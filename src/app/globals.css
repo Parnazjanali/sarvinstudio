@@ -1,26 +1,204 @@
+@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&display=swap');
 @import "tailwindcss";
 
+/* 1. معرفی فونت دوران (نسخه با اعداد فارسی - woff2) */
+@font-face {
+font-family: 'Doran';
+src: url('/fonts/DoranPro/Doran FaNum/Webfonts/fonts/woff2/DoranFaNum-Light.woff2') format('woff2');
+font-weight: 300;
+font-style: normal;
+font-display: swap;
+}
+@font-face {
+font-family: 'Doran';
+src: url('/fonts/DoranPro/Doran FaNum/Webfonts/fonts/woff2/DoranFaNum-Regular.woff2') format('woff2');
+font-weight: 400;
+font-style: normal;
+font-display: swap;
+}
+@font-face {
+font-family: 'Doran';
+src: url('/fonts/DoranPro/Doran FaNum/Webfonts/fonts/woff2/DoranFaNum-Medium.woff2') format('woff2');
+font-weight: 500;
+font-style: normal;
+font-display: swap;
+}
+@font-face {
+font-family: 'Doran';
+src: url('/fonts/DoranPro/Doran FaNum/Webfonts/fonts/woff2/DoranFaNum-Bold.woff2') format('woff2');
+font-weight: 700;
+font-style: normal;
+font-display: swap;
+}
+@font-face {
+font-family: 'Doran';
+src: url('/fonts/DoranPro/Doran FaNum/Webfonts/fonts/woff2/DoranFaNum-ExtraBold.woff2') format('woff2');
+font-weight: 800;
+font-style: normal;
+font-display: swap;
+}
+
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+--background: #FCFCFA; /* بسیار روشن، ملایم و خنثی برای جلوگیری از شلوغی کرم */
+--foreground: #1C3324; /* سبز سروی تیره و عمیق به عنوان رنگ متن اصلی */
+--font-doran: 'Doran', Tahoma, sans-serif;
+color-scheme: light;
 }
 
+html.dark {
+--background: #101813;
+--foreground: #F4F4F5;
+color-scheme: dark;
+}
+
+/* =========================================================
+بخش پیکربندی تیلویند ۴ (ریبرندینگ به سروین استودیو)
+========================================================= */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+--color-background: var(--background);
+--color-foreground: var(--foreground);
+/* فونت پیش‌فرض سایت */
+--font-sans: var(--font-doran);
+
+/* پالت رنگی جدید سروین استودیو (پایه روشن‌تر و مینیمال) */
+--color-cream: #FCFCFA;
+--color-cream-deep: #F3EFEA;
+--color-paper: #FFFFFF;
+--color-gold: #B4901E;
+--color-gold-light: #D8B65C;
+--color-gold-pale: #EAD9A0;
+--color-gold-deep: #7C5E14;
+--color-ink: #1C3324;        /* سبز سروی عمیق */
+--color-ink-soft: #3A5A46;    /* سبز سروی ملایم‌تر برای متن‌های فرعی */
+--color-accent-red: #8B263E;  /* سرخ لعل / عنابی برای المان‌های خاص */
+--color-line: rgba(28, 51, 36, 0.1);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* =========================================================
+استایل‌های عمومی
+========================================================= */
+html {
+direction: rtl;
+scroll-behavior: smooth;
+background: var(--background);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+min-height: 100vh;
+margin: 0;
+background: var(--background);
+color: var(--foreground);
+font-family: var(--font-doran);
+transition: background-color 300ms ease, color 300ms ease;
+-webkit-font-smoothing: antialiased;
+}
+
+* {
+box-sizing: border-box;
+}
+
+button,
+input,
+select,
+textarea {
+font: inherit;
+}
+
+button,
+a {
+-webkit-tap-highlight-color: transparent;
+}
+
+button:not(:disabled),
+select:not(:disabled) {
+cursor: pointer;
+}
+
+::selection {
+background: #1C3324;
+color: #FCFCFA;
+}
+
+/* =========================================================
+استایل‌های دکمه‌ها (هماهنگ با طیف‌های جدید)
+========================================================= */
+.add-to-cart-button,
+.view-details-button {
+position: relative;
+overflow: hidden;
+isolation: isolate;
+display: flex;
+width: 100%;
+min-height: 46px;
+align-items: center;
+justify-content: center;
+padding: 11px 16px;
+border-radius: 14px;
+color: #ffffff;
+background: linear-gradient(135deg, #1C3324 0%, #2D4F38 100%);
+box-shadow: 0 6px 14px rgba(28, 51, 36, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+font-size: 14px;
+font-weight: 800;
+text-decoration: none;
+cursor: pointer;
+transition: transform 220ms ease, background 220ms ease, box-shadow 220ms ease;
+}
+
+.add-to-cart-button::before,
+.view-details-button::before {
+content: "";
+position: absolute;
+top: 0;
+bottom: 0;
+left: -80%;
+width: 45%;
+z-index: 0;
+pointer-events: none;
+transform: skewX(-20deg);
+background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35), transparent);
+transition: left 500ms ease;
+}
+
+.add-to-cart-button > *,
+.view-details-button > * {
+position: relative;
+z-index: 1;
+}
+
+.add-to-cart-button:hover,
+.view-details-button:hover {
+transform: translateY(-3px) scale(1.025);
+background: linear-gradient(135deg, #2D4F38 0%, #1C3324 100%);
+box-shadow: 0 0 0 1px rgba(28, 51, 36, 0.3), 0 8px 18px rgba(28, 51, 36, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+.add-to-cart-button:hover::before,
+.view-details-button:hover::before {
+left: 140%;
+}
+
+.add-to-cart-button:active,
+.view-details-button:active {
+transform: translateY(-1px) scale(0.98);
+box-shadow: 0 3px 8px rgba(28, 51, 36, 0.2);
+}
+
+.add-to-cart-button:focus-visible,
+.view-details-button:focus-visible {
+outline: 3px solid rgba(28, 51, 36, 0.35);
+outline-offset: 4px;
+}
+
+/* --- vibefarsi:text-reveal --- */
+@keyframes wipe-in {
+from { clip-path: inset(0 0 0 100%); transform: translateY(0.35em); opacity: 0; }
+to { clip-path: inset(0 0 0 0); transform: translateY(0); opacity: 1; }
+}
+/* --- vibefarsi:text-reveal-end --- */
+
+/* تعریف کلاس اختصاصی وزیرمتن */
+.font-vazir {
+font-family: 'Vazirmatn', sans-serif !important;
 }
