@@ -443,7 +443,7 @@ export default function AddressesPage() {
               </h1>
             </div>
             <p className="text-xs sm:text-sm text-[#3A5A46] m-0">
-              نشانی‌های خود را جهت ارسال سفارشات در سروین استودیو مدیریت کنید.
+              نشانی‌های خود را جهت ارسال سفارشات در پرنا زر مدیریت کنید.
             </p>
           </div>
 

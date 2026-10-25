@@ -233,7 +233,7 @@ export default function OrderInstallmentsPage({
 
         {/* کارت راهنمای نحوه تسویه */}
         <div className="p-4 rounded-2xl bg-white border border-[#1C3324]/15 text-xs text-[#3A5A46] leading-6 space-y-1">
-          <p className="font-bold text-[#1C3324]">قوانین تسویه طرح اقساط طلایی سروین:</p>
+          <p className="font-bold text-[#1C3324]">قوانین تسویه طرح اقساط طلایی پرنا زر:</p>
           <p>• هر قسط معادل یک‌سوم وزن کل اثر ({shareWeight.toFixed(3)} گرم) است.</p>
           <p>• مبالغ اقساط بعدی در لحظه پرداخت، با نرخ همان روز طلا در بازار محاسبه و تسویه می‌شوند.</p>
         </div>

@@ -99,8 +99,8 @@ export default function RegisterPage() {
           <div className="w-16 h-16 rounded-2xl bg-[#FAF9F6] border border-[#1C3324]/20 flex items-center justify-center mb-4 shadow-xs">
             <SarvIcon />
           </div>
-          <h2 className="text-2xl font-extrabold text-center text-[#1C3324]">ثبت‌‌نام در سروین استودیو</h2>
-          <p className="text-xs mt-1.5 text-[#3A5A46] font-medium">به استواریِ سرو، به امنیتِ سایه ✨</p>
+          <h2 className="text-2xl font-extrabold text-center text-[#1C3324] font-heading">ثبت‌نام در پرنا زر</h2>
+          <p className="text-xs mt-1.5 text-[#8B263E] font-bold">مثل زر بدرخش ✨</p>
         </div>
 
         {/* Error Box */}
@@ -194,7 +194,7 @@ export default function RegisterPage() {
             className="w-full text-white font-bold py-4 rounded-2xl flex justify-center items-center gap-2 transition-all shadow-md bg-[#1C3324] hover:bg-[#8B263E] disabled:opacity-70 disabled:cursor-not-allowed text-sm mt-3 cursor-pointer"
           >
             {isLoading && <Loader2 size={18} className="animate-spin" />}
-            {isLoading ? "در حال ثبت اطلاعات..." : "ثبت‌نام و عضویت در سروین"}
+            {isLoading ? "در حال ثبت اطلاعات..." : "ثبت‌نام و عضویت در پرنا زر"}
           </button>
         </form>
 

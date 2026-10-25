@@ -126,7 +126,7 @@ export default function PaymentPage() {
           const installmentTotalCount = prod.installmentTotalCount || cartItem.installmentTotalCount || (isInstallment ? 3 : undefined);
 
           return {
-            productTitle: prod.name || prod.title || "طلا و جواهر سروین",
+            productTitle: prod.name || prod.title || "طلا و جواهر پرنا زر",
             weight: Number(prod.weight) || 0,
             colour: prod.colour || prod.color || "زرد",
             goldPricePerGram: goldPrice,
@@ -211,7 +211,7 @@ export default function PaymentPage() {
         shippingPhone: shippingInfo.phone || "",
         shippingProvince: shippingInfo.province || "",
         shippingPostalCode: shippingInfo.postalCode || "",
-        shippingMethod: "پستی پیشتاز بیمه‌شده سروین",
+        shippingMethod: "پستی پیشتاز بیمه‌شده پرنا زر",
         shippingCost: "رایگان",
         items: cartItems, // اکنون totalPrice هر آیتم همان مبلغ واقعی فاکتور است
       };
@@ -235,7 +235,7 @@ export default function PaymentPage() {
           body: JSON.stringify({
             amount: sanitizedAmount,
             callbackUrl: `${window.location.origin}/checkout/verify?orderId=${createdOrder.id}`,
-            description: `خرید طلا و جواهرات از سروین استودیو - فاکتور ${orderNumber}`,
+            description: `خرید طلا و جواهرات از پرنا زر - فاکتور ${orderNumber}`,
             mobile: shippingInfo.phone,
             email: pb.authStore.model.email || "",
           }),
@@ -286,7 +286,7 @@ export default function PaymentPage() {
                 تکمیل فرآیند خرید
               </h1>
               <p className="mt-1 text-xs sm:text-sm text-[#3A5A46]">
-                مرحله سوم: درگاه و شیوه پرداخت سفارش در سروین استودیو.
+                مرحله سوم: درگاه و شیوه پرداخت سفارش در پرنا زر.
               </p>
             </div>
 
@@ -339,7 +339,7 @@ export default function PaymentPage() {
                   انتخاب درگاه پرداخت الکترونیک
                 </h2>
                 <p className="mt-1 text-xs text-[#3A5A46]">
-                  درگاه امن بانکی سروین استودیو.
+                  درگاه امن بانکی پرنا زر.
                 </p>
               </div>
             </div>
@@ -501,7 +501,7 @@ export default function PaymentPage() {
                     ضمانت اصالت و بازگشت
                   </h2>
                   <p className="mt-2 text-xs leading-6 text-[#3A5A46]">
-                    تمام محصولات با فاکتور رسمی معتبر سروین استودیو و ضمانت بازگشت ارسال می‌گردند.
+                    تمام محصولات با فاکتور رسمی معتبر پرنا زر و ضمانت بازگشت ارسال می‌گردند.
                   </p>
                 </div>
               </div>

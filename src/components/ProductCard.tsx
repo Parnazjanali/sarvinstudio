@@ -1,5 +1,7 @@
+"use client";
+
 import Link from "next/link";
-import { ImageIcon } from "lucide-react";
+import { ImageIcon, BadgePercent, ArrowLeft } from "lucide-react";
 import { formatPrice } from "@/lib/format";
 import {
   ProductItem,
@@ -30,7 +32,6 @@ export default function ProductCard({
   const productName = getProductName(product);
   const productDescription = getProductDescription(product);
   
-  // رفع مشکل نمایش عکس در کارت
   const rawImageUrl = getProductImageUrl(product);
   const productImage = typeof rawImageUrl === "string" && rawImageUrl.trim() !== "" ? rawImageUrl.trim() : null;
   
@@ -46,105 +47,107 @@ export default function ProductCard({
       ? `${validVariants.length.toLocaleString("fa-IR")} وزن`
       : primaryWeight > 0
       ? `${primaryWeight.toLocaleString("fa-IR", { maximumFractionDigits: 2 })} گرم`
-      : "وزن مشخص نشده";
+      : null;
+
+  // محاسبه مبلغ هر قسط از ۳ قسط
+  const installmentAmount = productPrice && productPrice > 0 ? Math.ceil(productPrice / 3) : null;
 
   return (
-    <div
-      style={{
-        background: "#FFFFFF",
-        border: "1px solid rgba(28, 51, 36, 0.12)",
-        borderRadius: 22,
-        padding: 16,
-        boxShadow: "0 4px 20px rgba(28, 51, 36, 0.04)",
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "space-between",
-        minWidth: 0,
-        transition: "all 300ms ease",
-      }}
-    >
-      <Link href={`/products/${product.id}`} style={{ textDecoration: "none", color: "inherit", display: "block" }}>
-        {/* تصویر */}
-        <div
-          style={{
-            height: 180,
-            borderRadius: 16,
-            background: "linear-gradient(135deg, #F4F6F4, #FFFFFF)",
-            border: "1px solid rgba(28, 51, 36, 0.08)",
-            marginBottom: 14,
-            position: "relative",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            overflow: "hidden",
-          }}
-        >
+    <article className="group relative bg-white dark:bg-[#15221B] rounded-[1.75rem] border border-[#1C3324]/10 dark:border-white/10 hover:border-[#8B263E]/40 dark:hover:border-[#D8B65C]/40 transition-all duration-400 p-4 sm:p-5 flex flex-col justify-between shadow-xs hover:shadow-xl">
+      <Link href={`/products/${product.id}`} className="block">
+        
+        {/* قاب تصویر لوکس با پس‌زمینه ارگانیک */}
+        <div className="relative aspect-[4/4.5] rounded-2xl bg-[#FAF9F6] dark:bg-[#101813] border border-[#1C3324]/5 dark:border-white/5 overflow-hidden flex items-center justify-center mb-4">
+          
+          {/* برچسب اختصاصی تگ */}
+          {typeof product.tag === "string" && product.tag.trim() !== "" ? (
+            <span className="absolute top-3 right-3 z-10 text-[10px] font-black px-2.5 py-0.5 bg-[#8B263E] text-white rounded-full shadow-xs">
+              {product.tag.trim()}
+            </span>
+          ) : (
+            <span className="absolute top-3 right-3 z-10 text-[10px] font-bold px-2 py-0.5 bg-white/90 dark:bg-[#15221B]/90 backdrop-blur text-[#8B263E] dark:text-[#D8B65C] rounded-full border border-[#8B263E]/20 dark:border-[#D8B65C]/20 shadow-xs">
+              {primaryAyar > 0 ? `${primaryAyar.toLocaleString("fa-IR")} عیار` : "۱۸ عیار"}
+            </span>
+          )}
+
+          {/* نشانگر وزن */}
+          {weightLabel && (
+            <span className="absolute top-3 left-3 z-10 text-[10px] font-mono font-bold px-2 py-0.5 bg-white/90 dark:bg-[#15221B]/90 backdrop-blur text-[#3A5A46] dark:text-zinc-300 rounded-full border border-[#1C3324]/10 dark:border-white/10 shadow-xs">
+              {weightLabel}
+            </span>
+          )}
+
           {productImage ? (
             <img
               src={productImage}
               alt={productName}
               loading="lazy"
-              style={{ width: "100%", height: "100%", objectFit: "contain", display: "block" }}
+              className="w-full h-full object-cover p-3 group-hover:scale-106 transition-transform duration-500 ease-out"
             />
           ) : (
-            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 8 }}>
-              <ImageIcon size={42} color="#1C3324" opacity={0.3} />
-              <span style={{ fontSize: 12, color: "#3A5A46", fontWeight: 600 }}>
-                {productColor ? getColorName(productColor) : "تصویر موجود نیست"}
+            <div className="flex flex-col items-center gap-2 text-[#1C3324]/30 dark:text-zinc-500">
+              <ImageIcon size={36} />
+              <span className="text-[11px] font-medium text-[#3A5A46] dark:text-zinc-400">
+                {productColor ? getColorName(productColor) : "پرنا زر"}
               </span>
             </div>
           )}
-          {typeof product.tag === "string" && product.tag.trim() !== "" && (
-            <span
-              style={{
-                position: "absolute",
-                top: 10,
-                right: 10,
-                background: "rgba(139, 38, 62, 0.1)",
-                color: "#8B263E",
-                borderRadius: 999,
-                padding: "4px 10px",
-                fontSize: 11,
-                fontWeight: 800,
-                border: "1px solid rgba(139, 38, 62, 0.2)",
-              }}
-            >
-              {product.tag.trim()}
-            </span>
-          )}
         </div>
 
-        {/* عنوان و توضیحات */}
-        <h2 style={{ fontSize: 18, fontWeight: 800, margin: "0 0 8px 0", color: "#1C3324", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+        {/* عنوان و توضیحات اثر */}
+        <h3 className="text-sm sm:text-base font-extrabold text-[#1C3324] dark:text-zinc-100 mb-1 line-clamp-1 group-hover:text-[#8B263E] dark:group-hover:text-[#D8B65C] transition-colors">
           {productName}
-        </h2>
-        <p style={{ fontSize: 13, color: "#3A5A46", lineHeight: 1.7, marginBottom: 14, minHeight: 44, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>
-          {productDescription}
+        </h3>
+        <p className="text-xs text-[#3A5A46] dark:text-zinc-400 line-clamp-1 mb-3.5 leading-relaxed">
+          {productDescription || "طلای ۱۸ عیار دست‌ساز با شناسنامه اصالت"}
         </p>
       </Link>
 
-      <div>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "8px 12px", background: "#F4F6F4", borderRadius: 12, fontSize: 12, fontWeight: 700, color: "#3A5A46", marginBottom: 14 }}>
-          <span>وزن: {weightLabel}</span>
-          <span>عیار: {primaryAyar.toLocaleString("fa-IR")}</span>
-        </div>
-
-        <div style={{ marginBottom: 12 }}>
-          <span style={{ fontSize: 10, color: "#3A5A46", display: "block", marginBottom: 3 }}>قیمت:</span>
-          <span style={{ fontSize: 15, fontWeight: 900, color: "#8B263E" }}>
+      {/* بخش قیمت نقد، آفر ۳ قسط و دکمه مشاهده */}
+      <div className="pt-3 border-t border-[#1C3324]/5 dark:border-white/5 space-y-2.5">
+        
+        {/* قیمت نقدی */}
+        <div className="flex items-center justify-between">
+          <span className="text-[11px] text-[#3A5A46] dark:text-zinc-400 font-medium">قیمت روز:</span>
+          <span className="text-sm sm:text-[15px] font-black text-[#1C3324] dark:text-white font-mono">
             {productPrice !== null
-              ? formatPrice(productPrice) + " تومان"
-              : isLoadingPrices ? "در حال محاسبه..." : goldPriceError ? "نرخ طلا در دسترس نیست" : "قیمت نامشخص"}
+              ? `${formatPrice(productPrice)} تومان`
+              : isLoadingPrices 
+              ? "در حال محاسبه..." 
+              : goldPriceError 
+              ? "نرخ طلا در دسترس نیست" 
+              : "قیمت نامشخص"}
           </span>
         </div>
 
+        {/* برچسب آفر خرید در ۳ قسط طلایی با قیمت روز */}
+        {installmentAmount !== null && (
+          <div className="bg-[#FAF9F6] dark:bg-[#101813] px-2.5 py-1.5 rounded-xl border border-[#D8B65C]/35 flex flex-col gap-0.5 text-[10.5px]">
+            <div className="flex items-center justify-between font-bold text-[#8B263E] dark:text-[#D8B65C]">
+              <span className="flex items-center gap-1">
+                <BadgePercent size={13} />
+                <span>۳ قسط طلایی با قیمت روز:</span>
+              </span>
+              <span className="font-mono font-black">
+                قسط اول: {formatPrice(installmentAmount)} ت
+              </span>
+            </div>
+            <span className="text-[9.5px] text-[#3A5A46] dark:text-zinc-400">
+              اقساط بعدی معادل ۱/۳ وزن به نرخ روز طلا
+            </span>
+          </div>
+        )}
+
+        {/* دکمه مشاهده و خرید */}
         <Link
           href={`/products/${product.id}`}
-          style={{ display: "flex", alignItems: "center", justifyContent: "center", width: "100%", padding: "10px 14px", borderRadius: 12, background: "#1C3324", color: "#FFFFFF", textDecoration: "none", fontSize: 13, fontWeight: 800, transition: "background 200ms ease" }}
+          className="w-full py-2.5 px-3 rounded-xl bg-[#1C3324] dark:bg-[#D8B65C] text-white dark:text-[#101813] text-xs font-bold flex items-center justify-center gap-1.5 hover:bg-[#8B263E] dark:hover:bg-[#E6CA7A] transition-colors shadow-xs"
         >
-          مشاهده جزئیات
+          <span>مشاهده و سفارش</span>
+          <ArrowLeft size={13} />
         </Link>
       </div>
-    </div>
+
+    </article>
   );
 }

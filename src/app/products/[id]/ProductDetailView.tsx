@@ -441,13 +441,15 @@ export default function ProductDetailView({
   // بررسی ناموجود بودن وزن انتخاب‌شده
   const isSelectedOutOfStock = selectedStock !== null && Number(selectedStock) <= 0;
 
+  const effectiveGoldRate = goldGramPrice > 0 ? goldGramPrice : 25658600;
+
   const selectedPriceInfo = useMemo(() => {
     if (selectedWeight <= 0) return null;
     return calcProductPrice(
       { ...product, weight: selectedWeight },
-      goldGramPrice,
+      effectiveGoldRate,
     );
-  }, [goldGramPrice, product, selectedWeight]);
+  }, [effectiveGoldRate, product, selectedWeight]);
 
   const selectedPrice = selectedPriceInfo?.total ?? null;
 
@@ -658,8 +660,8 @@ export default function ProductDetailView({
           <div className="mb-5 space-y-3">
             <div className="flex flex-wrap items-center justify-between gap-2.5">
               <div className="flex flex-wrap items-center gap-1.5 text-[11px] font-bold">
-                <span className="rounded-full bg-[#1C3324] px-3 py-1 text-white shadow-xs">
-                  سروین استودیو
+                <span className="rounded-full bg-[#1C3324] px-3 py-1 text-white shadow-xs font-heading">
+                  پرنا زر
                 </span>
                 <span className="rounded-full border border-[#1C3324]/15 bg-white px-2.5 py-1 text-[#1C3324]">
                   عیار {karat}
@@ -785,7 +787,7 @@ export default function ProductDetailView({
               ) : (
                 <span className="inline-flex items-center gap-1.5 text-emerald-800 font-bold bg-emerald-50 px-3 py-1.5 rounded-xl border border-emerald-200">
                   <Package size={14} />
-                  <span>موجود در گالری سروین (آماده تحویل و ارسال فوری)</span>
+                  <span>موجود در گالری پرنا زر (آماده تحویل و ارسال فوری)</span>
                 </span>
               )}
             </div>
@@ -863,93 +865,83 @@ export default function ProductDetailView({
             </div>
           </div>
 
-          {/* طرح اقساط طلایی */}
-          <div className="rounded-[22px] border border-[#1C3324]/20 bg-white p-5 text-[#1C3324] shadow-xs sm:rounded-[26px] sm:p-6">
+          {/* طرح اقساط طلایی با قیمت روز طلا */}
+          <div className="rounded-[22px] border border-[#1C3324]/20 dark:border-white/10 bg-white dark:bg-[#15221B] p-5 text-[#1C3324] dark:text-zinc-100 shadow-xs sm:rounded-[26px] sm:p-6 transition-colors">
             <div className="flex flex-col gap-4">
               <div className="flex items-center justify-between flex-wrap gap-2">
-                <div className="flex items-center gap-2 text-base font-black text-[#8B263E]">
-                  <Sparkles className="h-5 w-5 text-[#8B263E]" />
-                  <span>طرح اقساط طلایی سروین (۳ قسط بدون چک)</span>
+                <div className="flex items-center gap-2 text-base font-black text-[#8B263E] dark:text-[#D8B65C]">
+                  <Sparkles className="h-5 w-5 text-[#8B263E] dark:text-[#D8B65C]" />
+                  <span>طرح اقساط طلایی پرنا زر (۳ قسط با قیمت روز طلا)</span>
                 </div>
+                <span className="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-400">
+                  بدون سود و بدون چک
+                </span>
               </div>
 
-              <div className="relative overflow-hidden rounded-2xl p-1">
-                {authLoaded && !isLoggedIn && (
-                  <div className="absolute inset-0 z-10 flex flex-col items-center justify-center bg-white/90 backdrop-blur-[3px] text-center p-3">
-                    <div className="flex flex-col items-center gap-2">
-                      <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[#1C3324] text-white shadow-md">
-                        <Lock className="h-4 w-4" />
-                      </div>
-                      <span className="text-xs font-black text-[#1C3324]">
-                        برای مشاهده جدول اقساط لطفا وارد حساب کاربری خود شوید
-                      </span>
-                      <Link
-                        href="/login"
-                        className="mt-1 inline-flex items-center gap-1.5 rounded-xl bg-[#1C3324] px-4 py-2 text-xs font-bold text-white shadow hover:bg-[#8B263E] transition-colors"
-                      >
-                        ورود به حساب کاربری
-                      </Link>
+              <div>
+                <p className="text-xs leading-6 text-[#3A5A46] dark:text-zinc-300">
+                  در این طرح، وزن خالص طلا به ۳ سهم مساوی تقسیم می‌شود. <strong className="text-[#8B263E] dark:text-[#D8B65C]">قسط اول</strong> همین الان با نرخ زنده بازار پرداخت شده و سفارش ثبت می‌شود. <strong className="text-[#1C3324] dark:text-white">اقساط دوم و سوم</strong> در موعد سررسید بر اساس <strong>نرخ روز طلا</strong> تسویه می‌گردند.
+                </p>
+
+                {installmentWeight !== null && installmentPrice !== null && (
+                  <div className="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+                    <div className="rounded-2xl bg-[#FAF9F6] dark:bg-[#101813] p-3 text-right border-2 border-[#8B263E] dark:border-[#D8B65C] shadow-xs">
+                      <span className="block text-[10px] font-extrabold text-[#8B263E] dark:text-[#D8B65C]">۱. قسط اول (همین الان):</span>
+                      <strong className="block text-xs font-black text-[#1C3324] dark:text-white mt-1">
+                        {formatProductPrice(installmentPrice)}
+                      </strong>
+                      <span className="block text-[10px] text-[#3A5A46] dark:text-zinc-400 mt-0.5">وزن سهمی: {installmentWeight.toFixed(2)} گرم (به نرخ امروز)</span>
+                    </div>
+
+                    <div className="rounded-2xl bg-[#FAF9F6] dark:bg-[#101813] p-3 text-right border border-[#1C3324]/15 dark:border-white/10">
+                      <span className="block text-[10px] font-bold text-[#3A5A46] dark:text-zinc-400">۲. قسط دوم (ماه آینده):</span>
+                      <strong className="block text-xs font-black text-[#1C3324] dark:text-white mt-1">
+                        محاسبه با نرخ روز طلا
+                      </strong>
+                      <span className="block text-[10px] text-[#3A5A46] dark:text-zinc-400 mt-0.5">وزن سهمی: {installmentWeight.toFixed(2)} گرم</span>
+                    </div>
+
+                    <div className="rounded-2xl bg-[#FAF9F6] dark:bg-[#101813] p-3 text-right border border-[#1C3324]/15 dark:border-white/10">
+                      <span className="block text-[10px] font-bold text-[#3A5A46] dark:text-zinc-400">۳. قسط سوم (ماه بعد):</span>
+                      <strong className="block text-xs font-black text-[#1C3324] dark:text-white mt-1">
+                        محاسبه با نرخ روز طلا
+                      </strong>
+                      <span className="block text-[10px] text-[#3A5A46] dark:text-zinc-400 mt-0.5">وزن سهمی: {installmentWeight.toFixed(2)} گرم (تسویه و تحویل)</span>
                     </div>
                   </div>
                 )}
-
-                <div className={!isLoggedIn ? "opacity-30 filter blur-[4px] select-none pointer-events-none" : ""}>
-                  <p className="text-xs leading-6 text-[#3A5A46]">
-                    قسط اول همین الان بر اساس یک‌سوم مبلغ کل نهایی محاسبه شده و به سبد خرید اضافه می‌شود. اقساط بعدی در زمان سررسید با قیمت روز تسویه می‌گردند.
-                  </p>
-
-                  {installmentWeight !== null && installmentPrice !== null && (
-                    <div className="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-2.5">
-                      <div className="rounded-2xl bg-[#FAF9F6] p-3 text-right border-2 border-[#1C3324] shadow-xs">
-                        <span className="block text-[10px] font-extrabold text-[#8B263E]">۱. قسط اول (همین الان):</span>
-                        <strong className="block text-xs font-black text-[#1C3324] mt-1">
-                          {formatProductPrice(installmentPrice)}
-                        </strong>
-                        <span className="block text-[10px] text-[#3A5A46] mt-0.5">وزن سهمی: {installmentWeight.toFixed(2)} گرم (یک‌سوم کل)</span>
-                      </div>
-
-                      <div className="rounded-2xl bg-[#FAF9F6] p-3 text-right border border-[#1C3324]/15">
-                        <span className="block text-[10px] font-bold text-[#3A5A46]">۲. قسط دوم (ماه آینده):</span>
-                        <strong className="block text-xs font-black text-[#1C3324] mt-1">
-                          محاسبه با قیمت روز
-                        </strong>
-                        <span className="block text-[10px] text-[#3A5A46] mt-0.5">وزن سهمی: {installmentWeight.toFixed(2)} گرم</span>
-                      </div>
-
-                      <div className="rounded-2xl bg-[#FAF9F6] p-3 text-right border border-[#1C3324]/15">
-                        <span className="block text-[10px] font-bold text-[#3A5A46]">۳. قسط سوم (ماه بعد):</span>
-                        <strong className="block text-xs font-black text-[#1C3324] mt-1">
-                          محاسبه با قیمت روز
-                        </strong>
-                        <span className="block text-[10px] text-[#3A5A46] mt-0.5">وزن سهمی: {installmentWeight.toFixed(2)} گرم</span>
-                      </div>
-                    </div>
-                  )}
-                </div>
               </div>
 
-              {authLoaded && isLoggedIn && installmentPrice !== null && (
-                <div className="space-y-2 pt-2 border-t border-[#1C3324]/15">
+              {installmentPrice !== null && (
+                <div className="space-y-2 pt-2 border-t border-[#1C3324]/15 dark:border-white/10">
                   {isSelectedOutOfStock ? (
                     <button
                       type="button"
                       disabled
-                      className="w-full h-[50px] rounded-2xl bg-gray-200 text-gray-500 text-xs font-bold cursor-not-allowed flex items-center justify-center"
+                      className="w-full h-[50px] rounded-2xl bg-gray-200 dark:bg-zinc-800 text-gray-500 text-xs font-bold cursor-not-allowed flex items-center justify-center"
                     >
                       خرید اقساطی به دلیل ناموجودی این وزن امکان‌پذیر نیست
                     </button>
+                  ) : !isLoggedIn ? (
+                    <Link
+                      href={`/login?redirect=/products/${product.id}`}
+                      className="w-full h-[50px] rounded-2xl bg-[#8B263E] hover:bg-[#6e1e31] text-white text-xs font-black flex items-center justify-center gap-2 shadow-md transition-colors"
+                    >
+                      <Lock size={15} />
+                      <span>ورود به حساب کاربری و خرید قسط اول ({formatProductPrice(installmentPrice)})</span>
+                    </Link>
                   ) : (
-                    <div className="w-full [&_button]:!w-full [&_button]:!h-[50px] [&_button]:!bg-[#1C3324] [&_button]:hover:!bg-[#8B263E] [&_button]:!text-white [&_button]:!rounded-2xl [&_button]:!border-none [&_button]:!shadow-xs [&_button_*]:!text-white">
+                    <div className="w-full [&_button]:!w-full [&_button]:!h-[50px] [&_button]:!bg-[#1C3324] dark:[&_button]:!bg-[#D8B65C] dark:[&_button]:hover:!bg-[#E6CA7A] dark:[&_button]:!text-[#101813] [&_button]:hover:!bg-[#8B263E] [&_button]:!text-white [&_button]:!rounded-2xl [&_button]:!border-none [&_button]:!shadow-xs [&_button_*]:!text-inherit">
                       <AddToCartButton
                         product={installmentProduct}
                         price={installmentPrice}
                         selectedVariant={selectedVariantForCart}
-                        className="w-full !h-[50px] !bg-[#1C3324] hover:!bg-[#8B263E] !text-white !rounded-2xl !border-none !text-xs !font-black cursor-pointer shadow-xs"
+                        className="w-full !h-[50px] !bg-[#1C3324] hover:!bg-[#8B263E] dark:!bg-[#D8B65C] dark:hover:!bg-[#E6CA7A] !text-white dark:!text-[#101813] !rounded-2xl !border-none !text-xs !font-black cursor-pointer shadow-xs"
                       />
                     </div>
                   )}
-                  <p className="text-[11px] text-center text-[#3A5A46]">
-                    با کلیک روی دکمه بالا، مبلغ <span className="font-bold text-[#1C3324]">قسط اول</span> به همراه مشخصات انتخاب‌شده به سبد خرید اضافه خواهد شد.
+                  <p className="text-[11px] text-center text-[#3A5A46] dark:text-zinc-400">
+                    با ثبت سفارش، مبلغ <span className="font-bold text-[#1C3324] dark:text-white">قسط اول به نرخ روز طلا</span> پرداخت شده و سفارش شما قطعی می‌شود.
                   </p>
                 </div>
               )}
@@ -962,7 +954,7 @@ export default function ProductDetailView({
         <div className="flex items-center justify-between flex-wrap gap-4 border-b border-[#1C3324]/10 pb-4">
           <div>
             <span className="text-xs font-bold text-[#8B263E] block mb-1">کلکسیون اختصاصی</span>
-            <h2 className="text-xl sm:text-2xl font-black text-[#1C3324]">بهترین انتخاب از استودیو سروین</h2>
+            <h2 className="text-xl sm:text-2xl font-black text-[#1C3324] font-heading">بهترین انتخاب از گالری طلا و جواهر پرنا زر</h2>
           </div>
           <Link
             href="/products"
@@ -1028,7 +1020,7 @@ export default function ProductDetailView({
             {hasDescription ? (
               <p className="whitespace-pre-line">{product.description}</p>
             ) : (
-              <p>توضیحات تکمیلی برای این محصول ثبت نشده است. ساخت این اثر با دقت بالا در استودیو سروین انجام شده است.</p>
+              <p>توضیحات تکمیلی برای این محصول ثبت نشده است. ساخت این اثر با دقت بالا در گالری پرنا زر انجام شده است.</p>
             )}
           </div>
         ) : (

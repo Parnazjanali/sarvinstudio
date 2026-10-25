@@ -3,202 +3,419 @@
 
 /* 1. معرفی فونت دوران (نسخه با اعداد فارسی - woff2) */
 @font-face {
-font-family: 'Doran';
-src: url('/fonts/DoranPro/Doran FaNum/Webfonts/fonts/woff2/DoranFaNum-Light.woff2') format('woff2');
-font-weight: 300;
-font-style: normal;
-font-display: swap;
+  font-family: 'Doran';
+  src: url('/fonts/DoranPro/Doran FaNum/Webfonts/fonts/woff2/DoranFaNum-Light.woff2') format('woff2');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
 }
 @font-face {
-font-family: 'Doran';
-src: url('/fonts/DoranPro/Doran FaNum/Webfonts/fonts/woff2/DoranFaNum-Regular.woff2') format('woff2');
-font-weight: 400;
-font-style: normal;
-font-display: swap;
+  font-family: 'Doran';
+  src: url('/fonts/DoranPro/Doran FaNum/Webfonts/fonts/woff2/DoranFaNum-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
 }
 @font-face {
-font-family: 'Doran';
-src: url('/fonts/DoranPro/Doran FaNum/Webfonts/fonts/woff2/DoranFaNum-Medium.woff2') format('woff2');
-font-weight: 500;
-font-style: normal;
-font-display: swap;
+  font-family: 'Doran';
+  src: url('/fonts/DoranPro/Doran FaNum/Webfonts/fonts/woff2/DoranFaNum-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
 }
 @font-face {
-font-family: 'Doran';
-src: url('/fonts/DoranPro/Doran FaNum/Webfonts/fonts/woff2/DoranFaNum-Bold.woff2') format('woff2');
-font-weight: 700;
-font-style: normal;
-font-display: swap;
+  font-family: 'Doran';
+  src: url('/fonts/DoranPro/Doran FaNum/Webfonts/fonts/woff2/DoranFaNum-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
 }
 @font-face {
-font-family: 'Doran';
-src: url('/fonts/DoranPro/Doran FaNum/Webfonts/fonts/woff2/DoranFaNum-ExtraBold.woff2') format('woff2');
-font-weight: 800;
-font-style: normal;
-font-display: swap;
+  font-family: 'Doran';
+  src: url('/fonts/DoranPro/Doran FaNum/Webfonts/fonts/woff2/DoranFaNum-ExtraBold.woff2') format('woff2');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* 2. معرفی فونت ایران سنس (IRANSans) */
+@font-face {
+  font-family: 'IRANSans';
+  src: url('/fonts/IRANSans/woff2/IRANSansWeb_Light.woff2') format('woff2'),
+       url('/fonts/IRANSans/woff/IRANSansWeb_Light.woff') format('woff'),
+       url('/fonts/IRANSans/ttf/IRANSansWeb_Light.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'IRANSans';
+  src: url('/fonts/IRANSans/woff2/IRANSansWeb.woff2') format('woff2'),
+       url('/fonts/IRANSans/woff/IRANSansWeb.woff') format('woff'),
+       url('/fonts/IRANSans/ttf/IRANSansWeb.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'IRANSans';
+  src: url('/fonts/IRANSans/woff2/IRANSansWeb_Medium.woff2') format('woff2'),
+       url('/fonts/IRANSans/woff/IRANSansWeb_Medium.woff') format('woff'),
+       url('/fonts/IRANSans/ttf/IRANSansWeb_Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'IRANSans';
+  src: url('/fonts/IRANSans/woff2/IRANSansWeb_Bold.woff2') format('woff2'),
+       url('/fonts/IRANSans/woff/IRANSansWeb_Bold.woff') format('woff'),
+       url('/fonts/IRANSans/ttf/IRANSansWeb_Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* 3. معرفی فونت ایران یکان (IRANYekan) با اعداد فارسی */
+@font-face {
+  font-family: 'IRANYekan';
+  src: url('/fonts/IRANYekan/woff/iranyekanweblightfanum.woff') format('woff'),
+       url('/fonts/IRANYekan/ttf/iranyekanweblightfanum.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'IRANYekan';
+  src: url('/fonts/IRANYekan/woff/iranyekanwebregularfanum.woff') format('woff'),
+       url('/fonts/IRANYekan/ttf/iranyekanwebregularfanum.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'IRANYekan';
+  src: url('/fonts/IRANYekan/woff/iranyekanwebmediumfanum.woff') format('woff'),
+       url('/fonts/IRANYekan/ttf/iranyekanwebmediumfanum.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'IRANYekan';
+  src: url('/fonts/IRANYekan/woff/iranyekanwebboldfanum.woff') format('woff'),
+       url('/fonts/IRANYekan/ttf/iranyekanwebboldfanum.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'IRANYekan';
+  src: url('/fonts/IRANYekan/woff/iranyekanwebextraboldfanum.woff') format('woff'),
+       url('/fonts/IRANYekan/ttf/iranyekanwebextraboldfanum.ttf') format('truetype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
 }
 
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
---background: #FCFCFA; /* بسیار روشن، ملایم و خنثی برای جلوگیری از شلوغی کرم */
---foreground: #1C3324; /* سبز سروی تیره و عمیق به عنوان رنگ متن اصلی */
---font-doran: 'Doran', Tahoma, sans-serif;
-color-scheme: light;
+  --background: #FFFFFF; /* سفید خالص بدون هیچ تناژ کرم */
+  --foreground: #1C3324; /* سبز سروی تیره و عمیق به عنوان رنگ متن اصلی */
+  --card: #FFFFFF;
+  --card-foreground: #1C3324;
+  --popover: #FFFFFF;
+  --popover-foreground: #1C3324;
+  --primary: #1C3324;
+  --primary-foreground: #FFFFFF;
+  --secondary: #F8F9FA; /* خاکستری بسیار ملایم و خنثی، جایگزین کرم */
+  --secondary-foreground: #1C3324;
+  --muted: #F8F9FA;
+  --muted-foreground: #3A5A46;
+  --accent: #F1F3F2;
+  --accent-foreground: #1C3324;
+  --destructive: #DC2626;
+  --destructive-foreground: #FFFFFF;
+  --border: rgba(28, 51, 36, 0.12);
+  --input: rgba(28, 51, 36, 0.14);
+  --ring: #1C3324;
+  --radius: 1rem;
+  
+  --font-doran: 'Doran', Tahoma, sans-serif;
+  --font-iransans: 'IRANSans', Tahoma, sans-serif;
+  --font-iranyekan: 'IRANYekan', Tahoma, sans-serif;
+  --font-vazir: 'Vazirmatn', Tahoma, sans-serif;
+  --font-heading: var(--font-doran);
+  --font-body: var(--font-iransans);
+  --font-print: var(--font-iransans);
+  --font-heading-scale: 1;
+  --font-body-size: 14px;
+  --font-print-size: 11px;
+  color-scheme: light;
 }
 
 html.dark {
---background: #101813;
---foreground: #F4F4F5;
-color-scheme: dark;
+  --background: #101813;
+  --foreground: #F4F4F5;
+  --card: #15221B;
+  --card-foreground: #F4F4F5;
+  --popover: #15221B;
+  --popover-foreground: #F4F4F5;
+  --primary: #D8B65C;
+  --primary-foreground: #101813;
+  --secondary: #1C2D23;
+  --secondary-foreground: #F4F4F5;
+  --muted: #18281F;
+  --muted-foreground: #8FA597;
+  --accent: #1C2E24;
+  --accent-foreground: #F4F4F5;
+  --destructive: #EF4444;
+  --destructive-foreground: #FFFFFF;
+  --border: rgba(255, 255, 255, 0.1);
+  --input: rgba(255, 255, 255, 0.12);
+  --ring: #D8B65C;
+  color-scheme: dark;
 }
 
 /* =========================================================
-بخش پیکربندی تیلویند ۴ (ریبرندینگ به سروین استودیو)
+   بخش پیکربندی تیلویند ۴ (ریبرندینگ به پرنا زر — مثل زر بدرخش)
 ========================================================= */
 @theme inline {
---color-background: var(--background);
---color-foreground: var(--foreground);
-/* فونت پیش‌فرض سایت */
---font-sans: var(--font-doran);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
 
-/* پالت رنگی جدید سروین استودیو (پایه روشن‌تر و مینیمال) */
---color-cream: #FCFCFA;
---color-cream-deep: #F3EFEA;
---color-paper: #FFFFFF;
---color-gold: #B4901E;
---color-gold-light: #D8B65C;
---color-gold-pale: #EAD9A0;
---color-gold-deep: #7C5E14;
---color-ink: #1C3324;        /* سبز سروی عمیق */
---color-ink-soft: #3A5A46;    /* سبز سروی ملایم‌تر برای متن‌های فرعی */
---color-accent-red: #8B263E;  /* سرخ لعل / عنابی برای المان‌های خاص */
---color-line: rgba(28, 51, 36, 0.1);
+  /* متغیرهای تایپوگرافی سایت */
+  --font-sans: var(--font-body);
+  --font-heading: var(--font-heading);
+
+  /* پالت رنگی جدید پرنا زر (سفید خالص و خطوط شارپ) */
+  --color-cream: #FFFFFF;
+  --color-cream-deep: #F8F9FA;
+  --color-paper: #FFFFFF;
+  --color-gold: #B4901E;
+  --color-gold-light: #D8B65C;
+  --color-gold-pale: #EAD9A0;
+  --color-gold-deep: #7C5E14;
+  --color-ink: #1C3324;        /* سبز سروی عمیق */
+  --color-ink-soft: #3A5A46;    /* سبز سروی ملایم‌تر برای متن‌های فرعی */
+  --color-accent-red: #8B263E;  /* سرخ لعل / عنابی برای المان‌های خاص */
+  --color-line: rgba(28, 51, 36, 0.1);
 }
 
 /* =========================================================
-استایل‌های عمومی
+   استایل‌های عمومی
 ========================================================= */
 html {
-direction: rtl;
-scroll-behavior: smooth;
-background: var(--background);
+  direction: rtl;
+  scroll-behavior: smooth;
+  background-color: var(--background);
 }
 
 body {
-min-height: 100vh;
-margin: 0;
-background: var(--background);
-color: var(--foreground);
-font-family: var(--font-doran);
-transition: background-color 300ms ease, color 300ms ease;
--webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+  margin: 0;
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-body, var(--font-iransans));
+  font-size: var(--font-body-size, 14px);
+  transition: background-color 300ms ease, color 300ms ease;
+  -webkit-font-smoothing: antialiased;
 }
 
+/* تضمین تبعیت کلیه تگ‌های متنی، لینک‌ها، دکمه‌ها و فیلدها از فونت انتخابی */
+p, span, a, label, li, td, th, input, select, textarea, button {
+  font-family: inherit;
+}
+
+/* سربرگ‌ها و عنوان‌ها در تمام سایت از فونت سربرگ پیروی می‌کنند */
+h1, h2, h3, h4, h5, h6, .font-heading {
+  font-family: var(--font-heading, var(--font-doran)) !important;
+}
+
+/* فقط عنوان‌هایی که کلاس سایز اختصاصی (text-*) ندارند از مقیاس پیش‌فرض پیروی می‌کنند */
+:where(h1):not([class*="text-"]) { font-size: calc(2.25rem * var(--font-heading-scale, 1)); }
+:where(h2):not([class*="text-"]) { font-size: calc(1.75rem * var(--font-heading-scale, 1)); }
+:where(h3):not([class*="text-"]) { font-size: calc(1.35rem * var(--font-heading-scale, 1)); }
+:where(h4):not([class*="text-"]) { font-size: calc(1.15rem * var(--font-heading-scale, 1)); }
+:where(h5):not([class*="text-"]) { font-size: calc(1rem * var(--font-heading-scale, 1)); }
+:where(h6):not([class*="text-"]) { font-size: calc(0.875rem * var(--font-heading-scale, 1)); }
+
+/* اصلاح خطای سینتکس: تبدیل خط فاصله به ستاره برای ریست درست باکس */
 * {
-box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 button,
 input,
 select,
 textarea {
-font: inherit;
+  font: inherit;
 }
 
 button,
 a {
--webkit-tap-highlight-color: transparent;
+  -webkit-tap-highlight-color: transparent;
 }
 
 button:not(:disabled),
 select:not(:disabled) {
-cursor: pointer;
+  cursor: pointer;
 }
 
 ::selection {
-background: #1C3324;
-color: #FCFCFA;
+  background: #1C3324;
+  color: #FFFFFF;
 }
 
 /* =========================================================
-استایل‌های دکمه‌ها (هماهنگ با طیف‌های جدید)
+   استایل‌های دکمه‌ها
 ========================================================= */
 .add-to-cart-button,
 .view-details-button {
-position: relative;
-overflow: hidden;
-isolation: isolate;
-display: flex;
-width: 100%;
-min-height: 46px;
-align-items: center;
-justify-content: center;
-padding: 11px 16px;
-border-radius: 14px;
-color: #ffffff;
-background: linear-gradient(135deg, #1C3324 0%, #2D4F38 100%);
-box-shadow: 0 6px 14px rgba(28, 51, 36, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.25);
-font-size: 14px;
-font-weight: 800;
-text-decoration: none;
-cursor: pointer;
-transition: transform 220ms ease, background 220ms ease, box-shadow 220ms ease;
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  display: flex;
+  width: 100%;
+  min-height: 46px;
+  align-items: center;
+  justify-content: center;
+  padding: 11px 16px;
+  border-radius: 14px;
+  color: #ffffff;
+  background: linear-gradient(135deg, #1C3324 0%, #2D4F38 100%);
+  box-shadow: 0 6px 14px rgba(28, 51, 36, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+  font-size: 14px;
+  font-weight: 800;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 220ms ease, background 220ms ease, box-shadow 220ms ease;
 }
 
 .add-to-cart-button::before,
 .view-details-button::before {
-content: "";
-position: absolute;
-top: 0;
-bottom: 0;
-left: -80%;
-width: 45%;
-z-index: 0;
-pointer-events: none;
-transform: skewX(-20deg);
-background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35), transparent);
-transition: left 500ms ease;
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -80%;
+  width: 45%;
+  z-index: 0;
+  pointer-events: none;
+  transform: skewX(-20deg);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35), transparent);
+  transition: left 500ms ease;
 }
 
 .add-to-cart-button > *,
 .view-details-button > * {
-position: relative;
-z-index: 1;
+  position: relative;
+  z-index: 1;
 }
 
 .add-to-cart-button:hover,
 .view-details-button:hover {
-transform: translateY(-3px) scale(1.025);
-background: linear-gradient(135deg, #2D4F38 0%, #1C3324 100%);
-box-shadow: 0 0 0 1px rgba(28, 51, 36, 0.3), 0 8px 18px rgba(28, 51, 36, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  transform: translateY(-3px) scale(1.025);
+  background: linear-gradient(135deg, #2D4F38 0%, #1C3324 100%);
+  box-shadow: 0 0 0 1px rgba(28, 51, 36, 0.3), 0 8px 18px rgba(28, 51, 36, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.4);
 }
 
 .add-to-cart-button:hover::before,
 .view-details-button:hover::before {
-left: 140%;
+  left: 140%;
 }
 
 .add-to-cart-button:active,
 .view-details-button:active {
-transform: translateY(-1px) scale(0.98);
-box-shadow: 0 3px 8px rgba(28, 51, 36, 0.2);
+  transform: translateY(-1px) scale(0.98);
+  box-shadow: 0 3px 8px rgba(28, 51, 36, 0.2);
 }
 
 .add-to-cart-button:focus-visible,
 .view-details-button:focus-visible {
-outline: 3px solid rgba(28, 51, 36, 0.35);
-outline-offset: 4px;
+  outline: 3px solid rgba(28, 51, 36, 0.35);
+  outline-offset: 4px;
 }
 
 /* --- vibefarsi:text-reveal --- */
 @keyframes wipe-in {
-from { clip-path: inset(0 0 0 100%); transform: translateY(0.35em); opacity: 0; }
-to { clip-path: inset(0 0 0 0); transform: translateY(0); opacity: 1; }
+  from { clip-path: inset(0 0 0 100%); transform: translateY(0.35em); opacity: 0; }
+  to { clip-path: inset(0 0 0 0); transform: translateY(0); opacity: 1; }
 }
 /* --- vibefarsi:text-reveal-end --- */
 
-/* تعریف کلاس اختصاصی وزیرمتن */
+/* کلاس‌های کمکی فونت */
+.font-doran {
+  font-family: var(--font-doran) !important;
+}
+
+.font-iransans {
+  font-family: var(--font-iransans) !important;
+}
+
+.font-iranyekan {
+  font-family: var(--font-iranyekan) !important;
+}
+
 .font-vazir {
-font-family: 'Vazirmatn', sans-serif !important;
+  font-family: var(--font-vazir) !important;
+}
+
+.font-sans {
+  font-family: var(--font-body, var(--font-iransans)) !important;
+}
+
+.font-heading {
+  font-family: var(--font-heading, var(--font-doran)) !important;
+}
+
+.font-body {
+  font-family: var(--font-body, var(--font-iransans)) !important;
+}
+
+.font-print {
+  font-family: var(--font-print, var(--font-iransans)) !important;
+}
+
+.font-mono {
+  font-family: var(--font-body, var(--font-iransans)), monospace;
+}
+
+@media print {
+  html, body {
+    font-size: var(--font-print-size, 11px) !important;
+    background-color: #ffffff !important;
+    color: #000000 !important;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+    font-family: var(--font-print, 'IRANSans', sans-serif) !important;
+  }
+  *, .print-font, table, th, td, p, span, div, h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-print, 'IRANSans', sans-serif) !important;
+  }
+  table, th, td {
+    font-size: var(--font-print-size, 11px) !important;
+  }
+  @page {
+    size: A4;
+    margin: 10mm;
+  }
 }

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { LayoutDashboard, LogOut, Menu, Package, Settings, ShieldCheck, ShoppingBag, Trash2, User, X, ChevronDown } from "lucide-react";
 import { toast } from "sonner";
 import Cookies from "js-cookie";
@@ -98,7 +98,7 @@ const LiveGoldTicker = () => {
   }, []);
 
   return (
-    <div className="bg-[#1C3324] text-[#FFFFFF] py-2 px-6 text-sm font-medium tracking-wide flex justify-between md:justify-center items-center gap-3 md:gap-8 border-b border-[#1C3324]/20 w-full pointer-events-auto shadow-sm font-vazir">
+    <div className="bg-[#1C3324] text-[#FFFFFF] py-2 px-6 text-sm font-medium tracking-wide flex justify-between md:justify-center items-center gap-3 md:gap-8 border-b border-[#1C3324]/20 w-full pointer-events-auto shadow-sm">
       <span className="flex items-center gap-2">
         <span className={`w-2 h-2 rounded-full animate-pulse ${changeDir === 'up' ? 'bg-green-400' : changeDir === 'down' ? 'bg-red-400' : 'bg-[#8B263E]'}`}></span> 
         قیمت لحظه‌ای طلای ۱۸ عیار:
@@ -123,18 +123,37 @@ export default function SiteHeader({ user: initialUser = null }: SiteHeaderProps
   const [isCartHovered, setIsCartHovered] = useState(false);
   const [isUserHovered, setIsUserHovered] = useState(false);
   
-  // مدیریت منوی فعال
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
-
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
+
+  // تایمر برای ایجاد تاخیر نامحسوس در بسته شدن منو جهت حرکت نرم ماوس
+  const closeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  const handleMenuEnter = (menuName: string) => {
+    if (closeTimeoutRef.current) {
+      clearTimeout(closeTimeoutRef.current);
+      closeTimeoutRef.current = null;
+    }
+    setActiveMenu(menuName);
+  };
+
+  const handleMenuLeave = () => {
+    if (closeTimeoutRef.current) clearTimeout(closeTimeoutRef.current);
+    closeTimeoutRef.current = setTimeout(() => {
+      setActiveMenu(null);
+    }, 150);
+  };
 
   useEffect(() => {
     const syncUser = () => setCurrentUser(getUserFromAuthStore() || initialUser || null);
     syncUser();
     setIsMounted(true);
     const unsubscribe = pb.authStore.onChange(syncUser);
-    return () => unsubscribe();
+    return () => {
+      unsubscribe();
+      if (closeTimeoutRef.current) clearTimeout(closeTimeoutRef.current);
+    };
   }, [initialUser]);
 
   const isAuthenticated = isMounted ? Boolean(pb.authStore.isValid && currentUser) : Boolean(initialUser);
@@ -166,90 +185,98 @@ export default function SiteHeader({ user: initialUser = null }: SiteHeaderProps
   };
 
   return (
-    <div dir="rtl" className="fixed top-0 left-0 right-0 z-50 flex flex-col items-center pointer-events-none font-vazir" onMouseLeave={() => setActiveMenu(null)}>
-      {/* ۱. نوار قیمت طلا */}
+    <div dir="rtl" className="fixed top-0 left-0 right-0 z-50 flex flex-col items-center pointer-events-none">
+      {/* نوار قیمت لحظه‌ای */}
       <LiveGoldTicker />
 
-      {/* ۲. کپسول شیشه‌ای هدر اصلی با استایل تمیز و روان */}
-      <header className="pointer-events-auto w-full max-w-[1400px] flex items-center justify-between gap-6 px-8 py-4 rounded-full bg-[#FAF9F6]/95 backdrop-blur-xl border border-[#1C3324]/15 shadow-[0_12px_40px_rgba(28,51,36,0.08)] transition-all mt-3 mx-4">
+      {/* کپسول اصلی هدر */}
+      <header 
+        className="pointer-events-auto w-[calc(100%-2rem)] max-w-[1400px] flex items-center justify-between px-5 lg:px-7 py-3 rounded-full bg-[#FAF9F6]/95 backdrop-blur-xl border border-[#1C3324]/15 shadow-[0_10px_35px_rgba(28,51,36,0.06)] transition-all mt-3 mx-4"
+        onMouseLeave={handleMenuLeave}
+      >
         
-        {/* ================= LOGO (Far Right) با آیکون سرو کوچک ================= */}
-        <Link href="/" className="group flex shrink-0 items-center justify-center gap-2.5 pl-4" onClick={() => setMobileMenuOpen(false)}>
+        {/* لوگو */}
+        <Link href="/" className="group flex shrink-0 items-center justify-center gap-2.5" onClick={() => setMobileMenuOpen(false)}>
           <SarvIcon />
-          <div className="text-[1.5rem] font-extrabold tracking-wide text-[#1C3324] group-hover:text-[#8B263E] transition-colors">استودیو سروین</div>
+          <div className="flex flex-col text-right">
+            <span className="text-[1.2rem] lg:text-[1.35rem] font-extrabold tracking-tight text-[#1C3324] group-hover:text-[#8B263E] transition-colors font-heading whitespace-nowrap leading-tight">
+              پرنا زر
+            </span>
+            <span className="text-[9.5px] font-bold text-[#8B263E] tracking-tight -mt-0.5 whitespace-nowrap hidden sm:inline font-sans">
+              مثل زر بدرخش
+            </span>
+          </div>
         </Link>
 
-        {/* ================= DESKTOP NAV ================= */}
-        <nav className="hidden xl:flex flex-1 gap-6 text-[15px] font-bold items-center justify-center">
-          <Link href="/" className="relative text-[#1C3324] hover:text-[#8B263E] transition-colors tracking-wide whitespace-nowrap py-1 group">
-            صفحه اصلی
-            <span className="absolute bottom-0 right-0 w-0 h-[2px] bg-[#8B263E] transition-all duration-300 group-hover:w-full"></span>
-          </Link>
-          <Link href="/products" className="relative text-[#1C3324] hover:text-[#8B263E] transition-colors tracking-wide whitespace-nowrap py-1 group">
-            محصولات
-            <span className="absolute bottom-0 right-0 w-0 h-[2px] bg-[#8B263E] transition-all duration-300 group-hover:w-full"></span>
+        {/* منوی دسکتاپ */}
+        <nav className="hidden lg:flex flex-1 items-center justify-center gap-1 xl:gap-3 px-2">
+          
+          <Link 
+            href="/" 
+            onMouseEnter={handleMenuLeave}
+            className="px-2.5 py-1.5 text-[13.5px] xl:text-[14.5px] font-bold text-[#1C3324] hover:text-[#8B263E] transition-colors whitespace-nowrap rounded-lg hover:bg-black/5"
+          >
+            خانه
           </Link>
 
-          {/* زنانه */}
-          <div className="relative py-2" onMouseEnter={() => setActiveMenu("women")}>
-            <Link href="/products?category=women" className="relative text-[#1C3324] hover:text-[#8B263E] transition-colors tracking-wide flex items-center gap-1 whitespace-nowrap py-1 group">
-              زنانه <ChevronDown size={14} className="opacity-70" />
-              <span className="absolute bottom-0 right-0 w-0 h-[2px] bg-[#8B263E] transition-all duration-300 group-hover:w-full"></span>
+          <Link 
+            href="/products" 
+            onMouseEnter={handleMenuLeave}
+            className="px-2.5 py-1.5 text-[13.5px] xl:text-[14.5px] font-bold text-[#1C3324] hover:text-[#8B263E] transition-colors whitespace-nowrap rounded-lg hover:bg-black/5"
+          >
+            محصولات
+          </Link>
+
+          {/* آثار زنانه */}
+          <div className="relative py-1" onMouseEnter={() => handleMenuEnter("women")}>
+            <Link href="/products?gender=women" className="px-2.5 py-1.5 text-[13.5px] xl:text-[14.5px] font-bold text-[#1C3324] hover:text-[#8B263E] transition-colors flex items-center gap-1 whitespace-nowrap rounded-lg hover:bg-black/5">
+              زنانه <ChevronDown size={13} className={`opacity-60 transition-transform duration-200 ${activeMenu === "women" ? "rotate-180 text-[#8B263E]" : ""}`} />
             </Link>
           </div>
 
           {/* مردانه */}
-          <div className="relative py-2" onMouseEnter={() => setActiveMenu("men")}>
-            <Link href="/products?category=men" className="relative text-[#1C3324] hover:text-[#8B263E] transition-colors tracking-wide flex items-center gap-1 whitespace-nowrap py-1 group">
-              مردانه <ChevronDown size={14} className="opacity-70" />
-              <span className="absolute bottom-0 right-0 w-0 h-[2px] bg-[#8B263E] transition-all duration-300 group-hover:w-full"></span>
+          <div className="relative py-1" onMouseEnter={() => handleMenuEnter("men")}>
+            <Link href="/products?gender=men" className="px-2.5 py-1.5 text-[13.5px] xl:text-[14.5px] font-bold text-[#1C3324] hover:text-[#8B263E] transition-colors flex items-center gap-1 whitespace-nowrap rounded-lg hover:bg-black/5">
+              مردانه <ChevronDown size={13} className={`opacity-60 transition-transform duration-200 ${activeMenu === "men" ? "rotate-180 text-[#8B263E]" : ""}`} />
             </Link>
           </div>
 
           {/* کودک */}
-          <div className="relative py-2" onMouseEnter={() => setActiveMenu("kids")}>
-            <Link href="/products?category=kids" className="relative text-[#1C3324] hover:text-[#8B263E] transition-colors tracking-wide flex items-center gap-1 whitespace-nowrap py-1 group">
-              کودک <ChevronDown size={14} className="opacity-70" />
-              <span className="absolute bottom-0 right-0 w-0 h-[2px] bg-[#8B263E] transition-all duration-300 group-hover:w-full"></span>
+          <div className="relative py-1" onMouseEnter={() => handleMenuEnter("kids")}>
+            <Link href="/products?gender=kids" className="px-2.5 py-1.5 text-[13.5px] xl:text-[14.5px] font-bold text-[#1C3324] hover:text-[#8B263E] transition-colors flex items-center gap-1 whitespace-nowrap rounded-lg hover:bg-black/5">
+              کودک <ChevronDown size={13} className={`opacity-60 transition-transform duration-200 ${activeMenu === "kids" ? "rotate-180 text-[#8B263E]" : ""}`} />
             </Link>
           </div>
 
-          {/* سرای سرو */}
-          <div className="relative py-2" onMouseEnter={() => setActiveMenu("world")}>
-            <Link href="/story" className="relative text-[#8B263E] font-black hover:text-[#1C3324] transition-colors tracking-wide whitespace-nowrap flex items-center gap-1 py-1 group">
-              سرای سرو <ChevronDown size={14} className="opacity-70" />
-              <span className="absolute bottom-0 right-0 w-0 h-[2px] bg-[#1C3324] transition-all duration-300 group-hover:w-full"></span>
+          {/* کالکشن‌ها */}
+          <div className="relative py-1" onMouseEnter={() => handleMenuEnter("collections")}>
+            <Link href="/collections" className="px-2.5 py-1.5 text-[13.5px] xl:text-[14.5px] font-extrabold text-[#8B263E] hover:text-[#1C3324] transition-colors flex items-center gap-1 whitespace-nowrap rounded-lg hover:bg-[#8B263E]/5">
+              کالکشن‌ها <ChevronDown size={13} className={`opacity-60 transition-transform duration-200 ${activeMenu === "collections" ? "rotate-180 text-[#1C3324]" : ""}`} />
             </Link>
           </div>
 
-          <Link href="/contact" className="relative text-[#1C3324] hover:text-[#8B263E] transition-colors tracking-wide whitespace-nowrap py-1 group" onMouseEnter={() => setActiveMenu(null)}>
+          <Link href="/story" className="px-2.5 py-1.5 text-[13.5px] xl:text-[14.5px] font-bold text-[#1C3324] hover:text-[#8B263E] transition-colors whitespace-nowrap rounded-lg hover:bg-black/5" onMouseEnter={handleMenuLeave}>
+            سرای زر
+          </Link>
+
+          <Link href="/contact" className="px-2.5 py-1.5 text-[13.5px] xl:text-[14.5px] font-bold text-[#1C3324] hover:text-[#8B263E] transition-colors whitespace-nowrap rounded-lg hover:bg-black/5" onMouseEnter={handleMenuLeave}>
             ارتباط با ما
-            <span className="absolute bottom-0 right-0 w-0 h-[2px] bg-[#8B263E] transition-all duration-300 group-hover:w-full"></span>
           </Link>
         </nav>
 
-        {/* منوی نمایشی برای لپ‌تاپ‌های متوسط */}
-        <nav className="hidden md:flex xl:hidden flex-1 gap-3 text-[13px] font-bold items-center justify-center flex-wrap">
-          <Link href="/" className="text-[#1C3324]">خانه</Link>
-          <Link href="/products" className="text-[#1C3324]">محصولات</Link>
-          <Link href="/products?category=women" className="text-[#1C3324]">زنانه</Link>
-          <Link href="/products?category=men" className="text-[#1C3324]">مردانه</Link>
-          <Link href="/story" className="text-[#8B263E]">سرای سرو</Link>
-          <Link href="/contact" className="text-[#1C3324]">ارتباط</Link>
-        </nav>
-
-        {/* ================= DESKTOP ACTIONS (Left Side) ================= */}
-        <div className="hidden shrink-0 items-center justify-end gap-4 md:flex pr-4" onMouseEnter={() => setActiveMenu(null)}>
+        {/* اکشن‌های سمت چپ */}
+        <div className="hidden lg:flex shrink-0 items-center justify-end gap-2.5" onMouseEnter={handleMenuLeave}>
           {isAuthenticated && isAdmin && (
-            <Link href="/dashboard" className="hidden lg:flex items-center gap-2 rounded-full px-4 py-2.5 text-[14px] font-bold transition hover:opacity-90 bg-[#8B263E]/15 text-[#8B263E] hover:bg-[#8B263E]/25 whitespace-nowrap">
-              <LayoutDashboard size={17} /> پنل مدیریت
+            <Link href="/dashboard" className="flex items-center gap-1.5 rounded-full px-3.5 py-2 text-[13px] font-bold transition bg-[#8B263E]/10 text-[#8B263E] hover:bg-[#8B263E]/20 whitespace-nowrap">
+              <LayoutDashboard size={15} /> پنل
             </Link>
           )}
 
-          {/* User Dropdown */}
-          <div className="relative py-2" onMouseEnter={() => { setIsUserHovered(true); setActiveMenu(null); }} onMouseLeave={() => setIsUserHovered(false)}>
-            <Link href={primaryAccountHref} className="text-[15px] font-bold text-[#1C3324] hover:text-[#8B263E] transition-colors flex items-center gap-2 px-3 py-1.5 whitespace-nowrap">
-              {isAuthenticated ? displayName.split(' ')[0] : 'ورود'} <User size={20} />
+          {/* منوی کاربر */}
+          <div className="relative" onMouseEnter={() => { setIsUserHovered(true); handleMenuLeave(); }} onMouseLeave={() => setIsUserHovered(false)}>
+            <Link href={primaryAccountHref} className="text-[14px] font-bold text-[#1C3324] hover:text-[#8B263E] transition-colors flex items-center gap-1.5 px-3 py-2 rounded-full hover:bg-black/5 whitespace-nowrap">
+              <User size={18} />
+              <span>{isAuthenticated ? displayName.split(' ')[0] : 'ورود'}</span>
             </Link>
 
             <div className={`absolute left-0 mt-2 w-72 overflow-hidden rounded-2xl shadow-xl transition-all duration-300 bg-white border border-[#1C3324]/15 ${isUserHovered ? "visible translate-y-0 opacity-100" : "invisible -translate-y-2 opacity-0"}`}>
@@ -265,23 +292,22 @@ export default function SiteHeader({ user: initialUser = null }: SiteHeaderProps
                 </div>
               </div>
 
-              <div className="p-2.5">
-                {isAuthenticated && (
+              <div className="p-2">
+                {isAuthenticated ? (
                   <>
-                    <Link href="/account/orders" className="flex w-full items-center gap-3 rounded-xl px-4 py-3 text-[14px] font-bold text-[#1C3324] transition hover:bg-[#FAF9F6]" onClick={() => setIsUserHovered(false)}>
-                      <Package size={18} className="text-[#3A5A46]" /> سفارش‌های من
+                    <Link href="/account/orders" className="flex w-full items-center gap-3 rounded-xl px-4 py-2.5 text-[13.5px] font-bold text-[#1C3324] transition hover:bg-[#FAF9F6]" onClick={() => setIsUserHovered(false)}>
+                      <Package size={17} className="text-[#3A5A46]" /> سفارش‌های من
                     </Link>
-                    <Link href="/account/edit" className="flex w-full items-center gap-3 rounded-xl px-4 py-3 text-[14px] font-bold text-[#1C3324] transition hover:bg-[#FAF9F6]" onClick={() => setIsUserHovered(false)}>
-                      <Settings size={18} className="text-[#3A5A46]" /> تغییر اطلاعات
+                    <Link href="/account/edit" className="flex w-full items-center gap-3 rounded-xl px-4 py-2.5 text-[13.5px] font-bold text-[#1C3324] transition hover:bg-[#FAF9F6]" onClick={() => setIsUserHovered(false)}>
+                      <Settings size={17} className="text-[#3A5A46]" /> تغییر اطلاعات
                     </Link>
-                    <div className="my-1.5 border-t border-[#1C3324]/10" />
-                    <button onClick={handleLogout} disabled={isLoggingOut} className="flex w-full items-center gap-3 rounded-xl px-4 py-3 text-right text-[14px] font-bold text-red-600 transition hover:bg-red-50">
-                      <LogOut size={18} /> {isLoggingOut ? "در حال خروج..." : "خروج از حساب"}
+                    <div className="my-1 border-t border-[#1C3324]/10" />
+                    <button onClick={handleLogout} disabled={isLoggingOut} className="flex w-full items-center gap-3 rounded-xl px-4 py-2.5 text-right text-[13.5px] font-bold text-red-600 transition hover:bg-red-50">
+                      <LogOut size={17} /> {isLoggingOut ? "در حال خروج..." : "خروج از حساب"}
                     </button>
                   </>
-                )}
-                {!isAuthenticated && (
-                  <Link href="/login" className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#1C3324] text-white px-4 py-3 text-[14px] font-bold transition hover:bg-[#8B263E]" onClick={() => setIsUserHovered(false)}>
+                ) : (
+                  <Link href="/login" className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#1C3324] text-white px-4 py-2.5 text-[13.5px] font-bold transition hover:bg-[#8B263E]" onClick={() => setIsUserHovered(false)}>
                      ورود به حساب کاربری
                   </Link>
                 )}
@@ -289,19 +315,23 @@ export default function SiteHeader({ user: initialUser = null }: SiteHeaderProps
             </div>
           </div>
 
-          {/* Cart Dropdown */}
-          <div className="relative py-2" onMouseEnter={() => { setIsCartHovered(true); setActiveMenu(null); }} onMouseLeave={() => setIsCartHovered(false)}>
-            <Link href="/cart" className="relative flex items-center gap-2.5 rounded-full px-5 py-3 text-[15px] font-bold bg-[#1C3324] text-white hover:scale-105 transition-transform duration-300 shadow-md">
-              <ShoppingBag size={20} />
-              {totalItems > 0 && <span className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full text-[11px] font-bold bg-[#8B263E] text-white border-2 border-[#FAF9F6]">{totalItems}</span>}
+          {/* سبد خرید */}
+          <div className="relative" onMouseEnter={() => { setIsCartHovered(true); handleMenuLeave(); }} onMouseLeave={() => setIsCartHovered(false)}>
+            <Link href="/cart" className="relative flex items-center justify-center rounded-full p-2.5 bg-[#1C3324] text-white hover:scale-105 transition-all shadow-md">
+              <ShoppingBag size={18} />
+              {totalItems > 0 && (
+                <span className="absolute -top-1 -right-1 flex h-4.5 w-4.5 items-center justify-center rounded-full text-[10px] font-black bg-[#8B263E] text-white border-2 border-white">
+                  {totalItems}
+                </span>
+              )}
             </Link>
 
-            <div className={`absolute left-0 z-50 mt-2 w-96 overflow-hidden rounded-2xl shadow-2xl transition-all duration-300 bg-white border border-[#1C3324]/15 ${isCartHovered ? "visible translate-y-0 opacity-100" : "invisible -translate-y-2 opacity-0"}`}>
+            <div className={`absolute left-0 z-50 mt-2 w-88 overflow-hidden rounded-2xl shadow-2xl transition-all duration-300 bg-white border border-[#1C3324]/15 ${isCartHovered ? "visible translate-y-0 opacity-100" : "invisible -translate-y-2 opacity-0"}`}>
               {cartItems.length === 0 ? (
-                <div className="py-14 text-center text-[15px] text-[#3A5A46] font-bold">سبد خرید شما خالی است.</div>
+                <div className="py-12 text-center text-[14px] text-[#3A5A46] font-bold">سبد خرید شما خالی است.</div>
               ) : (
                 <div className="flex flex-col gap-3 p-4">
-                  <div className="flex max-h-72 flex-col gap-3 overflow-y-auto pr-1">
+                  <div className="flex max-h-64 flex-col gap-3 overflow-y-auto pr-1">
                     {cartItems.map((item) => {
                       const product = item.product;
                       const imageUrl = getProductImageUrl(product);
@@ -309,25 +339,25 @@ export default function SiteHeader({ user: initialUser = null }: SiteHeaderProps
                       return (
                         <div key={item.id} className="flex items-center gap-3">
                           {imageUrl ? (
-                            <img src={imageUrl} alt={productTitle} className="h-16 w-16 shrink-0 rounded-xl object-cover bg-[#FAF9F6] border border-[#1C3324]/10" />
+                            <img src={imageUrl} alt={productTitle} className="h-14 w-14 shrink-0 rounded-xl object-cover bg-[#FAF9F6] border border-[#1C3324]/10" />
                           ) : (
-                            <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-xl bg-[#F4F6F4] text-[#1C3324]"><ShoppingBag size={22} /></div>
+                            <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-[#F4F6F4] text-[#1C3324]"><ShoppingBag size={20} /></div>
                           )}
                           <div className="flex-1 min-w-0">
-                            <p className="line-clamp-1 text-[14px] font-bold text-[#1C3324] mb-1">{productTitle}</p>
-                            <span className="text-[13px] text-[#3A5A46] bg-[#FAF9F6] px-3 py-1 rounded-md font-medium">تعداد: {formatNumber(item.quantity)}</span>
+                            <p className="line-clamp-1 text-[13px] font-bold text-[#1C3324] mb-1">{productTitle}</p>
+                            <span className="text-[12px] text-[#3A5A46] bg-[#FAF9F6] px-2.5 py-0.5 rounded-md font-medium">تعداد: {formatNumber(item.quantity)}</span>
                           </div>
-                          <button onClick={() => removeItem(item.id)} className="p-2 text-[#3A5A46] hover:text-red-500 transition-colors"><Trash2 size={18} /></button>
+                          <button onClick={() => removeItem(item.id)} className="p-1.5 text-[#3A5A46] hover:text-red-500 transition-colors"><Trash2 size={16} /></button>
                         </div>
                       );
                     })}
                   </div>
-                  <div className="border-t border-[#1C3324]/10 mt-3 pt-4">
-                    <div className="mb-4 flex items-center justify-between px-1">
-                      <span className="text-[14px] font-bold text-[#3A5A46]">جمع کل:</span>
-                      <span className="text-[17px] font-black text-[#1C3324]">{formatNumber(totalPrice)} تومان</span>
+                  <div className="border-t border-[#1C3324]/10 mt-2 pt-3">
+                    <div className="mb-3 flex items-center justify-between px-1">
+                      <span className="text-[13px] font-bold text-[#3A5A46]">جمع کل:</span>
+                      <span className="text-[15px] font-black text-[#1C3324]">{formatNumber(totalPrice)} تومان</span>
                     </div>
-                    <Link href="/cart" className="block w-full rounded-full py-3.5 text-center text-[15px] font-bold transition hover:opacity-90 bg-[#1C3324] text-white shadow-lg" onClick={() => setIsCartHovered(false)}>
+                    <Link href="/cart" className="block w-full rounded-full py-2.5 text-center text-[13.5px] font-bold transition hover:opacity-90 bg-[#1C3324] text-white shadow-md" onClick={() => setIsCartHovered(false)}>
                       مشاهده سبد خرید
                     </Link>
                   </div>
@@ -335,166 +365,185 @@ export default function SiteHeader({ user: initialUser = null }: SiteHeaderProps
               )}
             </div>
           </div>
+
         </div>
 
-        {/* ================= MOBILE MENU BUTTON ================= */}
-        <div className="flex md:hidden items-center gap-3">
-          <Link href="/cart" className="relative text-[#1C3324]">
-            <ShoppingBag size={24} />
-            {totalItems > 0 && <span className="absolute -top-1 -right-1 flex h-4.5 w-4.5 items-center justify-center rounded-full text-[11px] font-bold bg-[#8B263E] text-white">{totalItems}</span>}
+        {/* دکمه منوی موبایل و تبلت */}
+        <div className="flex lg:hidden items-center gap-3">
+          <Link href="/cart" className="relative p-2 text-[#1C3324]">
+            <ShoppingBag size={22} />
+            {totalItems > 0 && <span className="absolute top-0 right-0 flex h-4.5 w-4.5 items-center justify-center rounded-full text-[10px] font-bold bg-[#8B263E] text-white">{totalItems}</span>}
           </Link>
-          <button className="text-[#1C3324]" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
-            {mobileMenuOpen ? <X size={26} /> : <Menu size={26} />}
+          <button className="p-1.5 text-[#1C3324]" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
+            {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
       </header>
 
-      {/* ================= MEGA MENU BLUR PANEL ================= */}
+      {/* مگامنو دسکتاپ به همراه پل ارتباطی نامرئی جهت حفظ فوکوس ماوس */}
       {activeMenu && (
         <div 
-          className="pointer-events-auto w-full max-w-[1400px] mx-4 bg-white/95 backdrop-blur-2xl rounded-3xl shadow-2xl border border-[#1C3324]/15 p-8 mt-2 animate-in fade-in slide-in-from-top-3 duration-200 text-right z-50"
-          onMouseEnter={() => setActiveMenu(activeMenu)}
-          onMouseLeave={() => setActiveMenu(null)}
+          className="pointer-events-auto w-[calc(100%-2rem)] max-w-[1400px] mx-4 pt-2 z-50 hidden lg:block"
+          onMouseEnter={() => handleMenuEnter(activeMenu)}
+          onMouseLeave={handleMenuLeave}
         >
-          {activeMenu === "women" && (
-            <div className="grid grid-cols-4 gap-8">
-              <div>
-                <h5 className="text-xs font-black text-[#8B263E] mb-3 uppercase tracking-wider">انگشتر و دستبند</h5>
-                <ul className="space-y-2.5 text-xs font-bold text-[#1C3324]">
-                  <li><Link href="/products?category=women&type=ring" className="hover:text-[#8B263E] transition-colors" onClick={() => setActiveMenu(null)}>انگشتر طلا</Link></li>
-                  <li><Link href="/products?category=women&type=ring-gem" className="hover:text-[#8B263E] transition-colors" onClick={() => setActiveMenu(null)}>انگشتر نگین‌دار</Link></li>
-                  <li><Link href="/products?category=women&type=bracelet" className="hover:text-[#8B263E] transition-colors">دستبند زنجیری</Link></li>
-                  <li><Link href="/products?category=women&type=bangle" className="hover:text-[#8B263E] transition-colors">النگو و دستبند صلب</Link></li>
-                </ul>
-              </div>
-              <div>
-                <h5 className="text-xs font-black text-[#8B263E] mb-3 uppercase tracking-wider">گردنبند و گوشواره</h5>
-                <ul className="space-y-2.5 text-xs font-bold text-[#1C3324]">
-                  <li><Link href="/products?category=women&type=necklace" className="hover:text-[#8B263E] transition-colors">گردنبند طلا</Link></li>
-                  <li><Link href="/products?category=women&type=pendant" className="hover:text-[#8B263E] transition-colors">پلاک و آویز</Link></li>
-                  <li><Link href="/products?category=women&type=earring-stud" className="hover:text-[#8B263E] transition-colors">گوشواره میخی</Link></li>
-                  <li><Link href="/products?category=women&type=earring-hoop" className="hover:text-[#8B263E] transition-colors">گوشواره حلقه‌ای</Link></li>
-                </ul>
-              </div>
-              <div>
-                <h5 className="text-xs font-black text-[#8B263E] mb-3 uppercase tracking-wider">کالکشن‌های زنانه</h5>
-                <ul className="space-y-2.5 text-xs font-bold text-[#1C3324]">
-                  <li><Link href="/products?collection=bridal" className="hover:text-[#8B263E] transition-colors">کالکشن عروس</Link></li>
-                  <li><Link href="/products?collection=minimal" className="hover:text-[#8B263E] transition-colors">مینیمال روزمره</Link></li>
-                </ul>
-              </div>
-              <div className="bg-[#FAF9F6] p-5 rounded-2xl border border-[#1C3324]/10 flex flex-col justify-between">
+          <div className="bg-white/95 backdrop-blur-2xl rounded-3xl shadow-2xl border border-[#1C3324]/15 p-7 animate-in fade-in slide-in-from-top-2 duration-150 text-right">
+            {activeMenu === "women" && (
+              <div className="grid grid-cols-4 gap-8">
                 <div>
-                  <span className="text-[10px] font-extrabold text-[#8B263E] uppercase">ویژه استودیو سروین</span>
-                  <h4 className="text-sm font-black text-[#1C3324] mt-1">طراحی‌های دست‌ساز زنانه</h4>
+                  <h5 className="text-xs font-black text-[#8B263E] mb-3 uppercase tracking-wider">انگشتر و دستبند</h5>
+                  <ul className="space-y-2.5 text-xs font-bold text-[#1C3324]">
+                    <li><Link href="/products?gender=women&type=ring" className="hover:text-[#8B263E] transition-colors" onClick={() => setActiveMenu(null)}>انگشتر طلا</Link></li>
+                    <li><Link href="/products?gender=women&type=ring" className="hover:text-[#8B263E] transition-colors" onClick={() => setActiveMenu(null)}>انگشتر نگین‌دار</Link></li>
+                    <li><Link href="/products?gender=women&type=bracelet" className="hover:text-[#8B263E] transition-colors" onClick={() => setActiveMenu(null)}>دستبند زنجیری</Link></li>
+                    <li><Link href="/products?gender=women&type=bangle" className="hover:text-[#8B263E] transition-colors" onClick={() => setActiveMenu(null)}>النگو و دستبند صلب</Link></li>
+                  </ul>
                 </div>
-                <Link href="/products?category=women" className="text-xs font-bold text-[#8B263E] hover:underline mt-4 inline-block" onClick={() => setActiveMenu(null)}>مشاهده همه آثار زنانه ←</Link>
+                <div>
+                  <h5 className="text-xs font-black text-[#8B263E] mb-3 uppercase tracking-wider">گردنبند و گوشواره</h5>
+                  <ul className="space-y-2.5 text-xs font-bold text-[#1C3324]">
+                    <li><Link href="/products?gender=women&type=necklace" className="hover:text-[#8B263E] transition-colors" onClick={() => setActiveMenu(null)}>گردنبند طلا زنانه</Link></li>
+                    <li><Link href="/products?gender=women&type=pendant" className="hover:text-[#8B263E] transition-colors" onClick={() => setActiveMenu(null)}>پلاک و آویز</Link></li>
+                    <li><Link href="/products?gender=women&type=earring" className="hover:text-[#8B263E] transition-colors" onClick={() => setActiveMenu(null)}>گوشواره میخی</Link></li>
+                    <li><Link href="/products?gender=women&type=earring" className="hover:text-[#8B263E] transition-colors" onClick={() => setActiveMenu(null)}>گوشواره حلقه‌ای</Link></li>
+                  </ul>
+                </div>
+                <div>
+                  <h5 className="text-xs font-black text-[#8B263E] mb-3 uppercase tracking-wider">کالکشن‌های زنانه</h5>
+                  <ul className="space-y-2.5 text-xs font-bold text-[#1C3324]">
+                    <li><Link href="/collections/nasima" className="hover:text-[#8B263E] transition-colors" onClick={() => setActiveMenu(null)}>کالکشن نسیما</Link></li>
+                    <li><Link href="/collections/delbar" className="hover:text-[#8B263E] transition-colors" onClick={() => setActiveMenu(null)}>مینیمال دلبر</Link></li>
+                    <li><Link href="/collections/arona" className="hover:text-[#8B263E] transition-colors" onClick={() => setActiveMenu(null)}>سلطنتی آرونا</Link></li>
+                  </ul>
+                </div>
+                <div className="bg-[#FAF9F6] p-5 rounded-2xl border border-[#1C3324]/10 flex flex-col justify-between">
+                  <div>
+                    <span className="text-[10px] font-extrabold text-[#8B263E] uppercase">ویژه پرنا زر</span>
+                    <h4 className="text-sm font-black text-[#1C3324] mt-1 font-heading">طراحی‌های دست‌ساز زنانه</h4>
+                    <p className="text-xs text-[#3A5A46] mt-2 leading-relaxed">زیورآلات طلای ۱۸ عیار با امکان خرید اقساطی در ۳ قسط با قیمت روز</p>
+                  </div>
+                  <Link href="/products?gender=women" className="text-xs font-bold text-[#8B263E] hover:underline mt-4 inline-block" onClick={() => setActiveMenu(null)}>مشاهده همه آثار زنانه ←</Link>
+                </div>
               </div>
-            </div>
-          )}
+            )}
 
-          {activeMenu === "men" && (
-            <div className="grid grid-cols-3 gap-8">
-              <div>
-                <h5 className="text-xs font-black text-[#8B263E] mb-3 uppercase tracking-wider">آثار مردانه</h5>
-                <ul className="space-y-2.5 text-xs font-bold text-[#1C3324]">
-                  <li><Link href="/products?category=men&type=ring" className="hover:text-[#8B263E] transition-colors" onClick={() => setActiveMenu(null)}>انگشتر مردانه</Link></li>
-                  <li><Link href="/products?category=men&type=bracelet" className="hover:text-[#8B263E] transition-colors" onClick={() => setActiveMenu(null)}>دستبند چرم و طلا</Link></li>
-                  <li><Link href="/products?category=men&type=chain" className="hover:text-[#8B263E] transition-colors" onClick={() => setActiveMenu(null)}>زنجیر طلا</Link></li>
-                </ul>
-              </div>
-              <div>
-                <h5 className="text-xs font-black text-[#8B263E] mb-3 uppercase tracking-wider">سبک طراحی</h5>
-                <p className="text-xs text-[#3A5A46] leading-relaxed">استواریِ سرو؛ ترکیبی از صلابت و اصالت در قالب زیورآلات مردانه.</p>
-              </div>
-              <div className="bg-[#FAF9F6] p-5 rounded-2xl border border-[#1C3324]/10 flex flex-col justify-between">
+            {activeMenu === "men" && (
+              <div className="grid grid-cols-3 gap-8">
                 <div>
-                  <span className="text-[10px] font-extrabold text-[#8B263E] uppercase">مجموعه مردانه</span>
-                  <h4 className="text-sm font-black text-[#1C3324] mt-1">استواری و اصالت</h4>
+                  <h5 className="text-xs font-black text-[#8B263E] mb-3 uppercase tracking-wider">آثار مردانه</h5>
+                  <ul className="space-y-2.5 text-xs font-bold text-[#1C3324]">
+                    <li><Link href="/products?gender=men&type=ring" className="hover:text-[#8B263E] transition-colors" onClick={() => setActiveMenu(null)}>انگشتر مردانه</Link></li>
+                    <li><Link href="/products?gender=men&type=bracelet" className="hover:text-[#8B263E] transition-colors" onClick={() => setActiveMenu(null)}>دستبند چرم و طلا</Link></li>
+                    <li><Link href="/products?gender=men&type=chain" className="hover:text-[#8B263E] transition-colors" onClick={() => setActiveMenu(null)}>زنجیر طلا</Link></li>
+                  </ul>
                 </div>
-                <Link href="/products?category=men" className="text-xs font-bold text-[#8B263E] hover:underline mt-4 inline-block" onClick={() => setActiveMenu(null)}>مشاهده همه آثار مردانه ←</Link>
+                <div>
+                  <h5 className="text-xs font-black text-[#8B263E] mb-3 uppercase tracking-wider">سبک طراحی</h5>
+                  <p className="text-xs text-[#3A5A46] leading-relaxed">استواریِ سرو؛ ترکیبی از صلابت و اصالت در قالب زیورآلات مردانه با طلای ۱۸ عیار و چرم طبیعی دست‌دوز.</p>
+                </div>
+                <div className="bg-[#FAF9F6] p-5 rounded-2xl border border-[#1C3324]/10 flex flex-col justify-between">
+                  <div>
+                    <span className="text-[10px] font-extrabold text-[#8B263E] uppercase">مجموعه مردانه</span>
+                    <h4 className="text-sm font-black text-[#1C3324] mt-1 font-heading">استواری و اصالت</h4>
+                  </div>
+                  <Link href="/products?gender=men" className="text-xs font-bold text-[#8B263E] hover:underline mt-4 inline-block" onClick={() => setActiveMenu(null)}>مشاهده همه آثار مردانه ←</Link>
+                </div>
               </div>
-            </div>
-          )}
+            )}
 
-          {activeMenu === "kids" && (
-            <div className="grid grid-cols-3 gap-8">
-              <div>
-                <h5 className="text-xs font-black text-[#8B263E] mb-3 uppercase tracking-wider">زیورآلات کودکانه</h5>
-                <ul className="space-y-2.5 text-xs font-bold text-[#1C3324]">
-                  <li><Link href="/products?category=kids&type=bracelet" className="hover:text-[#8B263E] transition-colors" onClick={() => setActiveMenu(null)}>دستبند نوزادی و کودک</Link></li>
-                  <li><Link href="/products?category=kids&type=pendant" className="hover:text-[#8B263E] transition-colors" onClick={() => setActiveMenu(null)}>پلاک و مدال کودک</Link></li>
-                </ul>
-              </div>
-              <div>
-                <h5 className="text-xs font-black text-[#8B263E] mb-3 uppercase tracking-wider">ایمنی و ظرافت</h5>
-                <p className="text-xs text-[#3A5A46] leading-relaxed">طراحی شده با لبه‌های کاملاً نرم و استاندارد برای کودکان.</p>
-              </div>
-              <div className="bg-[#FAF9F6] p-5 rounded-2xl border border-[#1C3324]/10 flex flex-col justify-between">
+            {activeMenu === "kids" && (
+              <div className="grid grid-cols-3 gap-8">
                 <div>
-                  <span className="text-[10px] font-extrabold text-[#8B263E] uppercase">کودکانه</span>
-                  <h4 className="text-sm font-black text-[#1C3324] mt-1">لحظه‌های شیرین</h4>
+                  <h5 className="text-xs font-black text-[#8B263E] mb-3 uppercase tracking-wider">زیورآلات کودکانه</h5>
+                  <ul className="space-y-2.5 text-xs font-bold text-[#1C3324]">
+                    <li><Link href="/products?gender=kids&type=bracelet" className="hover:text-[#8B263E] transition-colors" onClick={() => setActiveMenu(null)}>دستبند نوزادی و کودک</Link></li>
+                    <li><Link href="/products?gender=kids&type=pendant" className="hover:text-[#8B263E] transition-colors" onClick={() => setActiveMenu(null)}>پلاک و مدال کودک</Link></li>
+                  </ul>
                 </div>
-                <Link href="/products?category=kids" className="text-xs font-bold text-[#8B263E] hover:underline mt-4 inline-block" onClick={() => setActiveMenu(null)}>مشاهده آثار کودکانه ←</Link>
+                <div>
+                  <h5 className="text-xs font-black text-[#8B263E] mb-3 uppercase tracking-wider">ایمنی و ظرافت</h5>
+                  <p className="text-xs text-[#3A5A46] leading-relaxed">طراحی شده با لبه‌های کاملاً نرم و استاندارد ضد حساسیت برای کودکان و نوزادان.</p>
+                </div>
+                <div className="bg-[#FAF9F6] p-5 rounded-2xl border border-[#1C3324]/10 flex flex-col justify-between">
+                  <div>
+                    <span className="text-[10px] font-extrabold text-[#8B263E] uppercase">کودکانه</span>
+                    <h4 className="text-sm font-black text-[#1C3324] mt-1 font-heading">لحظه‌های شیرین</h4>
+                  </div>
+                  <Link href="/products?gender=kids" className="text-xs font-bold text-[#8B263E] hover:underline mt-4 inline-block" onClick={() => setActiveMenu(null)}>مشاهده آثار کودکانه ←</Link>
+                </div>
               </div>
-            </div>
-          )}
+            )}
 
-          {activeMenu === "world" && (
-            <div className="grid grid-cols-3 gap-8">
-              <div>
-                <h5 className="text-xs font-black text-[#8B263E] mb-3 uppercase tracking-wider">کالکشن‌های اختصاصی</h5>
-                <ul className="space-y-2.5 text-xs font-bold text-[#1C3324]">
-                  <li><Link href="/products?collection=nasima" className="hover:text-[#8B263E] transition-colors" onClick={() => setActiveMenu(null)}>کالکشن نسیما</Link></li>
-                  <li><Link href="/products?collection=sahra" className="hover:text-[#8B263E] transition-colors" onClick={() => setActiveMenu(null)}>کالکشن صحرا</Link></li>
-                  <li><Link href="/products?collection=delbar" className="hover:text-[#8B263E] transition-colors" onClick={() => setActiveMenu(null)}>کالکشن دلبر</Link></li>
-                  <li><Link href="/products?collection=arona" className="hover:text-[#8B263E] transition-colors" onClick={() => setActiveMenu(null)}>کالکشن آرونا</Link></li>
-                </ul>
-              </div>
-              <div>
-                <h5 className="text-xs font-black text-[#8B263E] mb-3 uppercase tracking-wider">فلسفه و داستان</h5>
-                <ul className="space-y-2.5 text-xs font-bold text-[#1C3324]">
-                  <li><Link href="/story" className="hover:text-[#8B263E] transition-colors" onClick={() => setActiveMenu(null)}>سرو، سایه، ستایش</Link></li>
-                  <li><Link href="/blog" className="hover:text-[#8B263E] transition-colors" onClick={() => setActiveMenu(null)}>مجله و راهنمای طلا</Link></li>
-                  <li><Link href="/contact" className="hover:text-[#8B263E] transition-colors" onClick={() => setActiveMenu(null)}>طراحی اسم و حکاکی</Link></li>
-                </ul>
-              </div>
-              <div className="bg-[#FAF9F6] p-5 rounded-2xl border border-[#1C3324]/10 flex flex-col justify-between">
-                <div>
-                  <span className="text-[10px] font-extrabold text-[#8B263E] uppercase">سرای سرو</span>
-                  <h4 className="text-sm font-black text-[#1C3324] mt-1">روایت اصالت و هنر</h4>
+            {activeMenu === "collections" && (
+              <div className="space-y-6">
+                <div className="flex justify-between items-center border-b border-[#1C3324]/10 pb-4">
+                  <div>
+                    <h4 className="text-base font-black text-[#1C3324] font-heading">کالکشن‌های اختصاصی پرنا زر</h4>
+                    <p className="text-xs text-[#3A5A46] mt-0.5">مجموعه‌های داستانی و انحصاری با الهام از اصالت هنر زرگری ایران</p>
+                  </div>
+                  <Link 
+                    href="/collections" 
+                    className="inline-flex items-center gap-1.5 text-xs font-black text-[#8B263E] hover:underline bg-[#8B263E]/10 px-3.5 py-1.5 rounded-xl border border-[#8B263E]/20" 
+                    onClick={() => setActiveMenu(null)}
+                  >
+                    <span>مشاهده همه کالکشن‌ها به صورت کارت</span>
+                    <span>←</span>
+                  </Link>
                 </div>
-                <Link href="/story" className="text-xs font-bold text-[#8B263E] hover:underline mt-4 inline-block" onClick={() => setActiveMenu(null)}>ورود به سرای سرو ←</Link>
+
+                <div className="grid grid-cols-5 gap-4">
+                  {[
+                    { slug: "nasima", title: "کالکشن نسیما", subtitle: "لطافت باد و انحناهای طلایی", image: "/banner.webp" },
+                    { slug: "sahra", title: "کالکشن صحرا", subtitle: "گرما و وسعت بیکران افق", image: "/header.webp" },
+                    { slug: "delbar", title: "کالکشن دلبر", subtitle: "عناوین ظریف و مینیمال", image: "/gold.webp" },
+                    { slug: "arona", title: "کالکشن آرونا", subtitle: "شکوه سنگ‌های اصیل", image: "/banner.webp" },
+                    { slug: "sarv", title: "کالکشن سرو", subtitle: "نماد استواری و جاودانگی", image: "/header.webp" },
+                  ].map((c) => (
+                    <Link
+                      key={c.slug}
+                      href={`/collections/${c.slug}`}
+                      onClick={() => setActiveMenu(null)}
+                      className="group flex flex-col rounded-2xl border border-[#1C3324]/10 bg-[#FAF9F6] p-3 transition hover:border-[#8B263E]/40 hover:shadow-md"
+                    >
+                      <div className="relative aspect-[16/10] w-full overflow-hidden rounded-xl bg-white mb-2.5">
+                        <img src={c.image} alt={c.title} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-108" />
+                      </div>
+                      <h5 className="text-xs font-black text-[#1C3324] font-heading group-hover:text-[#8B263E] transition-colors">{c.title}</h5>
+                      <p className="text-[10px] text-[#3A5A46] mt-0.5 line-clamp-1">{c.subtitle}</p>
+                    </Link>
+                  ))}
+                </div>
               </div>
-            </div>
-          )}
+            )}
+          </div>
         </div>
       )}
 
-      {/* ================= MOBILE MENU ================= */}
+      {/* منوی موبایل و تبلت */}
       {mobileMenuOpen && (
-        <div className="absolute top-[120%] left-4 right-4 rounded-2xl border border-[#1C3324]/15 p-6 bg-white shadow-2xl md:hidden pointer-events-auto">
-          <div className="flex flex-col gap-3 max-h-[70vh] overflow-y-auto">
-            <Link href="/" className="px-4 py-3 text-[15px] font-bold rounded-xl hover:bg-[#FAF9F6] text-[#1C3324]" onClick={() => setMobileMenuOpen(false)}>صفحه اصلی</Link>
-            <Link href="/products" className="px-4 py-3 text-[15px] font-bold rounded-xl hover:bg-[#FAF9F6] text-[#1C3324]" onClick={() => setMobileMenuOpen(false)}>محصولات</Link>
-            <Link href="/products?category=women" className="px-4 py-3 text-[15px] font-bold rounded-xl hover:bg-[#FAF9F6] text-[#1C3324]" onClick={() => setMobileMenuOpen(false)}>زنانه</Link>
-            <Link href="/products?category=men" className="px-4 py-3 text-[15px] font-bold rounded-xl hover:bg-white text-[#1C3324]" onClick={() => setMobileMenuOpen(false)}>مردانه</Link>
-            <Link href="/products?category=kids" className="px-4 py-3 text-[15px] font-bold rounded-xl hover:bg-[#FAF9F6] text-[#1C3324]" onClick={() => setMobileMenuOpen(false)}>کودک</Link>
-            <Link href="/story" className="px-4 py-3 text-[15px] font-black rounded-xl hover:bg-[#FAF9F6] text-[#8B263E]" onClick={() => setMobileMenuOpen(false)}>سرای سرو</Link>
-            <Link href="/contact" className="px-4 py-3 text-[15px] font-bold rounded-xl hover:bg-[#FAF9F6] text-[#1C3324]" onClick={() => setMobileMenuOpen(false)}>ارتباط با ما</Link>
+        <div className="absolute top-[115%] left-4 right-4 rounded-2xl border border-[#1C3324]/15 p-6 bg-white shadow-2xl lg:hidden pointer-events-auto">
+          <div className="flex flex-col gap-2 max-h-[75vh] overflow-y-auto">
+            <Link href="/" className="px-4 py-3 text-[14.5px] font-bold rounded-xl hover:bg-[#FAF9F6] text-[#1C3324]" onClick={() => setMobileMenuOpen(false)}>صفحه اصلی</Link>
+            <Link href="/products" className="px-4 py-3 text-[14.5px] font-bold rounded-xl hover:bg-[#FAF9F6] text-[#1C3324]" onClick={() => setMobileMenuOpen(false)}>محصولات</Link>
+            <Link href="/products?gender=women" className="px-4 py-3 text-[14.5px] font-bold rounded-xl hover:bg-[#FAF9F6] text-[#1C3324]" onClick={() => setMobileMenuOpen(false)}>آثار زنانه</Link>
+            <Link href="/products?gender=men" className="px-4 py-3 text-[14.5px] font-bold rounded-xl hover:bg-[#FAF9F6] text-[#1C3324]" onClick={() => setMobileMenuOpen(false)}>مردانه</Link>
+            <Link href="/products?gender=kids" className="px-4 py-3 text-[14.5px] font-bold rounded-xl hover:bg-[#FAF9F6] text-[#1C3324]" onClick={() => setMobileMenuOpen(false)}>کودک</Link>
+            <Link href="/collections" className="px-4 py-3 text-[14.5px] font-black rounded-xl hover:bg-[#8B263E]/10 text-[#8B263E]" onClick={() => setMobileMenuOpen(false)}>کالکشن‌های اختصاصی</Link>
+            <Link href="/story" className="px-4 py-3 text-[14.5px] font-bold rounded-xl hover:bg-[#FAF9F6] text-[#1C3324]" onClick={() => setMobileMenuOpen(false)}>سرای زر</Link>
+            <Link href="/contact" className="px-4 py-3 text-[14.5px] font-bold rounded-xl hover:bg-[#FAF9F6] text-[#1C3324]" onClick={() => setMobileMenuOpen(false)}>ارتباط با ما</Link>
             
             <div className="mt-2 border-t border-[#1C3324]/10 pt-4">
               {isAuthenticated ? (
                 <>
-                  <Link href="/account" className="flex items-center gap-3.5 px-4 py-3 text-[15px] font-bold rounded-xl hover:bg-[#FAF9F6] text-[#1C3324]" onClick={() => setMobileMenuOpen(false)}>
-                    <User size={20} /> حساب کاربری
+                  <Link href="/account" className="flex items-center gap-3.5 px-4 py-3 text-[14.5px] font-bold rounded-xl hover:bg-[#FAF9F6] text-[#1C3324]" onClick={() => setMobileMenuOpen(false)}>
+                    <User size={19} /> حساب کاربری
                   </Link>
-                  <button onClick={handleLogout} className="flex w-full items-center gap-3.5 px-4 py-3 text-right text-[15px] font-bold rounded-xl hover:bg-red-50 text-red-600">
-                    <LogOut size={20} /> خروج از حساب
+                  <button onClick={handleLogout} className="flex w-full items-center gap-3.5 px-4 py-3 text-right text-[14.5px] font-bold rounded-xl hover:bg-red-50 text-red-600">
+                    <LogOut size={19} /> خروج از حساب
                   </button>
                 </>
               ) : (
-                <Link href="/login" className="flex items-center justify-center gap-2 mt-1 px-4 py-3.5 text-[15px] font-bold rounded-xl bg-[#1C3324] text-white shadow-md" onClick={() => setMobileMenuOpen(false)}>
+                <Link href="/login" className="flex items-center justify-center gap-2 mt-1 px-4 py-3.5 text-[14.5px] font-bold rounded-xl bg-[#1C3324] text-white shadow-md" onClick={() => setMobileMenuOpen(false)}>
                    ورود به حساب کاربری
                 </Link>
               )}

@@ -24,7 +24,7 @@ export default function ProductNotFound() {
           href="/products"
           className="inline-flex w-full items-center justify-center rounded-2xl bg-[#1C3324] px-5 py-3.5 text-xs font-black text-white shadow-sm transition hover:bg-[#8B263E]"
         >
-          مشاهده همه آثار سروین
+          مشاهده همه آثار پرنا زر
         </Link>
       </div>
     </main>

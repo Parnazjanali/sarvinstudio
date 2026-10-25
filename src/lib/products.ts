@@ -33,6 +33,9 @@ export type ProductItem = {
 
   category?: string | string[] | null;
   category_name?: string | null;
+  category_slugs?: string[] | null;
+  category_names?: string[] | null;
+  collection_slug?: string | null;
   type?: string | null;
 
   description?: string | null;
@@ -343,8 +346,49 @@ export function getProductColor(
   return null;
 }
 
+export function calculateDynamicGoldPrice(
+  product: {
+    weight?: number | string | null;
+    karat?: number | string | null;
+    wage_percent?: number | string | null;
+    profit_percent?: number | string | null;
+    tax_percent?: number | string | null;
+  },
+  goldGramPrice: number = 25658600
+): {
+  raw: number;
+  wage: number;
+  profit: number;
+  tax: number;
+  total: number;
+} | null {
+  const weight = toFiniteNumber(product.weight) ?? 0;
+  if (weight <= 0 || !goldGramPrice || goldGramPrice <= 0) return null;
+
+  const karat = toFiniteNumber(product.karat) || 18;
+  const wagePercent = toFiniteNumber(product.wage_percent) || 0;
+  const profitPercent = toFiniteNumber(product.profit_percent) ?? 7;
+  const taxPercent = toFiniteNumber(product.tax_percent) ?? 9;
+
+  const purityFactor = karat / 18;
+  const raw = weight * goldGramPrice * purityFactor;
+  const wage = raw * (wagePercent / 100);
+  const profit = (raw + wage) * (profitPercent / 100);
+  const tax = (wage + profit) * (taxPercent / 100);
+  const total = raw + wage + profit + tax;
+
+  return {
+    raw: Math.round(raw),
+    wage: Math.round(wage),
+    profit: Math.round(profit),
+    tax: Math.round(tax),
+    total: Math.round(total),
+  };
+}
+
 export function getProductPrice(
   product: ProductItem,
+  goldGramPrice?: number
 ): number | null {
   const variants =
     parseProductVariants(product);
@@ -362,10 +406,33 @@ export function getProductPrice(
     "sellingPrice",
   ]);
 
-  return (
+  const directPrice =
     toFiniteNumber(variantPrice) ??
-    toFiniteNumber(productPrice)
-  );
+    toFiniteNumber(productPrice);
+
+  if (directPrice !== null && directPrice > 0) {
+    return directPrice;
+  }
+
+  // اگر قیمت ثابت در دیتابیس نبود، بر اساس وزن و عیار و مظنه لحظه‌ای طلا محاسبه می‌شود
+  if (goldGramPrice && goldGramPrice > 0) {
+    const calc = calculateDynamicGoldPrice(
+      {
+        weight: getProductWeight(product),
+        karat: getProductKarat(product),
+        wage_percent: (source.wage_percent as number) ?? 0,
+        profit_percent: (source.profit_percent as number) ?? 7,
+        tax_percent: (source.tax_percent as number) ?? 9,
+      },
+      goldGramPrice
+    );
+
+    if (calc && calc.total > 0) {
+      return calc.total;
+    }
+  }
+
+  return null;
 }
 
 export function getProductWeight(
@@ -510,6 +577,21 @@ export function mapPocketBaseProduct(
   const rawCategory = getFirstValue(source, ["category", "category_name", "type"]);
   const rawColor = getFirstValue(source, ["color", "colour"]);
 
+  const expandObj = (source.expand as Record<string, unknown>) || {};
+  const expandCats = Array.isArray(expandObj.category)
+    ? (expandObj.category as Array<{ id?: string; name?: string; slug?: string }>)
+    : [];
+
+  const categorySlugs = expandCats
+    .map((c) => (c && typeof c.slug === "string" ? c.slug.toLowerCase().trim() : ""))
+    .filter(Boolean);
+
+  const categoryNames = expandCats
+    .map((c) => (c && typeof c.name === "string" ? c.name.trim() : ""))
+    .filter(Boolean);
+
+  const collectionSlug = typeof source.collection_slug === "string" ? source.collection_slug.trim() : null;
+
   return {
     ...record,
 
@@ -520,6 +602,10 @@ export function mapPocketBaseProduct(
 
     color: normalizeString(rawColor),
     colour: normalizeString(rawColor),
+
+    collection_slug: collectionSlug,
+    category_slugs: categorySlugs.length > 0 ? categorySlugs : null,
+    category_names: categoryNames.length > 0 ? categoryNames : null,
 
     category: Array.isArray(rawCategory) 
       ? rawCategory 

@@ -134,6 +134,14 @@ export async function PUT(request: NextRequest) {
       "requireEmailVerification",
       "sessionTimeout",
       "defaultPageSize",
+
+      "fontHeading",
+      "fontBody",
+      "fontPrint",
+      "fontHeadingSize",
+      "fontBodySize",
+      "fontPrintSize",
+      "customFonts",
     ];
 
     const updateData: Record<string, unknown> = {};

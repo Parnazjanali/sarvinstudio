@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import PocketBase from "pocketbase";
 import https from "node:https";
 import type { IncomingHttpHeaders } from "node:http";
+import { createAuditLog } from "@/lib/audit-log";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -560,6 +561,21 @@ export async function GET() {
       });
     }
 
+    const updatedCount = results.filter(
+      (r) => r.action === "updated" || r.action === "created"
+    ).length;
+
+    if (updatedCount > 0) {
+      await createAuditLog({
+        category: "price",
+        title: "همگام‌سازی خودکار نرخ‌های طلا و مسکوکات",
+        description: `بروزرسانی موفق ${updatedCount} نرخ طلا از مرجع BRS API در سیستم ثبت شد.`,
+        operator: "سرویس همگام‌ساز خودکار",
+        level: "info",
+        targetType: "gold_rates",
+        metadata: { source, updatedCount, totalProcessed: results.length },
+      });
+    }
 
     return NextResponse.json({
       success: true,

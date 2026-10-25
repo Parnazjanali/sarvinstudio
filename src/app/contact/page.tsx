@@ -8,9 +8,9 @@ import {
 } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "تماس با ما | سروین استودیو",
+  title: "تماس با ما | پرنا زر",
   description:
-    "برای ارتباط با سروین استودیو، دریافت مشاوره و پیگیری سفارش‌ها با ما در تماس باشید.",
+    "برای ارتباط با گالری پرنا زر، دریافت مشاوره و پیگیری سفارش‌ها با ما در تماس باشید.",
 };
 
 export default function ContactPage() {
@@ -20,7 +20,7 @@ export default function ContactPage() {
       <section className="px-6 pb-16 pt-32 md:pb-20 md:pt-44">
         <div className="mx-auto max-w-5xl text-center">
           <span className="mb-5 inline-block text-xs font-bold tracking-[0.3em] text-[#8B263E]">
-            SARVIN STUDIO
+            PARNA ZAR
           </span>
 
           <h1 className="text-4xl font-black md:text-6xl text-[#1C3324]">
@@ -82,7 +82,7 @@ export default function ContactPage() {
                 <div>
                   <p className="text-xs text-[#3A5A46]">واتساپ</p>
                   <p className="mt-1 font-bold text-[#1C3324]">
-                    گفتگو با سروین استودیو
+                    گفتگو با پرنا زر
                   </p>
                 </div>
               </a>
@@ -117,7 +117,7 @@ export default function ContactPage() {
 
               {/* Instagram */}
               <a
-                href="https://instagram.com/sarvin.jewels"
+                href="https://instagram.com/parnazar.gold"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-4 rounded-2xl p-4 transition hover:bg-[#FAF9F6]"
@@ -129,7 +129,7 @@ export default function ContactPage() {
                 <div>
                   <p className="text-xs text-[#3A5A46]">اینستاگرام</p>
                   <p className="mt-1 font-bold text-[#1C3324]">
-                    sarvin.jewels
+                    parnazar.gold
                   </p>
                 </div>
               </a>

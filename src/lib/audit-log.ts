@@ -1,17 +1,20 @@
 import PocketBase from "pocketbase";
 
 const POCKETBASE_URL =
-  process.env.POCKETBASE_URL || "http://127.0.0.1:8090";
+  process.env.POCKETBASE_URL ||
+  process.env.NEXT_PUBLIC_POCKETBASE_URL ||
+  "http://127.0.0.1:8090";
 
 export type AuditLogInput = {
-  logCode: string;
+  logCode?: string;
 
   category:
     | "price"
     | "order"
     | "stock"
     | "auth"
-    | "settings";
+    | "settings"
+    | "invoice";
 
   title: string;
   description?: string;
@@ -44,17 +47,19 @@ export async function createAuditLog(
 ) {
   try {
     const email =
-      process.env.POCKETBASE_ADMIN_EMAIL || "";
+      process.env.POCKETBASE_ADMIN_EMAIL ||
+      process.env.PB_SUPERUSER_EMAIL ||
+      "";
 
     const password =
-      process.env.POCKETBASE_ADMIN_PASSWORD || "";
+      process.env.POCKETBASE_ADMIN_PASSWORD ||
+      process.env.PB_SUPERUSER_PASSWORD ||
+      "";
 
     const pb = new PocketBase(POCKETBASE_URL);
 
     /*
      * اگر توکن کاربر داریم، اول همان را استفاده می‌کنیم.
-     * در غیر این صورت برای ثبت لاگ سیستمی از Superuser
-     * استفاده می‌کنیم.
      */
     if (options?.token) {
       pb.authStore.save(options.token, null);
@@ -62,7 +67,7 @@ export async function createAuditLog(
       try {
         await pb.collection("users").authRefresh();
       } catch {
-        // اگر توکن کاربر معتبر نبود، پایین‌تر Superuser را امتحان می‌کنیم.
+        // در صورت نامعتبر بودن توکن کاربر، پایین‌تر Superuser را امتحان می‌کنیم.
       }
     }
 
@@ -72,90 +77,62 @@ export async function createAuditLog(
     if (!pb.authStore.isValid) {
       if (!email || !password) {
         console.error(
-          "Audit log: PocketBase admin credentials are missing.",
+          "Audit log: PocketBase superuser credentials are missing.",
         );
-
         return null;
       }
 
-      await pb.admins.authWithPassword(
-        email,
-        password,
-      );
+      try {
+        await pb.collection("_superusers").authWithPassword(email, password);
+      } catch {
+        // در نگارش‌های قدیمی‌تر PocketBase
+        await pb.admins.authWithPassword(email, password);
+      }
     }
 
-    let operator = input.operator || "سیستم";
+    let operator = input.operator || "سیستم خودکار";
     let operatorId = input.operatorId || "";
 
     /*
      * اگر کاربر لاگین‌شده داشته باشیم، نام او را پیدا می‌کنیم.
      */
-    if (
-      pb.authStore.isValid &&
-      pb.authStore.record
-    ) {
-      const record =
-        pb.authStore.record as PBAuthRecord;
+    if (pb.authStore.isValid && pb.authStore.record) {
+      const record = pb.authStore.record as PBAuthRecord;
+      operator = input.operator || record.name || record.email || operator;
+      operatorId = input.operatorId || record.id || operatorId;
+    }
 
-      operator =
-        input.operator ||
-        record.name ||
-        record.email ||
-        operator;
-
-      operatorId =
-        input.operatorId ||
-        record.id ||
-        operatorId;
+    // تولید کد خودکار لاگ در صورت نبودن
+    let logCode = input.logCode;
+    if (!logCode) {
+      const randNum = Math.floor(1000 + Math.random() * 9000);
+      logCode = `LOG-${randNum}`;
     }
 
     const data = {
-      logCode: input.logCode,
-
+      logCode,
       category: input.category,
-
       title: input.title,
-
-      description:
-        input.description || "",
-
+      description: input.description || "",
       operator,
-
       operatorId,
-
-      ipAddress:
-        input.ipAddress || "server",
-
-      level:
-        input.level || "info",
-
-      targetId:
-        input.targetId || "",
-
-      targetType:
-        input.targetType || "",
-
-      metadata:
-        input.metadata || {},
+      ipAddress: input.ipAddress || "server",
+      level: input.level || "info",
+      targetId: input.targetId || "",
+      targetType: input.targetType || "",
+      metadata: input.metadata || {},
     };
 
-    const record =
-      await pb
-        .collection("audit_logs")
-        .create(data, {
-          requestKey: null,
-        });
+    const record = await pb.collection("audit_logs").create(data, {
+      requestKey: null,
+    });
 
     return record;
   } catch (error) {
     /*
      * خطای ثبت لاگ نباید باعث خراب شدن عملیات اصلی شود.
      */
-    console.error(
-      "Audit log creation failed:",
-      error,
-    );
-
+    console.error("Audit log creation failed:", error);
     return null;
   }
 }

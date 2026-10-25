@@ -258,7 +258,7 @@ export default function EditAccountPage() {
           </h1>
 
           <p className="mt-1.5 text-xs sm:text-sm text-[#3A5A46]">
-            مشخصات فردی و اطلاعات حساب کاربری خود را در سروین استودیو مدیریت کنید.
+            مشخصات فردی و اطلاعات حساب کاربری خود را در پرنا زر مدیریت کنید.
           </p>
         </div>
 

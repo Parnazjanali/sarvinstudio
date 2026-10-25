@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import ProductsPageClient from "@/components/ProductsPageClient";
 
 import {
@@ -11,30 +12,30 @@ export const dynamic = "force-dynamic";
 
 export default async function ProductsPage() {
   try {
-    const records =
-      await pb
-        .collection("products")
-        .getFullList<PocketBaseProductRecord>({
-          sort: "-created",
+    const [records, categories] = await Promise.all([
+      pb.collection("products").getFullList<PocketBaseProductRecord>({
+        sort: "-created",
+        expand: "category",
+        requestKey: null,
+      }),
+      pb
+        .collection("categories")
+        .getFullList<{ id: string; name: string; slug: string; icon?: string }>({
+          sort: "slug",
           requestKey: null,
-        });
-
-    console.log(
-      "POCKETBASE PRODUCT RECORDS:",
-      JSON.stringify(records, null, 2),
-    );
+        })
+        .catch(() => []),
+    ]);
 
     const products = records.map(mapPocketBaseProduct);
 
-    console.log(
-      "MAPPED PRODUCTS:",
-      JSON.stringify(products, null, 2),
-    );
-
     return (
-      <ProductsPageClient
-        initialProducts={products}
-      />
+      <Suspense fallback={<div className="min-h-screen pt-44 text-center">در حال بارگذاری آثار...</div>}>
+        <ProductsPageClient
+          initialProducts={products}
+          availableCategories={categories}
+        />
+      </Suspense>
     );
   } catch (error) {
     console.error(
@@ -43,9 +44,12 @@ export default async function ProductsPage() {
     );
 
     return (
-      <ProductsPageClient
-        initialProducts={[]}
-      />
+      <Suspense fallback={<div className="min-h-screen pt-44 text-center">در حال بارگذاری آثار...</div>}>
+        <ProductsPageClient
+          initialProducts={[]}
+          availableCategories={[]}
+        />
+      </Suspense>
     );
   }
 }

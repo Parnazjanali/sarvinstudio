@@ -315,37 +315,39 @@ export function getProductTitle(
 }
 
 export async function getGoldGramPrice(): Promise<number> {
-  try {
-    const record =
-      await pb
-        .collection("gold_rates")
-        .getFirstListItem<GoldRateRecord>(
-          'symbol="IR_GOLD_18K"',
-          {
-            requestKey: null,
-          },
-        );
+  const FALLBACK_GOLD_RATE = 25658600; // مظنه پایه طلای ۱۸ عیار
 
-    const parsedPrice = toNumber(
-      record.price,
-    );
+  try {
+    const records = await pb
+      .collection("gold_rates")
+      .getFullList<GoldRateRecord>({
+        requestKey: null,
+      });
+
+    const target =
+      records.find((r) => r.symbol === "IR_GOLD_18K") ||
+      records.find((r) => r.symbol === "geram18") ||
+      records.find((r) => r.name?.includes("18") || r.name?.includes("۱۸")) ||
+      records[0];
+
+    const parsedPrice = target ? toNumber(target.price) : null;
 
     if (
-      parsedPrice === null ||
-      parsedPrice <= 0 ||
-      !Number.isFinite(parsedPrice)
+      parsedPrice !== null &&
+      parsedPrice > 0 &&
+      Number.isFinite(parsedPrice)
     ) {
-      return 0;
+      return parsedPrice;
     }
 
-    return parsedPrice;
+    return FALLBACK_GOLD_RATE;
   } catch (error: unknown) {
     console.error(
-      "خطا در دریافت قیمت طلای ۱۸ عیار از gold_rates:",
+      "خطا در دریافت قیمت طلای ۱۸ عیار از gold_rates، استفاده از نرخ پیش‌فرض:",
       error,
     );
 
-    return 0;
+    return FALLBACK_GOLD_RATE;
   }
 }
 
@@ -382,31 +384,36 @@ export function calcProductPrice(
     product.wage_percent ?? 0;
 
   const profitPercent =
-    product.profit_percent ?? 0;
+    product.profit_percent ?? 7; // سود استاندارد ۷ درصد اتحادیه
 
   const taxPercent =
-    product.tax_percent ?? 0;
+    product.tax_percent ?? 9; // درصد مالیات بر ارزش افزوده
 
   const purityFactor =
     karat / 18;
 
+  // ۱. ارزش طلای خام
   const raw =
     weight *
     goldGramPrice *
     purityFactor;
 
+  // ۲. اجرت ساخت کارگاه
   const wage =
     raw *
     (wagePercent / 100);
 
+  // ۳. سود مصوب اتحادیه طلا و جواهر
   const profit =
     (raw + wage) *
     (profitPercent / 100);
 
+  // ۴. مالیات بر ارزش افزوده قانونی (طبق ماده ۲۶ قانون مالیات، طلای خام معاف است و مالیات منحصراً بر اجرت و سود محاسبه می‌شود)
   const tax =
-    (raw + wage + profit) *
+    (wage + profit) *
     (taxPercent / 100);
 
+  // ۵. قیمت کل نهایی
   const total =
     raw +
     wage +
@@ -414,11 +421,11 @@ export function calcProductPrice(
     tax;
 
   return {
-    raw,
-    wage,
-    profit,
-    tax,
-    total,
+    raw: Math.round(raw),
+    wage: Math.round(wage),
+    profit: Math.round(profit),
+    tax: Math.round(tax),
+    total: Math.round(total),
     baseGramPrice: goldGramPrice,
   };
 }

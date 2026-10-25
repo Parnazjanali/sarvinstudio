@@ -1,9 +1,8 @@
 "use client";
 
-import React, { useEffect, useRef, useState, FormEvent } from "react";
+import React, { useEffect, useRef, useState, useMemo, FormEvent } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
-import pb from "@/lib/pocketbase";
 import {
   ArrowRight,
   Save,
@@ -22,7 +21,35 @@ import {
   Palette,
   Clock,
   Zap,
+  CircleDollarSign,
+  TrendingUp,
+  Sparkles,
+  ShieldCheck,
+  Coins,
+  AlertCircle,
 } from "lucide-react";
+
+import pb from "@/lib/pocketbase";
+import { getGoldGramPrice } from "@/lib/product-detail";
+import { calculateDynamicGoldPrice } from "@/lib/products";
+import { recordAuditLogClient } from "@/lib/audit-client";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogFooter,
+} from "@/components/ui/dialog";
+import { cn } from "@/lib/utils";
+
+/* =========================================================
+   Types
+========================================================= */
 
 interface CategoryRecord {
   id: string;
@@ -88,7 +115,7 @@ interface ProductForm {
   lead_time_days: string;
   description: string;
   short_detail: string;
-  isactive: boolean; // وضعیت موجودی / فعال بودن محصول
+  isactive: boolean;
 }
 
 interface PBError extends Error {
@@ -132,6 +159,7 @@ export default function EditProductPage() {
   const [form, setForm] = useState<ProductForm>(emptyProductForm);
   const [categoryIds, setCategoryIds] = useState<string[]>([]);
   const [categories, setCategories] = useState<CategoryItem[]>([]);
+  const [goldRate, setGoldRate] = useState<number>(25658600);
   const [isCategoryLoading, setIsCategoryLoading] = useState(false);
   const [isCategoryModalOpen, setIsCategoryModalOpen] = useState(false);
   const [newCategoryName, setNewCategoryName] = useState("");
@@ -166,7 +194,6 @@ export default function EditProductPage() {
       setCategories(mapped);
     } catch (err) {
       console.error("Categories load failed:", err);
-      setError("خطا در بارگذاری دسته‌بندی‌ها.");
     } finally {
       setIsCategoryLoading(false);
     }
@@ -182,10 +209,17 @@ export default function EditProductPage() {
     setIsLoading(true);
     setLoadError("");
     try {
-      const record = await pb.collection("products").getOne<ProductRecord>(productId, {
-        requestKey: null,
-        expand: "category",
-      });
+      const [rate, record] = await Promise.all([
+        getGoldGramPrice(),
+        pb.collection("products").getOne<ProductRecord>(productId, {
+          requestKey: null,
+          expand: "category",
+        }),
+      ]);
+
+      if (rate && rate > 0) {
+        setGoldRate(rate);
+      }
 
       let parsedColors = ["yellow"];
       if (record.colour) {
@@ -199,13 +233,13 @@ export default function EditProductPage() {
         stock: String(record.stock ?? 0),
         karat: String(record.karat ?? 18),
         wage_percent: String(record.wage_percent ?? 0),
-        profit_percent: String(record.profit_percent ?? 0),
-        tax_percent: String(record.tax_percent ?? 0),
+        profit_percent: String(record.profit_percent ?? 7),
+        tax_percent: String(record.tax_percent ?? 9),
         colors: parsedColors.length > 0 ? parsedColors : ["yellow"],
         lead_time_days: String(record.lead_time_days ?? 3),
         description: record.description || "",
         short_detail: record.short_detail || "",
-        isactive: Boolean(record.isactive),
+        isactive: record.isactive !== false,
       });
 
       const currentCategories = record.expand?.category ?? [];
@@ -354,6 +388,23 @@ export default function EditProductPage() {
     return `${pb.baseUrl}/api/files/products/${productId}/${filename}`;
   };
 
+  // Live Price Calculation Preview
+  const livePricePreview = useMemo(() => {
+    const w = Number(form.weight) || 0;
+    if (w <= 0 || !goldRate || goldRate <= 0) return null;
+
+    return calculateDynamicGoldPrice(
+      {
+        weight: w,
+        karat: Number(form.karat) || 18,
+        wage_percent: Number(form.wage_percent) || 0,
+        profit_percent: Number(form.profit_percent) ?? 7,
+        tax_percent: Number(form.tax_percent) ?? 9,
+      },
+      goldRate
+    );
+  }, [form.weight, form.karat, form.wage_percent, form.profit_percent, form.tax_percent, goldRate]);
+
   const triggerSubmit = () => {
     const formElement = document.getElementById("product-edit-form");
     if (formElement) {
@@ -410,6 +461,21 @@ export default function EditProductPage() {
 
       await pb.collection("products").update<ProductRecord>(productId, productPayload);
 
+      // ثبت خودکار لاگ رویداد
+      void recordAuditLogClient({
+        category: "stock",
+        title: `ویرایش مشخصات محصول: ${form.title.trim()}`,
+        description: `مشخصات، وزن و قیمت‌گذاری محصول «${form.title.trim()}» بروزرسانی گردید.`,
+        level: "info",
+        targetId: productId,
+        targetType: "product",
+        metadata: {
+          title: form.title.trim(),
+          weight: mainWeight,
+          wage_percent: form.wage_percent,
+        },
+      });
+
       const keptRemoteIds = variants
         .map((v) => v.remoteId)
         .filter((id): id is string => Boolean(id));
@@ -462,7 +528,7 @@ export default function EditProductPage() {
 
       setTimeout(() => {
         router.push("/dashboard/products");
-      }, 1200);
+      }, 1000);
     } catch (err) {
       console.error("PocketBase update product error:", err);
       const typedErr = err as PBError;
@@ -476,10 +542,10 @@ export default function EditProductPage() {
 
   if (isLoading) {
     return (
-      <div dir="rtl" className="flex min-h-screen items-center justify-center bg-[#FAF9F6]">
-        <div className="inline-flex flex-col items-center gap-3 text-[#3A5A46]">
-          <Loader2 className="h-8 w-8 animate-spin text-[#8B263E]" />
-          <span className="text-xs font-bold">در حال بارگذاری اطلاعات محصول...</span>
+      <div dir="rtl" className="flex min-h-screen items-center justify-center bg-[#FAF9F6] dark:bg-[#101813]">
+        <div className="inline-flex flex-col items-center gap-3 text-[#3A5A46] dark:text-zinc-400">
+          <Loader2 className="h-8 w-8 animate-spin text-[#8B263E] dark:text-[#D8B65C]" />
+          <span className="text-xs font-bold">در حال بارگذاری اطلاعات محصول و مظنه طلا...</span>
         </div>
       </div>
     );
@@ -487,71 +553,83 @@ export default function EditProductPage() {
 
   if (loadError) {
     return (
-      <div dir="rtl" className="flex min-h-screen items-center justify-center bg-[#FAF9F6] p-4">
-        <div className="w-full max-w-md rounded-3xl border border-rose-200 bg-white p-8 text-center shadow-xs">
-          <Package className="mx-auto h-10 w-10 text-rose-500" />
-          <h2 className="mt-3 text-base font-black text-[#1C3324]">خطا در دریافت محصول</h2>
-          <p className="mt-2 text-xs font-medium text-[#3A5A46]">{loadError}</p>
-          <Link
-            href="/dashboard/products"
-            className="mt-6 inline-flex items-center gap-2 rounded-2xl bg-[#1C3324] px-5 py-3 text-xs font-bold text-white transition hover:bg-[#8B263E]"
-          >
-            بازگشت به لیست محصولات
-          </Link>
+      <div dir="rtl" className="min-h-screen bg-[#FAF9F6] p-6 text-[#1C3324] dark:bg-[#101813] dark:text-zinc-100">
+        <div className="mx-auto max-w-xl rounded-3xl border border-rose-200 bg-white p-8 text-center shadow-xs dark:border-rose-900/40 dark:bg-[#15221B]">
+          <X className="mx-auto h-12 w-12 text-rose-600" />
+          <h2 className="mt-4 text-base font-black">خطا در بارگذاری اطلاعات کالا</h2>
+          <p className="mt-2 text-xs text-[#3A5A46] dark:text-zinc-400">{loadError}</p>
+          <div className="mt-6 flex justify-center gap-3">
+            <Button variant="default" onClick={() => void loadProduct()}>
+              تلاش مجدد
+            </Button>
+            <Button variant="outline" onClick={() => router.push("/dashboard/products")}>
+              بازگشت به محصولات
+            </Button>
+          </div>
         </div>
       </div>
     );
   }
 
   return (
-    <div dir="rtl" className="min-h-screen bg-[#FAF9F6] px-4 py-6 font-sans text-[#1C3324] sm:px-6 lg:px-8">
-      {/* هدر بالای صفحه */}
-      <div className="mx-auto mb-8 flex max-w-7xl flex-wrap items-center justify-between gap-4">
+    <div
+      dir="rtl"
+      className="min-h-screen bg-[#FAF9F6] px-4 py-6 font-sans text-[#1C3324] sm:px-6 lg:px-8 dark:bg-[#101813] dark:text-zinc-100"
+    >
+      {/* Top Bar Navigation */}
+      <div className="mx-auto mb-8 flex max-w-7xl items-center justify-between gap-4">
         <div className="flex items-center gap-4">
-          <Link
-            href="/dashboard/products"
-            className="group flex h-12 w-12 items-center justify-center rounded-2xl border border-[#1C3324]/15 bg-white text-[#3A5A46] shadow-xs transition hover:border-[#8B263E] hover:bg-[#8B263E]/5 hover:text-[#8B263E]"
+          <Button
+            asChild
+            variant="outline"
+            size="icon"
+            className="h-12 w-12 rounded-2xl dark:border-white/10 dark:bg-[#15221B]"
           >
-            <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
-          </Link>
+            <Link href="/dashboard/products">
+              <ArrowRight className="h-5 w-5" />
+            </Link>
+          </Button>
 
           <div>
-            <h1 className="flex flex-wrap items-center gap-2 text-2xl font-black tracking-tight text-[#1C3324] sm:text-3xl">
+            <h1 className="flex items-center gap-2 text-2xl font-black tracking-tight text-[#1C3324] sm:text-3xl dark:text-zinc-100">
               ویرایش محصول
-              <span className="inline-flex items-center rounded-xl bg-[#8B263E]/10 px-2.5 py-1 text-xs font-black text-[#8B263E] border border-[#8B263E]/20">
-                سروین استودیو
+              <span className="inline-flex items-center rounded-xl bg-[#8B263E]/10 px-2.5 py-1 text-xs font-black text-[#8B263E] border border-[#8B263E]/20 dark:bg-[#D8B65C]/10 dark:text-[#D8B65C] dark:border-[#D8B65C]/20">
+                {form.title || "پرنا زر"}
               </span>
             </h1>
-            <p className="mt-1 text-xs text-[#3A5A46]">
-              مدیریت تنوع رنگ، دسته‌بندی‌ها، وضعیت موجودی و مشخصات وزنی کالا.
+            <p className="mt-1 text-xs text-[#3A5A46] dark:text-zinc-400">
+              ویرایش اوزان، درصد اجرت، عیار، گالری تصاویر، وضعیت ویترین آنلاین و دسته‌بندی
             </p>
           </div>
         </div>
 
-        <button
-          type="button"
-          onClick={triggerSubmit}
-          disabled={isSaving}
-          className="relative inline-flex items-center gap-2 overflow-hidden rounded-2xl bg-[#1C3324] px-6 py-3.5 text-xs font-black text-white shadow-sm transition-all hover:bg-[#8B263E] active:scale-95 focus:outline-none disabled:opacity-50 cursor-pointer"
-        >
-          {isSaving ? <Loader2 className="h-5 w-5 animate-spin" /> : <Save className="h-5 w-5" />}
-          <span>ذخیره تغییرات</span>
-        </button>
+        <div className="flex items-center gap-2.5">
+          <Button
+            variant="default"
+            size="default"
+            onClick={triggerSubmit}
+            disabled={isSaving}
+            className="gap-2"
+          >
+            {isSaving ? <Loader2 className="h-4 w-4 animate-spin" /> : <Save className="h-4 w-4" />}
+            <span>ذخیره تغییرات</span>
+          </Button>
+        </div>
       </div>
 
       {error && (
-        <div className="mx-auto mb-6 flex max-w-7xl items-center justify-between rounded-2xl border border-rose-200 bg-rose-50 p-4 text-xs font-bold text-rose-700">
+        <div className="mx-auto mb-6 flex max-w-7xl items-center justify-between rounded-2xl border border-rose-200 bg-rose-50 p-4 text-xs font-bold text-rose-700 dark:border-rose-900/60 dark:bg-rose-950/40 dark:text-rose-200">
           <span>{error}</span>
-          <button type="button" onClick={() => setError("")} className="text-rose-500 hover:text-rose-700 cursor-pointer">
-            <X className="h-5 w-5" />
+          <button type="button" onClick={() => setError("")} className="text-rose-500">
+            <X className="h-4 w-4" />
           </button>
         </div>
       )}
 
       {success && (
-        <div className="mx-auto mb-6 flex max-w-7xl items-center justify-between rounded-2xl border border-emerald-200 bg-emerald-50 p-4 text-xs font-bold text-emerald-700">
+        <div className="mx-auto mb-6 flex max-w-7xl items-center justify-between rounded-2xl border border-emerald-200 bg-emerald-50 p-4 text-xs font-bold text-emerald-700 dark:border-emerald-800/40 dark:bg-emerald-950/40 dark:text-emerald-300">
           <span>{success}</span>
-          <CheckCircle2 className="h-5 w-5 text-emerald-600" />
+          <CheckCircle2 className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
         </div>
       )}
 
@@ -560,544 +638,579 @@ export default function EditProductPage() {
         onSubmit={handleSubmit}
         className="mx-auto grid max-w-7xl grid-cols-1 gap-8 lg:grid-cols-12"
       >
-        <div className="space-y-8 lg:col-span-8">
-          
-          {/* کارت ۱: اطلاعات شناسنامه‌ای و رنگ طلا */}
-          <div className="relative overflow-hidden rounded-3xl border border-[#1C3324]/15 bg-white p-6 shadow-xs sm:p-8">
-            <div className="absolute right-0 top-0 h-1 w-full bg-[#1C3324]" />
+        {/* Left Column (8 cols): Main Inputs */}
+        <div className="space-y-6 lg:col-span-8">
 
-            <div className="mb-6 flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-[#8B263E]/10 text-[#8B263E] border border-[#1C3324]/10">
-                <Package className="h-5 w-5" />
-              </div>
-              <h2 className="text-base font-black text-[#1C3324]">اطلاعات شناسنامه‌ای کالا</h2>
+          {/* Section 1: Title & Identity */}
+          <Card className="border-[#1C3324]/12 bg-white/80 p-6 backdrop-blur-md dark:border-white/10 dark:bg-[#15221B]/80 space-y-5">
+            <div className="flex items-center gap-2 pb-3 border-b border-black/5 dark:border-white/5">
+              <Package className="h-5 w-5 text-[#8B263E] dark:text-[#D8B65C]" />
+              <h2 className="text-base font-black text-[#1C3324] dark:text-zinc-100">
+                مشخصات شناسنامه‌ای و کد کالا
+              </h2>
             </div>
 
-            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div className="sm:col-span-2">
-                <label className="mb-2 block text-xs font-bold text-[#3A5A46]">
-                  نام محصول <span className="text-[#8B263E]">*</span>
+                <label className="mb-2 block text-xs font-bold text-[#3A5A46] dark:text-zinc-400">
+                  نام محصول <span className="text-[#8B263E] dark:text-rose-400">*</span>
                 </label>
-                <input
+                <Input
                   type="text"
                   value={form.title}
                   onChange={(e) => updateForm("title", e.target.value)}
-                  placeholder="مثال: مدال طلا طرح سرو ۱۸ عیار"
-                  className="w-full rounded-2xl border border-[#1C3324]/15 bg-[#FAF9F6] px-4 py-3.5 text-xs font-bold text-[#1C3324] outline-none transition focus:border-[#1C3324] focus:bg-white"
+                  placeholder="مثال: دستبند بنگل کارتیه ۱۸ عیار"
+                  className="text-xs font-bold"
                   required
                 />
               </div>
 
               <div>
-                <label className="mb-2 block text-xs font-bold text-[#3A5A46]">
-                  کد کالا (SKU)
+                <label className="mb-2 block text-xs font-bold text-[#3A5A46] dark:text-zinc-400">
+                  شناسه کالا / SKU
                 </label>
-                <input
+                <Input
                   type="text"
                   value={form.sku}
                   onChange={(e) => updateForm("sku", e.target.value)}
                   placeholder="SRV-001"
-                  className="w-full rounded-2xl border border-[#1C3324]/15 bg-[#FAF9F6] px-4 py-3.5 text-left font-mono text-xs font-bold text-[#1C3324] outline-none transition focus:border-[#1C3324]"
+                  className="font-mono text-xs font-bold"
                 />
               </div>
 
               <div>
-                <label className="mb-2 block text-xs font-bold text-[#3A5A46]">
-                  عیار طلا <span className="text-[#3A5A46]/60">(پیش‌فرض ۱۸)</span>
+                <label className="mb-2 block text-xs font-bold text-[#3A5A46] dark:text-zinc-400">
+                  زمان ساخت و تحویل (روز کاری)
                 </label>
-                <div className="flex items-stretch gap-2">
-                  <input
-                    type="number"
-                    step="0.1"
-                    value={form.karat}
-                    onChange={(e) => updateForm("karat", e.target.value)}
-                    className="min-w-0 flex-1 rounded-2xl border border-[#1C3324]/15 bg-[#FAF9F6] px-4 py-3.5 text-right font-mono text-xs font-bold text-[#1C3324] outline-none transition focus:border-[#1C3324]"
-                  />
-                  <span className="flex shrink-0 items-center justify-center rounded-2xl border border-[#1C3324]/15 bg-white px-4 text-xs font-bold text-[#3A5A46]">
-                    عیار
-                  </span>
-                </div>
+                <Input
+                  type="number"
+                  min="0"
+                  value={form.lead_time_days}
+                  onChange={(e) => updateForm("lead_time_days", e.target.value)}
+                  className="font-mono text-xs font-bold"
+                />
               </div>
 
-              {/* انتخاب چند رنگ طلا (تیک‌دار) */}
+              {/* Colors Multi-Select */}
               <div className="sm:col-span-2">
-                <label className="mb-2 flex items-center gap-1.5 text-xs font-bold text-[#3A5A46]">
-                  <Palette className="h-4 w-4 text-[#8B263E]" />
-                  رنگ‌های قابل انتخاب کار (متریال)
+                <label className="mb-2 block text-xs font-bold text-[#3A5A46] dark:text-zinc-400">
+                  رنگ‌های قابل سفارش طلا
                 </label>
-                <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-                  {GOLD_COLORS.map((c) => {
-                    const isSelected = form.colors.includes(c.id);
+                <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+                  {GOLD_COLORS.map((color) => {
+                    const isSelected = form.colors.includes(color.id);
                     return (
                       <button
-                        key={c.id}
+                        key={color.id}
                         type="button"
-                        onClick={() => toggleColor(c.id)}
-                        className={`flex items-center justify-between rounded-2xl border px-4 py-3 text-xs font-bold transition cursor-pointer ${
+                        onClick={() => toggleColor(color.id)}
+                        className={cn(
+                          "flex items-center justify-between rounded-2xl border p-3 text-xs font-bold transition cursor-pointer",
                           isSelected
-                            ? "border-[#1C3324] bg-[#1C3324] text-white shadow-xs"
-                            : "border-[#1C3324]/15 bg-[#FAF9F6] text-[#3A5A46] hover:border-[#8B263E]"
-                        }`}
+                            ? "border-[#8B263E] bg-[#8B263E]/5 text-[#8B263E] dark:border-[#D8B65C] dark:bg-[#D8B65C]/10 dark:text-[#D8B65C]"
+                            : "border-[#1C3324]/12 bg-[#FAF9F6] text-[#3A5A46] hover:border-[#8B263E]/40 dark:border-white/10 dark:bg-zinc-900/60 dark:text-zinc-300"
+                        )}
                       >
-                        <span>{c.label}</span>
-                        <div className={`flex h-5 w-5 items-center justify-center rounded-lg border ${isSelected ? "border-white bg-white text-[#1C3324]" : "border-[#3A5A46]/30 bg-white"}`}>
-                          {isSelected && <Check className="h-3 w-3" />}
-                        </div>
+                        <span>{color.label}</span>
+                        {isSelected && <Check className="h-4 w-4" />}
                       </button>
                     );
                   })}
                 </div>
               </div>
             </div>
-          </div>
+          </Card>
 
-          {/* کارت ۲: ضرایب مالی و زمان تحویل */}
-          <div className="rounded-3xl border border-[#1C3324]/15 bg-white p-6 shadow-xs sm:p-8">
-            <div className="mb-6 flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-[#8B263E]/10 text-[#8B263E] border border-[#1C3324]/10">
-                <Percent className="h-5 w-5" />
-              </div>
-              <div>
-                <h2 className="text-base font-black text-[#1C3324]">ضرایب محاسبه قیمت و زمان تحویل</h2>
-                <p className="mt-0.5 text-xs text-[#3A5A46]">
-                  اجرت، سود، مالیات و تعداد روز لازم برای آماده‌سازی محصول.
-                </p>
-              </div>
+          {/* Section 2: Weight, Karat, Wage & Guild Parameters */}
+          <Card className="border-[#1C3324]/12 bg-white/80 p-6 backdrop-blur-md dark:border-white/10 dark:bg-[#15221B]/80 space-y-5">
+            <div className="flex items-center gap-2 pb-3 border-b border-black/5 dark:border-white/5">
+              <Scale className="h-5 w-5 text-[#8B263E] dark:text-[#D8B65C]" />
+              <h2 className="text-base font-black text-[#1C3324] dark:text-zinc-100">
+                مشخصات وزنی، عیار و درصدهای قانونی قیمت‌گذاری
+              </h2>
             </div>
 
-            <div className="grid grid-cols-1 gap-6 sm:grid-cols-4">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
               <div>
-                <label className="mb-2 block text-xs font-bold text-[#3A5A46]">
-                  اجرت ساخت (%)
+                <label className="mb-2 block text-xs font-bold text-[#3A5A46] dark:text-zinc-400">
+                  وزن پایه طلا (گرم)
                 </label>
-                <input
+                <Input
+                  type="number"
+                  step="0.001"
+                  min="0"
+                  value={form.weight}
+                  onChange={(e) => updateForm("weight", e.target.value)}
+                  placeholder="0.000"
+                  className="font-mono text-xs font-bold"
+                />
+              </div>
+
+              <div>
+                <label className="mb-2 block text-xs font-bold text-[#3A5A46] dark:text-zinc-400">
+                  عیار طلا (پیش‌فرض ۱۸)
+                </label>
+                <select
+                  value={form.karat}
+                  onChange={(e) => updateForm("karat", e.target.value)}
+                  className="w-full rounded-2xl border border-[#1C3324]/15 bg-[#FAF9F6] px-4 py-2.5 text-xs font-bold text-[#1C3324] outline-none dark:border-white/10 dark:bg-zinc-900/60 dark:text-zinc-100"
+                >
+                  <option value="18">۱۸ عیار (۷۵۰)</option>
+                  <option value="21">۲۱ عیار (۸۷۵)</option>
+                  <option value="24">۲۴ عیار (۹۹۹)</option>
+                </select>
+              </div>
+
+              <div>
+                <label className="mb-2 block text-xs font-bold text-[#3A5A46] dark:text-zinc-400">
+                  موجودی کلی در انبار
+                </label>
+                <Input
+                  type="number"
+                  min="0"
+                  value={form.stock}
+                  onChange={(e) => updateForm("stock", e.target.value)}
+                  className="font-mono text-xs font-bold"
+                />
+              </div>
+
+              <div>
+                <label className="mb-2 block text-xs font-bold text-[#3A5A46] dark:text-zinc-400">
+                  اجرت ساخت کارگاه (درصد ٪)
+                </label>
+                <Input
                   type="number"
                   step="0.1"
+                  min="0"
                   value={form.wage_percent}
                   onChange={(e) => updateForm("wage_percent", e.target.value)}
-                  className="w-full rounded-2xl border border-[#1C3324]/15 bg-[#FAF9F6] px-4 py-3.5 text-left font-mono text-xs font-bold text-[#1C3324] outline-none focus:border-[#1C3324]"
-                  placeholder="0"
+                  placeholder="مثال: ۱۶"
+                  className="font-mono text-xs font-bold"
                 />
               </div>
 
               <div>
-                <label className="mb-2 block text-xs font-bold text-[#3A5A46]">
-                  سود گالری (%)
+                <label className="mb-2 block text-xs font-bold text-[#3A5A46] dark:text-zinc-400">
+                  سود گالری (درصد ٪ - مصوب ۷٪)
                 </label>
-                <input
+                <Input
                   type="number"
                   step="0.1"
+                  min="0"
                   value={form.profit_percent}
                   onChange={(e) => updateForm("profit_percent", e.target.value)}
-                  className="w-full rounded-2xl border border-[#1C3324]/15 bg-[#FAF9F6] px-4 py-3.5 text-left font-mono text-xs font-bold text-[#1C3324] outline-none focus:border-[#1C3324]"
                   placeholder="7"
+                  className="font-mono text-xs font-bold"
                 />
               </div>
 
               <div>
-                <label className="mb-2 block text-xs font-bold text-[#3A5A46]">
-                  مالیات بر ارزش افزوده (%)
+                <label className="mb-2 block text-xs font-bold text-[#3A5A46] dark:text-zinc-400">
+                  مالیات ارزش افزوده (درصد ٪)
                 </label>
-                <input
+                <Input
                   type="number"
                   step="0.1"
+                  min="0"
                   value={form.tax_percent}
                   onChange={(e) => updateForm("tax_percent", e.target.value)}
-                  className="w-full rounded-2xl border border-[#1C3324]/15 bg-[#FAF9F6] px-4 py-3.5 text-left font-mono text-xs font-bold text-[#1C3324] outline-none focus:border-[#1C3324]"
                   placeholder="9"
-                />
-              </div>
-
-              <div>
-                <label className="mb-2 flex items-center gap-1 text-xs font-bold text-[#3A5A46]">
-                  <Clock className="h-3.5 w-3.5 text-[#8B263E]" />
-                  زمان تحویل (روز)
-                </label>
-                <input
-                  type="number"
-                  step="1"
-                  min="0"
-                  value={form.lead_time_days}
-                  onChange={(e) => updateForm("lead_time_days", e.target.value)}
-                  className="w-full rounded-2xl border border-[#1C3324]/15 bg-[#FAF9F6] px-4 py-3.5 text-left font-mono text-xs font-bold text-[#1C3324] outline-none focus:border-[#1C3324]"
-                  placeholder="3"
+                  className="font-mono text-xs font-bold"
                 />
               </div>
             </div>
-          </div>
+          </Card>
 
-          {/* کارت ۳: تنوع‌های وزنی */}
-          <div className="rounded-3xl border border-[#1C3324]/15 bg-white p-6 shadow-xs sm:p-8">
-            <div className="mb-6 flex flex-wrap items-center justify-between gap-3 border-b border-[#1C3324]/10 pb-5">
-              <div className="flex items-center gap-3">
-                <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-[#8B263E]/10 text-[#8B263E] border border-[#1C3324]/10">
-                  <Scale className="h-5 w-5" />
-                </div>
-                <div>
-                  <h2 className="text-base font-black text-[#1C3324]">مشخصات وزنی و تنوع‌ها (Variants)</h2>
-                  <p className="text-xs text-[#3A5A46]">
-                    وزن بر حسب گرم با دقت سه رقم اعشار ذخیره می‌شود.
-                  </p>
-                </div>
+          {/* Section 3: Variants (تنوع وزنی) */}
+          <Card className="border-[#1C3324]/12 bg-white/80 p-6 backdrop-blur-md dark:border-white/10 dark:bg-[#15221B]/80 space-y-5">
+            <div className="flex items-center justify-between pb-3 border-b border-black/5 dark:border-white/5">
+              <div className="flex items-center gap-2">
+                <Layers className="h-5 w-5 text-[#8B263E] dark:text-[#D8B65C]" />
+                <h2 className="text-base font-black text-[#1C3324] dark:text-zinc-100">
+                  تنوع‌های وزنی محصول (Variants)
+                </h2>
               </div>
-
-              <button
-                type="button"
-                onClick={addVariant}
-                className="inline-flex items-center gap-2 rounded-2xl bg-[#1C3324] px-4 py-2.5 text-xs font-black text-white transition hover:bg-[#8B263E] active:scale-95 cursor-pointer"
-              >
+              <Button type="button" variant="outline" size="sm" onClick={addVariant} className="gap-1.5">
                 <Plus className="h-4 w-4" />
-                افزودن تنوع وزنی
-              </button>
+                <span>افزودن تنوع وزنی</span>
+              </Button>
             </div>
 
             {variants.length === 0 ? (
-              <div className="rounded-2xl border border-dashed border-[#1C3324]/20 bg-[#FAF9F6] p-6 text-center">
-                <p className="mb-4 text-xs font-bold text-[#3A5A46]">
-                  وزن و موجودی پایه تک‌محصول (بدون تنوع چندگانه)
+              <div className="rounded-2xl border border-dashed border-[#1C3324]/20 p-6 text-center dark:border-white/20">
+                <p className="text-xs text-[#3A5A46] dark:text-zinc-400">
+                  محصول به صورت تک‌وزن با وزن اصلی فرم ثبت خواهد شد. جهت افزودن سایزبندی یا وزن‌های گوناگون دکمه بالا را بزنید.
                 </p>
-
-                <div className="mx-auto grid max-w-lg grid-cols-1 gap-4 sm:grid-cols-2">
-                  <div>
-                    <label className="mb-1 block text-right text-xs font-bold text-[#3A5A46]">
-                      وزن محصول (گرم) <span className="text-[#8B263E]">*</span>
-                    </label>
-                    <input
-                      type="number"
-                      step="0.001"
-                      value={form.weight}
-                      onChange={(e) => updateForm("weight", e.target.value)}
-                      placeholder="مثال: ۴.۳۵۰"
-                      className="w-full rounded-xl border border-[#1C3324]/15 bg-white px-3 py-2.5 text-left font-mono text-xs font-bold text-[#1C3324] outline-none focus:border-[#1C3324]"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="mb-1 block text-right text-xs font-bold text-[#3A5A46]">
-                      موجودی انبار (تعداد)
-                    </label>
-                    <input
-                      type="number"
-                      step="1"
-                      min="0"
-                      value={form.stock}
-                      onChange={(e) => updateForm("stock", e.target.value)}
-                      placeholder="1"
-                      className="w-full rounded-xl border border-[#1C3324]/15 bg-white px-3 py-2.5 text-left font-mono text-xs font-bold text-[#1C3324] outline-none focus:border-[#1C3324]"
-                    />
-                  </div>
-                </div>
               </div>
             ) : (
-              <div className="space-y-4">
-                {variants.map((variant, index) => (
+              <div className="space-y-3">
+                {variants.map((v, idx) => (
                   <div
-                    key={variant.id}
-                    className={`relative rounded-2xl border p-5 transition-all ${
-                      variant.is_default
-                        ? "border-[#8B263E] bg-[#8B263E]/5 shadow-xs"
-                        : "border-[#1C3324]/15 bg-[#FAF9F6]"
-                    }`}
+                    key={v.id}
+                    className="flex flex-col gap-3 rounded-2xl border border-[#1C3324]/10 bg-[#FAF9F6] p-4 sm:flex-row sm:items-center dark:border-white/10 dark:bg-zinc-900/40"
                   >
-                    <div className="mb-4 flex items-center justify-between border-b border-[#1C3324]/10 pb-3">
-                      <div className="flex flex-wrap items-center gap-2">
-                        <span className="flex h-6 w-6 items-center justify-center rounded-full bg-[#1C3324] text-xs font-black text-white">
-                          {index + 1}
-                        </span>
-                        <span className="text-xs font-black text-[#1C3324]">
-                          تنوع {variant.weight ? `${variant.weight} گرم` : "جدید"}
-                        </span>
-                        {variant.is_default && (
-                          <span className="rounded-full border border-[#8B263E]/30 bg-[#8B263E]/10 px-2 py-0.5 text-[10px] font-black text-[#8B263E]">
-                            تنوع پیش‌فرض اصلی
-                          </span>
-                        )}
-                      </div>
-
-                      <button
-                        type="button"
-                        onClick={() => removeVariant(variant.id)}
-                        className="flex h-8 w-8 items-center justify-center rounded-xl border border-rose-200 bg-rose-50 text-rose-600 transition hover:bg-rose-500 hover:text-white cursor-pointer"
-                        title="حذف این وارییشن"
-                      >
-                        <Trash2 className="h-4 w-4" />
-                      </button>
-                    </div>
-
-                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-                      <div>
-                        <label className="mb-1 block text-[11px] font-bold text-[#3A5A46]">وزن (گرم)</label>
-                        <input
-                          type="number"
-                          step="0.001"
-                          value={variant.weight}
-                          onChange={(e) => updateVariant(variant.id, "weight", e.target.value)}
-                          placeholder="4.350"
-                          className="w-full rounded-xl border border-[#1C3324]/15 bg-white px-3 py-2 text-left font-mono text-xs font-bold text-[#1C3324] outline-none focus:border-[#1C3324]"
-                        />
-                      </div>
-
-                      <div>
-                        <label className="mb-1 block text-[11px] font-bold text-[#3A5A46]">موجودی این وزن</label>
-                        <input
-                          type="number"
-                          step="1"
-                          min="0"
-                          value={variant.stock}
-                          onChange={(e) => updateVariant(variant.id, "stock", e.target.value)}
-                          placeholder="1"
-                          className="w-full rounded-xl border border-[#1C3324]/15 bg-white px-3 py-2 text-left font-mono text-xs font-bold text-[#1C3324] outline-none focus:border-[#1C3324]"
-                        />
-                      </div>
-
-                      <div>
-                        <label className="mb-1 block text-[11px] font-bold text-[#3A5A46]">کد تنوع (SKU)</label>
-                        <input
-                          type="text"
-                          value={variant.sku}
-                          onChange={(e) => updateVariant(variant.id, "sku", e.target.value)}
-                          placeholder="SRV-001-V1"
-                          className="w-full rounded-xl border border-[#1C3324]/15 bg-white px-3 py-2 text-left font-mono text-xs font-bold text-[#1C3324] outline-none focus:border-[#1C3324]"
-                        />
-                      </div>
-                    </div>
-
-                    <div className="mt-4 flex items-center justify-end">
-                      <label className="flex cursor-pointer items-center gap-2 text-xs font-bold text-[#3A5A46]">
-                        <input
-                          type="radio"
-                          name="default_variant"
-                          checked={variant.is_default}
-                          onChange={() => updateVariant(variant.id, "is_default", true)}
-                          className="h-4 w-4 text-[#8B263E] accent-[#8B263E]"
-                        />
-                        انتخاب به عنوان تنوع پیش‌فرض اصلی
+                    <div className="flex items-center gap-2">
+                      <input
+                        type="radio"
+                        id={`default-${v.id}`}
+                        name="default_variant"
+                        checked={v.is_default}
+                        onChange={() => updateVariant(v.id, "is_default", true)}
+                        className="h-4 w-4 text-[#8B263E] cursor-pointer"
+                      />
+                      <label htmlFor={`default-${v.id}`} className="text-xs font-bold text-[#1C3324] dark:text-zinc-200">
+                        سایز پیش‌فرض
                       </label>
                     </div>
+
+                    <div className="flex-1 grid grid-cols-1 gap-2 sm:grid-cols-3">
+                      <Input
+                        type="number"
+                        step="0.001"
+                        placeholder="وزن (گرم)"
+                        value={v.weight}
+                        onChange={(e) => updateVariant(v.id, "weight", e.target.value)}
+                        className="font-mono text-xs font-bold"
+                      />
+                      <Input
+                        type="number"
+                        placeholder="موجودی"
+                        value={v.stock}
+                        onChange={(e) => updateVariant(v.id, "stock", e.target.value)}
+                        className="font-mono text-xs font-bold"
+                      />
+                      <Input
+                        type="text"
+                        placeholder="کد کالا SKU"
+                        value={v.sku}
+                        onChange={(e) => updateVariant(v.id, "sku", e.target.value)}
+                        className="font-mono text-xs font-bold"
+                      />
+                    </div>
+
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="icon-sm"
+                      onClick={() => removeVariant(v.id)}
+                      className="text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/40"
+                    >
+                      <Trash2 className="h-4 w-4" />
+                    </Button>
                   </div>
                 ))}
               </div>
             )}
-          </div>
+          </Card>
 
-          {/* کارت ۴: توضیحات */}
-          <div className="space-y-6 rounded-3xl border border-[#1C3324]/15 bg-white p-6 shadow-xs sm:p-8">
-            <h2 className="text-base font-black text-[#1C3324]">توضیحات و مشخصات کالا</h2>
+          {/* Section 4: Descriptions */}
+          <Card className="border-[#1C3324]/12 bg-white/80 p-6 backdrop-blur-md dark:border-white/10 dark:bg-[#15221B]/80 space-y-4">
+            <h2 className="text-base font-black text-[#1C3324] dark:text-zinc-100">
+              توضیحات و معرفی محصول
+            </h2>
 
             <div>
-              <label className="mb-2 block text-xs font-bold text-[#3A5A46]">
-                توضیح کوتاه
+              <label className="mb-2 block text-xs font-bold text-[#3A5A46] dark:text-zinc-400">
+                خلاصه مشخصات (نمایش در کارت محصول)
               </label>
-              <textarea
-                rows={2}
+              <Input
+                type="text"
                 value={form.short_detail}
                 onChange={(e) => updateForm("short_detail", e.target.value)}
-                placeholder="توضیح مختصر جهت نمایش در لیست محصولات..."
-                className="w-full rounded-2xl border border-[#1C3324]/15 bg-[#FAF9F6] px-4 py-3 text-xs font-bold text-[#1C3324] outline-none focus:border-[#1C3324]"
+                placeholder="مثال: طراحی سبک و مینیمال مناسب استفاده روزمره"
+                className="text-xs"
               />
             </div>
 
             <div>
-              <label className="mb-2 block text-xs font-bold text-[#3A5A46]">
-                توضیحات کامل محصول
+              <label className="mb-2 block text-xs font-bold text-[#3A5A46] dark:text-zinc-400">
+                توضیحات کامل کالا و ویژگی‌های طلا
               </label>
               <textarea
                 rows={5}
                 value={form.description}
                 onChange={(e) => updateForm("description", e.target.value)}
-                placeholder="توضیحات کامل، ابعاد، ویژگی‌های ساخت و نکات نگهداری..."
-                className="w-full rounded-2xl border border-[#1C3324]/15 bg-[#FAF9F6] px-4 py-3 text-xs font-bold text-[#1C3324] outline-none focus:border-[#1C3324]"
+                placeholder="توضیحات فنی، جزئیات قفل، ابعاد و نکات نگهداری..."
+                className="w-full rounded-2xl border border-[#1C3324]/15 bg-[#FAF9F6] p-4 text-xs font-medium text-[#1C3324] outline-none transition focus:border-[#1C3324] dark:border-white/10 dark:bg-zinc-900/60 dark:text-zinc-100"
               />
             </div>
-          </div>
+          </Card>
         </div>
 
-        {/* ستون کناری */}
-        <div className="space-y-8 lg:col-span-4">
-          
-          {/* دکمه وضعیت موجودی (سبز = فعال/موجود، قرمز = غیرفعال/ناموجود) */}
-          <div className="flex items-center justify-between rounded-3xl border border-[#1C3324]/15 bg-white p-6 shadow-xs">
-            <div className="flex items-center gap-3">
-              <div className={`flex h-10 w-10 items-center justify-center rounded-2xl border ${form.isactive ? "bg-emerald-500/10 text-emerald-600 border-emerald-500/20" : "bg-rose-500/10 text-rose-600 border-rose-500/20"}`}>
-                <Package className="h-5 w-5" />
-              </div>
-              <div>
-                <span className={`block text-xs font-black ${form.isactive ? "text-emerald-700" : "text-rose-600"}`}>
-                  {form.isactive ? "موجود در انبار (فعال)" : "ناموجود (غیرفعال)"}
-                </span>
-                <span className="text-[11px] text-[#3A5A46]">وضعیت نمایش در ویترین سایت</span>
-              </div>
-            </div>
+        {/* Right Column (4 cols): Sticky Price Calculator Preview + Vitrine & Images */}
+        <div className="space-y-6 lg:col-span-4">
 
-            <div dir="ltr">
-              <button
-                type="button"
-                role="switch"
-                aria-checked={form.isactive}
-                onClick={() => updateForm("isactive", !form.isactive)}
-                className={`relative inline-flex h-7 w-12 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none ${
-                  form.isactive ? "bg-emerald-500" : "bg-rose-500"
-                }`}
-              >
-                <span
-                  className={`pointer-events-none inline-block h-6 w-6 transform rounded-full bg-white shadow-md ring-0 transition duration-200 ease-in-out ${
-                    form.isactive ? "translate-x-5" : "translate-x-0"
-                  }`}
-                />
-              </button>
-            </div>
-          </div>
-
-          {/* دسته‌بندی‌ها */}
-          <div className="space-y-4 rounded-3xl border border-[#1C3324]/15 bg-white p-6 shadow-xs">
-            <div className="flex items-center justify-between border-b border-[#1C3324]/10 pb-3">
+          {/* Live Gold Price Calculator Preview */}
+          <Card className="border-[#1C3324]/12 bg-gradient-to-br from-white to-amber-50/40 p-5 backdrop-blur-md dark:border-white/10 dark:from-[#15221B] dark:to-emerald-950/30 space-y-4 sticky top-6">
+            <div className="flex items-center justify-between pb-3 border-b border-black/5 dark:border-white/5">
               <div className="flex items-center gap-2">
-                <Layers className="h-5 w-5 text-[#8B263E]" />
-                <h3 className="text-base font-black text-[#1C3324]">دسته‌بندی‌ها</h3>
+                <CircleDollarSign className="h-5 w-5 text-[#8B263E] dark:text-[#D8B65C]" />
+                <h3 className="text-xs font-black text-[#1C3324] dark:text-zinc-100">
+                  پیش‌نمایش زنده قیمت فروش
+                </h3>
               </div>
-
-              <button
-                type="button"
-                onClick={() => setIsCategoryModalOpen(true)}
-                aria-label="ایجاد دسته‌بندی جدید"
-                title="ایجاد دسته جدید"
-                className="flex h-8 w-8 items-center justify-center rounded-xl bg-[#1C3324] text-white transition hover:bg-[#8B263E] active:scale-90 cursor-pointer"
-              >
-                <Plus className="h-4 w-4" />
-              </button>
+              <Badge variant="gold" className="text-[10px] font-bold">
+                مظنه: {goldRate.toLocaleString("fa-IR")}
+              </Badge>
             </div>
 
-            {isCategoryLoading ? (
-              <div className="py-4 text-center text-xs text-[#3A5A46]">در حال دریافت دسته‌ها...</div>
-            ) : categories.length === 0 ? (
-              <div className="py-4 text-center text-xs text-[#3A5A46]">هیچ دسته‌ای یافت نشد.</div>
-            ) : (
-              <div className="flex flex-wrap gap-2 pt-2">
-                {categories.map((cat) => {
-                  const isSelected = categoryIds.includes(cat.id);
+            {livePricePreview ? (
+              <div className="space-y-3">
+                <div className="rounded-2xl bg-[#8B263E]/5 p-4 border border-[#8B263E]/15 text-center dark:bg-[#D8B65C]/10 dark:border-[#D8B65C]/20">
+                  <span className="text-[11px] font-bold text-[#8B263E] dark:text-[#D8B65C]">
+                    قیمت نهایی مصرف‌کننده
+                  </span>
+                  <div className="mt-1 font-mono text-2xl font-black text-[#8B263E] dark:text-[#D8B65C]">
+                    {livePricePreview.total.toLocaleString("fa-IR")} تومان
+                  </div>
+                </div>
 
+                <div className="space-y-2 text-xs">
+                  <div className="flex justify-between py-1 border-b border-black/5 dark:border-white/5">
+                    <span className="text-[#3A5A46] dark:text-zinc-400">ارزش طلای خام:</span>
+                    <span className="font-mono font-bold">{livePricePreview.raw.toLocaleString("fa-IR")} تومان</span>
+                  </div>
+                  <div className="flex justify-between py-1 border-b border-black/5 dark:border-white/5">
+                    <span className="text-[#3A5A46] dark:text-zinc-400">مبلغ اجرت ساخت:</span>
+                    <span className="font-mono font-bold">{livePricePreview.wage.toLocaleString("fa-IR")} تومان</span>
+                  </div>
+                  <div className="flex justify-between py-1 border-b border-black/5 dark:border-white/5">
+                    <span className="text-[#3A5A46] dark:text-zinc-400">مبلغ سود گالری:</span>
+                    <span className="font-mono font-bold">{livePricePreview.profit.toLocaleString("fa-IR")} تومان</span>
+                  </div>
+                  <div className="flex justify-between py-1">
+                    <span className="text-[#3A5A46] dark:text-zinc-400">مالیات ارزش افزوده:</span>
+                    <span className="font-mono font-bold">{livePricePreview.tax.toLocaleString("fa-IR")} تومان</span>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <div className="py-4 text-center text-xs text-[#3A5A46] dark:text-zinc-400">
+                با وارد کردن وزن طلا در کادر سمت چپ، قیمت زنده در اینجا محاسبه و نمایش داده می‌شود.
+              </div>
+            )}
+          </Card>
+
+          {/* Vitrine Status & Publication */}
+          <Card className="border-[#1C3324]/12 bg-white/80 p-5 backdrop-blur-md dark:border-white/10 dark:bg-[#15221B]/80 space-y-4">
+            <h3 className="text-xs font-black text-[#1C3324] dark:text-zinc-100">
+              تنظیمات انتشار در ویترین آنلاین
+            </h3>
+
+            <div className="flex items-center justify-between rounded-2xl bg-[#FAF9F6] p-4 border border-[#1C3324]/10 dark:bg-zinc-900/60 dark:border-white/10">
+              <div>
+                <span className="text-xs font-bold text-[#1C3324] dark:text-zinc-200">
+                  نمایش در ویترین فروشگاه
+                </span>
+                <p className="mt-0.5 text-[10px] text-[#3A5A46] dark:text-zinc-400">
+                  در صورت غیرفعال بودن، کالا تنها در انبار است
+                </p>
+              </div>
+
+              <input
+                type="checkbox"
+                checked={form.isactive}
+                onChange={(e) => updateForm("isactive", e.target.checked)}
+                className="h-5 w-5 accent-[#1C3324] cursor-pointer"
+              />
+            </div>
+          </Card>
+
+          {/* Categories Assignment */}
+          <Card className="border-[#1C3324]/12 bg-white/80 p-5 backdrop-blur-md dark:border-white/10 dark:bg-[#15221B]/80 space-y-4">
+            <div className="flex items-center justify-between">
+              <h3 className="text-xs font-black text-[#1C3324] dark:text-zinc-100">
+                دسته‌بندی کالا
+              </h3>
+              <Button
+                type="button"
+                variant="ghost"
+                size="sm"
+                onClick={() => setIsCategoryModalOpen(true)}
+                className="h-7 text-[11px] font-bold text-[#8B263E] dark:text-[#D8B65C]"
+              >
+                + دسته جدید
+              </Button>
+            </div>
+
+            <div className="space-y-2">
+              <select
+                onChange={(e) => {
+                  const val = e.target.value;
+                  if (val && !categoryIds.includes(val)) {
+                    setCategoryIds((prev) => [...prev, val]);
+                  }
+                  e.target.value = "";
+                }}
+                className="w-full rounded-2xl border border-[#1C3324]/15 bg-[#FAF9F6] p-3 text-xs font-bold text-[#1C3324] outline-none dark:border-white/10 dark:bg-zinc-900/60 dark:text-zinc-100"
+              >
+                <option value="">انتخاب دسته برای افزودن...</option>
+                {categories.map((c) => (
+                  <option key={c.id} value={c.id}>
+                    {c.name}
+                  </option>
+                ))}
+              </select>
+
+              <div className="flex flex-wrap gap-1.5 pt-2">
+                {categoryIds.map((catId) => {
+                  const cat = categories.find((c) => c.id === catId);
+                  const name = cat?.name || catId;
                   return (
-                    <div
-                      key={cat.id}
-                      className={`inline-flex items-center gap-2 rounded-xl px-3 py-2 text-xs font-bold transition-all ${
-                        isSelected
-                          ? "bg-[#1C3324] text-white shadow-xs"
-                          : "border border-[#1C3324]/15 bg-[#FAF9F6] text-[#3A5A46]"
-                      }`}
+                    <Badge
+                      key={catId}
+                      variant="secondary"
+                      className="gap-1 px-2.5 py-1 text-xs font-bold"
                     >
+                      <span>{name}</span>
                       <button
                         type="button"
-                        onClick={() =>
-                          setCategoryIds((prev) =>
-                            isSelected ? prev.filter((id) => id !== cat.id) : [...prev, cat.id]
-                          )
-                        }
-                        className="flex items-center gap-1.5 cursor-pointer"
+                        onClick={() => removeCategory(catId)}
+                        className="text-zinc-400 hover:text-rose-500"
                       >
-                        {isSelected && <Check className="h-3 w-3" />}
-                        {cat.name}
+                        <X className="h-3 w-3" />
                       </button>
-
-                      {isSelected && (
-                        <button
-                          type="button"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            removeCategory(cat.id);
-                          }}
-                          className="flex h-5 w-5 items-center justify-center rounded-lg bg-rose-600 text-white transition hover:bg-rose-700 cursor-pointer"
-                          title="حذف دسته‌بندی از این محصول"
-                        >
-                          <X className="h-3 w-3" />
-                        </button>
-                      )}
-                    </div>
+                    </Badge>
                   );
                 })}
               </div>
-            )}
-          </div>
-
-          {/* گالری تصاویر */}
-          <div className="space-y-4 rounded-3xl border border-[#1C3324]/15 bg-white p-6 shadow-xs">
-            <div className="flex items-center justify-between border-b border-[#1C3324]/10 pb-3">
-              <div className="flex items-center gap-2">
-                <ImageIcon className="h-5 w-5 text-[#8B263E]" />
-                <h3 className="text-base font-black text-[#1C3324]">گالری تصاویر</h3>
-              </div>
-              <span className="text-xs font-bold text-[#3A5A46]">
-                {(existingImages.length + newImages.length).toLocaleString("fa-IR")} تصویر
-              </span>
             </div>
+          </Card>
 
+          {/* Images Management */}
+          <Card className="border-[#1C3324]/12 bg-white/80 p-5 backdrop-blur-md dark:border-white/10 dark:bg-[#15221B]/80 space-y-4">
+            <h3 className="text-xs font-black text-[#1C3324] dark:text-zinc-100">
+              تصاویر و گالری ویترین
+            </h3>
+
+            {/* Existing Images */}
             {existingImages.length > 0 && (
-              <div className="grid grid-cols-3 gap-3">
-                {existingImages.map((filename) => (
-                  <div
-                    key={filename}
-                    className="group relative aspect-square overflow-hidden rounded-xl border border-[#1C3324]/15 bg-[#FAF9F6]"
-                  >
-                    <img
-                      src={getPocketBaseImageUrl(filename)}
-                      alt={filename}
-                      className="h-full w-full object-cover"
-                    />
-                    <button
-                      type="button"
-                      onClick={() => removeExistingImage(filename)}
-                      className="absolute left-1 top-1 flex h-6 w-6 items-center justify-center rounded-lg bg-rose-600 text-white opacity-0 transition group-hover:opacity-100 cursor-pointer"
-                      title="حذف این تصویر"
+              <div>
+                <span className="text-[11px] font-bold text-[#3A5A46] dark:text-zinc-400">
+                  تصاویر موجود در پاکت‌بیس:
+                </span>
+                <div className="mt-2 grid grid-cols-3 gap-2">
+                  {existingImages.map((img) => (
+                    <div
+                      key={img}
+                      className="relative aspect-square overflow-hidden rounded-xl border border-black/10 dark:border-white/10 group"
                     >
-                      <X className="h-3.5 w-3.5" />
-                    </button>
-                  </div>
-                ))}
+                      <img
+                        src={getPocketBaseImageUrl(img)}
+                        alt="Product"
+                        className="h-full w-full object-cover"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => removeExistingImage(img)}
+                        className="absolute top-1 left-1 flex h-6 w-6 items-center justify-center rounded-lg bg-rose-600 text-white shadow-xs opacity-90 hover:opacity-100 cursor-pointer"
+                        title="حذف تصویر"
+                      >
+                        <Trash2 className="h-3 w-3" />
+                      </button>
+                    </div>
+                  ))}
+                </div>
               </div>
             )}
 
+            {/* New Upload Previews */}
+            {newImagePreviews.length > 0 && (
+              <div>
+                <span className="text-[11px] font-bold text-emerald-700 dark:text-emerald-400">
+                  تصاویر جدید آماده بارگذاری:
+                </span>
+                <div className="mt-2 grid grid-cols-3 gap-2">
+                  {newImagePreviews.map((preview, idx) => (
+                    <div
+                      key={preview}
+                      className="relative aspect-square overflow-hidden rounded-xl border border-emerald-500/30 group"
+                    >
+                      <img src={preview} alt="New" className="h-full w-full object-cover" />
+                      <button
+                        type="button"
+                        onClick={() => removeNewImage(idx)}
+                        className="absolute top-1 left-1 flex h-6 w-6 items-center justify-center rounded-lg bg-rose-600 text-white shadow-xs cursor-pointer"
+                      >
+                        <X className="h-3 w-3" />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* File Input trigger */}
             <input
-              type="file"
               ref={imageInputRef}
-              onChange={handleImageChange}
+              type="file"
               multiple
               accept="image/*"
+              onChange={handleImageChange}
               className="hidden"
             />
-
-            <button
+            <Button
               type="button"
+              variant="outline"
+              size="default"
               onClick={() => imageInputRef.current?.click()}
-              className="flex w-full flex-col items-center justify-center rounded-2xl border-2 border-dashed border-[#1C3324]/20 bg-[#FAF9F6] p-6 text-center transition hover:border-[#8B263E] hover:bg-[#8B263E]/5 cursor-pointer"
+              className="w-full gap-2 border-dashed"
             >
-              <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-[#1C3324]/10 bg-white text-[#8B263E] shadow-xs">
-                <Upload className="h-6 w-6" />
-              </div>
-              <p className="mt-3 text-xs font-black text-[#1C3324]">برای افزودن عکس جدید کلیک کنید</p>
-              <p className="mt-1 text-[10px] text-[#3A5A46]">فرمت‌های تصویری تا ۱۰ مگابایت</p>
-            </button>
-
-            {newImagePreviews.length > 0 && (
-              <div className="grid grid-cols-3 gap-3 pt-2">
-                {newImagePreviews.map((src, idx) => (
-                  <div
-                    key={idx}
-                    className="group relative aspect-square overflow-hidden rounded-xl border border-[#1C3324]/15 bg-[#FAF9F6]"
-                  >
-                    <img src={src} alt="پیش‌نمایش" className="h-full w-full object-cover" />
-                    <button
-                      type="button"
-                      onClick={() => removeNewImage(idx)}
-                      className="absolute left-1 top-1 flex h-6 w-6 items-center justify-center rounded-lg bg-rose-600 text-white opacity-0 transition group-hover:opacity-100 cursor-pointer"
-                    >
-                      <X className="h-3.5 w-3.5" />
-                    </button>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
+              <Upload className="h-4 w-4" />
+              <span>انتخاب و بارگذاری تصاویر جدید</span>
+            </Button>
+          </Card>
         </div>
       </form>
+
+      {/* New Category Modal */}
+      <Dialog open={isCategoryModalOpen} onOpenChange={setIsCategoryModalOpen}>
+        <DialogContent className="max-w-md dark:border-white/10 dark:bg-[#15221B]">
+          <DialogHeader>
+            <DialogTitle className="text-base font-black text-[#1C3324] dark:text-zinc-100">
+              افزودن دسته‌بندی جدید
+            </DialogTitle>
+            <DialogDescription className="text-xs text-[#3A5A46] dark:text-zinc-400">
+              دسته‌بندی جدید در پاکت‌بیس ثبت و به این کالا متصل می‌گردد.
+            </DialogDescription>
+          </DialogHeader>
+
+          <div className="py-2">
+            <label className="mb-2 block text-xs font-bold text-[#3A5A46] dark:text-zinc-300">
+              نام دسته‌بندی
+            </label>
+            <Input
+              type="text"
+              value={newCategoryName}
+              onChange={(e) => setNewCategoryName(e.target.value)}
+              placeholder="مثال: دستبند چرم و طلا"
+              className="text-xs font-bold"
+            />
+          </div>
+
+          <DialogFooter className="gap-2">
+            <Button
+              variant="outline"
+              onClick={() => {
+                setNewCategoryName("");
+                setIsCategoryModalOpen(false);
+              }}
+              disabled={isAddingCategory}
+            >
+              انصراف
+            </Button>
+            <Button
+              variant="default"
+              onClick={handleAddCategory}
+              disabled={isAddingCategory || !newCategoryName.trim()}
+              className="gap-2"
+            >
+              {isAddingCategory ? <Loader2 className="h-4 w-4 animate-spin" /> : <Plus className="h-4 w-4" />}
+              <span>ثبت دسته‌بندی</span>
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

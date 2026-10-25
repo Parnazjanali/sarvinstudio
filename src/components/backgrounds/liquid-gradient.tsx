@@ -21,7 +21,7 @@ void main(){
   gl_FragColor=vec4(col,a*u_opacity);
 }`;
 
-/** گرادیان سیال پرجلوه و هماهنگ با پس‌زمینه روشن سروین استودیو */
+/** گرادیان سیال پرجلوه و هماهنگ با پس‌زمینه روشن پرنا زر */
 export function LiquidGradientBackground({ speed = 1, opacity = 0.75, className }: { speed?: number; opacity?: number; className?: string }) {
   return (
     <ShaderCanvas 

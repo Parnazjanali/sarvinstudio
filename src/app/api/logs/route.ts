@@ -9,7 +9,8 @@ type LogCategory =
   | "order"
   | "stock"
   | "auth"
-  | "settings";
+  | "settings"
+  | "invoice";
 
 type LogLevel = "info" | "warning" | "error";
 
@@ -85,8 +86,10 @@ async function authenticateAdmin(request: NextRequest) {
 }
 
 async function getSuperuserPb() {
-  const superadminEmail = process.env.PB_SUPERUSER_EMAIL;
-  const superadminPassword = process.env.PB_SUPERUSER_PASSWORD;
+  const superadminEmail =
+    process.env.POCKETBASE_ADMIN_EMAIL || process.env.PB_SUPERUSER_EMAIL;
+  const superadminPassword =
+    process.env.POCKETBASE_ADMIN_PASSWORD || process.env.PB_SUPERUSER_PASSWORD;
 
   if (!superadminEmail || !superadminPassword) {
     throw new Error("SUPERUSER_CONFIG_MISSING");
@@ -94,12 +97,19 @@ async function getSuperuserPb() {
 
   const adminPb = new PocketBase(pocketBaseUrl);
 
-  await adminPb
-    .collection("_superusers")
-    .authWithPassword(
+  try {
+    await adminPb
+      .collection("_superusers")
+      .authWithPassword(
+        superadminEmail,
+        superadminPassword,
+      );
+  } catch {
+    await adminPb.admins.authWithPassword(
       superadminEmail,
       superadminPassword,
     );
+  }
 
   return adminPb;
 }
@@ -271,6 +281,7 @@ export async function POST(request: NextRequest) {
       "stock",
       "auth",
       "settings",
+      "invoice",
     ];
 
     const validLevels: LogLevel[] = [

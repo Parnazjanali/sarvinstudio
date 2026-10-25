@@ -250,7 +250,7 @@ export default function AccountPage() {
                   </span>
                 ) : (
                   <span className="bg-[#FAF9F6] text-[#8B263E] text-xs px-3 py-1 rounded-full font-bold border border-[#8B263E]/20">
-                    مشتری سروین استودیو
+                    مشتری پرنا زر
                   </span>
                 )}
               </div>
@@ -374,7 +374,7 @@ export default function AccountPage() {
               </h3>
 
               <p className="text-sm text-[#3A5A46] max-w-sm leading-7">
-                وقتی اولین خریدتان را از سروین استودیو ثبت کنید، سفارش شما در این قسمت به صورت تفکیک‌شده نمایش داده می‌شود.
+                وقتی اولین خریدتان را از پرنا زر ثبت کنید، سفارش شما در این قسمت به صورت تفکیک‌شده نمایش داده می‌شود.
               </p>
 
               <Link
@@ -382,7 +382,7 @@ export default function AccountPage() {
                 className="mt-6 inline-flex items-center gap-2 px-6 py-3 rounded-2xl text-sm font-bold text-white shadow-xs transition hover:bg-[#8B263E] bg-[#1C3324]"
               >
                 <Sparkles size={16} />
-                مشاهده محصولات استودیو
+                مشاهده آثار پرنا زر
               </Link>
             </div>
           ) : (
@@ -395,7 +395,7 @@ export default function AccountPage() {
                   <div className="space-y-1.5">
                     <div className="flex items-center gap-2.5 flex-wrap">
                       <span className="font-extrabold text-sm text-[#1C3324]">
-                        {order.productTitle || "سفارش طلا و جواهرات سروین استودیو"}
+                        {order.productTitle || "سفارش طلا و جواهرات پرنا زر"}
                       </span>
 
                       {order.status && (

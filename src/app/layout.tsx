@@ -7,9 +7,11 @@ import { AuthUpdater } from "@/components/AuthUpdater";
 import { CartProvider } from "@/context/CartContext";
 import ConditionalSiteChrome from "@/components/ConditionalSiteChrome";
 
+import DynamicTypography from "@/components/DynamicTypography";
+
 export const metadata: Metadata = {
-  title: "طلا و جواهرات سروین | SarvinJewelry",
-  description: "طلا و جواهرات سروین، خرید و فروش مطمئن و آنلاین طلا",
+  title: "پرنا زر | مثل زر بدرخش",
+  description: "گالری طلا و جواهر پرنا زر؛ مثل زر بدرخش. خرید و فروش مطمئن و آنلاین طلای ۱۸ عیار با اقساط طلایی و طراحی اختصاصی.",
 };
 
 const themeNoFlashScript = `
@@ -23,6 +25,40 @@ const themeNoFlashScript = `
     } else {
       document.documentElement.classList.remove("dark");
       document.documentElement.style.colorScheme = "light";
+    }
+  } catch (e) {}
+
+  try {
+    var typo = localStorage.getItem("site_typography");
+    if (typo) {
+      var p = JSON.parse(typo);
+      var fontMap = {
+        Doran: "'Doran', Tahoma, sans-serif",
+        IRANSans: "'IRANSans', Tahoma, sans-serif",
+        IRANYekan: "'IRANYekan', Tahoma, sans-serif",
+        Vazirmatn: "'Vazirmatn', Tahoma, sans-serif"
+      };
+      if (p.fontHeading) {
+        var hf = fontMap[p.fontHeading] || ("'" + p.fontHeading + "', Tahoma, sans-serif");
+        document.documentElement.style.setProperty("--font-heading", hf);
+      }
+      if (p.fontBody) {
+        var bf = fontMap[p.fontBody] || ("'" + p.fontBody + "', Tahoma, sans-serif");
+        document.documentElement.style.setProperty("--font-body", bf);
+      }
+      if (p.fontPrint) {
+        var pf = fontMap[p.fontPrint] || ("'" + p.fontPrint + "', Tahoma, sans-serif");
+        document.documentElement.style.setProperty("--font-print", pf);
+      }
+      if (p.fontHeadingSize) {
+        document.documentElement.style.setProperty("--font-heading-scale", (p.fontHeadingSize / 100).toString());
+      }
+      if (p.fontBodySize) {
+        document.documentElement.style.setProperty("--font-body-size", p.fontBodySize + "px");
+      }
+      if (p.fontPrintSize) {
+        document.documentElement.style.setProperty("--font-print-size", p.fontPrintSize + "px");
+      }
     }
   } catch (e) {}
 })();
@@ -69,6 +105,7 @@ export default async function RootLayout({
       <body className="min-h-screen bg-[#FBF6EA] text-zinc-900 antialiased transition-colors duration-300 dark:bg-[#12100D] dark:text-zinc-100">
         <CartProvider>
           <AuthUpdater />
+          <DynamicTypography />
 
           <ConditionalSiteChrome user={userData}>
             {children}

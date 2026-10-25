@@ -205,6 +205,7 @@ export async function GET(request: NextRequest) {
       "stock",
       "auth",
       "settings",
+      "invoice",
     ];
 
     /*

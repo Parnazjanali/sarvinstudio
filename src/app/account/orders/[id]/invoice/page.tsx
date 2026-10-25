@@ -165,8 +165,8 @@ export default function OrderInvoicePage({
           {/* هدر فاکتور */}
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center pb-6 border-b border-[#1C3324]/15 gap-4">
             <div>
-              <h1 className="text-xl sm:text-2xl font-black text-[#1C3324] m-0">
-                سروین استودیو
+              <h1 className="text-xl sm:text-2xl font-black text-[#1C3324] m-0 font-heading">
+                پرنا زر
               </h1>
               <p className="text-xs text-[#3A5A46] mt-1 m-0">فاکتور رسمی خرید طلا و جواهرات</p>
             </div>
@@ -223,7 +223,7 @@ export default function OrderInvoicePage({
 
           {/* فوتر فاکتور */}
           <div className="text-center pt-8 border-t border-[#1C3324]/10 text-[11px] text-[#3A5A46]">
-            از خرید شما از سروین استودیو کمال تشکر را داریم. این فاکتور به صورت سیستمی صادر شده است. ✨
+            از خرید شما از گالری طلا و جواهر پرنا زر کمال تشکر را داریم. مثل زر بدرخش ✨
           </div>
 
         </div>

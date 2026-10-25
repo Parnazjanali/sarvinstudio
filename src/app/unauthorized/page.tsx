@@ -27,7 +27,7 @@ export default function UnauthorizedPage() {
         </h1>
 
         <p className="mt-3 text-sm leading-6 text-[#3A5A46]">
-          این بخش فقط مخصوص مدیران ارشد سروین استودیو است. حساب کاربری شما اجازه ورود به پنل مدیریت را ندارد.
+          این بخش فقط مخصوص مدیران ارشد پرنا زر است. حساب کاربری شما اجازه ورود به پنل مدیریت را ندارد.
         </p>
 
         <div className="mt-8 flex flex-col gap-3">

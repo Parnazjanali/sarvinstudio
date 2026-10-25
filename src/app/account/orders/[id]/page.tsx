@@ -268,7 +268,7 @@ export default function OrderDetailPage({
                     return (
                       <tr key={idx} className="hover:bg-[#FAF9F6]/50 transition">
                         <td className="p-3.5 font-bold text-[#1C3324]">
-                          <div>{item.productTitle || "طلا و جواهرات سروین"}</div>
+                          <div>{item.productTitle || "طلا و جواهرات پرنا زر"}</div>
                           {item.weight ? (
                             <span className="text-[11px] text-[#3A5A46] font-normal">وزن: {item.weight} گرم</span>
                           ) : null}

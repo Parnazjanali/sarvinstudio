@@ -5,6 +5,8 @@ import { useSearchParams, useRouter } from "next/navigation";
 import { CheckCircle2, XCircle, Loader2, PackageCheck } from "lucide-react";
 import Link from "next/link";
 import pb from "@/lib/pocketbase";
+import { recordAuditLogClient } from "@/lib/audit-client";
+import { syncOrderToInvoiceAndSettlement } from "@/lib/order-invoice-sync";
 import { useCart } from "@/context/CartContext";
 
 export default function VerifyPaymentPage() {
@@ -42,12 +44,33 @@ export default function VerifyPaymentPage() {
             { requestKey: null }
           );
 
+          // صدور خودکار فاکتور و ایجاد رکورد تسویه متصل به فاکتور
+          try {
+            await syncOrderToInvoiceAndSettlement(orderIdParam, {
+              paymentMethod: "online",
+              trackingCode: authority || undefined,
+            });
+          } catch (syncErr) {
+            console.error("Auto invoice & settlement sync error:", syncErr);
+          }
+
+          // ثبت خودکار لاگ رویداد
+          void recordAuditLogClient({
+            category: "order",
+            title: `پرداخت موفق آنلاین سفارش`,
+            description: `تراکنش آنلاین سفارش با شناسه ${orderIdParam} و کد پیگیری درگاه زرین‌پال تایید شد و فاکتور و تسویه خودکار صادر گردید.`,
+            level: "info",
+            targetId: orderIdParam,
+            targetType: "order",
+            metadata: { authority, orderId: orderIdParam },
+          });
+
           // ۲. خالی کردن سبد خرید در State و LocalStorage
           clearCart();
           localStorage.removeItem("cart-items-v2");
           localStorage.removeItem("cart-items-v1");
           localStorage.removeItem("sarvin_gold_cart");
-          localStorage.removeItem("parza_gold_cart");
+          localStorage.removeItem("parnazar_gold_cart");
           localStorage.removeItem("checkout_selected_shipping_info");
           localStorage.removeItem("checkout_shipping_information");
 
@@ -99,7 +122,7 @@ export default function VerifyPaymentPage() {
             <CheckCircle2 size={50} className="text-emerald-600 mx-auto" />
             <h2 className="text-lg font-black text-[#1C3324]">پرداخت با موفقیت انجام شد!</h2>
             <p className="text-xs text-[#3A5A46] leading-6">
-              سفارش شما در سروین استودیو ثبت شد. در حال انتقال به صفحه سفارش‌های من...
+              سفارش شما در پرنا زر ثبت شد. مثل زر بدرخش ✨ در حال انتقال به صفحه سفارش‌های من...
             </p>
             <div className="pt-2">
               <Link

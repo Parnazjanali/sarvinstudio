@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Leaf, ExternalLink, Package, ShieldCheck } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "رهگیری مرسولات پستی | سروین استودیو",
+  title: "رهگیری مرسولات پستی | پرنا زر",
   description:
     "پیگیری وضعیت بسته‌های پستی و مرسولات طلا و جواهر در سامانه رسمی اداره پست.",
 };

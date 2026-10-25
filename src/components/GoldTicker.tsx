@@ -2,9 +2,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import PocketBase from "pocketbase";
-
-const PB_URL = "http://127.0.0.1:8090";
+import { pb } from "@/lib/pocketbase";
 
 interface GoldRate {
   id: string;
@@ -22,13 +20,11 @@ export default function GoldTicker() {
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    const pb = new PocketBase(PB_URL);
-
     async function fetchRates() {
       try {
-        // خواندن تمام نرخ‌های طلا و سکه
         const records = await pb.collection("gold_rates").getFullList<GoldRate>({
-          sort: "price", // مرتب‌سازی بر اساس قیمت
+          sort: "price",
+          requestKey: null,
         });
         setRates(records);
         setLoading(false);
@@ -42,7 +38,6 @@ export default function GoldTicker() {
     fetchRates();
 
     // همگام‌سازی لحظه‌ای (Realtime) با PocketBase
-    // هر زمان دیتابیس آپدیت شود، هدر بدون رفرش آپدیت می‌شود!
     pb.collection("gold_rates").subscribe("*", (e) => {
       if (e.action === "update") {
         setRates((prev) =>
@@ -58,14 +53,14 @@ export default function GoldTicker() {
     };
   }, []);
 
-  // تابع فرمت‌دهی اعداد به ریال/تومان فارسی
+  // تابع فرمت‌دهی اعداد به تومان فارسی
   const formatPrice = (num: number) => {
     return new Intl.NumberFormat("fa-IR").format(Math.round(num));
   };
 
   if (loading) {
     return (
-      <div className="w-full bg-neutral-900 text-neutral-400 text-xs py-2 text-center">
+      <div className="w-full bg-[#1C3324] text-[#D8B65C] text-xs py-2 text-center font-bold">
         در حال دریافت آخرین نرخ‌های بازار طلا...
       </div>
     );
@@ -76,26 +71,25 @@ export default function GoldTicker() {
   }
 
   return (
-    <div className="w-full bg-gradient-to-r from-amber-950 via-neutral-950 to-amber-950 text-white text-xs border-b border-amber-500/20 overflow-hidden direction-rtl">
+    <div className="w-full bg-[#1C3324] text-white text-xs border-b border-[#8B263E]/30 overflow-hidden direction-rtl font-sans">
       {/* بخش متحرک قیمت‌ها */}
       <div className="max-w-7xl mx-auto px-4 py-2 flex items-center justify-between gap-4 overflow-x-auto no-scrollbar">
         <div className="flex items-center gap-2 whitespace-nowrap">
           <span className="inline-flex h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></span>
-          <span className="text-amber-400 font-bold">نرخ لحظه‌ای طلا و سکه (پرضا گلد):</span>
+          <span className="text-[#D8B65C] font-black">نرخ لحظه‌ای طلا و سکه (پرنا زر):</span>
         </div>
 
-        <div className="flex items-center gap-8 text-neutral-300">
+        <div className="flex items-center gap-8 text-neutral-200">
           {rates.map((rate) => {
-            // محاسبه قیمت فروش با ۲ درصد سود بیشتر
             const sellingPrice = rate.price * 1.02;
             const isPositive = rate.change_percent >= 0;
 
             return (
               <div
                 key={rate.id}
-                className="flex items-center gap-2 border-r border-neutral-800 pr-8 first:border-0 first:pr-0 whitespace-nowrap"
+                className="flex items-center gap-2 border-r border-[#FAF9F6]/10 pr-8 first:border-0 first:pr-0 whitespace-nowrap"
               >
-                <span className="font-semibold text-neutral-100">{rate.name}:</span>
+                <span className="font-bold text-white">{rate.name}:</span>
                 
                 {/* قیمت خام بازار */}
                 <div className="flex flex-col items-start leading-none">
@@ -106,9 +100,9 @@ export default function GoldTicker() {
                 </div>
 
                 {/* قیمت فروش با ۲ درصد سود */}
-                <div className="flex flex-col items-start leading-none bg-amber-500/10 px-1.5 py-0.5 rounded border border-amber-500/20">
-                  <span className="text-[9px] text-amber-400 font-bold">فروش (+۲٪)</span>
-                  <span className="font-mono text-amber-300 font-semibold">
+                <div className="flex flex-col items-start leading-none bg-[#8B263E]/20 px-1.5 py-0.5 rounded border border-[#8B263E]/30">
+                  <span className="text-[9px] text-[#D8B65C] font-bold">فروش (+۲٪)</span>
+                  <span className="font-mono text-amber-200 font-semibold">
                     {formatPrice(sellingPrice)} {rate.unit}
                   </span>
                 </div>

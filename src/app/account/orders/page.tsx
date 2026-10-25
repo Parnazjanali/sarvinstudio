@@ -173,7 +173,7 @@ export default function MyOrdersPage() {
               سفارش‌های من
             </h1>
             <p className="mt-1.5 text-xs sm:text-sm text-[#3A5A46] leading-relaxed">
-              سوابق خرید و پیگیری وضعیت آثار در استودیو سروین.
+              سوابق خرید و پیگیری وضعیت آثار در گالری طلا و جواهر پرنا زر.
             </p>
           </div>
 
@@ -226,7 +226,7 @@ export default function MyOrdersPage() {
               {activeTab === "all" ? "هنوز سفارشی ثبت نکرده‌اید" : "سفارشی در این بخش وجود ندارد"}
             </h2>
             <p className="text-xs text-[#3A5A46] max-w-sm mx-auto leading-6">
-              می‌توانید از جدیدترین کلکسیون آثار سروین دیدن فرمایید.
+              می‌توانید از جدیدترین کلکسیون آثار پرنا زر دیدن فرمایید.
             </p>
             <button
               type="button"

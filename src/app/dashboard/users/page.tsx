@@ -37,7 +37,6 @@ import {
 
 import { ClientResponseError } from "pocketbase";
 import { pb } from "@/lib/pocketbase";
-import ThemeToggle from "@/components/theme/ThemeToggle";
 
 /* -------------------------------------------------------------------------- */
 /* Types                                                                      */
@@ -893,7 +892,7 @@ export default function UsersPage() {
   ) => {
     if (verified) {
       return (
-        <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-3 py-1.5 text-xs font-medium text-emerald-700 ring-1 ring-emerald-200 dark:bg-emerald-950/40 dark:text-emerald-400 dark:ring-emerald-900">
+        <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-3 py-1.5 text-xs font-bold text-emerald-700 border border-emerald-200">
           <CheckCircle2 className="h-4 w-4" />
           تأیید شده
         </span>
@@ -901,7 +900,7 @@ export default function UsersPage() {
     }
 
     return (
-      <span className="inline-flex items-center gap-1.5 rounded-full bg-amber-50 px-3 py-1.5 text-xs font-medium text-amber-700 ring-1 ring-amber-200 dark:bg-amber-950/40 dark:text-amber-400 dark:ring-amber-900">
+      <span className="inline-flex items-center gap-1.5 rounded-full bg-amber-50 px-3 py-1.5 text-xs font-bold text-amber-700 border border-amber-200">
         <XCircle className="h-4 w-4" />
         تأیید نشده
       </span>
@@ -1227,11 +1226,6 @@ export default function UsersPage() {
             id !== address.id
         );
 
-      /*
-       * این قسمت ممکن است با Ruleهای users محدود شود.
-       * اگر خطا بدهد، حذف آدرس همچنان انجام شده
-       * و فقط relation کاربر به‌روزرسانی نمی‌شود.
-       */
       try {
         await pb
           .collection("users")
@@ -1322,46 +1316,42 @@ export default function UsersPage() {
   return (
     <div
       dir="rtl"
-      className="min-h-screen bg-slate-50 text-slate-900 transition-colors dark:bg-zinc-950 dark:text-zinc-100"
+      className="min-h-screen bg-transparent font-sans text-[#1C3324] dark:text-zinc-100"
     >
-      <div className="mx-auto max-w-[1600px] p-4 md:p-6">
+      <div className="mx-auto max-w-[1600px] space-y-6">
 
         {/* Header */}
-        <div className="mb-6 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+        <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between rounded-3xl border border-[#1C3324]/12 bg-white/80 p-5 shadow-xs backdrop-blur-md transition-colors lg:p-6 dark:border-white/10 dark:bg-[#15221B]/80">
           <div>
-            <div className="mb-2 flex items-center gap-3">
-              <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-slate-900 text-white shadow-sm dark:bg-white dark:text-zinc-900">
+            <div className="flex items-center gap-3">
+              <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#1C3324] text-white shadow-xs dark:bg-emerald-950/60 dark:text-[#D8B65C] dark:border dark:border-[#D8B65C]/30">
                 <Users className="h-5 w-5" />
               </div>
 
               <div>
-                <h1 className="text-xl font-bold md:text-2xl">
+                <h1 className="text-xl font-black md:text-2xl text-[#1C3324] dark:text-zinc-100">
                   مدیریت کاربران
                 </h1>
 
-                <p className="mt-1 text-sm text-slate-500 dark:text-zinc-400">
-                  مدیریت اطلاعات مشتریان، نقش‌ها و آدرس‌ها
+                <p className="mt-1 text-xs font-medium text-[#3A5A46] dark:text-zinc-400">
+                  مدیریت اطلاعات مشتریان، نقش‌ها و آدرس‌های پرنا زر
                 </p>
               </div>
             </div>
-          </div>
-
-          <div className="flex items-center gap-2">
-            <ThemeToggle />
           </div>
         </div>
 
         {/* Error */}
         {error && (
-          <div className="mb-5 flex items-start gap-3 rounded-2xl border border-red-200 bg-red-50 p-4 text-red-700 dark:border-red-900/70 dark:bg-red-950/30 dark:text-red-400">
+          <div className="flex items-start gap-3 rounded-2xl border border-rose-200 bg-rose-50 p-4 text-xs font-bold text-rose-700 shadow-xs dark:border-rose-900/40 dark:bg-rose-950/30 dark:text-rose-300">
             <AlertCircle className="mt-0.5 h-5 w-5 shrink-0" />
 
             <div className="min-w-0 flex-1">
-              <div className="font-semibold">
+              <div className="font-black">
                 خطا
               </div>
 
-              <div className="mt-1 break-words text-sm">
+              <div className="mt-1 break-words font-medium">
                 {error}
               </div>
             </div>
@@ -1371,7 +1361,7 @@ export default function UsersPage() {
               onClick={() =>
                 setError("")
               }
-              className="rounded-lg p-1 hover:bg-red-100 dark:hover:bg-red-950/50"
+              className="rounded-lg p-1 hover:bg-rose-100 dark:hover:bg-rose-900/40 cursor-pointer"
             >
               <X className="h-4 w-4" />
             </button>
@@ -1379,7 +1369,7 @@ export default function UsersPage() {
         )}
 
         {/* Stats */}
-        <div className="mb-6 grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-5">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-5">
           <StatCard
             icon={
               <Users className="h-5 w-5" />
@@ -1388,6 +1378,8 @@ export default function UsersPage() {
             value={formatMoney(
               dashboardStats.totalUsers
             )}
+            accent="default"
+            description="مشتریان ثبت‌شده"
           />
 
           <StatCard
@@ -1398,6 +1390,8 @@ export default function UsersPage() {
             value={formatMoney(
               dashboardStats.verifiedUsers
             )}
+            accent="emerald"
+            description="احراز هویت شده"
           />
 
           <StatCard
@@ -1408,6 +1402,8 @@ export default function UsersPage() {
             value={formatMoney(
               dashboardStats.adminUsers
             )}
+            accent="gold"
+            description="دسترسی مدیریت"
           />
 
           <StatCard
@@ -1418,6 +1414,8 @@ export default function UsersPage() {
             value={formatMoney(
               dashboardStats.totalOrders
             )}
+            accent="blue"
+            description="سفارش‌های ثبت‌شده"
           />
 
           <StatCard
@@ -1425,17 +1423,20 @@ export default function UsersPage() {
               <Wallet className="h-5 w-5" />
             }
             title="مجموع خرید"
-            value={`${formatMoney(
+            value={formatMoney(
               dashboardStats.totalSales
-            )} تومان`}
+            )}
+            unit="تومان"
+            accent="crimson"
+            description="گردش حساب مشتریان"
           />
         </div>
 
         {/* Filters */}
-        <div className="mb-5 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
+        <div className="rounded-3xl border border-[#1C3324]/12 bg-white/80 p-4 shadow-xs backdrop-blur-md dark:border-white/10 dark:bg-[#15221B]/80">
           <div className="flex flex-col gap-3 lg:flex-row">
             <div className="relative flex-1">
-              <Search className="absolute right-3 top-1/2 h-5 w-5 -translate-y-1/2 text-slate-400 dark:text-zinc-500" />
+              <Search className="absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[#3A5A46] dark:text-zinc-400" />
 
               <input
                 value={search}
@@ -1445,7 +1446,7 @@ export default function UsersPage() {
                   )
                 }
                 placeholder="جستجو بر اساس نام، ایمیل، شماره موبایل یا کد ملی..."
-                className="h-11 w-full rounded-xl border border-slate-200 bg-slate-50 pr-10 pl-4 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-slate-400 focus:bg-white dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-100 dark:placeholder:text-zinc-500 dark:focus:border-zinc-500 dark:focus:bg-zinc-900"
+                className="w-full rounded-2xl border border-[#1C3324]/15 bg-white py-3.5 pl-4 pr-11 text-xs font-bold text-[#1C3324] outline-none transition placeholder:text-[#3A5A46]/60 focus:border-[#1C3324] dark:border-white/10 dark:bg-[#101813] dark:text-zinc-100 dark:placeholder:text-zinc-500 dark:focus:border-[#D8B65C]"
               />
             </div>
 
@@ -1458,17 +1459,17 @@ export default function UsersPage() {
                     | UserRole
                 )
               }
-              className="h-11 rounded-xl border border-slate-200 bg-slate-50 px-4 text-sm text-slate-900 outline-none focus:border-slate-400 dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-100 dark:focus:border-zinc-500"
+              className="rounded-2xl border border-[#1C3324]/15 bg-white px-4 py-3.5 text-xs font-black text-[#1C3324] outline-none transition focus:border-[#1C3324] cursor-pointer dark:border-white/10 dark:bg-[#101813] dark:text-zinc-100 dark:focus:border-[#D8B65C]"
             >
-              <option value="all">
+              <option value="all" className="dark:bg-[#101813]">
                 همه نقش‌ها
               </option>
 
-              <option value="user">
+              <option value="user" className="dark:bg-[#101813]">
                 کاربران
               </option>
 
-              <option value="admin">
+              <option value="admin" className="dark:bg-[#101813]">
                 مدیران
               </option>
             </select>
@@ -1477,7 +1478,7 @@ export default function UsersPage() {
               type="button"
               onClick={fetchUsers}
               disabled={loading}
-              className="inline-flex h-11 items-center justify-center gap-2 rounded-xl bg-slate-900 px-5 text-sm font-medium text-white transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-60 dark:bg-white dark:text-zinc-900 dark:hover:bg-zinc-200"
+              className="inline-flex h-12 items-center justify-center gap-2 rounded-2xl bg-[#1C3324] px-6 text-xs font-black text-white shadow-sm transition hover:bg-[#8B263E] disabled:cursor-not-allowed disabled:opacity-60 cursor-pointer dark:bg-emerald-900/80 dark:hover:bg-emerald-800"
             >
               {loading ? (
                 <Loader2 className="h-4 w-4 animate-spin" />
@@ -1491,68 +1492,68 @@ export default function UsersPage() {
         </div>
 
         {/* Table */}
-        <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
+        <div className="overflow-hidden rounded-[2rem] border border-[#1C3324]/12 bg-white/80 shadow-xs backdrop-blur-md dark:border-white/10 dark:bg-[#15221B]/80">
           {loading ? (
             <div className="flex min-h-[350px] items-center justify-center">
-              <div className="flex items-center gap-3 text-sm text-slate-500 dark:text-zinc-400">
-                <Loader2 className="h-5 w-5 animate-spin" />
+              <div className="flex items-center gap-3 text-xs font-bold text-[#3A5A46] dark:text-zinc-400">
+                <Loader2 className="h-5 w-5 animate-spin text-[#8B263E] dark:text-[#D8B65C]" />
                 در حال دریافت کاربران...
               </div>
             </div>
           ) : filteredUsers.length === 0 ? (
             <div className="flex min-h-[350px] flex-col items-center justify-center px-6 text-center">
-              <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-slate-100 dark:bg-zinc-800">
-                <Users className="h-7 w-7 text-slate-400 dark:text-zinc-500" />
+              <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl border border-[#1C3324]/10 bg-white text-[#8B263E] dark:border-white/10 dark:bg-zinc-800 dark:text-[#D8B65C]">
+                <Users className="h-7 w-7" />
               </div>
 
-              <h3 className="font-semibold text-slate-800 dark:text-zinc-100">
+              <h3 className="font-black text-[#1C3324] dark:text-zinc-100">
                 کاربری پیدا نشد
               </h3>
 
-              <p className="mt-1 text-sm text-slate-500 dark:text-zinc-400">
+              <p className="mt-1 text-xs font-medium text-[#3A5A46] dark:text-zinc-400">
                 عبارت جستجو یا فیلتر نقش را تغییر دهید.
               </p>
             </div>
           ) : (
             <div className="overflow-x-auto">
-              <table className="w-full min-w-[1050px] text-right">
+              <table className="w-full min-w-[1050px] text-right text-xs">
                 <thead>
-                  <tr className="border-b border-slate-200 bg-slate-50 text-xs text-slate-500 dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-400">
-                    <th className="px-5 py-4 font-medium">
+                  <tr className="border-b border-[#1C3324]/10 bg-white/90 font-black text-[#1C3324] dark:border-white/10 dark:bg-[#15221B] dark:text-zinc-200">
+                    <th className="px-5 py-4">
                       کاربر
                     </th>
 
-                    <th className="px-5 py-4 font-medium">
+                    <th className="px-5 py-4">
                       تماس
                     </th>
 
-                    <th className="px-5 py-4 font-medium">
+                    <th className="px-5 py-4">
                       نقش
                     </th>
 
-                    <th className="px-5 py-4 font-medium">
+                    <th className="px-5 py-4">
                       وضعیت
                     </th>
 
-                    <th className="px-5 py-4 font-medium">
+                    <th className="px-5 py-4">
                       سفارش‌ها
                     </th>
 
-                    <th className="px-5 py-4 font-medium">
+                    <th className="px-5 py-4">
                       مجموع خرید
                     </th>
 
-                    <th className="px-5 py-4 font-medium">
+                    <th className="px-5 py-4">
                       تاریخ ثبت
                     </th>
 
-                    <th className="px-5 py-4 font-medium text-center">
+                    <th className="px-5 py-4 text-center">
                       ورود
                     </th>
                   </tr>
                 </thead>
 
-                <tbody>
+                <tbody className="divide-y divide-[#1C3324]/5">
                   {filteredUsers.map(
                     (user) => (
                       <UserTableRow
@@ -1572,7 +1573,7 @@ export default function UsersPage() {
           )}
         </div>
 
-        <div className="mt-3 text-xs text-slate-400 dark:text-zinc-500">
+        <div className="text-xs font-bold text-[#3A5A46]">
           نمایش{" "}
           {formatMoney(
             filteredUsers.length
@@ -1589,29 +1590,29 @@ export default function UsersPage() {
       {selectedUser && (
         <div className="fixed inset-0 z-50">
           <div
-            className="absolute inset-0 bg-slate-950/50 backdrop-blur-sm dark:bg-black/70"
+            className="absolute inset-0 bg-black/50 backdrop-blur-sm"
             onClick={closeUser}
           />
 
-          <aside className="absolute inset-y-0 right-0 flex w-full max-w-2xl flex-col overflow-hidden bg-white shadow-2xl dark:bg-zinc-950">
+          <aside className="absolute inset-y-0 right-0 flex w-full max-w-2xl flex-col overflow-hidden bg-white shadow-2xl dark:bg-[#121A15] dark:border-l dark:border-white/10">
 
             {/* Drawer header */}
-            <div className="flex items-center justify-between border-b border-slate-200 px-5 py-4 dark:border-zinc-800">
+            <div className="flex items-center justify-between border-b border-[#1C3324]/10 px-6 py-5 bg-white dark:border-white/10 dark:bg-[#15221B]">
               <div className="flex items-center gap-3">
-                <div className="flex h-11 w-11 items-center justify-center rounded-full bg-slate-900 font-bold text-white dark:bg-white dark:text-zinc-900">
+                <div className="flex h-11 w-11 items-center justify-center rounded-full bg-[#1C3324] font-black text-white dark:bg-emerald-900 dark:text-[#D8B65C]">
                   {getInitial(
                     selectedUser
                   )}
                 </div>
 
                 <div>
-                  <h2 className="font-bold text-slate-900 dark:text-zinc-100">
+                  <h2 className="font-black text-[#1C3324] dark:text-zinc-100">
                     {selectedUser.name ||
                       selectedUser.email ||
                       "کاربر"}
                   </h2>
 
-                  <p className="mt-0.5 text-xs text-slate-500 dark:text-zinc-500">
+                  <p className="mt-0.5 font-mono text-xs text-[#3A5A46] dark:text-zinc-400">
                     {selectedUser.id}
                   </p>
                 </div>
@@ -1626,7 +1627,7 @@ export default function UsersPage() {
                         true
                       )
                     }
-                    className="inline-flex items-center gap-2 rounded-xl border border-slate-200 px-3 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-50 dark:border-zinc-700 dark:text-zinc-200 dark:hover:bg-zinc-900"
+                    className="inline-flex items-center gap-2 rounded-2xl border border-[#1C3324]/15 bg-white px-4 py-2.5 text-xs font-bold text-[#1C3324] transition hover:border-[#8B263E] hover:text-[#8B263E] cursor-pointer dark:border-white/10 dark:bg-[#101813] dark:text-zinc-200 dark:hover:border-[#D8B65C] dark:hover:text-[#D8B65C]"
                   >
                     <Pencil className="h-4 w-4" />
                     ویرایش
@@ -1669,7 +1670,7 @@ export default function UsersPage() {
                             ),
                         });
                       }}
-                      className="inline-flex items-center gap-2 rounded-xl border border-slate-200 px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 dark:border-zinc-700 dark:text-zinc-200 dark:hover:bg-zinc-900"
+                      className="inline-flex items-center gap-2 rounded-2xl border border-[#1C3324]/15 bg-white px-4 py-2.5 text-xs font-bold text-[#1C3324] hover:bg-neutral-50 cursor-pointer dark:border-white/10 dark:bg-[#101813] dark:text-zinc-200"
                     >
                       <X className="h-4 w-4" />
                       لغو
@@ -1683,7 +1684,7 @@ export default function UsersPage() {
                       disabled={
                         savingUser
                       }
-                      className="inline-flex items-center gap-2 rounded-xl bg-slate-900 px-3 py-2 text-sm font-medium text-white hover:bg-slate-800 disabled:opacity-60 dark:bg-white dark:text-zinc-900 dark:hover:bg-zinc-200"
+                      className="inline-flex items-center gap-2 rounded-2xl bg-[#1C3324] px-4 py-2.5 text-xs font-black text-white hover:bg-[#8B263E] disabled:opacity-60 cursor-pointer dark:bg-emerald-900/80 dark:hover:bg-emerald-800"
                     >
                       {savingUser ? (
                         <Loader2 className="h-4 w-4 animate-spin" />
@@ -1701,7 +1702,7 @@ export default function UsersPage() {
                   onClick={
                     closeUser
                   }
-                  className="rounded-xl p-2 text-slate-600 hover:bg-slate-100 dark:text-zinc-400 dark:hover:bg-zinc-900"
+                  className="rounded-xl p-2 text-[#3A5A46] hover:bg-[#1C3324]/5 cursor-pointer dark:text-zinc-400 dark:hover:bg-white/5"
                 >
                   <X className="h-5 w-5" />
                 </button>
@@ -1709,17 +1710,17 @@ export default function UsersPage() {
             </div>
 
             {/* Drawer content */}
-            <div className="flex-1 overflow-y-auto p-5">
+            <div className="flex-1 overflow-y-auto p-6 space-y-6">
 
               {/* User information */}
-              <section className="mb-5 rounded-2xl border border-slate-200 bg-slate-50 p-4 dark:border-zinc-800 dark:bg-zinc-900">
-                <div className="mb-4 flex items-center justify-between gap-3">
+              <section className="rounded-3xl border border-[#1C3324]/15 bg-white p-5 shadow-xs dark:border-white/10 dark:bg-[#15221B]">
+                <div className="mb-5 flex items-center justify-between gap-3">
                   <div>
-                    <h3 className="font-bold text-slate-900 dark:text-zinc-100">
+                    <h3 className="font-black text-[#1C3324] dark:text-zinc-100">
                       اطلاعات کاربر
                     </h3>
 
-                    <p className="mt-1 text-xs text-slate-500 dark:text-zinc-400">
+                    <p className="mt-1 text-xs font-medium text-[#3A5A46] dark:text-zinc-400">
                       اطلاعات اصلی حساب
                     </p>
                   </div>
@@ -1834,7 +1835,7 @@ export default function UsersPage() {
 
                   {/* Role */}
                   <div>
-                    <label className="mb-2 block text-xs font-medium text-slate-600 dark:text-zinc-300">
+                    <label className="mb-2 block text-xs font-bold text-[#3A5A46]">
                       نقش کاربر
                     </label>
 
@@ -1858,27 +1859,27 @@ export default function UsersPage() {
                             })
                           )
                         }
-                        className="h-11 w-full rounded-xl border border-slate-200 bg-white px-3 text-sm text-slate-900 outline-none focus:border-slate-400 dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-100 dark:focus:border-zinc-500"
+                        className="h-11 w-full rounded-2xl border border-[#1C3324]/15 bg-white px-3 text-xs font-bold text-[#1C3324] outline-none focus:border-[#1C3324] cursor-pointer dark:border-white/10 dark:bg-[#101813] dark:text-zinc-100 dark:focus:border-[#D8B65C]"
                       >
-                        <option value="user">
+                        <option value="user" className="dark:bg-[#101813]">
                           کاربر
                         </option>
 
-                        <option value="admin">
+                        <option value="admin" className="dark:bg-[#101813]">
                           مدیر
                         </option>
                       </select>
                     ) : (
-                      <div className="flex h-11 items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 text-sm text-slate-700 dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-200">
+                      <div className="flex h-11 items-center gap-2 rounded-2xl border border-[#1C3324]/15 bg-white px-3 text-xs font-bold text-[#1C3324] dark:border-white/10 dark:bg-zinc-900/50 dark:text-zinc-100">
                         {selectedUser.role ===
                         "admin" ? (
                           <>
-                            <ShieldCheck className="h-4 w-4 text-indigo-600 dark:text-indigo-400" />
+                            <ShieldCheck className="h-4 w-4 text-[#8B263E] dark:text-[#D8B65C]" />
                             مدیر
                           </>
                         ) : (
                           <>
-                            <UserRound className="h-4 w-4 text-slate-500" />
+                            <UserRound className="h-4 w-4 text-[#3A5A46] dark:text-zinc-400" />
                             کاربر
                           </>
                         )}
@@ -1888,11 +1889,11 @@ export default function UsersPage() {
 
                   {/* Verification */}
                   <div>
-                    <label className="mb-2 block text-xs font-medium text-slate-600 dark:text-zinc-300">
+                    <label className="mb-2 block text-xs font-bold text-[#3A5A46] dark:text-zinc-400">
                       وضعیت احراز هویت
                     </label>
 
-                    <div className="rounded-xl border border-slate-200 bg-white p-3 dark:border-zinc-700 dark:bg-zinc-950">
+                    <div className="rounded-2xl border border-[#1C3324]/15 bg-white p-3.5 shadow-xs dark:border-white/10 dark:bg-zinc-900/80">
                       <div className="flex items-center justify-between gap-3">
                         {renderVerificationBadge(
                           selectedUser.verified
@@ -1910,7 +1911,7 @@ export default function UsersPage() {
                             disabled={
                               verifyingUser
                             }
-                            className="inline-flex items-center gap-1.5 rounded-lg border border-red-200 bg-white px-3 py-2 text-xs font-medium text-red-600 transition hover:bg-red-50 disabled:cursor-not-allowed disabled:opacity-50 dark:border-red-900 dark:bg-zinc-950 dark:text-red-400 dark:hover:bg-red-950/30"
+                            className="inline-flex items-center gap-1.5 rounded-xl border border-rose-200 bg-rose-50 px-3 py-2 text-xs font-bold text-rose-700 transition hover:bg-rose-100 disabled:cursor-not-allowed disabled:opacity-50 cursor-pointer dark:border-rose-900/40 dark:bg-rose-950/30 dark:text-rose-300"
                           >
                             {verifyingUser ? (
                               <Loader2 className="h-3.5 w-3.5 animate-spin" />
@@ -1932,7 +1933,7 @@ export default function UsersPage() {
                             disabled={
                               verifyingUser
                             }
-                            className="inline-flex items-center gap-1.5 rounded-lg bg-emerald-600 px-3 py-2 text-xs font-medium text-white transition hover:bg-emerald-700 disabled:cursor-not-allowed disabled:opacity-50"
+                            className="inline-flex items-center gap-1.5 rounded-xl bg-emerald-600 px-3 py-2 text-xs font-bold text-white transition hover:bg-emerald-700 disabled:cursor-not-allowed disabled:opacity-50 cursor-pointer dark:bg-emerald-800 dark:hover:bg-emerald-700"
                           >
                             {verifyingUser ? (
                               <Loader2 className="h-3.5 w-3.5 animate-spin" />
@@ -1945,7 +1946,7 @@ export default function UsersPage() {
                         )}
                       </div>
 
-                      <p className="mt-2 text-[11px] text-slate-400 dark:text-zinc-500">
+                      <p className="mt-2 text-[10px] font-medium text-[#3A5A46] dark:text-zinc-400">
                         وضعیت از طریق سرور مدیریت و PocketBase ذخیره می‌شود.
                       </p>
                     </div>
@@ -1954,7 +1955,7 @@ export default function UsersPage() {
               </section>
 
               {/* Stats */}
-              <section className="mb-5 grid grid-cols-2 gap-3 md:grid-cols-4">
+              <section className="grid grid-cols-2 gap-3 md:grid-cols-4">
                 <MiniStat
                   icon={
                     <ShoppingBag className="h-4 w-4" />
@@ -2000,19 +2001,19 @@ export default function UsersPage() {
               </section>
 
               {/* Addresses */}
-              <section className="mb-5 rounded-2xl border border-slate-200 bg-white dark:border-zinc-800 dark:bg-zinc-900">
-                <div className="flex items-center justify-between border-b border-slate-200 px-4 py-4 dark:border-zinc-800">
+              <section className="rounded-3xl border border-[#1C3324]/15 bg-white shadow-xs overflow-hidden dark:border-white/10 dark:bg-[#15221B]">
+                <div className="flex items-center justify-between border-b border-[#1C3324]/10 px-5 py-4 bg-white dark:border-white/10 dark:bg-[#15221B]">
                   <div>
-                    <h3 className="font-bold text-slate-900 dark:text-zinc-100">
+                    <h3 className="font-black text-[#1C3324] dark:text-zinc-100">
                       آدرس‌های کاربر
                     </h3>
 
-                    <p className="mt-1 text-xs text-slate-500 dark:text-zinc-400">
+                    <p className="mt-1 text-xs font-medium text-[#3A5A46] dark:text-zinc-400">
                       مدیریت آدرس‌های ثبت‌شده
                     </p>
                   </div>
 
-                  <div className="rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-600 dark:bg-zinc-800 dark:text-zinc-300">
+                  <div className="rounded-full bg-[#1C3324]/5 px-3 py-1 text-xs font-bold text-[#1C3324] border border-[#1C3324]/10 dark:border-white/10 dark:bg-white/10 dark:text-zinc-200">
                     {formatMoney(
                       addresses.length
                     )}{" "}
@@ -2020,24 +2021,23 @@ export default function UsersPage() {
                   </div>
                 </div>
 
-                <div className="p-4">
+                <div className="p-5">
                   {loadingAddresses ? (
-                    <div className="flex items-center justify-center py-8 text-sm text-slate-500 dark:text-zinc-400">
-                      <Loader2 className="ml-2 h-5 w-5 animate-spin" />
+                    <div className="flex items-center justify-center py-8 text-xs font-bold text-[#3A5A46] dark:text-zinc-400">
+                      <Loader2 className="ml-2 h-5 w-5 animate-spin text-[#8B263E] dark:text-[#D8B65C]" />
                       در حال دریافت آدرس‌ها...
                     </div>
                   ) : addresses.length ===
                     0 ? (
-                    <div className="rounded-xl border border-dashed border-slate-200 bg-slate-50 px-4 py-8 text-center dark:border-zinc-700 dark:bg-zinc-950">
-                      <Home className="mx-auto mb-2 h-7 w-7 text-slate-300 dark:text-zinc-600" />
+                    <div className="rounded-2xl border border-dashed border-[#1C3324]/20 bg-white px-4 py-8 text-center dark:border-white/10 dark:bg-zinc-900/50">
+                      <Home className="mx-auto mb-2 h-7 w-7 text-[#3A5A46]/40 dark:text-zinc-500" />
 
-                      <p className="text-sm font-medium text-slate-600 dark:text-zinc-300">
+                      <p className="text-xs font-bold text-[#1C3324] dark:text-zinc-100">
                         آدرسی ثبت نشده است
                       </p>
 
-                      <p className="mt-1 text-xs text-slate-400 dark:text-zinc-500">
-                        اگر آدرس وجود دارد ولی اینجا نمایش داده نمی‌شود،
-                        قوانین دسترسی Collection آدرس‌ها را بررسی کنید.
+                      <p className="mt-1 text-[11px] text-[#3A5A46] dark:text-zinc-400">
+                        اگر آدرس وجود دارد ولی اینجا نمایش داده نمی‌شود، قوانین دسترسی Collection را بررسی کنید.
                       </p>
                     </div>
                   ) : (
@@ -2082,14 +2082,14 @@ export default function UsersPage() {
 
               {/* Address editor */}
               {editingAddress && (
-                <section className="mb-5 rounded-2xl border border-slate-200 bg-slate-50 p-4 dark:border-zinc-800 dark:bg-zinc-900">
+                <section className="rounded-3xl border border-[#1C3324]/15 bg-white p-5 shadow-xs dark:border-white/10 dark:bg-[#15221B]">
                   <div className="mb-4 flex items-center justify-between">
                     <div>
-                      <h3 className="font-bold text-slate-900 dark:text-zinc-100">
+                      <h3 className="font-black text-[#1C3324] dark:text-zinc-100">
                         ویرایش آدرس
                       </h3>
 
-                      <p className="mt-1 text-xs text-slate-500 dark:text-zinc-400">
+                      <p className="mt-1 text-xs font-medium text-[#3A5A46] dark:text-zinc-400">
                         اطلاعات آدرس را اصلاح کنید.
                       </p>
                     </div>
@@ -2099,7 +2099,7 @@ export default function UsersPage() {
                       onClick={
                         cancelEditAddress
                       }
-                      className="rounded-lg p-2 text-slate-600 hover:bg-slate-200 dark:text-zinc-400 dark:hover:bg-zinc-800"
+                      className="rounded-xl p-2 text-[#3A5A46] hover:bg-[#1C3324]/5 cursor-pointer"
                     >
                       <X className="h-4 w-4" />
                     </button>
@@ -2248,7 +2248,7 @@ export default function UsersPage() {
                       />
                     </div>
 
-                    <label className="flex cursor-pointer items-center gap-3 rounded-xl border border-slate-200 bg-white px-3 py-3 text-slate-800 dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-200">
+                    <label className="flex cursor-pointer items-center gap-3 rounded-2xl border border-[#1C3324]/15 bg-white px-4 py-3 text-xs font-bold text-[#1C3324] dark:border-white/10 dark:bg-[#101813] dark:text-zinc-100">
                       <input
                         type="checkbox"
                         checked={
@@ -2269,15 +2269,15 @@ export default function UsersPage() {
                             })
                           )
                         }
-                        className="h-4 w-4"
+                        className="h-4 w-4 accent-[#1C3324]"
                       />
 
-                      <span className="text-sm">
+                      <span>
                         آدرس پیش‌فرض
                       </span>
                     </label>
 
-                    <label className="flex cursor-pointer items-center gap-3 rounded-xl border border-slate-200 bg-white px-3 py-3 text-slate-800 dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-200">
+                    <label className="flex cursor-pointer items-center gap-3 rounded-2xl border border-[#1C3324]/15 bg-white px-4 py-3 text-xs font-bold text-[#1C3324] dark:border-white/10 dark:bg-[#101813] dark:text-zinc-100">
                       <input
                         type="checkbox"
                         checked={
@@ -2298,22 +2298,22 @@ export default function UsersPage() {
                             })
                           )
                         }
-                        className="h-4 w-4"
+                        className="h-4 w-4 accent-[#1C3324]"
                       />
 
-                      <span className="text-sm">
+                      <span>
                         آدرس فعال
                       </span>
                     </label>
                   </div>
 
-                  <div className="mt-4 flex justify-end gap-2">
+                  <div className="mt-5 flex justify-end gap-2">
                     <button
                       type="button"
                       onClick={
                         cancelEditAddress
                       }
-                      className="rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-medium text-slate-700 hover:bg-slate-50 dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-200 dark:hover:bg-zinc-900"
+                      className="rounded-2xl border border-[#1C3324]/15 bg-white px-4 py-2.5 text-xs font-bold text-[#1C3324] hover:bg-neutral-50 cursor-pointer dark:border-white/10 dark:bg-[#101813] dark:text-zinc-200"
                     >
                       لغو
                     </button>
@@ -2326,7 +2326,7 @@ export default function UsersPage() {
                       disabled={
                         savingAddress
                       }
-                      className="inline-flex items-center gap-2 rounded-xl bg-slate-900 px-4 py-2.5 text-sm font-medium text-white hover:bg-slate-800 disabled:opacity-60 dark:bg-white dark:text-zinc-900 dark:hover:bg-zinc-200"
+                      className="inline-flex items-center gap-2 rounded-2xl bg-[#1C3324] px-4 py-2.5 text-xs font-black text-white hover:bg-[#8B263E] disabled:opacity-60 cursor-pointer dark:bg-emerald-900/80 dark:hover:bg-emerald-800"
                     >
                       {savingAddress ? (
                         <Loader2 className="h-4 w-4 animate-spin" />
@@ -2341,8 +2341,8 @@ export default function UsersPage() {
               )}
 
               {/* System information */}
-              <section className="rounded-2xl border border-slate-200 bg-slate-50 p-4 dark:border-zinc-800 dark:bg-zinc-900">
-                <h3 className="mb-4 font-bold text-slate-900 dark:text-zinc-100">
+              <section className="rounded-3xl border border-[#1C3324]/15 bg-white p-5 shadow-xs dark:border-white/10 dark:bg-[#15221B]">
+                <h3 className="mb-4 font-black text-[#1C3324] dark:text-zinc-100">
                   اطلاعات سیستمی
                 </h3>
 
@@ -2406,31 +2406,77 @@ function StatCard({
   icon,
   title,
   value,
+  unit,
+  description,
+  accent = "default",
 }: {
   icon: ReactNode;
   title: string;
   value: string;
+  unit?: string;
+  description?: string;
+  accent?: "default" | "emerald" | "gold" | "blue" | "crimson";
 }) {
+  const accentStyles = {
+    default: {
+      iconBg: "bg-[#1C3324]/10 text-[#1C3324] dark:bg-white/10 dark:text-zinc-200",
+      border: "hover:border-[#1C3324]/30",
+    },
+    emerald: {
+      iconBg: "bg-emerald-500/10 text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-400",
+      border: "hover:border-emerald-500/30",
+    },
+    gold: {
+      iconBg: "bg-[#B4901E]/10 text-[#B4901E] dark:bg-[#D8B65C]/20 dark:text-[#D8B65C]",
+      border: "hover:border-[#B4901E]/40",
+    },
+    blue: {
+      iconBg: "bg-sky-500/10 text-sky-700 dark:bg-sky-500/20 dark:text-sky-400",
+      border: "hover:border-sky-500/30",
+    },
+    crimson: {
+      iconBg: "bg-[#8B263E]/10 text-[#8B263E] dark:bg-[#8B263E]/25 dark:text-rose-300",
+      border: "hover:border-[#8B263E]/40",
+    },
+  }[accent];
+
   return (
-    <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm transition-colors dark:border-zinc-800 dark:bg-zinc-900">
+    <div
+      className={`group relative overflow-hidden rounded-3xl border border-[#1C3324]/12 bg-white/95 p-5 shadow-xs backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md dark:border-white/10 dark:bg-[#15221B]/95 ${accentStyles.border}`}
+    >
       <div className="flex items-center justify-between">
-        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-slate-100 text-slate-700 dark:bg-zinc-800 dark:text-zinc-200">
+        <div
+          className={`flex h-11 w-11 items-center justify-center rounded-2xl border border-black/5 dark:border-white/10 ${accentStyles.iconBg}`}
+        >
           {icon}
         </div>
 
-        <span className="text-xs text-slate-400 dark:text-zinc-500">
-          Perza Gold
+        <span className="text-[11px] font-bold text-[#3A5A46] dark:text-zinc-400">
+          پرنا زر
         </span>
       </div>
 
       <div className="mt-4">
-        <div className="text-xs text-slate-500 dark:text-zinc-400">
+        <div className="text-xs font-bold text-[#3A5A46] dark:text-zinc-400">
           {title}
         </div>
 
-        <div className="mt-1 text-lg font-bold text-slate-900 dark:text-zinc-100">
-          {value}
+        <div className="mt-1 flex items-baseline gap-1">
+          <span className="text-2xl font-black text-[#1C3324] dark:text-zinc-100">
+            {value}
+          </span>
+          {unit && (
+            <span className="text-xs font-bold text-[#3A5A46] dark:text-zinc-400">
+              {unit}
+            </span>
+          )}
         </div>
+
+        {description && (
+          <div className="mt-1.5 text-[11px] text-[#3A5A46] dark:text-zinc-400">
+            {description}
+          </div>
+        )}
       </div>
     </div>
   );
@@ -2446,22 +2492,22 @@ function UserTableRow({
   return (
     <tr
       onClick={onOpen}
-      className="group cursor-pointer border-b border-slate-100 transition-colors last:border-0 hover:bg-slate-50 dark:border-zinc-800 dark:hover:bg-zinc-800/60"
+      className="group cursor-pointer border-b border-[#1C3324]/5 transition-colors last:border-0 hover:bg-[#FAF9F6] dark:border-white/5 dark:hover:bg-white/[0.04]"
     >
       <td className="px-5 py-4">
         <div className="flex items-center gap-3">
-          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-slate-900 text-sm font-bold text-white dark:bg-white dark:text-zinc-900">
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#1C3324] text-xs font-black text-white dark:bg-emerald-900 dark:text-[#D8B65C]">
             {getInitial(user)}
           </div>
 
           <div className="min-w-0">
-            <div className="truncate font-semibold text-slate-800 dark:text-zinc-100">
+            <div className="truncate font-black text-[#1C3324] dark:text-zinc-100">
               {user.name ||
                 user.email ||
                 "کاربر بدون نام"}
             </div>
 
-            <div className="mt-1 truncate text-xs text-slate-400 dark:text-zinc-500">
+            <div className="mt-1 truncate font-mono text-[10px] font-bold text-[#3A5A46] dark:text-zinc-400">
               {user.id}
             </div>
           </div>
@@ -2469,15 +2515,15 @@ function UserTableRow({
       </td>
 
       <td className="px-5 py-4">
-        <div className="space-y-1 text-sm">
-          <div className="flex items-center gap-2 text-slate-700 dark:text-zinc-200">
-            <Phone className="h-3.5 w-3.5 text-slate-400 dark:text-zinc-500" />
+        <div className="space-y-1 text-xs">
+          <div className="flex items-center gap-2 font-bold text-[#1C3324] dark:text-zinc-200">
+            <Phone className="h-3.5 w-3.5 text-[#3A5A46] dark:text-zinc-400" />
             {formatPhone(
               user.phone
             )}
           </div>
 
-          <div className="flex items-center gap-2 text-xs text-slate-400 dark:text-zinc-500">
+          <div className="flex items-center gap-2 text-[11px] text-[#3A5A46] dark:text-zinc-400">
             <Mail className="h-3.5 w-3.5" />
             {user.email || "—"}
           </div>
@@ -2487,12 +2533,12 @@ function UserTableRow({
       <td className="px-5 py-4">
         {user.role ===
         "admin" ? (
-          <span className="inline-flex items-center gap-1.5 rounded-full bg-indigo-50 px-3 py-1.5 text-xs font-medium text-indigo-700 ring-1 ring-indigo-200 dark:bg-indigo-950/40 dark:text-indigo-400 dark:ring-indigo-900">
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-[#8B263E]/10 px-3 py-1 text-xs font-bold text-[#8B263E] border border-[#8B263E]/20 dark:bg-[#8B263E]/20 dark:text-rose-300 dark:border-[#8B263E]/30">
             <ShieldCheck className="h-3.5 w-3.5" />
             مدیر
           </span>
         ) : (
-          <span className="inline-flex items-center gap-1.5 rounded-full bg-slate-100 px-3 py-1.5 text-xs font-medium text-slate-600 dark:bg-zinc-800 dark:text-zinc-300">
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-[#1C3324]/5 px-3 py-1 text-xs font-bold text-[#3A5A46] border border-[#1C3324]/10 dark:bg-white/10 dark:text-zinc-300 dark:border-white/10">
             <UserRound className="h-3.5 w-3.5" />
             کاربر
           </span>
@@ -2501,32 +2547,32 @@ function UserTableRow({
 
       <td className="px-5 py-4">
         {user.verified ? (
-          <span className="inline-flex items-center gap-1.5 text-xs font-medium text-emerald-600 dark:text-emerald-400">
+          <span className="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-700 dark:text-emerald-400">
             <CheckCircle2 className="h-4 w-4" />
             تأیید شده
           </span>
         ) : (
-          <span className="inline-flex items-center gap-1.5 text-xs font-medium text-amber-600 dark:text-amber-400">
+          <span className="inline-flex items-center gap-1.5 text-xs font-bold text-amber-700 dark:text-amber-400">
             <ShieldX className="h-4 w-4" />
             تأیید نشده
           </span>
         )}
       </td>
 
-      <td className="px-5 py-4 text-sm font-medium text-slate-800 dark:text-zinc-200">
+      <td className="px-5 py-4 text-xs font-black text-[#1C3324] dark:text-zinc-100">
         {formatMoney(
           user.stats.ordersCount
         )}
       </td>
 
-      <td className="px-5 py-4 text-sm font-medium text-slate-800 dark:text-zinc-200">
+      <td className="px-5 py-4 text-xs font-black text-[#1C3324] dark:text-zinc-100">
         {formatMoney(
           user.stats.totalSpent
         )}{" "}
         تومان
       </td>
 
-      <td className="px-5 py-4 text-sm text-slate-500 dark:text-zinc-400">
+      <td className="px-5 py-4 text-xs font-medium text-[#3A5A46] dark:text-zinc-400">
         {formatDate(
           user.created
         )}
@@ -2534,7 +2580,7 @@ function UserTableRow({
 
       <td className="px-5 py-4">
         <div className="flex justify-center">
-          <div className="flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-500 transition-all group-hover:border-slate-300 group-hover:bg-slate-900 group-hover:text-white dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-400 dark:group-hover:border-zinc-600 dark:group-hover:bg-white dark:group-hover:text-zinc-900">
+          <div className="flex h-9 w-9 items-center justify-center rounded-2xl border border-[#1C3324]/15 bg-white text-[#3A5A46] transition-all group-hover:border-[#8B263E] group-hover:bg-[#8B263E] group-hover:text-white dark:border-white/10 dark:bg-zinc-800 dark:text-zinc-300 dark:group-hover:bg-[#8B263E]">
             <ChevronRight className="h-4 w-4 rotate-180" />
           </div>
         </div>
@@ -2557,35 +2603,35 @@ function AddressCard({
   deleting: boolean;
 }) {
   return (
-    <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4 dark:border-zinc-700 dark:bg-zinc-950">
+    <div className="rounded-2xl border border-[#1C3324]/15 bg-white p-4 dark:border-white/10 dark:bg-zinc-900/80">
       <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
         <div className="min-w-0 flex-1">
           <div className="mb-2 flex flex-wrap items-center gap-2">
-            <h4 className="font-semibold text-slate-800 dark:text-zinc-100">
+            <h4 className="font-black text-xs text-[#1C3324] dark:text-zinc-100">
               {address.title ||
                 "آدرس"}
             </h4>
 
             {address.isDefault && (
-              <span className="rounded-full bg-emerald-50 px-2.5 py-1 text-[11px] font-medium text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-400">
+              <span className="rounded-full bg-emerald-50 px-2.5 py-0.5 text-[10px] font-bold text-emerald-700 border border-emerald-200 dark:bg-emerald-950/40 dark:text-emerald-300 dark:border-emerald-800/40">
                 پیش‌فرض
               </span>
             )}
 
             {address.isActive ? (
-              <span className="rounded-full bg-blue-50 px-2.5 py-1 text-[11px] font-medium text-blue-700 dark:bg-blue-950/40 dark:text-blue-400">
+              <span className="rounded-full bg-blue-50 px-2.5 py-0.5 text-[10px] font-bold text-blue-700 border border-blue-200 dark:bg-blue-950/40 dark:text-blue-300 dark:border-blue-800/40">
                 فعال
               </span>
             ) : (
-              <span className="rounded-full bg-slate-200 px-2.5 py-1 text-[11px] font-medium text-slate-500 dark:bg-zinc-800 dark:text-zinc-500">
+              <span className="rounded-full bg-neutral-200 px-2.5 py-0.5 text-[10px] font-bold text-neutral-600 dark:bg-zinc-800 dark:text-zinc-400">
                 غیرفعال
               </span>
             )}
           </div>
 
-          <div className="space-y-1.5 text-sm text-slate-600 dark:text-zinc-300">
+          <div className="space-y-1 text-xs font-medium text-[#3A5A46] dark:text-zinc-400">
             <div>
-              <span className="font-medium">
+              <span className="font-bold text-[#1C3324] dark:text-zinc-200">
                 گیرنده:
               </span>{" "}
               {address.recipientName ||
@@ -2593,7 +2639,7 @@ function AddressCard({
             </div>
 
             <div>
-              <span className="font-medium">
+              <span className="font-bold text-[#1C3324] dark:text-zinc-200">
                 تلفن:
               </span>{" "}
               {address.recipientPhone ||
@@ -2601,9 +2647,9 @@ function AddressCard({
             </div>
 
             <div className="flex items-start gap-2">
-              <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-slate-400 dark:text-zinc-500" />
+              <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-[#8B263E] dark:text-[#D8B65C]" />
 
-              <span>
+              <span className="dark:text-zinc-300">
                 {getAddressSummary(
                   address
                 )}
@@ -2611,7 +2657,7 @@ function AddressCard({
             </div>
 
             {address.postalCode && (
-              <div className="text-xs text-slate-400 dark:text-zinc-500">
+              <div className="text-[11px] text-[#3A5A46]/70 dark:text-zinc-500">
                 کد پستی:{" "}
                 {address.postalCode}
               </div>
@@ -2623,7 +2669,7 @@ function AddressCard({
           <button
             type="button"
             onClick={onEdit}
-            className="rounded-lg border border-slate-200 bg-white p-2 text-slate-600 hover:bg-slate-100 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-300 dark:hover:bg-zinc-800"
+            className="rounded-xl border border-[#1C3324]/15 bg-white p-2 text-[#3A5A46] hover:border-[#8B263E] hover:text-[#8B263E] cursor-pointer dark:border-white/10 dark:bg-zinc-800 dark:text-zinc-300 dark:hover:border-[#D8B65C] dark:hover:text-[#D8B65C]"
             title="ویرایش"
           >
             <Pencil className="h-4 w-4" />
@@ -2634,7 +2680,7 @@ function AddressCard({
             onClick={
               onToggleActive
             }
-            className="rounded-lg border border-slate-200 bg-white p-2 text-slate-600 hover:bg-slate-100 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-300 dark:hover:bg-zinc-800"
+            className="rounded-xl border border-[#1C3324]/15 bg-white p-2 text-[#3A5A46] hover:border-[#8B263E] hover:text-[#8B263E] cursor-pointer dark:border-white/10 dark:bg-zinc-800 dark:text-zinc-300 dark:hover:border-[#D8B65C] dark:hover:text-[#D8B65C]"
             title={
               address.isActive
                 ? "غیرفعال کردن"
@@ -2652,7 +2698,7 @@ function AddressCard({
             type="button"
             onClick={onDelete}
             disabled={deleting}
-            className="rounded-lg border border-red-200 bg-white p-2 text-red-500 hover:bg-red-50 disabled:opacity-50 dark:border-red-900 dark:bg-zinc-900 dark:text-red-400 dark:hover:bg-red-950/30"
+            className="rounded-xl border border-rose-200 bg-white p-2 text-rose-600 hover:bg-rose-50 disabled:opacity-50 cursor-pointer dark:border-rose-900/40 dark:bg-rose-950/20 dark:text-rose-400 dark:hover:bg-rose-950/40"
             title="حذف"
           >
             {deleting ? (
@@ -2677,13 +2723,13 @@ function MiniStat({
   value: string;
 }) {
   return (
-    <div className="rounded-xl border border-slate-200 bg-slate-50 p-3 dark:border-zinc-800 dark:bg-zinc-900">
-      <div className="flex items-center gap-2 text-xs text-slate-500 dark:text-zinc-400">
+    <div className="rounded-2xl border border-[#1C3324]/15 bg-white p-4 shadow-xs dark:border-white/10 dark:bg-zinc-900/80">
+      <div className="flex items-center gap-2 text-xs font-bold text-[#3A5A46] dark:text-zinc-400">
         {icon}
         {title}
       </div>
 
-      <div className="mt-2 truncate text-sm font-bold text-slate-800 dark:text-zinc-100">
+      <div className="mt-2 truncate text-xs font-black text-[#1C3324] dark:text-zinc-100">
         {value}
       </div>
     </div>
@@ -2709,7 +2755,7 @@ function FormField({
 }) {
   return (
     <div>
-      <label className="mb-2 flex items-center gap-1.5 text-xs font-medium text-slate-600 dark:text-zinc-300">
+      <label className="mb-2 flex items-center gap-1.5 text-xs font-bold text-[#3A5A46] dark:text-zinc-400">
         {icon}
         {label}
       </label>
@@ -2722,16 +2768,16 @@ function FormField({
               event.target.value
             )
           }
-          className="h-11 w-full rounded-xl border border-slate-200 bg-white px-3 text-sm text-slate-900 outline-none focus:border-slate-400 dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-100 dark:focus:border-zinc-500"
+          className="h-11 w-full rounded-2xl border border-[#1C3324]/15 bg-white px-3 text-xs font-bold text-[#1C3324] outline-none focus:border-[#1C3324] dark:border-white/10 dark:bg-[#101813] dark:text-zinc-100 dark:focus:border-[#D8B65C]"
         />
       ) : (
-        <div className="flex min-h-11 items-center rounded-xl border border-slate-200 bg-white px-3 text-sm text-slate-700 dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-200">
+        <div className="flex min-h-11 items-center rounded-2xl border border-[#1C3324]/15 bg-white px-3 text-xs font-bold text-[#1C3324] dark:border-white/10 dark:bg-zinc-900/50 dark:text-zinc-100">
           {value || "—"}
         </div>
       )}
 
       {note && (
-        <p className="mt-1.5 text-[10px] text-slate-400 dark:text-zinc-500">
+        <p className="mt-1.5 text-[10px] text-[#3A5A46]/70 dark:text-zinc-500">
           {note}
         </p>
       )}
@@ -2754,7 +2800,7 @@ function AddressFormField({
 }) {
   return (
     <div>
-      <label className="mb-2 block text-xs font-medium text-slate-600 dark:text-zinc-300">
+      <label className="mb-2 block text-xs font-bold text-[#3A5A46] dark:text-zinc-400">
         {label}
       </label>
 
@@ -2767,7 +2813,7 @@ function AddressFormField({
             )
           }
           rows={4}
-          className="w-full resize-none rounded-xl border border-slate-200 bg-white px-3 py-3 text-sm text-slate-900 outline-none focus:border-slate-400 dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-100 dark:focus:border-zinc-500"
+          className="w-full resize-none rounded-2xl border border-[#1C3324]/15 bg-white px-3 py-3 text-xs font-bold text-[#1C3324] outline-none focus:border-[#1C3324] dark:border-white/10 dark:bg-[#101813] dark:text-zinc-100 dark:focus:border-[#D8B65C]"
         />
       ) : (
         <input
@@ -2777,7 +2823,7 @@ function AddressFormField({
               event.target.value
             )
           }
-          className="h-11 w-full rounded-xl border border-slate-200 bg-white px-3 text-sm text-slate-900 outline-none focus:border-slate-400 dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-100 dark:focus:border-zinc-500"
+          className="h-11 w-full rounded-2xl border border-[#1C3324]/15 bg-white px-3 text-xs font-bold text-[#1C3324] outline-none focus:border-[#1C3324] dark:border-white/10 dark:bg-[#101813] dark:text-zinc-100 dark:focus:border-[#D8B65C]"
         />
       )}
     </div>
@@ -2794,17 +2840,17 @@ function MetaRow({
   value: string;
 }) {
   return (
-    <div className="flex items-center gap-3 rounded-xl border border-slate-200 bg-white px-3 py-3 dark:border-zinc-700 dark:bg-zinc-950">
-      <div className="text-slate-400 dark:text-zinc-500">
+    <div className="flex items-center gap-3 rounded-2xl border border-[#1C3324]/15 bg-white px-3 py-3 dark:border-white/10 dark:bg-zinc-900/80">
+      <div className="text-[#8B263E] dark:text-[#D8B65C]">
         {icon}
       </div>
 
       <div className="min-w-0">
-        <div className="text-[11px] text-slate-400 dark:text-zinc-500">
+        <div className="text-[10px] font-bold text-[#3A5A46] dark:text-zinc-400">
           {label}
         </div>
 
-        <div className="mt-0.5 truncate text-xs font-medium text-slate-700 dark:text-zinc-200">
+        <div className="mt-0.5 truncate text-xs font-black text-[#1C3324] dark:text-zinc-100">
           {value}
         </div>
       </div>

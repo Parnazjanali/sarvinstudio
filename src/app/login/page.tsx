@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { pb } from "@/lib/pocketbase";
+import { recordAuditLogClient } from "@/lib/audit-client";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import Cookies from "js-cookie";
@@ -130,6 +131,16 @@ function LoginFormContent() {
       const cookieString = pb.authStore.exportToCookie({ httpOnly: false });
       Cookies.set("pb_auth", cookieString, { expires: 7, path: "/" });
 
+      // ثبت خودکار لاگ ورود
+      void recordAuditLogClient({
+        category: "auth",
+        title: isAdmin ? "ورود مدیر به سامانه" : "ورود کاربر به سیستم",
+        description: `کاربر با شناسه/ایمیل ${identifier} با موفقیت وارد سیستم شد.`,
+        level: "info",
+        targetId: (authData?.record as any)?.id,
+        targetType: "user",
+      });
+
       const redirectUrl = searchParams.get("redirect");
       if (redirectUrl && redirectUrl.startsWith("/") && !redirectUrl.startsWith("//")) {
         router.replace(redirectUrl);
@@ -159,8 +170,8 @@ function LoginFormContent() {
           <div className="w-16 h-16 rounded-2xl bg-[#FAF9F6] border border-[#1C3324]/20 flex items-center justify-center mb-4 shadow-xs">
             <SarvIcon />
           </div>
-          <h2 className="text-2xl font-extrabold text-center text-[#1C3324]">ورود به سروین استودیو</h2>
-          <p className="text-xs mt-1.5 text-[#3A5A46] font-medium">به استواریِ سرو، به امنیتِ سایه ✨</p>
+          <h2 className="text-2xl font-extrabold text-center text-[#1C3324] font-heading">ورود به پرنا زر</h2>
+          <p className="text-xs mt-1.5 text-[#8B263E] font-bold">مثل زر بدرخش ✨</p>
         </div>
 
         {serverError && (
@@ -293,7 +304,7 @@ function LoginFormContent() {
         <p className="text-center text-xs mt-6 text-[#3A5A46] relative z-10 font-medium">
           هنوز به جمع ما نپیوسته‌اید؟{" "}
           <Link href="/register" className="font-bold text-[#8B263E] hover:text-[#1C3324] transition-colors underline underline-offset-4">
-            ثبت‌نام در سروین
+            ثبت‌نام در پرنا زر
           </Link>
         </p>
       </div>
