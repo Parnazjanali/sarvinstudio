@@ -88,28 +88,18 @@ export async function PATCH(
     }
 
     // بررسی توکن فرستنده با مدیریت خطای 404 (کاربر حذف‌شده یا دیتابیس ریست‌شده)
+    // 🛡️ Sentinel: Fixed critical authorization bypass.
+    // Previous implementation manually parsed the JWT without verifying the signature,
+    // allowing attackers to forge tokens. Now using PocketBase's authRefresh() for proper validation.
     let currentUser: any = null;
+    const userPb = new PocketBase(pocketBaseUrl);
+    userPb.authStore.save(token, null);
     try {
-      const base64Url = token.split(".")[1];
-      const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
-      const jsonPayload = decodeURIComponent(
-        atob(base64)
-          .split("")
-          .map((c) => "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2))
-          .join("")
-      );
-      const parsedToken = JSON.parse(jsonPayload);
-
-      if (parsedToken && parsedToken.id) {
-        try {
-          currentUser = await adminPb.collection("users").getOne(parsedToken.id);
-        } catch {
-          // اگر کاربر در دیتابیس پیدا نشد (مثلاً دیتابیس ریست شده)
-          currentUser = null;
-        }
-      }
+      const authResult = await userPb.collection("users").authRefresh();
+      currentUser = authResult.record;
     } catch (err) {
-      console.error("Token parse error:", err);
+      console.error("Token validation error:", err);
+      currentUser = null;
     }
 
     if (!currentUser || currentUser.role !== "admin") {

@@ -1,0 +1,4 @@
+## 2024-05-18 - Authorization Bypass via Manual JWT Parsing
+**Vulnerability:** A critical authorization bypass existed in the admin user update endpoint `src/app/api/admin/users/[id]/route.ts`. The implementation manually parsed the JWT payload using `atob` and `JSON.parse` to extract the user ID without verifying the cryptographic signature. It then queried the database using the Superuser connection to retrieve the user's role.
+**Learning:** Manual token parsing (e.g. `JSON.parse(atob(token.split('.')[1]))`) is fundamentally insecure because it does not verify the token's signature, allowing attackers to trivially forge tokens with arbitrary user IDs (e.g. an admin's ID) and elevate privileges.
+**Prevention:** Never manually parse JWTs to make authorization decisions. Always use the provided authentication framework's methods (e.g. PocketBase's `authRefresh()`) to cryptographically verify the token before trusting its contents.
