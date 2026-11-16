@@ -5,8 +5,8 @@ export const COLORS = {
   creamDeep: "#F1E6C9",
   paper: "#FFFDF8",
   white: "#FFFFFF", // رنگ سفیدی که قبلا جا افتاده بود
-  gold: "#B4901E",
-  goldLight: "#D8B65C",
+  gold: "#C5A059",
+  goldLight: "#DFB76C",
   goldPale: "#EAD9A0",
   goldDeep: "#7C5E14",
   ink: "#4A3D22",

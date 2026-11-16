@@ -60,7 +60,7 @@ export default function GoldTicker() {
 
   if (loading) {
     return (
-      <div className="w-full bg-[#1C3324] text-[#D8B65C] text-xs py-2 text-center font-bold">
+      <div className="w-full bg-[#3B0B14] text-[#DFB76C] text-xs py-2 text-center font-bold">
         در حال دریافت آخرین نرخ‌های بازار طلا...
       </div>
     );
@@ -71,12 +71,12 @@ export default function GoldTicker() {
   }
 
   return (
-    <div className="w-full bg-[#1C3324] text-white text-xs border-b border-[#8B263E]/30 overflow-hidden direction-rtl font-sans">
+    <div className="w-full bg-[#3B0B14] text-white text-xs border-b border-[#8B142D]/30 overflow-hidden direction-rtl font-sans">
       {/* بخش متحرک قیمت‌ها */}
       <div className="max-w-7xl mx-auto px-4 py-2 flex items-center justify-between gap-4 overflow-x-auto no-scrollbar">
         <div className="flex items-center gap-2 whitespace-nowrap">
           <span className="inline-flex h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></span>
-          <span className="text-[#D8B65C] font-black">نرخ لحظه‌ای طلا و سکه (پرنا زر):</span>
+          <span className="text-[#DFB76C] font-black">نرخ لحظه‌ای طلا و سکه (پرنا زر):</span>
         </div>
 
         <div className="flex items-center gap-8 text-neutral-200">
@@ -87,7 +87,7 @@ export default function GoldTicker() {
             return (
               <div
                 key={rate.id}
-                className="flex items-center gap-2 border-r border-[#FAF9F6]/10 pr-8 first:border-0 first:pr-0 whitespace-nowrap"
+                className="flex items-center gap-2 border-r border-[#FDF8F9]/10 pr-8 first:border-0 first:pr-0 whitespace-nowrap"
               >
                 <span className="font-bold text-white">{rate.name}:</span>
                 
@@ -100,8 +100,8 @@ export default function GoldTicker() {
                 </div>
 
                 {/* قیمت فروش با ۲ درصد سود */}
-                <div className="flex flex-col items-start leading-none bg-[#8B263E]/20 px-1.5 py-0.5 rounded border border-[#8B263E]/30">
-                  <span className="text-[9px] text-[#D8B65C] font-bold">فروش (+۲٪)</span>
+                <div className="flex flex-col items-start leading-none bg-[#8B142D]/20 px-1.5 py-0.5 rounded border border-[#8B142D]/30">
+                  <span className="text-[9px] text-[#DFB76C] font-bold">فروش (+۲٪)</span>
                   <span className="font-mono text-amber-200 font-semibold">
                     {formatPrice(sellingPrice)} {rate.unit}
                   </span>

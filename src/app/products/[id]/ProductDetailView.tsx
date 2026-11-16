@@ -254,16 +254,16 @@ function getWhatsAppMessage(
 
 function PriceTooltip() {
   return (
-    <div className="pointer-events-none absolute bottom-full left-1/2 z-30 mb-3 hidden w-[min(340px,calc(100vw-2rem))] -translate-x-1/2 rounded-2xl border border-[#1C3324]/15 bg-white p-4 text-right shadow-xl group-hover:block">
-      <div className="mb-3 text-sm font-black text-[#1C3324]">
+    <div className="pointer-events-none absolute bottom-full left-1/2 z-30 mb-3 hidden w-[min(340px,calc(100vw-2rem))] -translate-x-1/2 rounded-2xl border border-[#DFB76C]/40 bg-white dark:bg-[#1E050A] p-4 text-right shadow-2xl group-hover:block dark:border-[#DFB76C]/30">
+      <div className="mb-3 text-sm font-black text-[#1E050A] dark:text-[#DFB76C]">
         نحوه محاسبه قیمت محصول
       </div>
 
-      <div className="space-y-2 text-xs leading-6 text-[#3A5A46]">
+      <div className="space-y-2 text-xs leading-6 text-[#5A252E] dark:text-zinc-200">
         <div>(قیمت طلا خام + اجرت) × وزن طلا + متعلقات + ۷٪ سود + ۹٪ مالیات</div>
 
-        <div className="mt-3 rounded-xl bg-white border border-[#8B263E]/20 px-3 py-2 text-[11px] font-bold text-[#8B263E]">
-          قیمت نهایی با قیمت روز طلا محاسبه می‌شود.
+        <div className="mt-3 rounded-xl bg-[#FAF8F5] dark:bg-[#2A0710] border border-[#DFB76C]/35 px-3 py-2 text-[11px] font-bold text-[#8B142D] dark:text-[#DFB76C]">
+          قیمت نهایی با نرخ زنده روز طلا محاسبه می‌شود.
         </div>
       </div>
     </div>
@@ -280,17 +280,17 @@ function BenefitCard({
   description: string;
 }) {
   return (
-    <div className="flex items-start gap-3 rounded-2xl border border-[#1C3324]/10 bg-white p-4 transition-all duration-200 hover:-translate-y-0.5 hover:border-[#1C3324]/25 shadow-xs">
-      <div className="mt-0.5 shrink-0 text-[#8B263E]">
+    <div className="flex items-start gap-2.5 sm:gap-3 rounded-2xl border border-[#DFB76C]/30 bg-white/90 dark:bg-[#1C080E] dark:border-white/10 p-3 sm:p-4 transition-all duration-200 hover:-translate-y-0.5 hover:border-[#DFB76C] shadow-[0_4px_16px_rgba(59,11,20,0.03)]">
+      <div className="mt-0.5 shrink-0 text-[#8B142D] dark:text-[#DFB76C]">
         {icon}
       </div>
 
       <div>
-        <div className="font-bold text-xs sm:text-sm text-[#1C3324]">
+        <div className="font-bold text-xs sm:text-sm text-[#3B0B14] dark:text-zinc-100">
           {title}
         </div>
 
-        <div className="text-[11px] sm:text-xs leading-6 text-[#3A5A46] mt-0.5">
+        <div className="text-[11px] sm:text-xs leading-5 sm:leading-6 text-[#6E3A44] dark:text-zinc-400 mt-0.5">
           {description}
         </div>
       </div>
@@ -454,7 +454,7 @@ export default function ProductDetailView({
   const selectedPrice = selectedPriceInfo?.total ?? null;
 
   const installmentCount = 3;
-  const installmentWeight = selectedWeight > 0 ? selectedWeight / installmentCount : null;
+  const installmentWeight = selectedWeight > 0 ? Math.round((selectedWeight / installmentCount) * 100) / 100 : null;
   const installmentPrice =
     selectedPrice !== null && selectedPrice > 0
       ? Math.ceil(selectedPrice / installmentCount)
@@ -463,8 +463,10 @@ export default function ProductDetailView({
   const installmentProduct = useMemo<ProductType>(
     () => ({
       ...product,
-      title: `${title} (قسط اول از ۳ - وزن سهمی: ${installmentWeight?.toFixed(3)} گرم)`,
+      title: `${title} (قسط اول از ۳ - وزن سهمی: ${installmentWeight?.toFixed(2)} گرم)`,
       weight: installmentWeight ?? selectedWeight,
+      totalWeight: Number(selectedWeight.toFixed(2)),
+      installmentWeight: installmentWeight ?? 0,
       price: installmentPrice ?? 0,
       goldPricePerGram: goldGramPrice,
       goldPrice: goldGramPrice,
@@ -574,19 +576,19 @@ export default function ProductDetailView({
   )}`;
 
   return (
-    <div className="w-full pt-1 sm:pt-2 pb-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+    <div className="w-full pt-1 sm:pt-2 pb-36 lg:pb-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
       <section className="grid grid-cols-1 gap-5 sm:gap-6 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] xl:gap-10 items-start">
         {/* ستون گالری با حالت Sticky و کارت‌های اعتماد در پایین آن */}
         <div className="min-w-0 lg:sticky lg:top-6 self-start space-y-4">
-          <div className="rounded-[22px] border border-[#1C3324]/15 bg-white p-3 shadow-xs sm:rounded-[28px] sm:p-5">
+          <div className="rounded-[22px] border border-[#DFB76C]/30 bg-white/95 dark:bg-[#1C080E] p-3 shadow-[0_4px_24px_rgba(59,11,20,0.04)] sm:rounded-[28px] sm:p-5 dark:border-white/10 transition-colors">
             <div className="flex flex-col gap-3 sm:gap-4">
-              <div className="relative overflow-hidden rounded-[18px] border border-[#1C3324]/15 bg-white sm:rounded-[24px]">
-                <div className="aspect-square min-h-[280px] p-3 sm:min-h-[420px] sm:p-4">
+              <div className="relative overflow-hidden rounded-[18px] border border-[#DFB76C]/20 bg-[#FAF6F0] dark:bg-[#150408] sm:rounded-[24px] dark:border-white/5">
+                <div className="aspect-square w-full p-2.5 sm:p-4 flex items-center justify-center">
                   {selectedImage ? (
                     <button
                       type="button"
                       onClick={() => setIsImageModalOpen(true)}
-                      className="group relative flex h-full w-full cursor-zoom-in items-center justify-center overflow-hidden rounded-[14px] focus:outline-none focus:ring-4 focus:ring-[#1C3324]/25 sm:rounded-[18px]"
+                      className="group relative flex h-full w-full cursor-zoom-in items-center justify-center overflow-hidden rounded-[14px] focus:outline-none focus:ring-4 focus:ring-[#8B142D]/20 sm:rounded-[18px]"
                       aria-label={`بزرگ‌نمایی تصویر ${title}`}
                     >
                       <img
@@ -594,15 +596,19 @@ export default function ProductDetailView({
                         alt={title}
                         className="h-full w-full rounded-[14px] object-contain transition-transform duration-500 group-hover:scale-[1.035] sm:rounded-[18px]"
                       />
-                      <span className="absolute bottom-3 left-3 inline-flex h-10 w-10 items-center justify-center rounded-full bg-[#1C3324]/80 text-white shadow-lg backdrop-blur-sm transition-all duration-200 group-hover:bg-[#8B263E] sm:bottom-4 sm:left-4 sm:h-auto sm:w-auto sm:gap-2 sm:rounded-2xl sm:px-4 sm:py-2.5 sm:text-xs sm:opacity-0 sm:group-hover:opacity-100">
+                      <span className="absolute bottom-3 left-3 inline-flex h-9 w-9 items-center justify-center rounded-full bg-[#3B0B14]/85 text-white shadow-lg backdrop-blur-sm transition-all duration-200 group-hover:bg-[#8B142D] sm:bottom-4 sm:left-4 sm:h-auto sm:w-auto sm:gap-2 sm:rounded-2xl sm:px-4 sm:py-2.5 sm:text-xs sm:opacity-0 sm:group-hover:opacity-100">
                         <Maximize2 className="h-4 w-4" />
                         <span className="hidden sm:inline">بزرگ‌نمایی تصویر</span>
                       </span>
                     </button>
                   ) : (
-                    <div className="flex h-full flex-col items-center justify-center text-center text-[#3A5A46]">
-                      <Gem className="mb-3 h-14 w-14 text-[#1C3324] sm:h-16 sm:w-16" />
-                      <span className="text-sm font-bold">تصویر محصول موجود نیست</span>
+                    <div className="flex h-full w-full flex-col items-center justify-center text-center p-4 sm:p-6 bg-gradient-to-br from-[#FAF6F0] via-[#F4ECE1] to-[#EFE3D3] dark:from-[#1A050A] dark:via-[#140407] dark:to-[#0F0205] rounded-[14px]">
+                      <div className="relative mb-3 flex h-16 w-16 sm:h-20 sm:w-20 items-center justify-center rounded-2xl bg-white/80 dark:bg-white/5 border border-[#DFB76C]/40 shadow-sm">
+                        <Gem className="h-8 w-8 sm:h-10 sm:w-10 text-[#8B142D] dark:text-[#DFB76C]" />
+                        <Sparkles className="absolute -top-1 -right-1 h-4 w-4 sm:h-5 sm:w-5 text-[#DFB76C] animate-pulse" />
+                      </div>
+                      <span className="text-xs sm:text-sm font-extrabold text-[#3B0B14] dark:text-zinc-100">دست‌ساخته طلای ۱۸ عیار پرنا زر</span>
+                      <span className="text-[11px] sm:text-xs text-[#6E3A44] dark:text-zinc-400 mt-1 max-w-[260px] leading-relaxed">طراحی اختصاصی با شناسنامه رسمی و عیار استاندارد اتحادیه</span>
                     </div>
                   )}
                 </div>
@@ -619,13 +625,13 @@ export default function ProductDetailView({
                           type="button"
                           onClick={() => setSelectedImage(image)}
                           className={[
-                            "group relative w-[72px] shrink-0 overflow-hidden rounded-xl border bg-white p-1 transition-all duration-200 sm:w-[88px] sm:rounded-2xl sm:p-1.5 cursor-pointer",
+                            "group relative w-[68px] shrink-0 overflow-hidden rounded-xl border bg-white dark:bg-[#1C080E] p-1 transition-all duration-200 sm:w-[88px] sm:rounded-2xl sm:p-1.5 cursor-pointer",
                             isActive
-                              ? "border-[#8B263E] shadow-sm ring-2 ring-[#8B263E]/25"
-                              : "border-[#1C3324]/15 hover:border-[#1C3324]/35",
+                              ? "border-[#8B142D] dark:border-[#DFB76C] shadow-sm ring-2 ring-[#8B142D]/25 dark:ring-[#DFB76C]/25"
+                              : "border-[#DFB76C]/25 dark:border-white/10 hover:border-[#DFB76C]",
                           ].join(" ")}
                         >
-                          <div className="aspect-square overflow-hidden rounded-[10px] bg-white sm:rounded-[14px]">
+                          <div className="aspect-square overflow-hidden rounded-[10px] bg-[#FAF6F0] dark:bg-[#150408] sm:rounded-[14px]">
                             <img
                               src={image}
                               alt={`${title} ${index + 1}`}
@@ -641,7 +647,7 @@ export default function ProductDetailView({
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-2 gap-2.5 sm:gap-3">
             <BenefitCard
               icon={<ShieldCheck className="h-5 w-5" />}
               title="ضمانت اصالت و عیار ۱۸"
@@ -656,20 +662,20 @@ export default function ProductDetailView({
         </div>
 
         {/* ستون اطلاعات و سفارش */}
-        <div className="min-w-0 rounded-[22px] border border-[#1C3324]/15 bg-white p-4 shadow-xs sm:rounded-[28px] sm:p-6 lg:p-8">
+        <div className="min-w-0 rounded-[22px] border border-[#DFB76C]/30 bg-white/95 dark:bg-[#1C080E] p-4 shadow-[0_4px_24px_rgba(59,11,20,0.04)] sm:rounded-[28px] sm:p-6 lg:p-8 dark:border-white/10 transition-colors">
           <div className="mb-5 space-y-3">
             <div className="flex flex-wrap items-center justify-between gap-2.5">
               <div className="flex flex-wrap items-center gap-1.5 text-[11px] font-bold">
-                <span className="rounded-full bg-[#1C3324] px-3 py-1 text-white shadow-xs font-heading">
+                <span className="rounded-full bg-[#8B142D] px-3 py-1 text-white shadow-xs font-heading">
                   پرنا زر
                 </span>
-                <span className="rounded-full border border-[#1C3324]/15 bg-white px-2.5 py-1 text-[#1C3324]">
+                <span className="rounded-full border border-[#DFB76C]/40 bg-[#DFB76C]/10 px-2.5 py-1 text-[#8B142D] dark:text-[#DFB76C] font-black">
                   عیار {karat}
                 </span>
-                <span className="rounded-full border border-[#1C3324]/10 bg-[#FAF9F6] px-2.5 py-1 font-mono text-[#3A5A46]">
+                <span className="rounded-full border border-[#DFB76C]/25 bg-white/70 dark:bg-white/5 px-2.5 py-1 font-mono text-[#3B0B14] dark:text-zinc-200">
                   کد: {currentSku}
                 </span>
-                <span className="inline-flex items-center gap-1 rounded-full border border-[#8B263E]/20 bg-[#8B263E]/5 px-2.5 py-1 text-[#8B263E]">
+                <span className="inline-flex items-center gap-1 rounded-full border border-[#DFB76C]/40 bg-[#DFB76C]/10 px-2.5 py-1 text-[#8B142D] dark:text-[#DFB76C]">
                   <Palette size={12} />
                   <span>طلای {productItemColor}</span>
                 </span>
@@ -679,7 +685,7 @@ export default function ProductDetailView({
                 <button
                   type="button"
                   onClick={() => setIsSizeGuideOpen(true)}
-                  className="inline-flex items-center gap-1.5 rounded-full border border-[#8B263E]/25 bg-white px-3 py-1 text-[11px] font-bold text-[#8B263E] shadow-2xs transition-all hover:bg-[#8B263E] hover:text-white cursor-pointer"
+                  className="inline-flex items-center gap-1.5 rounded-full border border-[#DFB76C]/50 bg-white/80 dark:bg-[#250910] px-3 py-1 text-[11px] font-bold text-[#8B142D] dark:text-[#DFB76C] shadow-2xs transition-all hover:bg-[#8B142D] hover:text-white cursor-pointer"
                 >
                   <Ruler size={13} />
                   <span>راهنمای سایز</span>
@@ -688,10 +694,10 @@ export default function ProductDetailView({
             </div>
 
             <div className="space-y-1.5 pt-1">
-              <h1 className="text-2xl font-black tracking-tight text-[#1C3324] sm:text-3xl lg:text-[2rem] leading-tight">
+              <h1 className="text-2xl font-black tracking-tight text-[#1E050A] dark:text-white sm:text-3xl lg:text-[2rem] leading-tight font-heading">
                 {title}
               </h1>
-              <p className="text-xs sm:text-sm leading-relaxed text-[#3A5A46]/90">
+              <p className="text-xs sm:text-sm leading-relaxed text-[#5A252E] dark:text-zinc-200">
                 {shortDetail}
               </p>
             </div>
@@ -699,13 +705,13 @@ export default function ProductDetailView({
 
           {/* انتخاب وزن با خط زدن روی وزن‌های ناموجود و عدم نمایش آماده ارسال */}
           {weightOptions.length > 1 && (
-            <div className="mb-5 rounded-[18px] border border-[#1C3324]/15 bg-white p-4 sm:mb-6 sm:rounded-[22px] sm:p-5">
+            <div className="mb-5 rounded-[18px] border border-[#DFB76C]/30 bg-[#FAF8F5] dark:bg-[#150408] p-4 sm:mb-6 sm:rounded-[22px] sm:p-5 dark:border-white/10 transition-colors">
               <div className="mb-3 flex items-center justify-between gap-3">
                 <div>
-                  <h2 className="text-base font-black text-[#1C3324]">انتخاب وزن / سایز</h2>
-                  <p className="mt-1 text-xs text-[#3A5A46]">وزن موردنظر خود را انتخاب کنید.</p>
+                  <h2 className="text-base font-black text-[#1E050A] dark:text-zinc-100">انتخاب وزن / سایز</h2>
+                  <p className="mt-1 text-xs text-[#5A252E] dark:text-zinc-400">وزن موردنظر خود را انتخاب کنید.</p>
                 </div>
-                <Weight className="h-6 w-6 shrink-0 text-[#8B263E]" />
+                <Weight className="h-6 w-6 shrink-0 text-[#8B142D] dark:text-[#DFB76C]" />
               </div>
 
               <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 sm:gap-3">
@@ -722,9 +728,9 @@ export default function ProductDetailView({
                       className={[
                         "group relative overflow-hidden rounded-xl border p-3 text-right transition-all duration-200 sm:rounded-2xl cursor-pointer",
                         isSelected && !isOptionOutOfStock
-                          ? "border-[#1C3324] bg-white shadow-sm ring-2 ring-[#1C3324]/20 font-bold"
-                          : "border-[#1C3324]/15 bg-white text-[#3A5A46] hover:border-[#1C3324]/40",
-                        isOptionOutOfStock ? "cursor-not-allowed bg-red-50/40 opacity-60 border-red-200" : "",
+                          ? "border-[#DFB76C] bg-white dark:bg-[#250910] shadow-sm ring-2 ring-[#DFB76C]/40 font-bold"
+                          : "border-[#DFB76C]/25 bg-white/90 dark:bg-[#1C080E] text-[#5A252E] dark:text-zinc-300 hover:border-[#DFB76C]",
+                        isOptionOutOfStock ? "cursor-not-allowed bg-red-50/40 dark:bg-red-950/20 opacity-60 border-red-200" : "",
                       ].join(" ")}
                     >
                       {/* خط مورب قرمز روی کارهای ناموجود */}
@@ -737,7 +743,7 @@ export default function ProductDetailView({
                       <span
                         className={[
                           "relative z-10 block text-sm font-black",
-                          isOptionOutOfStock ? "text-red-700 line-through" : "text-[#1C3324]",
+                          isOptionOutOfStock ? "text-red-700 dark:text-red-400 line-through" : "text-[#1E050A] dark:text-white",
                         ].join(" ")}
                       >
                         {formatWeight(option.weight)}
@@ -749,7 +755,7 @@ export default function ProductDetailView({
                           ناموجود
                         </span>
                       ) : (
-                        <span className={`relative z-10 block text-[10px] font-bold mt-0.5 ${!isMadeToOrder ? "text-emerald-700" : "text-amber-700"}`}>
+                        <span className={`relative z-10 block text-[10px] font-bold mt-0.5 ${!isMadeToOrder ? "text-emerald-700 dark:text-emerald-400" : "text-amber-700 dark:text-amber-400"}`}>
                           {!isMadeToOrder ? "آماده ارسال" : "سفارش ساخت"}
                         </span>
                       )}
@@ -760,14 +766,14 @@ export default function ProductDetailView({
             </div>
           )}
 
-          <div className="mb-5 rounded-[18px] border border-[#1C3324]/15 bg-white p-4 sm:mb-6 sm:rounded-[22px] sm:p-5 space-y-4">
+          <div className="mb-5 rounded-[18px] border border-[#DFB76C]/30 bg-white/95 dark:bg-[#1C080E] p-4 sm:mb-6 sm:rounded-[22px] sm:p-5 space-y-4 dark:border-white/10 shadow-xs transition-colors">
             <div className="flex items-center justify-between">
-              <span className="text-sm font-bold text-[#3A5A46]">قیمت کل محصول</span>
-              <span className="text-[11px] text-[#8B263E] font-bold">عیار {karat}</span>
+              <span className="text-sm font-bold text-[#5A252E] dark:text-zinc-300">قیمت کل محصول</span>
+              <span className="text-[11px] text-[#8B142D] dark:text-[#DFB76C] font-extrabold bg-[#DFB76C]/10 border border-[#DFB76C]/30 px-2.5 py-0.5 rounded-full">عیار {karat}</span>
             </div>
 
             <div className="flex flex-wrap items-end gap-2 sm:gap-3">
-              <strong className="text-2xl font-black text-[#8B263E] sm:text-3xl">
+              <strong className="text-2xl font-black text-[#8B142D] dark:text-[#DFB76C] sm:text-3xl font-mono">
                 {formatProductPrice(selectedPrice)}
               </strong>
             </div>
@@ -775,17 +781,17 @@ export default function ProductDetailView({
             {/* وضعیت تحویل بر اساس stock واقعی و زمان ساخت */}
             <div className="flex items-center gap-2 pt-1 text-xs">
               {isSelectedOutOfStock ? (
-                <span className="inline-flex items-center gap-1.5 text-red-700 font-bold bg-red-50 px-3 py-1.5 rounded-xl border border-red-200">
+                <span className="inline-flex items-center gap-1.5 text-red-700 font-bold bg-red-50 dark:bg-red-950/40 px-3 py-1.5 rounded-xl border border-red-200">
                   <X size={14} />
                   <span>این وزن در حال حاضر ناموجود است</span>
                 </span>
               ) : isMadeToOrder ? (
-                <span className="inline-flex items-center gap-1.5 text-amber-850 font-bold bg-amber-50 px-3 py-1.5 rounded-xl border border-amber-200">
+                <span className="inline-flex items-center gap-1.5 text-amber-850 font-bold bg-amber-50 dark:bg-amber-950/40 px-3 py-1.5 rounded-xl border border-amber-200 dark:text-amber-300">
                   <Clock size={14} />
                   <span>سفارش ساخت (زمان ساخت و آماده‌سازی: {leadTimeDays} روز کاری)</span>
                 </span>
               ) : (
-                <span className="inline-flex items-center gap-1.5 text-emerald-800 font-bold bg-emerald-50 px-3 py-1.5 rounded-xl border border-emerald-200">
+                <span className="inline-flex items-center gap-1.5 text-emerald-800 font-bold bg-emerald-50 dark:bg-emerald-950/40 px-3 py-1.5 rounded-xl border border-emerald-200 dark:text-emerald-300">
                   <Package size={14} />
                   <span>موجود در گالری پرنا زر (آماده تحویل و ارسال فوری)</span>
                 </span>
@@ -793,29 +799,29 @@ export default function ProductDetailView({
             </div>
 
             {hasStone && (
-              <div className="mt-2 text-[11px] text-[#8B263E] font-bold bg-amber-50 p-2.5 rounded-xl border border-amber-200">
+              <div className="mt-2 text-[11px] text-[#8B142D] dark:text-[#DFB76C] font-bold bg-amber-50 dark:bg-amber-950/40 p-2.5 rounded-xl border border-amber-200">
                 💎 این اثر دارای سنگ/نگین می‌باشد: {stoneDetails} {stoneWeight ? `(وزن سنگ: ${stoneWeight})` : ""}
               </div>
             )}
           </div>
 
           <div className="mb-5 grid grid-cols-3 gap-2 sm:mb-6 sm:gap-3">
-            <div className="rounded-xl bg-white border border-[#1C3324]/10 p-3 sm:rounded-2xl sm:p-4">
-              <Weight className="mb-2 h-5 w-5 text-[#8B263E]" />
-              <span className="block text-xs text-[#3A5A46]">وزن کل</span>
-              <strong className="mt-1 block text-xs text-[#1C3324] sm:text-sm">
+            <div className="rounded-xl bg-white/90 dark:bg-[#160408] border border-[#DFB76C]/25 dark:border-[#DFB76C]/20 p-3 sm:rounded-2xl sm:p-4 shadow-2xs">
+              <Weight className="mb-2 h-5 w-5 text-[#8B142D] dark:text-[#DFB76C]" />
+              <span className="block text-xs text-[#5A252E] dark:text-zinc-400">وزن کل</span>
+              <strong className="mt-1 block text-xs text-[#1E050A] dark:text-white sm:text-sm font-mono">
                 {formatWeight(selectedWeight)}
               </strong>
             </div>
-            <div className="rounded-xl bg-white border border-[#1C3324]/10 p-3 sm:rounded-2xl sm:p-4">
-              <Gem className="mb-2 h-5 w-5 text-[#8B263E]" />
-              <span className="block text-xs text-[#3A5A46]">عیار</span>
-              <strong className="mt-1 block text-xs text-[#1C3324] sm:text-sm">{karat}</strong>
+            <div className="rounded-xl bg-white/90 dark:bg-[#160408] border border-[#DFB76C]/25 dark:border-[#DFB76C]/20 p-3 sm:rounded-2xl sm:p-4 shadow-2xs">
+              <Gem className="mb-2 h-5 w-5 text-[#8B142D] dark:text-[#DFB76C]" />
+              <span className="block text-xs text-[#5A252E] dark:text-zinc-400">عیار</span>
+              <strong className="mt-1 block text-xs text-[#1E050A] dark:text-white sm:text-sm font-mono">{karat}</strong>
             </div>
-            <div className="rounded-xl bg-white border border-[#1C3324]/10 p-3 sm:rounded-2xl sm:p-4">
-              <BadgeCheck className="mb-2 h-5 w-5 text-[#8B263E]" />
-              <span className="block text-xs text-[#3A5A46]">اصالت</span>
-              <strong className="mt-1 block text-xs text-[#1C3324] sm:text-sm">تضمین‌شده</strong>
+            <div className="rounded-xl bg-white/90 dark:bg-[#160408] border border-[#DFB76C]/25 dark:border-[#DFB76C]/20 p-3 sm:rounded-2xl sm:p-4 shadow-2xs">
+              <BadgeCheck className="mb-2 h-5 w-5 text-[#8B142D] dark:text-[#DFB76C]" />
+              <span className="block text-xs text-[#5A252E] dark:text-zinc-400">اصالت</span>
+              <strong className="mt-1 block text-xs text-[#1E050A] dark:text-white sm:text-sm">تضمین‌شده</strong>
             </div>
           </div>
 
@@ -823,22 +829,23 @@ export default function ProductDetailView({
             <div className="group relative inline-flex">
               <button
                 type="button"
-                className="inline-flex min-w-[220px] items-center justify-center gap-2 rounded-2xl border border-[#1C3324]/20 bg-white px-5 py-3 text-sm font-extrabold text-[#1C3324] shadow-xs transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#1C3324]/5 sm:min-w-[240px] sm:rounded-3xl sm:px-7 sm:py-4 sm:text-base cursor-pointer"
+                className="inline-flex min-w-[220px] items-center justify-center gap-2 rounded-2xl border border-[#DFB76C]/50 bg-white dark:bg-[#1C080E] dark:border-[#DFB76C]/30 px-5 py-3 text-sm font-extrabold text-[#1E050A] dark:text-[#DFB76C] shadow-xs transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#DFB76C]/10 sm:min-w-[240px] sm:rounded-3xl sm:px-7 sm:py-4 sm:text-base cursor-pointer"
               >
-                <CircleDollarSign className="h-5 w-5 sm:h-6 sm:w-6 text-[#8B263E]" />
+                <CircleDollarSign className="h-5 w-5 sm:h-6 sm:w-6 text-[#8B142D] dark:text-[#DFB76C]" />
                 نحوه محاسبه قیمت
               </button>
               <PriceTooltip />
             </div>
           </div>
 
-          <div className="mb-5 grid gap-3 sm:mb-6 sm:grid-cols-2">
-            <div className="h-[52px] flex items-center w-full">
+          {/* ردیف دکمه‌های تجاری: افزودن به سبد خرید مسلط و مشاوره واتساپ */}
+          <div id="main-buy-actions" className="mb-5 grid gap-3 sm:mb-6 sm:grid-cols-[1.6fr_1fr]">
+            <div className="h-[54px] flex items-center w-full">
               {isSelectedOutOfStock ? (
                 <button
                   type="button"
                   disabled
-                  className="w-full h-[52px] rounded-2xl bg-gray-200 text-gray-500 text-xs font-bold cursor-not-allowed flex items-center justify-center"
+                  className="w-full h-[54px] rounded-2xl bg-zinc-200 dark:bg-zinc-800 text-zinc-500 text-xs font-bold cursor-not-allowed flex items-center justify-center"
                 >
                   محصول با این وزن ناموجود است
                 </button>
@@ -847,30 +854,30 @@ export default function ProductDetailView({
                   product={selectedProduct}
                   price={selectedPrice}
                   selectedVariant={selectedVariantForCart}
-                  className="w-full !h-[52px] !py-0 flex items-center justify-center"
+                  className="w-full !h-[54px] !py-0 flex items-center justify-center"
                 />
               )}
             </div>
 
-            <div className="h-[52px] flex items-center w-full">
+            <div className="h-[54px] flex items-center w-full">
               <a
                 href={whatsappLink}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex w-full h-[52px] items-center justify-center gap-2 rounded-2xl border border-[#25D366]/30 bg-[#25D366] px-6 text-sm font-extrabold text-white transition hover:bg-[#1fb85a] shadow-xs cursor-pointer"
+                className="inline-flex w-full h-[54px] items-center justify-center gap-2 rounded-2xl border border-emerald-600/40 bg-emerald-800/90 hover:bg-emerald-700 text-white dark:bg-emerald-900/85 dark:hover:bg-emerald-800/95 px-4 text-xs sm:text-sm font-extrabold shadow-sm transition hover:-translate-y-0.5 cursor-pointer whitespace-nowrap"
               >
-                <MessageCircle size={18} />
-                <span>مشاوره و سفارش از واتساپ</span>
+                <MessageCircle size={18} className="shrink-0" />
+                <span>مشاوره و سفارش واتساپ</span>
               </a>
             </div>
           </div>
 
           {/* طرح اقساط طلایی با قیمت روز طلا */}
-          <div className="rounded-[22px] border border-[#1C3324]/20 dark:border-white/10 bg-white dark:bg-[#15221B] p-5 text-[#1C3324] dark:text-zinc-100 shadow-xs sm:rounded-[26px] sm:p-6 transition-colors">
+          <div className="rounded-[22px] border border-[#3B0B14]/20 dark:border-white/10 bg-white dark:bg-[#1C080E] p-5 text-[#3B0B14] dark:text-zinc-100 shadow-xs sm:rounded-[26px] sm:p-6 transition-colors">
             <div className="flex flex-col gap-4">
               <div className="flex items-center justify-between flex-wrap gap-2">
-                <div className="flex items-center gap-2 text-base font-black text-[#8B263E] dark:text-[#D8B65C]">
-                  <Sparkles className="h-5 w-5 text-[#8B263E] dark:text-[#D8B65C]" />
+                <div className="flex items-center gap-2 text-base font-black text-[#8B142D] dark:text-[#DFB76C]">
+                  <Sparkles className="h-5 w-5 text-[#8B142D] dark:text-[#DFB76C]" />
                   <span>طرح اقساط طلایی پرنا زر (۳ قسط با قیمت روز طلا)</span>
                 </div>
                 <span className="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-400">
@@ -879,41 +886,41 @@ export default function ProductDetailView({
               </div>
 
               <div>
-                <p className="text-xs leading-6 text-[#3A5A46] dark:text-zinc-300">
-                  در این طرح، وزن خالص طلا به ۳ سهم مساوی تقسیم می‌شود. <strong className="text-[#8B263E] dark:text-[#D8B65C]">قسط اول</strong> همین الان با نرخ زنده بازار پرداخت شده و سفارش ثبت می‌شود. <strong className="text-[#1C3324] dark:text-white">اقساط دوم و سوم</strong> در موعد سررسید بر اساس <strong>نرخ روز طلا</strong> تسویه می‌گردند.
+                <p className="text-xs leading-6 text-[#6E3A44] dark:text-zinc-300">
+                  در این طرح، وزن خالص طلا به ۳ سهم مساوی تقسیم می‌شود. <strong className="text-[#8B142D] dark:text-[#DFB76C]">قسط اول</strong> همین الان با نرخ زنده بازار پرداخت شده و سفارش ثبت می‌شود. <strong className="text-[#3B0B14] dark:text-white">اقساط دوم و سوم</strong> در موعد سررسید بر اساس <strong>نرخ روز طلا</strong> تسویه می‌گردند.
                 </p>
 
                 {installmentWeight !== null && installmentPrice !== null && (
                   <div className="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-2.5">
-                    <div className="rounded-2xl bg-[#FAF9F6] dark:bg-[#101813] p-3 text-right border-2 border-[#8B263E] dark:border-[#D8B65C] shadow-xs">
-                      <span className="block text-[10px] font-extrabold text-[#8B263E] dark:text-[#D8B65C]">۱. قسط اول (همین الان):</span>
-                      <strong className="block text-xs font-black text-[#1C3324] dark:text-white mt-1">
+                    <div className="rounded-2xl bg-[#FDF8F9] dark:bg-[#140508] p-3 text-right border-2 border-[#8B142D] dark:border-[#DFB76C] shadow-xs">
+                      <span className="block text-[10px] font-extrabold text-[#8B142D] dark:text-[#DFB76C]">۱. قسط اول (همین الان):</span>
+                      <strong className="block text-xs font-black text-[#3B0B14] dark:text-white mt-1">
                         {formatProductPrice(installmentPrice)}
                       </strong>
-                      <span className="block text-[10px] text-[#3A5A46] dark:text-zinc-400 mt-0.5">وزن سهمی: {installmentWeight.toFixed(2)} گرم (به نرخ امروز)</span>
+                      <span className="block text-[10px] text-[#6E3A44] dark:text-zinc-400 mt-0.5">وزن سهمی: {installmentWeight.toFixed(2)} گرم (به نرخ امروز)</span>
                     </div>
 
-                    <div className="rounded-2xl bg-[#FAF9F6] dark:bg-[#101813] p-3 text-right border border-[#1C3324]/15 dark:border-white/10">
-                      <span className="block text-[10px] font-bold text-[#3A5A46] dark:text-zinc-400">۲. قسط دوم (ماه آینده):</span>
-                      <strong className="block text-xs font-black text-[#1C3324] dark:text-white mt-1">
+                    <div className="rounded-2xl bg-[#FDF8F9] dark:bg-[#140508] p-3 text-right border border-[#3B0B14]/15 dark:border-white/10">
+                      <span className="block text-[10px] font-bold text-[#6E3A44] dark:text-zinc-400">۲. قسط دوم (ماه آینده):</span>
+                      <strong className="block text-xs font-black text-[#3B0B14] dark:text-white mt-1">
                         محاسبه با نرخ روز طلا
                       </strong>
-                      <span className="block text-[10px] text-[#3A5A46] dark:text-zinc-400 mt-0.5">وزن سهمی: {installmentWeight.toFixed(2)} گرم</span>
+                      <span className="block text-[10px] text-[#6E3A44] dark:text-zinc-400 mt-0.5">وزن سهمی: {installmentWeight.toFixed(2)} گرم</span>
                     </div>
 
-                    <div className="rounded-2xl bg-[#FAF9F6] dark:bg-[#101813] p-3 text-right border border-[#1C3324]/15 dark:border-white/10">
-                      <span className="block text-[10px] font-bold text-[#3A5A46] dark:text-zinc-400">۳. قسط سوم (ماه بعد):</span>
-                      <strong className="block text-xs font-black text-[#1C3324] dark:text-white mt-1">
+                    <div className="rounded-2xl bg-[#FDF8F9] dark:bg-[#140508] p-3 text-right border border-[#3B0B14]/15 dark:border-white/10">
+                      <span className="block text-[10px] font-bold text-[#6E3A44] dark:text-zinc-400">۳. قسط سوم (ماه بعد):</span>
+                      <strong className="block text-xs font-black text-[#3B0B14] dark:text-white mt-1">
                         محاسبه با نرخ روز طلا
                       </strong>
-                      <span className="block text-[10px] text-[#3A5A46] dark:text-zinc-400 mt-0.5">وزن سهمی: {installmentWeight.toFixed(2)} گرم (تسویه و تحویل)</span>
+                      <span className="block text-[10px] text-[#6E3A44] dark:text-zinc-400 mt-0.5">وزن سهمی: {installmentWeight.toFixed(2)} گرم (تسویه و تحویل)</span>
                     </div>
                   </div>
                 )}
               </div>
 
               {installmentPrice !== null && (
-                <div className="space-y-2 pt-2 border-t border-[#1C3324]/15 dark:border-white/10">
+                <div className="space-y-2 pt-2 border-t border-[#3B0B14]/15 dark:border-white/10">
                   {isSelectedOutOfStock ? (
                     <button
                       type="button"
@@ -925,23 +932,23 @@ export default function ProductDetailView({
                   ) : !isLoggedIn ? (
                     <Link
                       href={`/login?redirect=/products/${product.id}`}
-                      className="w-full h-[50px] rounded-2xl bg-[#8B263E] hover:bg-[#6e1e31] text-white text-xs font-black flex items-center justify-center gap-2 shadow-md transition-colors"
+                      className="w-full h-[50px] rounded-2xl bg-[#8B142D] hover:bg-[#6e1e31] text-white text-xs font-black flex items-center justify-center gap-2 shadow-md transition-colors"
                     >
                       <Lock size={15} />
                       <span>ورود به حساب کاربری و خرید قسط اول ({formatProductPrice(installmentPrice)})</span>
                     </Link>
                   ) : (
-                    <div className="w-full [&_button]:!w-full [&_button]:!h-[50px] [&_button]:!bg-[#1C3324] dark:[&_button]:!bg-[#D8B65C] dark:[&_button]:hover:!bg-[#E6CA7A] dark:[&_button]:!text-[#101813] [&_button]:hover:!bg-[#8B263E] [&_button]:!text-white [&_button]:!rounded-2xl [&_button]:!border-none [&_button]:!shadow-xs [&_button_*]:!text-inherit">
+                    <div className="w-full [&_button]:!w-full [&_button]:!h-[50px] [&_button]:!bg-[#3B0B14] dark:[&_button]:!bg-[#DFB76C] dark:[&_button]:hover:!bg-[#E6CA7A] dark:[&_button]:!text-[#140508] [&_button]:hover:!bg-[#8B142D] [&_button]:!text-white [&_button]:!rounded-2xl [&_button]:!border-none [&_button]:!shadow-xs [&_button_*]:!text-inherit">
                       <AddToCartButton
                         product={installmentProduct}
                         price={installmentPrice}
                         selectedVariant={selectedVariantForCart}
-                        className="w-full !h-[50px] !bg-[#1C3324] hover:!bg-[#8B263E] dark:!bg-[#D8B65C] dark:hover:!bg-[#E6CA7A] !text-white dark:!text-[#101813] !rounded-2xl !border-none !text-xs !font-black cursor-pointer shadow-xs"
+                        className="w-full !h-[50px] !bg-[#3B0B14] hover:!bg-[#8B142D] dark:!bg-[#DFB76C] dark:hover:!bg-[#E6CA7A] !text-white dark:!text-[#140508] !rounded-2xl !border-none !text-xs !font-black cursor-pointer shadow-xs"
                       />
                     </div>
                   )}
-                  <p className="text-[11px] text-center text-[#3A5A46] dark:text-zinc-400">
-                    با ثبت سفارش، مبلغ <span className="font-bold text-[#1C3324] dark:text-white">قسط اول به نرخ روز طلا</span> پرداخت شده و سفارش شما قطعی می‌شود.
+                  <p className="text-[11px] text-center text-[#6E3A44] dark:text-zinc-400">
+                    با ثبت سفارش، مبلغ <span className="font-bold text-[#3B0B14] dark:text-white">قسط اول به نرخ روز طلا</span> پرداخت شده و سفارش شما قطعی می‌شود.
                   </p>
                 </div>
               )}
@@ -950,15 +957,15 @@ export default function ProductDetailView({
         </div>
       </section>
 
-      <section className="mt-14 rounded-3xl border border-[#1C3324]/15 bg-white p-6 sm:p-8 shadow-xs space-y-6">
-        <div className="flex items-center justify-between flex-wrap gap-4 border-b border-[#1C3324]/10 pb-4">
+      <section className="mt-14 rounded-3xl border border-[#DFB76C]/30 bg-white/95 dark:bg-[#1C080E] p-6 sm:p-8 shadow-[0_4px_24px_rgba(59,11,20,0.03)] dark:border-white/10 space-y-6 transition-colors">
+        <div className="flex items-center justify-between flex-wrap gap-4 border-b border-[#3B0B14]/10 dark:border-white/10 pb-4">
           <div>
-            <span className="text-xs font-bold text-[#8B263E] block mb-1">کلکسیون اختصاصی</span>
-            <h2 className="text-xl sm:text-2xl font-black text-[#1C3324] font-heading">بهترین انتخاب از گالری طلا و جواهر پرنا زر</h2>
+            <span className="text-xs font-bold text-[#8B142D] dark:text-[#DFB76C] block mb-1">کلکسیون اختصاصی</span>
+            <h2 className="text-xl sm:text-2xl font-black text-[#3B0B14] dark:text-zinc-100 font-heading">بهترین انتخاب از گالری طلا پرنا زر</h2>
           </div>
           <Link
             href="/products"
-            className="inline-flex items-center gap-1.5 text-xs font-bold text-[#1C3324] hover:text-[#8B263E] transition cursor-pointer"
+            className="inline-flex items-center gap-1.5 text-xs font-bold text-[#3B0B14] dark:text-[#DFB76C] hover:text-[#8B142D] transition cursor-pointer"
           >
             <span>مشاهده همه آثار</span>
             <ArrowRight size={16} />
@@ -966,38 +973,38 @@ export default function ProductDetailView({
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          <div className="p-4 rounded-2xl bg-[#FAF9F6] border border-[#1C3324]/10 space-y-2">
-            <Sparkles className="text-[#8B263E]" size={22} />
-            <h3 className="font-bold text-sm text-[#1C3324]">طراحی الهام‌گرفته از سرو</h3>
-            <p className="text-xs text-[#3A5A46] leading-relaxed">تلفیق هنر اصیل ایرانی با مینیمالیسم مدرن برای بانوان خاص‌پوش.</p>
+          <div className="p-4 rounded-2xl bg-[#FAF8F5] dark:bg-[#150408] border border-[#DFB76C]/20 dark:border-white/10 space-y-2">
+            <Sparkles className="text-[#8B142D] dark:text-[#DFB76C]" size={22} />
+            <h3 className="font-bold text-sm text-[#3B0B14] dark:text-zinc-100">طراحی اصیل و فاخر</h3>
+            <p className="text-xs text-[#6E3A44] dark:text-zinc-400 leading-relaxed">تلفیق هنر اصیل زرگری با ظرافت مدرن برای دوست‌داران طلای ناب.</p>
           </div>
-          <div className="p-4 rounded-2xl bg-[#FAF9F6] border border-[#1C3324]/10 space-y-2">
-            <ShieldCheck className="text-[#8B263E]" size={22} />
-            <h3 className="font-bold text-sm text-[#1C3324]">عیار ۱۸ استاندارد</h3>
-            <p className="text-xs text-[#3A5A46] leading-relaxed">تضمین عیار رسمی طلا همراه با فاکتور معتبر و قابل استعلام.</p>
+          <div className="p-4 rounded-2xl bg-[#FAF8F5] dark:bg-[#150408] border border-[#DFB76C]/20 dark:border-white/10 space-y-2">
+            <ShieldCheck className="text-[#8B142D] dark:text-[#DFB76C]" size={22} />
+            <h3 className="font-bold text-sm text-[#3B0B14] dark:text-zinc-100">عیار ۱۸ استاندارد</h3>
+            <p className="text-xs text-[#6E3A44] dark:text-zinc-400 leading-relaxed">تضمین عیار رسمی طلا همراه با فاکتور معتبر و قابل استعلام.</p>
           </div>
-          <div className="p-4 rounded-2xl bg-[#FAF9F6] border border-[#1C3324]/10 space-y-2">
-            <HeartHandshake className="text-[#8B263E]" size={22} />
-            <h3 className="font-bold text-sm text-[#1C3324]">خرید اقساطی بدون چک</h3>
-            <p className="text-xs text-[#3A5A46] leading-relaxed">طرح ویژه سه مرحله‌ای با محاسبه منصفانه مبتنی بر نرخ روز.</p>
+          <div className="p-4 rounded-2xl bg-[#FAF8F5] dark:bg-[#150408] border border-[#DFB76C]/20 dark:border-white/10 space-y-2">
+            <HeartHandshake className="text-[#8B142D] dark:text-[#DFB76C]" size={22} />
+            <h3 className="font-bold text-sm text-[#3B0B14] dark:text-zinc-100">خرید اقساطی بدون چک</h3>
+            <p className="text-xs text-[#6E3A44] dark:text-zinc-400 leading-relaxed">طرح ویژه سه مرحله‌ای با محاسبه منصفانه مبتنی بر نرخ روز.</p>
           </div>
-          <div className="p-4 rounded-2xl bg-[#FAF9F6] border border-[#1C3324]/10 space-y-2">
-            <Truck className="text-[#8B263E]" size={22} />
-            <h3 className="font-bold text-sm text-[#1C3324]">بسته‌بندی هدیه لوکس</h3>
-            <p className="text-xs text-[#3A5A46] leading-relaxed">ارسال امن با بسته‌بندی ویژه و مناسب هدیه دادن به عزیزانتان.</p>
+          <div className="p-4 rounded-2xl bg-[#FAF8F5] dark:bg-[#150408] border border-[#DFB76C]/20 dark:border-white/10 space-y-2">
+            <Truck className="text-[#8B142D] dark:text-[#DFB76C]" size={22} />
+            <h3 className="font-bold text-sm text-[#3B0B14] dark:text-zinc-100">بسته‌بندی هدیه لوکس</h3>
+            <p className="text-xs text-[#6E3A44] dark:text-zinc-400 leading-relaxed">ارسال امن با بسته‌بندی ویژه و مناسب هدیه دادن به عزیزانتان.</p>
           </div>
         </div>
       </section>
 
-      <section className="mt-8 rounded-3xl border border-[#1C3324]/15 bg-white p-6 sm:p-8 shadow-xs space-y-6">
-        <div className="flex items-center gap-3 border-b border-[#1C3324]/10 pb-4">
+      <section className="mt-8 rounded-3xl border border-[#DFB76C]/30 bg-white/95 dark:bg-[#1C080E] p-6 sm:p-8 shadow-[0_4px_24px_rgba(59,11,20,0.03)] dark:border-white/10 space-y-6 transition-colors">
+        <div className="flex items-center gap-3 border-b border-[#3B0B14]/10 dark:border-white/10 pb-4">
           <button
             type="button"
             onClick={() => setActiveTab("description")}
             className={`px-5 py-2.5 rounded-full text-xs font-bold transition cursor-pointer ${
               activeTab === "description"
-                ? "bg-[#1C3324] text-white shadow-xs"
-                : "bg-[#FAF9F6] text-[#3A5A46] hover:bg-[#1C3324]/5"
+                ? "bg-[#3B0B14] dark:bg-[#DFB76C] text-white dark:text-[#140508] shadow-xs"
+                : "bg-[#FAF8F5] dark:bg-[#150408] text-[#6E3A44] dark:text-zinc-400 hover:bg-[#3B0B14]/5"
             }`}
           >
             توضیحات و مشخصات تکمیلی
@@ -1007,8 +1014,8 @@ export default function ProductDetailView({
             onClick={() => setActiveTab("reviews")}
             className={`px-5 py-2.5 rounded-full text-xs font-bold transition cursor-pointer ${
               activeTab === "reviews"
-                ? "bg-[#1C3324] text-white shadow-xs"
-                : "bg-[#FAF9F6] text-[#3A5A46] hover:bg-[#1C3324]/5"
+                ? "bg-[#3B0B14] dark:bg-[#DFB76C] text-white dark:text-[#140508] shadow-xs"
+                : "bg-[#FAF8F5] dark:bg-[#150408] text-[#6E3A44] dark:text-zinc-400 hover:bg-[#3B0B14]/5"
             }`}
           >
             دیدگاه‌های مشتریان
@@ -1016,7 +1023,7 @@ export default function ProductDetailView({
         </div>
 
         {activeTab === "description" ? (
-          <div className="space-y-4 text-xs sm:text-sm text-[#3A5A46] leading-relaxed">
+          <div className="space-y-4 text-xs sm:text-sm text-[#6E3A44] dark:text-zinc-300 leading-relaxed">
             {hasDescription ? (
               <p className="whitespace-pre-line">{product.description}</p>
             ) : (
@@ -1025,11 +1032,11 @@ export default function ProductDetailView({
           </div>
         ) : (
           <div className="py-8 text-center space-y-3">
-            <div className="w-12 h-12 rounded-full bg-[#FAF9F6] border border-[#1C3324]/15 flex items-center justify-center mx-auto text-[#8B263E]">
+            <div className="w-12 h-12 rounded-full bg-[#FAF8F5] dark:bg-[#150408] border border-[#DFB76C]/30 flex items-center justify-center mx-auto text-[#8B142D] dark:text-[#DFB76C]">
               <Star size={20} />
             </div>
-            <h3 className="text-base font-black text-[#1C3324]">هنوز دیدگاهی ثبت نشده است</h3>
-            <p className="text-xs text-[#3A5A46]">اولین نفری باشید که نظر خود را درباره این اثر به اشتراک می‌گذارد.</p>
+            <h3 className="text-base font-black text-[#3B0B14] dark:text-zinc-100">هنوز دیدگاهی ثبت نشده است</h3>
+            <p className="text-xs text-[#6E3A44] dark:text-zinc-400">اولین نفری باشید که نظر خود را درباره این اثر به اشتراک می‌گذارد.</p>
           </div>
         )}
       </section>
@@ -1040,26 +1047,26 @@ export default function ProductDetailView({
           onClick={() => setIsSizeGuideOpen(false)}
         >
           <div
-            className="bg-white rounded-3xl max-w-md w-full p-6 space-y-4 shadow-2xl relative"
+            className="bg-white dark:bg-[#1C080E] rounded-3xl max-w-md w-full p-6 space-y-4 shadow-2xl relative border border-transparent dark:border-[#DFB76C]/30"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="flex items-center justify-between border-b pb-3">
-              <h3 className="text-base font-black text-[#1C3324] flex items-center gap-2">
-                <Ruler size={18} className="text-[#8B263E]" />
+            <div className="flex items-center justify-between border-b border-gray-100 dark:border-white/10 pb-3">
+              <h3 className="text-base font-black text-[#1E050A] dark:text-white flex items-center gap-2">
+                <Ruler size={18} className="text-[#8B142D] dark:text-[#DFB76C]" />
                 <span>راهنمای انتخاب سایز انگشتر</span>
               </h3>
               <button
                 onClick={() => setIsSizeGuideOpen(false)}
-                className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-gray-600 hover:bg-gray-200 cursor-pointer"
+                className="w-8 h-8 rounded-full bg-gray-100 dark:bg-white/10 flex items-center justify-center text-gray-600 dark:text-zinc-300 hover:bg-gray-200 dark:hover:bg-white/20 cursor-pointer"
               >
                 <X size={16} />
               </button>
             </div>
 
-            <div className="text-xs text-[#3A5A46] space-y-3 leading-relaxed">
+            <div className="text-xs text-[#5A252E] dark:text-zinc-300 space-y-3 leading-relaxed">
               <p>برای تعیین سایز انگشتر در خانه می‌توانید از روش زیر استفاده کنید:</p>
-              <div className="bg-[#FAF9F6] p-3 rounded-2xl border border-[#1C3324]/10 space-y-1">
-                <strong className="text-[#1C3324] block">روش اندازه‌گیری محیط انگشت:</strong>
+              <div className="bg-[#FDF8F9] dark:bg-[#140508] p-3 rounded-2xl border border-[#3B0B14]/10 dark:border-white/10 space-y-1">
+                <strong className="text-[#1E050A] dark:text-[#DFB76C] block">روش اندازه‌گیری محیط انگشت:</strong>
                 <p>۱. یک تکه نخ یا نوار کاغذی را دور انگشت مورد نظر بپیچید.</p>
                 <p>۲. محل تلاقی دو سر نخ را با خودکار علامت بزنید.</p>
                 <p>۳. طول نخ را روی خط‌کش بر حسب میلی‌متر اندازه‌گیری کنید.</p>
@@ -1068,7 +1075,7 @@ export default function ProductDetailView({
 
             <button
               onClick={() => setIsSizeGuideOpen(false)}
-              className="w-full py-2.5 rounded-xl bg-[#1C3324] text-white text-xs font-bold hover:bg-[#8B263E] transition cursor-pointer"
+              className="w-full py-2.5 rounded-xl bg-[#8B142D] dark:bg-[#DFB76C] text-white dark:text-[#140508] text-xs font-bold hover:bg-[#6e1e31] dark:hover:bg-[#E6CA7A] transition cursor-pointer"
             >
               متوجه شدم
             </button>
@@ -1076,9 +1083,66 @@ export default function ProductDetailView({
         </div>
       )}
 
+      {/* نوار ثابت خرید سریع - فقط در موبایل (زیر سایز lg) نمایش داده می‌شود و در دسکتاپ پنهان است */}
+      <div className="fixed left-0 right-0 bottom-16 z-40 lg:hidden">
+        <div className="mx-auto max-w-7xl px-3 sm:px-6 py-2.5 bg-[#190408]/95 backdrop-blur-2xl border-t border-[#DFB76C]/35 shadow-[0_-10px_35px_rgba(25,4,8,0.7)] text-white">
+          <div className="flex items-center justify-between gap-3">
+            {/* اطلاعات محصول در نوار موبایل */}
+            <div className="flex items-center gap-2.5 min-w-0">
+              <div className="relative h-11 w-11 shrink-0 overflow-hidden rounded-xl bg-white/10 border border-[#DFB76C]/30">
+                {selectedImage ? (
+                  <img src={selectedImage} alt={title} className="h-full w-full object-cover" />
+                ) : (
+                  <div className="h-full w-full flex items-center justify-center text-[#DFB76C]"><Gem size={18} /></div>
+                )}
+              </div>
+              <div className="min-w-0">
+                <p className="text-xs font-black truncate text-white max-w-[140px] sm:max-w-xs">{title}</p>
+                <div className="flex items-center gap-2 text-[10px] text-zinc-300 mt-0.5">
+                  <span className="font-mono text-[#DFB76C] font-black">{formatProductPrice(selectedPrice)}</span>
+                  {selectedWeight > 0 && <span className="opacity-70">| {formatWeight(selectedWeight)}</span>}
+                </div>
+              </div>
+            </div>
+
+            {/* اکشن‌های خرید سریع */}
+            <div className="flex items-center gap-2 shrink-0">
+              <a
+                href={whatsappLink}
+                target="_blank"
+                rel="noreferrer"
+                title="مشاوره واتساپ"
+                className="h-10 px-3 rounded-xl border border-emerald-500/40 bg-emerald-900/80 hover:bg-emerald-800 text-white flex items-center justify-center text-xs font-bold transition-colors cursor-pointer"
+              >
+                <MessageCircle size={16} />
+              </a>
+
+              <div className="w-36 sm:w-44">
+                {isSelectedOutOfStock ? (
+                  <button
+                    type="button"
+                    disabled
+                    className="w-full h-10 rounded-xl bg-zinc-700 text-zinc-300 text-[11px] font-bold cursor-not-allowed flex items-center justify-center"
+                  >
+                    ناموجود
+                  </button>
+                ) : (
+                  <AddToCartButton
+                    product={selectedProduct}
+                    price={selectedPrice}
+                    selectedVariant={selectedVariantForCart}
+                    className="w-full !h-10 !py-0 flex items-center justify-center text-xs"
+                  />
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       {isImageModalOpen && selectedImage && (
         <div
-          className="fixed inset-0 z-[100] flex items-center justify-center bg-[#1C3324]/90 p-2 backdrop-blur-sm sm:p-8"
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-[#3B0B14]/90 p-2 backdrop-blur-sm sm:p-8"
           role="dialog"
           aria-modal="true"
           onClick={() => setIsImageModalOpen(false)}
@@ -1087,7 +1151,7 @@ export default function ProductDetailView({
             className="relative flex h-[calc(100dvh-1rem)] w-full max-w-6xl flex-col overflow-hidden rounded-[20px] bg-white shadow-2xl sm:h-[calc(100dvh-4rem)] sm:rounded-[28px]"
             onClick={(event) => event.stopPropagation()}
           >
-            <div className="flex items-center justify-between border-b border-[#1C3324]/10 bg-[#1C3324] px-4 py-3">
+            <div className="flex items-center justify-between border-b border-[#3B0B14]/10 bg-[#3B0B14] px-4 py-3">
               <div className="min-w-0">
                 <p className="text-sm font-bold text-white truncate">{title}</p>
                 {images.length > 1 && (
@@ -1105,7 +1169,7 @@ export default function ProductDetailView({
               </button>
             </div>
 
-            <div className="relative flex flex-1 items-center justify-center p-4 bg-[#FAF9F6] overflow-hidden select-none">
+            <div className="relative flex flex-1 items-center justify-center p-4 bg-[#FDF8F9] overflow-hidden select-none">
               <img src={selectedImage} alt={title} className="max-h-full max-w-full object-contain rounded-2xl pointer-events-none" />
 
               {images.length > 1 && (
@@ -1113,7 +1177,7 @@ export default function ProductDetailView({
                   <button
                     type="button"
                     onClick={(e) => { e.stopPropagation(); showPreviousImage(); }}
-                    className="absolute right-4 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-[#1C3324]/80 text-white flex items-center justify-center shadow-lg hover:bg-[#8B263E] transition cursor-pointer z-20"
+                    className="absolute right-4 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-[#3B0B14]/80 text-white flex items-center justify-center shadow-lg hover:bg-[#8B142D] transition cursor-pointer z-20"
                     aria-label="تصویر قبلی"
                   >
                     <ChevronRight size={24} />
@@ -1122,7 +1186,7 @@ export default function ProductDetailView({
                   <button
                     type="button"
                     onClick={(e) => { e.stopPropagation(); showNextImage(); }}
-                    className="absolute left-4 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-[#1C3324]/80 text-white flex items-center justify-center shadow-lg hover:bg-[#8B263E] transition cursor-pointer z-20"
+                    className="absolute left-4 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-[#3B0B14]/80 text-white flex items-center justify-center shadow-lg hover:bg-[#8B142D] transition cursor-pointer z-20"
                     aria-label="تصویر بعدی"
                   >
                     <ChevronLeft size={24} />

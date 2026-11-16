@@ -15,22 +15,22 @@ export const metadata: Metadata = {
 
 export default function ContactPage() {
   return (
-    <main className="min-h-screen bg-[#FAF9F6] text-[#1C3324]">
+    <main className="min-h-screen bg-[#FDF8F9] text-[#3B0B14]">
       {/* Hero - با فاصله بیشتر از بالای صفحه برای قرارگیری صحیح زیر هدر */}
       <section className="px-6 pb-16 pt-32 md:pb-20 md:pt-44">
         <div className="mx-auto max-w-5xl text-center">
-          <span className="mb-5 inline-block text-xs font-bold tracking-[0.3em] text-[#8B263E]">
+          <span className="mb-5 inline-block text-xs font-bold tracking-[0.3em] text-[#8B142D]">
             PARNA ZAR
           </span>
 
-          <h1 className="text-4xl font-black md:text-6xl text-[#1C3324]">
+          <h1 className="text-4xl font-black md:text-6xl text-[#3B0B14]">
             با ما در تماس باشید
           </h1>
 
-          <div className="mx-auto mt-6 h-px w-20 bg-[#8B263E]/40" />
+          <div className="mx-auto mt-6 h-px w-20 bg-[#8B142D]/40" />
 
-          <p className="mx-auto mt-8 max-w-2xl text-base leading-8 md:text-lg text-[#3A5A46]">
-            اگر سوالی درباره جواهرات، نرخ روز طلا، ثبت سفارش یا
+          <p className="mx-auto mt-8 max-w-2xl text-base leading-8 md:text-lg text-[#6E3A44]">
+            اگر سوالی درباره دست‌ساخته‌های طلا، نرخ روز طلا، ثبت سفارش یا
             نحوه خرید دارید، خوشحال می‌شویم با شما در ارتباط باشیم.
           </p>
         </div>
@@ -40,12 +40,12 @@ export default function ContactPage() {
       <section className="px-6 pb-24 md:pb-32">
         <div className="mx-auto grid max-w-6xl gap-8 lg:grid-cols-2">
           {/* Contact information */}
-          <div className="rounded-3xl bg-white p-7 md:p-9 border border-[#1C3324]/15 shadow-xs">
-            <h2 className="text-2xl font-black md:text-3xl text-[#1C3324]">
+          <div className="rounded-3xl bg-white p-7 md:p-9 border border-[#3B0B14]/15 shadow-xs">
+            <h2 className="text-2xl font-black md:text-3xl text-[#3B0B14]">
               راه‌های ارتباطی
             </h2>
 
-            <p className="mt-4 leading-8 text-[#3A5A46]">
+            <p className="mt-4 leading-8 text-[#6E3A44]">
               برای دریافت مشاوره یا پیگیری سفارش، می‌توانید
               از طریق راه‌های زیر با ما در ارتباط باشید.
             </p>
@@ -54,15 +54,15 @@ export default function ContactPage() {
               {/* Phone */}
               <a
                 href="tel:+989383080950"
-                className="flex items-center gap-4 rounded-2xl p-4 transition hover:bg-[#FAF9F6]"
+                className="flex items-center gap-4 rounded-2xl p-4 transition hover:bg-[#FDF8F9]"
               >
-                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#1C3324]/5 text-[#8B263E]">
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#3B0B14]/5 text-[#8B142D]">
                   <Phone size={20} />
                 </div>
 
                 <div>
-                  <p className="text-xs text-[#3A5A46]">تماس تلفنی</p>
-                  <p className="mt-1 font-bold text-[#1C3324]" dir="ltr">
+                  <p className="text-xs text-[#6E3A44]">تماس تلفنی</p>
+                  <p className="mt-1 font-bold text-[#3B0B14]" dir="ltr">
                     0938 308 0950
                   </p>
                 </div>
@@ -73,15 +73,15 @@ export default function ContactPage() {
                 href="https://wa.me/989383080950"
                 target="_blank"
                 rel="noreferrer"
-                className="flex items-center gap-4 rounded-2xl p-4 transition hover:bg-[#FAF9F6]"
+                className="flex items-center gap-4 rounded-2xl p-4 transition hover:bg-[#FDF8F9]"
               >
-                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#1C3324]/5 text-[#25D366]">
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#3B0B14]/5 text-[#25D366]">
                   <MessageCircle size={20} />
                 </div>
 
                 <div>
-                  <p className="text-xs text-[#3A5A46]">واتساپ</p>
-                  <p className="mt-1 font-bold text-[#1C3324]">
+                  <p className="text-xs text-[#6E3A44]">واتساپ</p>
+                  <p className="mt-1 font-bold text-[#3B0B14]">
                     گفتگو با پرنا زر
                   </p>
                 </div>
@@ -89,13 +89,13 @@ export default function ContactPage() {
 
               {/* Address */}
               <div className="flex items-center gap-4 rounded-2xl p-4">
-                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#1C3324]/5 text-[#8B263E]">
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#3B0B14]/5 text-[#8B142D]">
                   <MapPin size={20} />
                 </div>
 
                 <div>
-                  <p className="text-xs text-[#3A5A46]">آدرس گالری</p>
-                  <p className="mt-1 font-bold leading-7 text-[#1C3324]">
+                  <p className="text-xs text-[#6E3A44]">آدرس گالری</p>
+                  <p className="mt-1 font-bold leading-7 text-[#3B0B14]">
                     تهران - بازار بزرگ - پاساژ تکیه دولت
                   </p>
                 </div>
@@ -103,13 +103,13 @@ export default function ContactPage() {
 
               {/* Working hours */}
               <div className="flex items-center gap-4 rounded-2xl p-4">
-                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#1C3324]/5 text-[#8B263E]">
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#3B0B14]/5 text-[#8B142D]">
                   <Clock3 size={20} />
                 </div>
 
                 <div>
-                  <p className="text-xs text-[#3A5A46]">ساعت کاری</p>
-                  <p className="mt-1 font-bold text-[#1C3324]">
+                  <p className="text-xs text-[#6E3A44]">ساعت کاری</p>
+                  <p className="mt-1 font-bold text-[#3B0B14]">
                     شنبه تا پنجشنبه، ۱۱ تا ۲۰
                   </p>
                 </div>
@@ -120,15 +120,15 @@ export default function ContactPage() {
                 href="https://instagram.com/parnazar.gold"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-4 rounded-2xl p-4 transition hover:bg-[#FAF9F6]"
+                className="flex items-center gap-4 rounded-2xl p-4 transition hover:bg-[#FDF8F9]"
               >
-                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#1C3324]/5 text-[#8B263E]">
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#3B0B14]/5 text-[#8B142D]">
                   <AtSign size={20} />
                 </div>
 
                 <div>
-                  <p className="text-xs text-[#3A5A46]">اینستاگرام</p>
-                  <p className="mt-1 font-bold text-[#1C3324]">
+                  <p className="text-xs text-[#6E3A44]">اینستاگرام</p>
+                  <p className="mt-1 font-bold text-[#3B0B14]">
                     parnazar.gold
                   </p>
                 </div>
@@ -137,12 +137,12 @@ export default function ContactPage() {
           </div>
 
           {/* Contact form */}
-          <div className="rounded-3xl bg-white p-7 md:p-9 border border-[#1C3324]/15 shadow-xs">
-            <h2 className="text-2xl font-black md:text-3xl text-[#1C3324]">
+          <div className="rounded-3xl bg-white p-7 md:p-9 border border-[#3B0B14]/15 shadow-xs">
+            <h2 className="text-2xl font-black md:text-3xl text-[#3B0B14]">
               برای ما پیام بگذارید
             </h2>
 
-            <p className="mt-4 leading-8 text-[#3A5A46]">
+            <p className="mt-4 leading-8 text-[#6E3A44]">
               سوال یا درخواستی دارید؟ فرم زیر را پر کنید
               تا بتوانیم با شما در ارتباط باشیم.
             </p>
@@ -151,7 +151,7 @@ export default function ContactPage() {
               <div>
                 <label
                   htmlFor="name"
-                  className="mb-2 block text-xs font-bold text-[#1C3324]"
+                  className="mb-2 block text-xs font-bold text-[#3B0B14]"
                 >
                   نام و نام خانوادگی
                 </label>
@@ -160,14 +160,14 @@ export default function ContactPage() {
                   name="name"
                   type="text"
                   placeholder="نام شما"
-                  className="w-full rounded-2xl px-4 py-3.5 text-xs outline-none transition bg-[#FAF9F6] border border-[#1C3324]/15 focus:border-[#1C3324]"
+                  className="w-full rounded-2xl px-4 py-3.5 text-xs outline-none transition bg-[#FDF8F9] border border-[#3B0B14]/15 focus:border-[#3B0B14]"
                 />
               </div>
 
               <div>
                 <label
                   htmlFor="phone"
-                  className="mb-2 block text-xs font-bold text-[#1C3324]"
+                  className="mb-2 block text-xs font-bold text-[#3B0B14]"
                 >
                   شماره تماس
                 </label>
@@ -177,14 +177,14 @@ export default function ContactPage() {
                   type="tel"
                   placeholder="۰۹۱۲..."
                   dir="rtl"
-                  className="w-full rounded-2xl px-4 py-3.5 text-xs outline-none transition bg-[#FAF9F6] border border-[#1C3324]/15 focus:border-[#1C3324]"
+                  className="w-full rounded-2xl px-4 py-3.5 text-xs outline-none transition bg-[#FDF8F9] border border-[#3B0B14]/15 focus:border-[#3B0B14]"
                 />
               </div>
 
               <div>
                 <label
                   htmlFor="message"
-                  className="mb-2 block text-xs font-bold text-[#1C3324]"
+                  className="mb-2 block text-xs font-bold text-[#3B0B14]"
                 >
                   پیام شما
                 </label>
@@ -193,13 +193,13 @@ export default function ContactPage() {
                   name="message"
                   rows={5}
                   placeholder="پیام خود را بنویسید..."
-                  className="w-full resize-none rounded-2xl px-4 py-3.5 text-xs outline-none transition bg-[#FAF9F6] border border-[#1C3324]/15 focus:border-[#1C3324]"
+                  className="w-full resize-none rounded-2xl px-4 py-3.5 text-xs outline-none transition bg-[#FDF8F9] border border-[#3B0B14]/15 focus:border-[#3B0B14]"
                 />
               </div>
 
               <button
                 type="submit"
-                className="w-full rounded-2xl px-6 py-4 text-xs font-black transition bg-[#1C3324] text-white hover:bg-[#8B263E] cursor-pointer shadow-sm"
+                className="w-full rounded-2xl px-6 py-4 text-xs font-black transition bg-[#3B0B14] text-white hover:bg-[#8B142D] cursor-pointer shadow-sm"
               >
                 ارسال پیام
               </button>

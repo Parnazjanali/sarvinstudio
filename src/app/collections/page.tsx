@@ -7,8 +7,17 @@ import pb from "@/lib/pocketbase";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "کالکشن‌های اختصاصی | پرنا زر",
-  description: "مجموعه‌های انحصاری و داستانی طلا و جواهر دست‌ساز پرنا زر؛ مثل زر بدرخش با الهام از فرهنگ اصیل ایرانی و انحناهای ارگانیک.",
+  title: "کالکشن‌های اختصاصی طلا | گالری طلا پرنا زر",
+  description: "مجموعه‌های انحصاری و داستانی طلای دست‌ساز ۱۸ عیار پرنا زر («نسیما»، «صحرا»، «دلبر»، «آرونا»، «سرو»)؛ مثل زر بدرخش با الهام از فرهنگ اصیل ایرانی.",
+  alternates: {
+    canonical: "/collections",
+  },
+  openGraph: {
+    title: "کالکشن‌های اختصاصی طلا | گالری طلا پرنا زر",
+    description: "مجموعه‌های انحصاری و داستانی طلای دست‌ساز پرنا زر با شرایط پرداخت در ۳ قسط ماهانه بدون سود.",
+    url: "https://parnazar.ir/collections",
+    images: [{ url: "/banner.webp", width: 1200, height: 630, alt: "کالکشن‌های اختصاصی پرنا زر" }],
+  },
 };
 
 type ExclusiveCollection = {
@@ -100,32 +109,70 @@ export default async function CollectionsPage() {
     ];
   }
 
+  const collectionsJsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "CollectionPage",
+        "@id": "https://parnazar.ir/collections#webpage",
+        url: "https://parnazar.ir/collections",
+        name: "کالکشن‌های اختصاصی گالری طلا پرنا زر",
+        description: "مجموعه‌های انحصاری و داستانی طلای دست‌ساز ۱۸ عیار پرنا زر",
+        isPartOf: {
+          "@id": "https://parnazar.ir/#website",
+        },
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://parnazar.ir/collections#breadcrumb",
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "صفحه اصلی",
+            item: "https://parnazar.ir",
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: "کالکشن‌های اختصاصی",
+            item: "https://parnazar.ir/collections",
+          },
+        ],
+      },
+    ],
+  };
+
   return (
     <main
       dir="rtl"
-      className="min-h-screen bg-[#FCFCFA] dark:bg-[#101813] text-[#1C3324] dark:text-zinc-100 font-sans pb-28 pt-36 sm:pt-44 lg:pt-48 transition-colors duration-300"
+      className="min-h-screen bg-[#FAF8F5] dark:bg-[#140508] text-[#3B0B14] dark:text-zinc-100 font-sans pb-28 pt-36 sm:pt-44 lg:pt-48 transition-colors duration-300"
     >
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionsJsonLd) }}
+      />
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Hero Section */}
         <div className="text-center max-w-3xl mx-auto mb-16 sm:mb-20">
-          <div className="inline-flex items-center gap-2 rounded-full bg-[#8B263E]/10 dark:bg-[#D8B65C]/15 px-4 py-1.5 text-xs font-black text-[#8B263E] dark:text-[#D8B65C] mb-4 border border-[#8B263E]/20">
+          <div className="inline-flex items-center gap-2 rounded-full bg-[#8B142D]/10 dark:bg-[#DFB76C]/15 px-4 py-1.5 text-xs font-black text-[#8B142D] dark:text-[#DFB76C] mb-4 border border-[#8B142D]/20">
             <Sparkles size={14} />
             <span>مجموعه‌های انحصاری پرنا زر</span>
           </div>
 
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-black text-[#1C3324] dark:text-white tracking-tight font-heading leading-tight mb-4">
-            کالکشن‌های اختصاصی
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-black text-[#3B0B14] dark:text-white tracking-tight font-heading leading-tight mb-4">
+            کالکشن‌های اختصاصی گالری پرنا زر
           </h1>
 
-          <p className="text-sm sm:text-base leading-relaxed text-[#3A5A46] dark:text-zinc-400 font-medium">
+          <p className="text-sm sm:text-base leading-relaxed text-[#6E3A44] dark:text-zinc-400 font-medium">
             هر کالکشن در پرنا زر، تجسم یک روایت داستانی و هنری است؛ زاده‌ی پیوند طلای ۱۸ عیار استاندارد، خطوط ارگانیک و مهارت استادانه زرگران ایرانی.
           </p>
 
           <div className="mt-6 flex flex-wrap justify-center gap-3">
             <Link
               href="/products"
-              className="inline-flex items-center gap-2 rounded-2xl bg-white dark:bg-[#15221B] px-5 py-2.5 text-xs font-bold text-[#1C3324] dark:text-zinc-200 border border-[#1C3324]/10 dark:border-white/10 hover:border-[#8B263E] transition shadow-xs"
+              className="inline-flex items-center gap-2 rounded-2xl bg-white dark:bg-[#1C080E] px-5 py-2.5 text-xs font-bold text-[#3B0B14] dark:text-zinc-200 border border-[#3B0B14]/10 dark:border-white/10 hover:border-[#8B142D] transition shadow-xs"
             >
               مشاهده تمامی آثار گالری ←
             </Link>
@@ -139,11 +186,11 @@ export default async function CollectionsPage() {
             return (
               <article
                 key={col.id}
-                className="group relative flex flex-col justify-between rounded-3xl border border-[#1C3324]/10 dark:border-white/10 bg-white dark:bg-[#15221B] p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-[#8B263E]/40 hover:shadow-xl dark:hover:border-[#D8B65C]/40"
+                className="group relative flex flex-col justify-between rounded-3xl border border-[#3B0B14]/10 dark:border-white/10 bg-white dark:bg-[#1C080E] p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-[#8B142D]/40 hover:shadow-xl dark:hover:border-[#DFB76C]/40"
               >
                 <div>
                   {/* Card Cover Visual */}
-                  <div className="relative aspect-[16/10] w-full overflow-hidden rounded-2xl bg-[#FAF9F6] dark:bg-[#101813] border border-[#1C3324]/5 dark:border-white/5 mb-6">
+                  <div className="relative aspect-[16/10] w-full overflow-hidden rounded-2xl bg-[#FDF8F9] dark:bg-[#140508] border border-[#3B0B14]/5 dark:border-white/5 mb-6">
                     <img
                       src={col.image || "/header.webp"}
                       alt={col.title}
@@ -153,13 +200,13 @@ export default async function CollectionsPage() {
 
                     {/* Top Badges */}
                     <div className="absolute top-3.5 right-3.5 flex items-center gap-2">
-                      <span className="rounded-full bg-[#1C3324]/90 backdrop-blur-md px-3 py-1 text-[11px] font-black text-white shadow-xs">
+                      <span className="rounded-full bg-[#3B0B14]/90 backdrop-blur-md px-3 py-1 text-[11px] font-black text-white shadow-xs">
                         {count.toLocaleString("fa-IR")} اثر فاخر
                       </span>
                     </div>
 
                     <div className="absolute top-3.5 left-3.5">
-                      <span className="rounded-full bg-[#8B263E]/90 backdrop-blur-md px-2.5 py-1 text-[10px] font-black text-white">
+                      <span className="rounded-full bg-[#8B142D]/90 backdrop-blur-md px-2.5 py-1 text-[10px] font-black text-white">
                         اختصاصی
                       </span>
                     </div>
@@ -175,26 +222,26 @@ export default async function CollectionsPage() {
                   {/* Subtitle & Description */}
                   <div className="space-y-2 mb-6">
                     {col.subtitle && (
-                      <p className="text-xs font-black text-[#8B263E] dark:text-[#D8B65C]">
+                      <p className="text-xs font-black text-[#8B142D] dark:text-[#DFB76C]">
                         {col.subtitle}
                       </p>
                     )}
-                    <p className="text-xs sm:text-[13px] leading-relaxed text-[#3A5A46] dark:text-zinc-400 line-clamp-3">
+                    <p className="text-xs sm:text-[13px] leading-relaxed text-[#6E3A44] dark:text-zinc-400 line-clamp-3">
                       {col.description}
                     </p>
                   </div>
                 </div>
 
                 {/* Footer Action */}
-                <div className="border-t border-[#1C3324]/10 dark:border-white/10 pt-4 flex items-center justify-between">
-                  <span className="text-[11px] font-bold text-[#3A5A46] dark:text-zinc-400 flex items-center gap-1.5">
-                    <CreditCard size={14} className="text-[#8B263E] dark:text-[#D8B65C]" />
+                <div className="border-t border-[#3B0B14]/10 dark:border-white/10 pt-4 flex items-center justify-between">
+                  <span className="text-[11px] font-bold text-[#6E3A44] dark:text-zinc-400 flex items-center gap-1.5">
+                    <CreditCard size={14} className="text-[#8B142D] dark:text-[#DFB76C]" />
                     <span>۳ قسط با قیمت روز</span>
                   </span>
 
                   <Link
                     href={`/collections/${col.slug}`}
-                    className="inline-flex items-center gap-1.5 rounded-xl bg-[#1C3324] dark:bg-[#D8B65C] px-4 py-2 text-xs font-black text-white dark:text-[#101813] transition-all hover:bg-[#8B263E] dark:hover:bg-[#EAD9A0] shadow-xs group-hover:scale-102"
+                    className="inline-flex items-center gap-1.5 rounded-xl bg-[#3B0B14] dark:bg-[#DFB76C] px-4 py-2 text-xs font-black text-white dark:text-[#140508] transition-all hover:bg-[#8B142D] dark:hover:bg-[#EAD9A0] shadow-xs group-hover:scale-102"
                   >
                     <span>جزییات و آثار</span>
                     <ChevronLeft size={14} />
@@ -206,59 +253,59 @@ export default async function CollectionsPage() {
         </div>
 
         {/* Value Proposition Highlights */}
-        <div className="mt-20 rounded-3xl border border-[#1C3324]/10 dark:border-white/10 bg-[#FAF9F6] dark:bg-[#15221B]/60 p-8 sm:p-10">
+        <div className="mt-20 rounded-3xl border border-[#3B0B14]/10 dark:border-white/10 bg-[#FDF8F9] dark:bg-[#1C080E]/60 p-8 sm:p-10">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 text-right">
             <div className="flex items-start gap-4">
-              <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-[#8B263E]/10 dark:bg-[#D8B65C]/20 text-[#8B263E] dark:text-[#D8B65C]">
+              <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-[#8B142D]/10 dark:bg-[#DFB76C]/20 text-[#8B142D] dark:text-[#DFB76C]">
                 <Scale size={22} />
               </div>
               <div>
-                <h4 className="text-sm font-black text-[#1C3324] dark:text-zinc-100 mb-1">
+                <h4 className="text-sm font-black text-[#3B0B14] dark:text-zinc-100 mb-1">
                   طلای ۱۸ عیار استاندارد
                 </h4>
-                <p className="text-xs text-[#3A5A46] dark:text-zinc-400 leading-relaxed">
+                <p className="text-xs text-[#6E3A44] dark:text-zinc-400 leading-relaxed">
                   تمامی قطعات دارای کد رهگیری اتحادیه و عیار استاندارد ۷۵۰ با فاکتور رسمی سیستمی می‌باشند.
                 </p>
               </div>
             </div>
 
             <div className="flex items-start gap-4">
-              <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-[#8B263E]/10 dark:bg-[#D8B65C]/20 text-[#8B263E] dark:text-[#D8B65C]">
+              <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-[#8B142D]/10 dark:bg-[#DFB76C]/20 text-[#8B142D] dark:text-[#DFB76C]">
                 <CreditCard size={22} />
               </div>
               <div>
-                <h4 className="text-sm font-black text-[#1C3324] dark:text-zinc-100 mb-1">
+                <h4 className="text-sm font-black text-[#3B0B14] dark:text-zinc-100 mb-1">
                   ۳ قسط طلایی با قیمت روز
                 </h4>
-                <p className="text-xs text-[#3A5A46] dark:text-zinc-400 leading-relaxed">
+                <p className="text-xs text-[#6E3A44] dark:text-zinc-400 leading-relaxed">
                   خرید آسان و بدون سود؛ پرداخت قسط اول هنگام ثبت سفارش و تسویه اقساط آتی بر مبنای نرخ روز طلا.
                 </p>
               </div>
             </div>
 
             <div className="flex items-start gap-4">
-              <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-[#8B263E]/10 dark:bg-[#D8B65C]/20 text-[#8B263E] dark:text-[#D8B65C]">
+              <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-[#8B142D]/10 dark:bg-[#DFB76C]/20 text-[#8B142D] dark:text-[#DFB76C]">
                 <Gem size={22} />
               </div>
               <div>
-                <h4 className="text-sm font-black text-[#1C3324] dark:text-zinc-100 mb-1">
+                <h4 className="text-sm font-black text-[#3B0B14] dark:text-zinc-100 mb-1">
                   طراحی دست‌ساز و اصیل
                 </h4>
-                <p className="text-xs text-[#3A5A46] dark:text-zinc-400 leading-relaxed">
+                <p className="text-xs text-[#6E3A44] dark:text-zinc-400 leading-relaxed">
                   ترکیب هنر سنتی زرگری با فرم‌های ارگانیک مدرن توسط طراحان پرنا زر.
                 </p>
               </div>
             </div>
 
             <div className="flex items-start gap-4">
-              <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-[#8B263E]/10 dark:bg-[#D8B65C]/20 text-[#8B263E] dark:text-[#D8B65C]">
+              <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-[#8B142D]/10 dark:bg-[#DFB76C]/20 text-[#8B142D] dark:text-[#DFB76C]">
                 <ShieldCheck size={22} />
               </div>
               <div>
-                <h4 className="text-sm font-black text-[#1C3324] dark:text-zinc-100 mb-1">
+                <h4 className="text-sm font-black text-[#3B0B14] dark:text-zinc-100 mb-1">
                   ارسال بیمه‌شده سراسر کشور
                 </h4>
-                <p className="text-xs text-[#3A5A46] dark:text-zinc-400 leading-relaxed">
+                <p className="text-xs text-[#6E3A44] dark:text-zinc-400 leading-relaxed">
                   تحویل در بسته‌بندی هاردباکس لوکس به همراه شناسنامه اختصاصی و بیمه معتبر پستی.
                 </p>
               </div>

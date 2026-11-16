@@ -26,7 +26,7 @@ export function LiquidGradientBackground({ speed = 1, opacity = 0.75, className 
   return (
     <ShaderCanvas 
       fragment={FRAG} 
-      colors={["#2D4F38", "#A8324E", "#E2C368"]} // سبز سرزنده‌تر، قرمز لعل شفاف‌تر و طلایی براق برای دید عالی روی بوم سفید
+      colors={["#580F1F", "#8B142D", "#DFB76C"]} // سرخ لعل عمیق، یاقوت سرخ شفاف و طلایی اصیل زرگری برای دید عالی روی بوم سفید خالص
       uniforms={{ u_opacity: opacity }} 
       speed={speed} 
       pointer 

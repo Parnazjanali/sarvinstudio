@@ -25,6 +25,7 @@ interface UserProfile {
   name: string;
   email: string;
   phone?: string;
+  nationalId?: string;
   role?: string;
   isAdmin?: boolean;
 }
@@ -113,6 +114,7 @@ export default function AccountPage() {
           username?: string;
           email?: string;
           phone?: string;
+          nationalId?: string;
           role?: string;
           isAdmin?: boolean;
           collectionName?: string;
@@ -131,6 +133,7 @@ export default function AccountPage() {
           name: model.name || model.username || "کاربر گرامی",
           email: model.email || "",
           phone: model.phone || "",
+          nationalId: model.nationalId || "",
           role: isAdmin ? "admin" : model.role || "user",
           isAdmin,
         });
@@ -207,12 +210,12 @@ export default function AccountPage() {
   if (loading) {
     return (
       <div
-        className="min-h-screen flex items-center justify-center bg-[#FAF9F6]"
+        className="min-h-screen flex items-center justify-center bg-[#FDF8F9]"
         dir="rtl"
       >
         <div className="flex flex-col items-center gap-3">
-          <div className="h-10 w-10 animate-spin rounded-full border-3 border-[#1C3324]/20 border-t-[#1C3324]" />
-          <p className="text-sm font-bold text-[#1C3324]">
+          <div className="h-10 w-10 animate-spin rounded-full border-3 border-[#3B0B14]/20 border-t-[#3B0B14]" />
+          <p className="text-sm font-bold text-[#3B0B14]">
             در حال بارگذاری اطلاعات حساب...
           </p>
         </div>
@@ -224,40 +227,62 @@ export default function AccountPage() {
 
   return (
     <div
-      className="min-h-screen pb-24 pt-36 lg:pt-42 px-4 sm:px-6 lg:px-8 font-sans bg-[#FAF9F6] text-[#1C3324]"
+      className="min-h-screen pb-24 pt-36 lg:pt-42 px-4 sm:px-6 lg:px-8 font-sans bg-[#FDF8F9] text-[#3B0B14]"
       dir="rtl"
     >
       <div className="max-w-5xl mx-auto space-y-6">
         
         {/* بنر خوش‌آمدگویی ظریف */}
-        <div className="p-6 sm:p-8 rounded-3xl border border-[#1C3324]/15 bg-white shadow-xs flex flex-col md:flex-row items-start md:items-center justify-between gap-6 relative overflow-hidden">
-          <div className="absolute -left-10 -bottom-10 w-40 h-40 rounded-full bg-[#8B263E]/5 pointer-events-none blur-xl" />
+        <div className="p-6 sm:p-8 rounded-3xl border border-[#3B0B14]/15 bg-white shadow-xs flex flex-col md:flex-row items-start md:items-center justify-between gap-6 relative overflow-hidden">
+          <div className="absolute -left-10 -bottom-10 w-40 h-40 rounded-full bg-[#8B142D]/5 pointer-events-none blur-xl" />
 
           <div className="flex items-center gap-4 relative z-10">
-            <div className="w-16 h-16 rounded-2xl flex items-center justify-center font-black text-2xl shadow-inner shrink-0 bg-[#1C3324] text-white">
+            <div className="w-16 h-16 rounded-2xl flex items-center justify-center font-black text-2xl shadow-inner shrink-0 bg-[#3B0B14] text-white">
               {user.name?.charAt(0) || "U"}
             </div>
 
             <div>
               <div className="flex items-center gap-2.5 flex-wrap">
-                <h1 className="text-xl sm:text-2xl font-black text-[#1C3324]">
+                <h1 className="text-xl sm:text-2xl font-black text-[#3B0B14]">
                   {user.name}
                 </h1>
 
                 {user.isAdmin ? (
-                  <span className="bg-[#1C3324] text-white text-xs px-3 py-1 rounded-full font-bold shadow-xs">
+                  <span className="bg-[#3B0B14] text-white text-xs px-3 py-1 rounded-full font-bold shadow-xs">
                     مدیر سیستم
                   </span>
                 ) : (
-                  <span className="bg-[#FAF9F6] text-[#8B263E] text-xs px-3 py-1 rounded-full font-bold border border-[#8B263E]/20">
+                  <span className="bg-[#FDF8F9] text-[#8B142D] text-xs px-3 py-1 rounded-full font-bold border border-[#8B142D]/20">
                     مشتری پرنا زر
                   </span>
                 )}
               </div>
 
-              <p className="text-xs sm:text-sm mt-1.5 text-[#3A5A46] font-medium" dir="ltr">
+              <p className="text-xs sm:text-sm mt-1.5 text-[#6E3A44] font-medium" dir="ltr">
                 {user.email}
               </p>
+
+              <div className="flex flex-wrap items-center gap-2.5 mt-2 text-xs">
+                {user.phone && (
+                  <span className="font-mono text-[#3B0B14] font-bold text-[11px] bg-[#FDF8F9] px-2 py-0.5 rounded-md border border-[#3B0B14]/10" dir="ltr">
+                    {user.phone}
+                  </span>
+                )}
+
+                {user.nationalId ? (
+                  <span className="inline-flex items-center gap-1 text-[11px] font-bold text-emerald-800 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200">
+                    <ShieldCheck size={13} />
+                    <span>کد ملی تایید شده</span>
+                  </span>
+                ) : (
+                  <Link
+                    href="/account/edit"
+                    className="inline-flex items-center gap-1 text-[11px] font-bold text-amber-800 bg-amber-50 px-2.5 py-0.5 rounded-full border border-amber-200 hover:bg-amber-100 transition"
+                  >
+                    <span>ثبت کد ملی جهت فاکتور</span>
+                  </Link>
+                )}
+              </div>
             </div>
           </div>
 
@@ -265,7 +290,7 @@ export default function AccountPage() {
             {user.isAdmin && (
               <Link
                 href="/dashboard"
-                className="flex-1 md:flex-none flex items-center justify-center gap-2 px-5 py-3 rounded-2xl font-bold text-sm text-white shadow-xs transition hover:bg-[#8B263E] bg-[#1C3324]"
+                className="flex-1 md:flex-none flex items-center justify-center gap-2 px-5 py-3 rounded-2xl font-bold text-sm text-white shadow-xs transition hover:bg-[#8B142D] bg-[#3B0B14]"
               >
                 <ShieldCheck size={18} />
                 پنل مدیریت فروشگاه
@@ -286,72 +311,72 @@ export default function AccountPage() {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
           <Link
             href="/account/orders"
-            className="p-5 rounded-3xl border border-[#1C3324]/15 bg-white transition duration-300 hover:-translate-y-1 hover:shadow-xs hover:border-[#8B263E] flex flex-col gap-3 group"
+            className="p-5 rounded-3xl border border-[#3B0B14]/15 bg-white transition duration-300 hover:-translate-y-1 hover:shadow-xs hover:border-[#8B142D] flex flex-col gap-3 group"
           >
-            <div className="w-11 h-11 rounded-2xl flex items-center justify-center text-[#1C3324] bg-[#FAF9F6] transition group-hover:bg-[#1C3324] group-hover:text-white border border-[#1C3324]/10">
+            <div className="w-11 h-11 rounded-2xl flex items-center justify-center text-[#3B0B14] bg-[#FDF8F9] transition group-hover:bg-[#3B0B14] group-hover:text-white border border-[#3B0B14]/10">
               <Package size={20} />
             </div>
             <div>
-              <p className="font-extrabold text-sm text-[#1C3324]">سفارش‌های من</p>
-              <p className="text-xs text-[#3A5A46] mt-0.5">پیگیری و سوابق خریدها</p>
+              <p className="font-extrabold text-sm text-[#3B0B14]">سفارش‌های من</p>
+              <p className="text-xs text-[#6E3A44] mt-0.5">پیگیری و سوابق خریدها</p>
             </div>
           </Link>
 
           <Link
             href="/account/addresses"
-            className="p-5 rounded-3xl border border-[#1C3324]/15 bg-white transition duration-300 hover:-translate-y-1 hover:shadow-xs hover:border-[#8B263E] flex flex-col gap-3 group"
+            className="p-5 rounded-3xl border border-[#3B0B14]/15 bg-white transition duration-300 hover:-translate-y-1 hover:shadow-xs hover:border-[#8B142D] flex flex-col gap-3 group"
           >
-            <div className="w-11 h-11 rounded-2xl flex items-center justify-center text-[#1C3324] bg-[#FAF9F6] transition group-hover:bg-[#1C3324] group-hover:text-white border border-[#1C3324]/10">
+            <div className="w-11 h-11 rounded-2xl flex items-center justify-center text-[#3B0B14] bg-[#FDF8F9] transition group-hover:bg-[#3B0B14] group-hover:text-white border border-[#3B0B14]/10">
               <MapPin size={20} />
             </div>
             <div>
-              <p className="font-extrabold text-sm text-[#1C3324]">آدرس‌های من</p>
-              <p className="text-xs text-[#3A5A46] mt-0.5">مدیریت نشانی ارسال</p>
+              <p className="font-extrabold text-sm text-[#3B0B14]">آدرس‌های من</p>
+              <p className="text-xs text-[#6E3A44] mt-0.5">مدیریت نشانی ارسال</p>
             </div>
           </Link>
 
           <Link
             href="/account/favorites"
-            className="p-5 rounded-3xl border border-[#1C3324]/15 bg-white transition duration-300 hover:-translate-y-1 hover:shadow-xs hover:border-[#8B263E] flex flex-col gap-3 group"
+            className="p-5 rounded-3xl border border-[#3B0B14]/15 bg-white transition duration-300 hover:-translate-y-1 hover:shadow-xs hover:border-[#8B142D] flex flex-col gap-3 group"
           >
-            <div className="w-11 h-11 rounded-2xl flex items-center justify-center text-[#1C3324] bg-[#FAF9F6] transition group-hover:bg-[#1C3324] group-hover:text-white border border-[#1C3324]/10">
+            <div className="w-11 h-11 rounded-2xl flex items-center justify-center text-[#3B0B14] bg-[#FDF8F9] transition group-hover:bg-[#3B0B14] group-hover:text-white border border-[#3B0B14]/10">
               <Heart size={20} />
             </div>
             <div>
-              <p className="font-extrabold text-sm text-[#1C3324]">علاقه‌مندی‌ها</p>
-              <p className="text-xs text-[#3A5A46] mt-0.5">طلا و جواهرات نشان‌شده</p>
+              <p className="font-extrabold text-sm text-[#3B0B14]">علاقه‌مندی‌ها</p>
+              <p className="text-xs text-[#6E3A44] mt-0.5">دست‌ساخته‌های طلای نشان‌شده</p>
             </div>
           </Link>
 
           <Link
             href="/account/edit"
-            className="p-5 rounded-3xl border border-[#1C3324]/15 bg-white transition duration-300 hover:-translate-y-1 hover:shadow-xs hover:border-[#8B263E] flex flex-col gap-3 group"
+            className="p-5 rounded-3xl border border-[#3B0B14]/15 bg-white transition duration-300 hover:-translate-y-1 hover:shadow-xs hover:border-[#8B142D] flex flex-col gap-3 group"
           >
-            <div className="w-11 h-11 rounded-2xl flex items-center justify-center text-[#1C3324] bg-[#FAF9F6] transition group-hover:bg-[#1C3324] group-hover:text-white border border-[#1C3324]/10">
+            <div className="w-11 h-11 rounded-2xl flex items-center justify-center text-[#3B0B14] bg-[#FDF8F9] transition group-hover:bg-[#3B0B14] group-hover:text-white border border-[#3B0B14]/10">
               <User size={20} />
             </div>
             <div>
-              <p className="font-extrabold text-sm text-[#1C3324]">اطلاعات فردی</p>
-              <p className="text-xs text-[#3A5A46] mt-0.5">ویرایش اطلاعات حساب</p>
+              <p className="font-extrabold text-sm text-[#3B0B14]">اطلاعات فردی</p>
+              <p className="text-xs text-[#6E3A44] mt-0.5">ویرایش اطلاعات حساب</p>
             </div>
           </Link>
         </div>
 
         {/* بخش آخرین خریدهای کاربر */}
-        <div className="p-6 sm:p-8 rounded-3xl border border-[#1C3324]/15 bg-white shadow-xs space-y-6">
-          <div className="flex items-center justify-between border-b border-[#1C3324]/10 pb-4">
+        <div className="p-6 sm:p-8 rounded-3xl border border-[#3B0B14]/15 bg-white shadow-xs space-y-6">
+          <div className="flex items-center justify-between border-b border-[#3B0B14]/10 pb-4">
             <div className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-xl bg-[#FAF9F6] text-[#1C3324] flex items-center justify-center border border-[#1C3324]/10">
+              <div className="w-8 h-8 rounded-xl bg-[#FDF8F9] text-[#3B0B14] flex items-center justify-center border border-[#3B0B14]/10">
                 <ShoppingBag size={18} />
               </div>
-              <h2 className="font-extrabold text-base sm:text-lg text-[#1C3324]">
+              <h2 className="font-extrabold text-base sm:text-lg text-[#3B0B14]">
                 آخرین خریدهای شما
               </h2>
             </div>
 
             <Link
               href="/account/orders"
-              className="flex items-center gap-1 text-xs font-bold text-[#8B263E] transition hover:opacity-75"
+              className="flex items-center gap-1 text-xs font-bold text-[#8B142D] transition hover:opacity-75"
             >
               <span>مشاهده همه</span>
               <ChevronLeft size={14} />
@@ -360,26 +385,26 @@ export default function AccountPage() {
 
           {ordersLoading ? (
             <div className="py-12 flex flex-col items-center justify-center gap-3">
-              <div className="h-7 w-7 animate-spin rounded-full border-3 border-[#1C3324]/20 border-t-[#1C3324]" />
-              <p className="text-xs text-[#3A5A46]">در حال دریافت سفارش‌ها...</p>
+              <div className="h-7 w-7 animate-spin rounded-full border-3 border-[#3B0B14]/20 border-t-[#3B0B14]" />
+              <p className="text-xs text-[#6E3A44]">در حال دریافت سفارش‌ها...</p>
             </div>
           ) : orders.length === 0 ? (
             <div className="py-12 flex flex-col items-center justify-center text-center">
-              <div className="w-16 h-16 rounded-2xl flex items-center justify-center mb-4 bg-[#FAF9F6] text-[#1C3324] border border-[#1C3324]/10">
+              <div className="w-16 h-16 rounded-2xl flex items-center justify-center mb-4 bg-[#FDF8F9] text-[#3B0B14] border border-[#3B0B14]/10">
                 <ShoppingBag size={28} />
               </div>
 
-              <h3 className="font-extrabold text-base mb-2 text-[#1C3324]">
+              <h3 className="font-extrabold text-base mb-2 text-[#3B0B14]">
                 هنوز سفارشی ثبت نکرده‌اید
               </h3>
 
-              <p className="text-sm text-[#3A5A46] max-w-sm leading-7">
+              <p className="text-sm text-[#6E3A44] max-w-sm leading-7">
                 وقتی اولین خریدتان را از پرنا زر ثبت کنید، سفارش شما در این قسمت به صورت تفکیک‌شده نمایش داده می‌شود.
               </p>
 
               <Link
                 href="/products"
-                className="mt-6 inline-flex items-center gap-2 px-6 py-3 rounded-2xl text-sm font-bold text-white shadow-xs transition hover:bg-[#8B263E] bg-[#1C3324]"
+                className="mt-6 inline-flex items-center gap-2 px-6 py-3 rounded-2xl text-sm font-bold text-white shadow-xs transition hover:bg-[#8B142D] bg-[#3B0B14]"
               >
                 <Sparkles size={16} />
                 مشاهده آثار پرنا زر
@@ -390,12 +415,12 @@ export default function AccountPage() {
               {orders.map((order) => (
                 <div
                   key={order.id}
-                  className="p-4 sm:p-5 rounded-2xl border border-[#1C3324]/10 bg-[#FAF9F6] transition hover:border-[#8B263E] flex flex-col sm:flex-row sm:items-center justify-between gap-4"
+                  className="p-4 sm:p-5 rounded-2xl border border-[#3B0B14]/10 bg-[#FDF8F9] transition hover:border-[#8B142D] flex flex-col sm:flex-row sm:items-center justify-between gap-4"
                 >
                   <div className="space-y-1.5">
                     <div className="flex items-center gap-2.5 flex-wrap">
-                      <span className="font-extrabold text-sm text-[#1C3324]">
-                        {order.productTitle || "سفارش طلا و جواهرات پرنا زر"}
+                      <span className="font-extrabold text-sm text-[#3B0B14]">
+                        {order.productTitle || "سفارش گالری طلا پرنا زر"}
                       </span>
 
                       {order.status && (
@@ -409,7 +434,7 @@ export default function AccountPage() {
                       )}
                     </div>
 
-                    <div className="flex items-center gap-3 text-xs text-[#3A5A46] flex-wrap">
+                    <div className="flex items-center gap-3 text-xs text-[#6E3A44] flex-wrap">
                       <span>کد سفارش: {order.orderNumber || order.id}</span>
                       {order.created && (
                         <>
@@ -423,16 +448,16 @@ export default function AccountPage() {
                     </div>
                   </div>
 
-                  <div className="flex items-center justify-between sm:justify-end gap-5 pt-2 sm:pt-0 border-t sm:border-t-0 border-[#1C3324]/10">
+                  <div className="flex items-center justify-between sm:justify-end gap-5 pt-2 sm:pt-0 border-t sm:border-t-0 border-[#3B0B14]/10">
                     {order.total !== undefined && (
-                      <span className="font-black text-sm sm:text-base text-[#8B263E]">
+                      <span className="font-black text-sm sm:text-base text-[#8B142D]">
                         {formatPrice(order.total)}
                       </span>
                     )}
 
                     <Link
                       href={`/account/orders/${order.id}`}
-                      className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-white text-[#1C3324] hover:bg-[#8B263E] hover:text-white text-xs font-bold transition shadow-2xs border border-[#1C3324]/10"
+                      className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-white text-[#3B0B14] hover:bg-[#8B142D] hover:text-white text-xs font-bold transition shadow-2xs border border-[#3B0B14]/10"
                       aria-label="مشاهده جزئیات سفارش"
                     >
                       <span>جزئیات</span>

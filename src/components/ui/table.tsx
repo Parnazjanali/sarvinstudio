@@ -22,7 +22,7 @@ const TableHeader = React.forwardRef<
   <thead
     ref={ref}
     className={cn(
-      "border-b border-[#1C3324]/10 dark:border-white/10 [&_tr]:border-b",
+      "border-b border-[#580F1F]/10 dark:border-white/10 [&_tr]:border-b",
       className
     )}
     {...props}
@@ -37,7 +37,7 @@ const TableBody = React.forwardRef<
   <tbody
     ref={ref}
     className={cn(
-      "divide-y divide-[#1C3324]/5 dark:divide-white/5 [&_tr:last-child]:border-0",
+      "divide-y divide-[#580F1F]/5 dark:divide-white/5 [&_tr:last-child]:border-0",
       className
     )}
     {...props}
@@ -52,7 +52,7 @@ const TableFooter = React.forwardRef<
   <tfoot
     ref={ref}
     className={cn(
-      "border-t border-[#1C3324]/10 bg-[#FAF9F6] font-medium dark:border-white/10 dark:bg-zinc-900/50 [&>tr]:last:border-b-0",
+      "border-t border-[#580F1F]/10 bg-[#FDF8F9] font-medium dark:border-white/10 dark:bg-zinc-900/50 [&>tr]:last:border-b-0",
       className
     )}
     {...props}
@@ -67,7 +67,7 @@ const TableRow = React.forwardRef<
   <tr
     ref={ref}
     className={cn(
-      "border-b border-[#1C3324]/5 transition-colors hover:bg-[#1C3324]/[0.02] dark:border-white/5 dark:hover:bg-white/[0.02]",
+      "border-b border-[#580F1F]/5 transition-colors hover:bg-[#580F1F]/[0.02] dark:border-white/5 dark:hover:bg-white/[0.02]",
       className
     )}
     {...props}
@@ -82,7 +82,7 @@ const TableHead = React.forwardRef<
   <th
     ref={ref}
     className={cn(
-      "h-11 px-3 text-right align-middle text-xs font-bold text-[#3A5A46] dark:text-zinc-400 [&:has([role=checkbox])]:pr-0",
+      "h-11 px-3 text-right align-middle text-xs font-bold text-[#6E3A44] dark:text-zinc-400 [&:has([role=checkbox])]:pr-0",
       className
     )}
     {...props}
@@ -111,7 +111,7 @@ const TableCaption = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <caption
     ref={ref}
-    className={cn("mt-4 text-xs text-[#3A5A46] dark:text-zinc-400", className)}
+    className={cn("mt-4 text-xs text-[#6E3A44] dark:text-zinc-400", className)}
     {...props}
   />
 ));

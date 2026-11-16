@@ -542,22 +542,22 @@ export default function DashboardOrdersPage() {
   return (
     <div className="space-y-6 sm:space-y-8 font-sans" dir="rtl">
       {/* Header */}
-      <div className="flex flex-col justify-between gap-5 rounded-3xl border border-[#1C3324]/12 bg-white/80 p-5 shadow-xs backdrop-blur-md transition-colors lg:flex-row lg:items-center lg:p-6 dark:border-white/10 dark:bg-[#15221B]/80">
+      <div className="flex flex-col justify-between gap-5 rounded-3xl border border-[#3B0B14]/12 bg-white/80 p-5 shadow-xs backdrop-blur-md transition-colors lg:flex-row lg:items-center lg:p-6 dark:border-white/10 dark:bg-[#1C080E]/80">
         <div>
           <div className="flex items-center gap-2">
             <span className="relative flex h-2.5 w-2.5">
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
               <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald-500" />
             </span>
-            <span className="text-xs font-black text-[#8B263E] dark:text-[#D8B65C]">
+            <span className="text-xs font-black text-[#8B142D] dark:text-[#DFB76C]">
               اتوماسیون رویدادمحور سفارش، فاکتور و تسویه
             </span>
           </div>
 
-          <h1 className="mt-2 text-2xl font-black text-[#1C3324] sm:text-3xl dark:text-zinc-100">
+          <h1 className="mt-2 text-2xl font-black text-[#3B0B14] sm:text-3xl dark:text-zinc-100">
             مدیریت سفارش‌  
           </h1>
-          <p className="mt-1 text-xs text-[#3A5A46] dark:text-zinc-400">
+          <p className="mt-1 text-xs text-[#6E3A44] dark:text-zinc-400">
             صدور هوشمند فاکتور با تغییر وضعیت به پرداخت موفق یا تایید سفارش و ثبت سند تسویه بلادرنگ
           </p>
         </div>
@@ -571,7 +571,7 @@ export default function DashboardOrdersPage() {
             className="gap-2"
           >
             <RefreshCw
-              className={cn("h-4 w-4", isRefreshing && "animate-spin text-[#8B263E] dark:text-[#D8B65C]")}
+              className={cn("h-4 w-4", isRefreshing && "animate-spin text-[#8B142D] dark:text-[#DFB76C]")}
             />
             <span>{isRefreshing ? "در حال دریافت..." : "بروزرسانی لیست"}</span>
           </Button>
@@ -667,11 +667,11 @@ export default function DashboardOrdersPage() {
       )}
 
       {/* Filters Card */}
-      <Card className="border-[#1C3324]/12 bg-white/80 p-4 backdrop-blur-md dark:border-white/10 dark:bg-[#15221B]/80">
+      <Card className="border-[#3B0B14]/12 bg-white/80 p-4 backdrop-blur-md dark:border-white/10 dark:bg-[#1C080E]/80">
         <div className="flex flex-col gap-3 lg:flex-row lg:items-center">
           {/* Search input */}
           <div className="relative flex-1">
-            <Search className="absolute right-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-[#3A5A46] dark:text-zinc-400" />
+            <Search className="absolute right-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-[#6E3A44] dark:text-zinc-400" />
             <Input
               type="text"
               placeholder="جست‌وجوی شماره سفارش، شماره فاکتور، نام مشتری، تلفن، آدرس..."
@@ -683,7 +683,7 @@ export default function DashboardOrdersPage() {
               <button
                 type="button"
                 onClick={() => setSearchTerm("")}
-                className="absolute left-3 top-1/2 -translate-y-1/2 text-[#3A5A46] hover:text-[#1C3324] dark:text-zinc-400 dark:hover:text-zinc-100"
+                className="absolute left-3 top-1/2 -translate-y-1/2 text-[#6E3A44] hover:text-[#3B0B14] dark:text-zinc-400 dark:hover:text-zinc-100"
               >
                 <X size={14} />
               </button>
@@ -693,12 +693,12 @@ export default function DashboardOrdersPage() {
           {/* Filters row */}
           <div className="flex flex-wrap items-center gap-2">
             {/* Status Filter */}
-            <div className="flex items-center gap-1.5 rounded-2xl border border-[#1C3324]/12 bg-[#FAF9F6] px-3 py-1.5 text-xs font-bold dark:border-white/10 dark:bg-zinc-900/60">
-              <Filter className="h-3.5 w-3.5 text-[#3A5A46] dark:text-zinc-400" />
+            <div className="flex items-center gap-1.5 rounded-2xl border border-[#3B0B14]/12 bg-[#FDF8F9] px-3 py-1.5 text-xs font-bold dark:border-white/10 dark:bg-zinc-900/60">
+              <Filter className="h-3.5 w-3.5 text-[#6E3A44] dark:text-zinc-400" />
               <select
                 value={statusFilter}
                 onChange={(e) => setStatusFilter(e.target.value)}
-                className="bg-transparent text-xs font-bold text-[#1C3324] outline-none cursor-pointer dark:text-zinc-200 dark:[&>option]:bg-zinc-900"
+                className="bg-transparent text-xs font-bold text-[#3B0B14] outline-none cursor-pointer dark:text-zinc-200 dark:[&>option]:bg-zinc-900"
               >
                 <option value="all">همه وضعیت‌های سفارش</option>
                 <option value="pending">در انتظار بررسی</option>
@@ -710,12 +710,12 @@ export default function DashboardOrdersPage() {
             </div>
 
             {/* Payment Filter */}
-            <div className="flex items-center gap-1.5 rounded-2xl border border-[#1C3324]/12 bg-[#FAF9F6] px-3 py-1.5 text-xs font-bold dark:border-white/10 dark:bg-zinc-900/60">
-              <CreditCard className="h-3.5 w-3.5 text-[#3A5A46] dark:text-zinc-400" />
+            <div className="flex items-center gap-1.5 rounded-2xl border border-[#3B0B14]/12 bg-[#FDF8F9] px-3 py-1.5 text-xs font-bold dark:border-white/10 dark:bg-zinc-900/60">
+              <CreditCard className="h-3.5 w-3.5 text-[#6E3A44] dark:text-zinc-400" />
               <select
                 value={paymentFilter}
                 onChange={(e) => setPaymentFilter(e.target.value)}
-                className="bg-transparent text-xs font-bold text-[#1C3324] outline-none cursor-pointer dark:text-zinc-200 dark:[&>option]:bg-zinc-900"
+                className="bg-transparent text-xs font-bold text-[#3B0B14] outline-none cursor-pointer dark:text-zinc-200 dark:[&>option]:bg-zinc-900"
               >
                 <option value="all">همه پرداخت‌ها</option>
                 <option value="paid">تسویه کامل (پرداخت موفق)</option>
@@ -726,12 +726,12 @@ export default function DashboardOrdersPage() {
             </div>
 
             {/* Invoice Filter */}
-            <div className="flex items-center gap-1.5 rounded-2xl border border-[#1C3324]/12 bg-[#FAF9F6] px-3 py-1.5 text-xs font-bold dark:border-white/10 dark:bg-zinc-900/60">
-              <Receipt className="h-3.5 w-3.5 text-[#3A5A46] dark:text-zinc-400" />
+            <div className="flex items-center gap-1.5 rounded-2xl border border-[#3B0B14]/12 bg-[#FDF8F9] px-3 py-1.5 text-xs font-bold dark:border-white/10 dark:bg-zinc-900/60">
+              <Receipt className="h-3.5 w-3.5 text-[#6E3A44] dark:text-zinc-400" />
               <select
                 value={invoiceFilter}
                 onChange={(e) => setInvoiceFilter(e.target.value)}
-                className="bg-transparent text-xs font-bold text-[#1C3324] outline-none cursor-pointer dark:text-zinc-200 dark:[&>option]:bg-zinc-900"
+                className="bg-transparent text-xs font-bold text-[#3B0B14] outline-none cursor-pointer dark:text-zinc-200 dark:[&>option]:bg-zinc-900"
               >
                 <option value="all">همه وضعیت‌های فاکتور</option>
                 <option value="has_invoice">دارای فاکتور صادرشده</option>
@@ -740,12 +740,12 @@ export default function DashboardOrdersPage() {
             </div>
 
             {/* Sort Filter */}
-            <div className="flex items-center gap-1.5 rounded-2xl border border-[#1C3324]/12 bg-[#FAF9F6] px-3 py-1.5 text-xs font-bold dark:border-white/10 dark:bg-zinc-900/60">
-              <ArrowUpDown className="h-3.5 w-3.5 text-[#3A5A46] dark:text-zinc-400" />
+            <div className="flex items-center gap-1.5 rounded-2xl border border-[#3B0B14]/12 bg-[#FDF8F9] px-3 py-1.5 text-xs font-bold dark:border-white/10 dark:bg-zinc-900/60">
+              <ArrowUpDown className="h-3.5 w-3.5 text-[#6E3A44] dark:text-zinc-400" />
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
-                className="bg-transparent text-xs font-bold text-[#1C3324] outline-none cursor-pointer dark:text-zinc-200 dark:[&>option]:bg-zinc-900"
+                className="bg-transparent text-xs font-bold text-[#3B0B14] outline-none cursor-pointer dark:text-zinc-200 dark:[&>option]:bg-zinc-900"
               >
                 <option value="newest">جدیدترین سفارش‌ها</option>
                 <option value="amount_desc">بیشترین مبلغ سفارش</option>
@@ -775,13 +775,13 @@ export default function DashboardOrdersPage() {
       </Card>
 
       {/* Orders Table */}
-      <Card className="border-[#1C3324]/12 bg-white/80 p-6 dark:border-white/10 dark:bg-[#15221B]/80">
+      <Card className="border-[#3B0B14]/12 bg-white/80 p-6 dark:border-white/10 dark:bg-[#1C080E]/80">
         <div className="mb-4 flex items-center justify-between">
           <div>
-            <CardTitle className="text-base font-extrabold text-[#1C3324] dark:text-zinc-100">
+            <CardTitle className="text-base font-extrabold text-[#3B0B14] dark:text-zinc-100">
               لیست سفارش‌ها و پیوند فاکتور
             </CardTitle>
-            <CardDescription className="text-xs text-[#3A5A46] dark:text-zinc-400">
+            <CardDescription className="text-xs text-[#6E3A44] dark:text-zinc-400">
               نمایش {filteredOrders.length.toLocaleString("fa-IR")} سفارش از مجموع{" "}
               {orders.length.toLocaleString("fa-IR")} سفارش ثبت‌شده در سامانه
             </CardDescription>
@@ -808,8 +808,8 @@ export default function DashboardOrdersPage() {
                 <TableRow>
                   <TableCell colSpan={8} className="py-16 text-center">
                     <div className="flex flex-col items-center gap-3">
-                      <RefreshCw className="h-6 w-6 animate-spin text-[#8B263E] dark:text-[#D8B65C]" />
-                      <span className="text-xs font-bold text-[#3A5A46] dark:text-zinc-400">
+                      <RefreshCw className="h-6 w-6 animate-spin text-[#8B142D] dark:text-[#DFB76C]" />
+                      <span className="text-xs font-bold text-[#6E3A44] dark:text-zinc-400">
                         در حال بارگذاری اطلاعات سفارشات و فاکتورها...
                       </span>
                     </div>
@@ -819,13 +819,13 @@ export default function DashboardOrdersPage() {
                 <TableRow>
                   <TableCell colSpan={8} className="py-16 text-center">
                     <div className="mx-auto flex max-w-sm flex-col items-center">
-                      <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#FAF9F6] border border-[#1C3324]/10 dark:bg-zinc-800 dark:border-white/10">
-                        <ShoppingBag className="h-6 w-6 text-[#3A5A46] dark:text-zinc-400" />
+                      <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#FDF8F9] border border-[#3B0B14]/10 dark:bg-zinc-800 dark:border-white/10">
+                        <ShoppingBag className="h-6 w-6 text-[#6E3A44] dark:text-zinc-400" />
                       </div>
-                      <p className="mt-3 text-sm font-black text-[#1C3324] dark:text-zinc-100">
+                      <p className="mt-3 text-sm font-black text-[#3B0B14] dark:text-zinc-100">
                         سفارشی با این مشخصات یافت نشد
                       </p>
-                      <p className="mt-1 text-xs text-[#3A5A46] dark:text-zinc-400">
+                      <p className="mt-1 text-xs text-[#6E3A44] dark:text-zinc-400">
                         فیلترهای انتخابی را تغییر داده یا عبارت جستجو را پاک کنید.
                       </p>
                     </div>
@@ -842,20 +842,20 @@ export default function DashboardOrdersPage() {
                   return (
                     <TableRow
                       key={order.id}
-                      className="cursor-pointer transition hover:bg-[#FAF9F6] dark:hover:bg-white/5"
+                      className="cursor-pointer transition hover:bg-[#FDF8F9] dark:hover:bg-white/5"
                       onClick={() => router.push(`/dashboard/orders/${order.id}`)}
                     >
                       {/* Order Number */}
                       <TableCell>
                         <div className="flex items-center gap-2">
-                          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[#FAF9F6] text-[#8B263E] border border-[#1C3324]/10 dark:bg-zinc-800 dark:border-white/10 dark:text-[#D8B65C]">
+                          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[#FDF8F9] text-[#8B142D] border border-[#3B0B14]/10 dark:bg-zinc-800 dark:border-white/10 dark:text-[#DFB76C]">
                             <ShoppingBag size={15} />
                           </div>
                           <div>
-                            <p className="font-mono text-xs font-black text-[#1C3324] dark:text-zinc-100">
+                            <p className="font-mono text-xs font-black text-[#3B0B14] dark:text-zinc-100">
                               {order.orderNumber || `#${order.id.slice(0, 7)}`}
                             </p>
-                            <span className="text-[10px] text-[#3A5A46] dark:text-zinc-400">
+                            <span className="text-[10px] text-[#6E3A44] dark:text-zinc-400">
                               شناسه سفارش
                             </span>
                           </div>
@@ -865,10 +865,10 @@ export default function DashboardOrdersPage() {
                       {/* Customer */}
                       <TableCell>
                         <div>
-                          <p className="text-xs font-bold text-[#1C3324] dark:text-zinc-100">
+                          <p className="text-xs font-bold text-[#3B0B14] dark:text-zinc-100">
                             {customerName}
                           </p>
-                          <p className="mt-0.5 font-mono text-[10px] text-[#3A5A46] dark:text-zinc-400">
+                          <p className="mt-0.5 font-mono text-[10px] text-[#6E3A44] dark:text-zinc-400">
                             {customerPhone}
                           </p>
                         </div>
@@ -876,9 +876,9 @@ export default function DashboardOrdersPage() {
 
                       {/* Amount */}
                       <TableCell>
-                        <div className="font-mono font-black text-xs text-[#1C3324] dark:text-zinc-100">
+                        <div className="font-mono font-black text-xs text-[#3B0B14] dark:text-zinc-100">
                           {totalAmount.toLocaleString("fa-IR")}{" "}
-                          <span className="text-[10px] font-bold text-[#3A5A46] dark:text-zinc-400">
+                          <span className="text-[10px] font-bold text-[#6E3A44] dark:text-zinc-400">
                             تومان
                           </span>
                         </div>
@@ -910,13 +910,13 @@ export default function DashboardOrdersPage() {
                           <div className="flex flex-col gap-1">
                             <Link
                               href={`/dashboard/invoices/${linkedInvoice.id}`}
-                              className="inline-flex items-center gap-1 font-mono text-xs font-bold text-[#8B263E] hover:underline dark:text-[#D8B65C]"
+                              className="inline-flex items-center gap-1 font-mono text-xs font-bold text-[#8B142D] hover:underline dark:text-[#DFB76C]"
                               title="مشاهده فاکتور"
                             >
                               <Receipt size={13} />
                               <span>{linkedInvoice.invoiceNumber}</span>
                             </Link>
-                            <span className="text-[10px] text-[#3A5A46] dark:text-zinc-400">
+                            <span className="text-[10px] text-[#6E3A44] dark:text-zinc-400">
                               {linkedInvoice.paymentStatus === "paid" ? "تسویه شده" : "در انتظار پرداخت"}
                             </span>
                           </div>
@@ -935,7 +935,7 @@ export default function DashboardOrdersPage() {
                       </TableCell>
 
                       {/* Date */}
-                      <TableCell className="font-mono text-[10px] text-[#3A5A46] dark:text-zinc-400 whitespace-nowrap">
+                      <TableCell className="font-mono text-[10px] text-[#6E3A44] dark:text-zinc-400 whitespace-nowrap">
                         {formatDate(order.created)}
                       </TableCell>
 
@@ -1017,17 +1017,17 @@ export default function DashboardOrdersPage() {
 
       {/* 1-Click Settlement Modal (کارت‌به‌کارت / اقساطی / امانی) */}
       <Dialog open={Boolean(settleTargetOrder)} onOpenChange={() => setSettleTargetOrder(null)}>
-        <DialogContent className="max-w-md dark:border-white/10 dark:bg-[#15221B]">
+        <DialogContent className="max-w-md dark:border-white/10 dark:bg-[#1C080E]">
           <DialogHeader>
             <div className="flex items-center gap-3">
               <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-emerald-100 text-emerald-700 dark:bg-emerald-950/50 dark:text-emerald-400">
                 <Receipt size={22} />
               </div>
               <div>
-                <DialogTitle className="text-base font-black text-[#1C3324] dark:text-zinc-100">
+                <DialogTitle className="text-base font-black text-[#3B0B14] dark:text-zinc-100">
                   تأیید واریز و ثبت خودکار تسویه مالی
                 </DialogTitle>
-                <DialogDescription className="mt-1 text-xs text-[#3A5A46] dark:text-zinc-400">
+                <DialogDescription className="mt-1 text-xs text-[#6E3A44] dark:text-zinc-400">
                   سفارش #{settleTargetOrder?.orderNumber || settleTargetOrder?.id.slice(0, 7)} به مبلغ{" "}
                   {settleTargetOrder ? formatMoney(settleTargetOrder.totalAmount) : 0} تومان
                 </DialogDescription>
@@ -1037,13 +1037,13 @@ export default function DashboardOrdersPage() {
 
           <div className="space-y-4 py-2 text-xs">
             <div>
-              <label className="mb-1.5 block font-bold text-[#3A5A46] dark:text-zinc-300">
+              <label className="mb-1.5 block font-bold text-[#6E3A44] dark:text-zinc-300">
                 روش پرداخت و تسویه
               </label>
               <select
                 value={settlementMethod}
                 onChange={(e) => setSettlementMethod(e.target.value)}
-                className="w-full rounded-2xl border border-[#1C3324]/15 bg-[#FAF9F6] p-3 text-xs font-bold text-[#1C3324] outline-none dark:border-white/10 dark:bg-zinc-900/60 dark:text-zinc-100"
+                className="w-full rounded-2xl border border-[#3B0B14]/15 bg-[#FDF8F9] p-3 text-xs font-bold text-[#3B0B14] outline-none dark:border-white/10 dark:bg-zinc-900/60 dark:text-zinc-100"
               >
                 <option value="card_to_card">کارت به کارت (واریز بانکی)</option>
                 <option value="installment">اقساطی / اسنپ‌پی / تارا</option>
@@ -1053,7 +1053,7 @@ export default function DashboardOrdersPage() {
             </div>
 
             <div>
-              <label className="mb-1.5 block font-bold text-[#3A5A46] dark:text-zinc-300">
+              <label className="mb-1.5 block font-bold text-[#6E3A44] dark:text-zinc-300">
                 کد رهگیری / شماره ارجاع فیش واریز
               </label>
               <Input
@@ -1066,7 +1066,7 @@ export default function DashboardOrdersPage() {
             </div>
 
             <div>
-              <label className="mb-1.5 block font-bold text-[#3A5A46] dark:text-zinc-300">
+              <label className="mb-1.5 block font-bold text-[#6E3A44] dark:text-zinc-300">
                 یادداشت تسویه (اختیاری)
               </label>
               <Input

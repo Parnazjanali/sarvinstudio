@@ -9,13 +9,14 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Cookies from "js-cookie";
 import { Loader2, Eye, EyeOff } from "lucide-react";
+import { toast } from "sonner";
 
 const registerSchema = z.object({
-  name: z.string().trim().min(3, { message: "نام و نام خانوادگی باید حداقل ۳ حرف باشد" }),
+  name: z.string().trim().min(2, { message: "نام و نام خانوادگی باید حداقل ۲ حرف باشد" }),
   email: z.string().trim().email({ message: "ایمیل وارد شده نامعتبر است" }),
-  phone: z.string().trim().min(10, { message: "شماره تماس معتبر نیست" }),
-  password: z.string().min(6, { message: "رمز عبور باید حداقل ۶ کاراکتر باشد" }),
-  passwordConfirm: z.string(),
+  phone: z.string().trim().regex(/^09\d{9}$/, { message: "شماره موبایل باید ۱۱ رقم بوده و با ۰۹ آغاز شود (مثال: 09123456789)" }),
+  password: z.string().min(8, { message: "رمز عبور باید حداقل ۸ کاراکتر باشد" }),
+  passwordConfirm: z.string().min(1, { message: "تکرار رمز عبور الزامی است" }),
 }).refine((data) => data.password === data.passwordConfirm, {
   message: "تکرار رمز عبور با رمز اصلی همخوانی ندارد",
   path: ["passwordConfirm"],
@@ -25,7 +26,7 @@ type RegisterFormData = z.infer<typeof registerSchema>;
 
 /* المان گرافیکی درخت سرو */
 const SarvIcon = () => (
-  <svg width="28" height="32" viewBox="0 0 24 26" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-[#8B263E]">
+  <svg width="28" height="32" viewBox="0 0 24 26" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-[#8B142D]">
     <path d="M12 1L3 9C3 14 7 19 12 24C17 19 21 14 21 9L12 1Z" fill="currentColor" fillOpacity="0.1" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round"/>
     <path d="M12 7V22" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/>
     <path d="M9 24H15" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/>
@@ -72,35 +73,60 @@ export default function RegisterPage() {
       router.push("/");
       router.refresh();
     } catch (error: any) {
-      console.error(error);
-      const msg = error?.response?.message || error?.message || "";
-      
-      if (error?.status === 403) {
-        setServerError("دسترسی ثبت‌نام مجاز نیست.");
-      } else if (msg.toLowerCase().includes("email")) {
-        setServerError("این ایمیل قبلاً ثبت شده است.");
-      } else {
-        setServerError("ثبت‌نام انجام نشد. لطفاً اطلاعات را بررسی کنید.");
+      console.error("Register error:", error);
+      const data = error?.response?.data;
+      const errorList: string[] = [];
+
+      if (data && typeof data === "object") {
+        if (data.password?.message) {
+          errorList.push("رمز عبور باید حداقل ۸ کاراکتر باشد.");
+        }
+        if (data.passwordConfirm?.message) {
+          errorList.push("تکرار رمز عبور با رمز اصلی همخوانی ندارد.");
+        }
+        if (data.email?.message) {
+          errorList.push("این نشانی ایمیل قبلاً در سامانه ثبت‌نام کرده است.");
+        }
+        if (data.phone?.message) {
+          errorList.push("این شماره موبایل قبلاً ثبت شده یا نامعتبر است.");
+        }
+        if (data.name?.message) {
+          errorList.push("نام و نام خانوادگی نامعتبر است.");
+        }
       }
+
+      let errorMsg = "";
+      if (errorList.length > 0) {
+        errorMsg = errorList.join(" | ");
+      } else if (error?.status === 403) {
+        errorMsg = "دسترسی ایجاد کاربر در حال حاضر مجاز نیست.";
+      } else if (error?.message?.toLowerCase().includes("email")) {
+        errorMsg = "این ایمیل قبلاً در سیستم ثبت شده است.";
+      } else {
+        errorMsg = error?.response?.message || error?.message || "خطا در ثبت‌نام. لطفاً صحت اطلاعات را بررسی کنید.";
+      }
+
+      setServerError(errorMsg);
+      toast.error(errorList[0] || errorMsg);
     } finally {
       setIsLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center pt-40 pb-12 px-4 bg-[#FAF9F6] text-[#1C3324] font-sans" dir="rtl">
-      <div className="max-w-md w-full p-8 md:p-10 rounded-[2.5rem] border-2 border-[#1C3324] bg-white shadow-[0_20px_50px_rgba(28,51,36,0.08)] relative overflow-hidden">
+    <div className="min-h-screen flex items-center justify-center pt-40 pb-12 px-4 bg-[#FDF8F9] text-[#3B0B14] font-sans" dir="rtl">
+      <div className="max-w-md w-full p-8 md:p-10 rounded-[2.5rem] border-2 border-[#3B0B14] bg-white shadow-[0_20px_50px_rgba(59, 11, 20,0.08)] relative overflow-hidden">
         
         {/* المان تزئینی پس‌زمینه کارت */}
-        <div className="absolute -top-12 -left-12 w-32 h-32 bg-[#8B263E]/5 rounded-full blur-2xl pointer-events-none" />
+        <div className="absolute -top-12 -left-12 w-32 h-32 bg-[#8B142D]/5 rounded-full blur-2xl pointer-events-none" />
 
         {/* Logo & Header */}
         <div className="flex flex-col items-center mb-8 relative z-10">
-          <div className="w-16 h-16 rounded-2xl bg-[#FAF9F6] border border-[#1C3324]/20 flex items-center justify-center mb-4 shadow-xs">
+          <div className="w-16 h-16 rounded-2xl bg-[#FDF8F9] border border-[#3B0B14]/20 flex items-center justify-center mb-4 shadow-xs">
             <SarvIcon />
           </div>
-          <h2 className="text-2xl font-extrabold text-center text-[#1C3324] font-heading">ثبت‌نام در پرنا زر</h2>
-          <p className="text-xs mt-1.5 text-[#8B263E] font-bold">مثل زر بدرخش ✨</p>
+          <h2 className="text-2xl font-extrabold text-center text-[#3B0B14] font-heading">ثبت‌نام در پرنا زر</h2>
+          <p className="text-xs mt-1.5 text-[#8B142D] font-bold">مثل زر بدرخش ✨</p>
         </div>
 
         {/* Error Box */}
@@ -112,22 +138,22 @@ export default function RegisterPage() {
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 relative z-10">
           <div>
-            <label className="block text-xs font-bold mb-1.5 text-[#1C3324]">نام و نام خانوادگی</label>
+            <label className="block text-xs font-bold mb-1.5 text-[#3B0B14]">نام و نام خانوادگی</label>
             <input 
               {...register("name")} 
               type="text" 
-              className="w-full p-3.5 border border-[#1C3324]/20 bg-[#FAF9F6] text-[#1C3324] rounded-2xl focus:border-[#8B263E] outline-none transition text-sm font-medium" 
+              className="w-full p-3.5 border border-[#3B0B14]/20 bg-[#FDF8F9] text-[#3B0B14] rounded-2xl focus:border-[#8B142D] outline-none transition text-sm font-medium" 
               placeholder="مثال: اکبر احمدی" 
             />
             {errors.name && <p className="text-red-500 text-[11px] mt-1 font-medium">{errors.name.message}</p>}
           </div>
 
           <div>
-            <label className="block text-xs font-bold mb-1.5 text-[#1C3324]">ایمیل</label>
+            <label className="block text-xs font-bold mb-1.5 text-[#3B0B14]">ایمیل</label>
             <input 
               {...register("email")} 
               type="email" 
-              className="w-full p-3.5 border border-[#1C3324]/20 bg-[#FAF9F6] text-[#1C3324] rounded-2xl focus:border-[#8B263E] outline-none transition text-left text-sm font-medium" 
+              className="w-full p-3.5 border border-[#3B0B14]/20 bg-[#FDF8F9] text-[#3B0B14] rounded-2xl focus:border-[#8B142D] outline-none transition text-left text-sm font-medium" 
               placeholder="yourmail@example.com" 
               dir="ltr" 
             />
@@ -135,11 +161,11 @@ export default function RegisterPage() {
           </div>
 
           <div>
-            <label className="block text-xs font-bold mb-1.5 text-[#1C3324]">شماره موبایل</label>
+            <label className="block text-xs font-bold mb-1.5 text-[#3B0B14]">شماره موبایل</label>
             <input 
               {...register("phone")} 
               type="tel" 
-              className="w-full p-3.5 border border-[#1C3324]/20 bg-[#FAF9F6] text-[#1C3324] rounded-2xl focus:border-[#8B263E] outline-none transition text-left text-sm font-medium" 
+              className="w-full p-3.5 border border-[#3B0B14]/20 bg-[#FDF8F9] text-[#3B0B14] rounded-2xl focus:border-[#8B142D] outline-none transition text-left text-sm font-medium" 
               placeholder="09123456789" 
               dir="ltr" 
             />
@@ -147,18 +173,18 @@ export default function RegisterPage() {
           </div>
 
           <div>
-            <label className="block text-xs font-bold mb-1.5 text-[#1C3324]">رمز عبور</label>
+            <label className="block text-xs font-bold mb-1.5 text-[#3B0B14]">رمز عبور</label>
             <div className="relative">
               <input 
                 {...register("password")} 
                 type={showPassword ? "text" : "password"} 
-                className="w-full p-3.5 pl-11 border border-[#1C3324]/20 bg-[#FAF9F6] text-[#1C3324] rounded-2xl focus:border-[#8B263E] outline-none transition text-left text-sm font-medium" 
+                className="w-full p-3.5 pl-11 border border-[#3B0B14]/20 bg-[#FDF8F9] text-[#3B0B14] rounded-2xl focus:border-[#8B142D] outline-none transition text-left text-sm font-medium" 
                 dir="ltr" 
               />
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#3A5A46] hover:text-[#1C3324] transition-colors cursor-pointer"
+                className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#6E3A44] hover:text-[#3B0B14] transition-colors cursor-pointer"
                 tabIndex={-1}
               >
                 {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
@@ -168,18 +194,18 @@ export default function RegisterPage() {
           </div>
 
           <div>
-            <label className="block text-xs font-bold mb-1.5 text-[#1C3324]">تکرار رمز عبور</label>
+            <label className="block text-xs font-bold mb-1.5 text-[#3B0B14]">تکرار رمز عبور</label>
             <div className="relative">
               <input 
                 {...register("passwordConfirm")} 
                 type={showPasswordConfirm ? "text" : "password"} 
-                className="w-full p-3.5 pl-11 border border-[#1C3324]/20 bg-[#FAF9F6] text-[#1C3324] rounded-2xl focus:border-[#8B263E] outline-none transition text-left text-sm font-medium" 
+                className="w-full p-3.5 pl-11 border border-[#3B0B14]/20 bg-[#FDF8F9] text-[#3B0B14] rounded-2xl focus:border-[#8B142D] outline-none transition text-left text-sm font-medium" 
                 dir="ltr" 
               />
               <button
                 type="button"
                 onClick={() => setShowPasswordConfirm(!showPasswordConfirm)}
-                className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#3A5A46] hover:text-[#1C3324] transition-colors cursor-pointer"
+                className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#6E3A44] hover:text-[#3B0B14] transition-colors cursor-pointer"
                 tabIndex={-1}
               >
                 {showPasswordConfirm ? <EyeOff size={18} /> : <Eye size={18} />}
@@ -191,16 +217,16 @@ export default function RegisterPage() {
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full text-white font-bold py-4 rounded-2xl flex justify-center items-center gap-2 transition-all shadow-md bg-[#1C3324] hover:bg-[#8B263E] disabled:opacity-70 disabled:cursor-not-allowed text-sm mt-3 cursor-pointer"
+            className="w-full text-white font-bold py-4 rounded-2xl flex justify-center items-center gap-2 transition-all shadow-md bg-[#3B0B14] hover:bg-[#8B142D] disabled:opacity-70 disabled:cursor-not-allowed text-sm mt-3 cursor-pointer"
           >
             {isLoading && <Loader2 size={18} className="animate-spin" />}
             {isLoading ? "در حال ثبت اطلاعات..." : "ثبت‌نام و عضویت در پرنا زر"}
           </button>
         </form>
 
-        <p className="text-center text-xs mt-6 text-[#3A5A46] relative z-10 font-medium">
+        <p className="text-center text-xs mt-6 text-[#6E3A44] relative z-10 font-medium">
           قبلاً ثبت‌نام کرده‌اید؟{" "}
-          <Link href="/login" className="font-bold text-[#8B263E] hover:text-[#1C3324] transition-colors underline underline-offset-4">
+          <Link href="/login" className="font-bold text-[#8B142D] hover:text-[#3B0B14] transition-colors underline underline-offset-4">
             وارد شوید
           </Link>
         </p>

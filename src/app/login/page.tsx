@@ -22,7 +22,7 @@ type LoginFormData = z.infer<typeof loginSchema>;
 
 /* المان گرافیکی درخت سرو */
 const SarvIcon = () => (
-  <svg width="28" height="32" viewBox="0 0 24 26" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-[#8B263E]">
+  <svg width="28" height="32" viewBox="0 0 24 26" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-[#8B142D]">
     <path d="M12 1L3 9C3 14 7 19 12 24C17 19 21 14 21 9L12 1Z" fill="currentColor" fillOpacity="0.1" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round"/>
     <path d="M12 7V22" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/>
     <path d="M9 24H15" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/>
@@ -150,28 +150,35 @@ function LoginFormContent() {
         router.replace("/");
       }
       router.refresh();
-    } catch (error: unknown) {
+    } catch (error: any) {
       console.error("خطای ورود:", error);
-      setServerError("اطلاعات ورودی اشتباه است.");
+      let msg = "ایمیل یا رمز عبور وارد شده نادرست است.";
+      if (error?.message && error.message.includes("کاربری با این مشخصات یافت نشد")) {
+        msg = "کاربری با این مشخصات یافت نشد. لطفاً ثبت‌نام کنید.";
+      } else if (error?.status === 400) {
+        msg = "اطلاعات ورود اشتباه است (رمز عبور یا شناسه کاربری نامعتبر است).";
+      }
+      setServerError(msg);
+      toast.error(msg);
     } finally {
       setIsLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 bg-[#FAF9F6] font-sans" dir="rtl">
-      <div className="max-w-md w-full p-8 md:p-10 rounded-[2.5rem] border-2 border-[#1C3324] bg-white shadow-[0_20px_50px_rgba(28,51,36,0.08)] relative overflow-hidden">
+    <div className="min-h-screen flex items-center justify-center p-4 bg-[#FDF8F9] font-sans" dir="rtl">
+      <div className="max-w-md w-full p-8 md:p-10 rounded-[2.5rem] border-2 border-[#3B0B14] bg-white shadow-[0_20px_50px_rgba(59, 11, 20,0.08)] relative overflow-hidden">
         
         {/* المان تزئینی پس‌زمینه کارت */}
-        <div className="absolute -top-12 -left-12 w-32 h-32 bg-[#8B263E]/5 rounded-full blur-2xl pointer-events-none" />
+        <div className="absolute -top-12 -left-12 w-32 h-32 bg-[#8B142D]/5 rounded-full blur-2xl pointer-events-none" />
 
         {/* Logo & Header */}
         <div className="flex flex-col items-center mb-8 relative z-10">
-          <div className="w-16 h-16 rounded-2xl bg-[#FAF9F6] border border-[#1C3324]/20 flex items-center justify-center mb-4 shadow-xs">
+          <div className="w-16 h-16 rounded-2xl bg-[#FDF8F9] border border-[#3B0B14]/20 flex items-center justify-center mb-4 shadow-xs">
             <SarvIcon />
           </div>
-          <h2 className="text-2xl font-extrabold text-center text-[#1C3324] font-heading">ورود به پرنا زر</h2>
-          <p className="text-xs mt-1.5 text-[#8B263E] font-bold">مثل زر بدرخش ✨</p>
+          <h2 className="text-2xl font-extrabold text-center text-[#3B0B14] font-heading">ورود به پرنا زر</h2>
+          <p className="text-xs mt-1.5 text-[#8B142D] font-bold">مثل زر بدرخش ✨</p>
         </div>
 
         {serverError && (
@@ -184,11 +191,11 @@ function LoginFormContent() {
         {step === 1 && (
           <form onSubmit={handleSubmit(handleNextStep)} className="space-y-5 relative z-10">
             <div>
-              <label className="block text-xs font-bold mb-2 text-[#1C3324]">ایمیل یا شماره تلفن همراه</label>
+              <label className="block text-xs font-bold mb-2 text-[#3B0B14]">ایمیل یا شماره تلفن همراه</label>
               <input 
                 {...register("identifier")} 
                 type="text" 
-                className="w-full p-3.5 border border-[#1C3324]/20 bg-[#FAF9F6] text-[#1C3324] rounded-2xl focus:border-[#8B263E] outline-none transition text-left text-sm font-medium" 
+                className="w-full p-3.5 border border-[#3B0B14]/20 bg-[#FDF8F9] text-[#3B0B14] rounded-2xl focus:border-[#8B142D] outline-none transition text-left text-sm font-medium" 
                 placeholder="09123456789 یا email@example.com" 
                 dir="ltr" 
               />
@@ -197,7 +204,7 @@ function LoginFormContent() {
 
             <button
               type="submit"
-              className="w-full text-white font-bold py-4 flex justify-center items-center gap-2 rounded-2xl transition-all shadow-md bg-[#1C3324] hover:bg-[#8B263E] text-sm cursor-pointer"
+              className="w-full text-white font-bold py-4 flex justify-center items-center gap-2 rounded-2xl transition-all shadow-md bg-[#3B0B14] hover:bg-[#8B142D] text-sm cursor-pointer"
             >
               مرحله بعد <ArrowLeft size={16} />
             </button>
@@ -207,31 +214,31 @@ function LoginFormContent() {
         {/* مرحله ۲: وارد کردن رمز عبور یا انتخاب ورود با OTP */}
         {step === 2 && (
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-5 relative z-10">
-            <div className="bg-[#FAF9F6] p-3.5 rounded-2xl border border-[#1C3324]/10 flex items-center justify-between">
-              <span className="text-xs text-[#3A5A46] font-medium" dir="ltr">{userIdentifier}</span>
+            <div className="bg-[#FDF8F9] p-3.5 rounded-2xl border border-[#3B0B14]/10 flex items-center justify-between">
+              <span className="text-xs text-[#6E3A44] font-medium" dir="ltr">{userIdentifier}</span>
               <button 
                 type="button" 
                 onClick={() => setStep(1)} 
-                className="text-[11px] font-bold text-[#8B263E] hover:underline cursor-pointer"
+                className="text-[11px] font-bold text-[#8B142D] hover:underline cursor-pointer"
               >
                 تغییر
               </button>
             </div>
 
             <div>
-              <label className="block text-xs font-bold mb-2 text-[#1C3324]">رمز عبور</label>
+              <label className="block text-xs font-bold mb-2 text-[#3B0B14]">رمز عبور</label>
               <div className="relative">
                 <input 
                   {...register("password")} 
                   type={showPassword ? "text" : "password"} 
-                  className="w-full p-3.5 pl-11 border border-[#1C3324]/20 bg-[#FAF9F6] text-[#1C3324] rounded-2xl focus:border-[#8B263E] outline-none transition text-left text-sm font-medium" 
+                  className="w-full p-3.5 pl-11 border border-[#3B0B14]/20 bg-[#FDF8F9] text-[#3B0B14] rounded-2xl focus:border-[#8B142D] outline-none transition text-left text-sm font-medium" 
                   dir="ltr" 
                   autoFocus
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#3A5A46] hover:text-[#1C3324] transition-colors cursor-pointer"
+                  className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#6E3A44] hover:text-[#3B0B14] transition-colors cursor-pointer"
                   tabIndex={-1}
                 >
                   {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
@@ -245,7 +252,7 @@ function LoginFormContent() {
                 type="button"
                 onClick={handleRequestOtp}
                 disabled={isLoading}
-                className="text-xs font-bold text-[#8B263E] hover:underline cursor-pointer"
+                className="text-xs font-bold text-[#8B142D] hover:underline cursor-pointer"
               >
                 ورود با رمز یک‌بار مصرف (OTP)
               </button>
@@ -254,7 +261,7 @@ function LoginFormContent() {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full text-white font-bold py-4 flex justify-center items-center gap-2 rounded-2xl transition-all shadow-md bg-[#1C3324] hover:bg-[#8B263E] disabled:opacity-70 text-sm cursor-pointer"
+              className="w-full text-white font-bold py-4 flex justify-center items-center gap-2 rounded-2xl transition-all shadow-md bg-[#3B0B14] hover:bg-[#8B142D] disabled:opacity-70 text-sm cursor-pointer"
             >
               {isLoading && <Loader2 size={18} className="animate-spin" />}
               {isLoading ? "در حال ورود..." : "ورود به حساب کاربری"}
@@ -265,26 +272,26 @@ function LoginFormContent() {
         {/* مرحله ۳: وارد کردن کد تایید OTP */}
         {step === 3 && (
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 relative z-10">
-            <div className="bg-[#FAF9F6] p-4 rounded-2xl border border-[#1C3324]/10 text-center">
-              <p className="text-xs text-[#3A5A46] font-medium">کد تایید ارسال شد به:</p>
-              <p className="text-sm font-extrabold text-[#1C3324] mt-1" dir="ltr">{userIdentifier}</p>
+            <div className="bg-[#FDF8F9] p-4 rounded-2xl border border-[#3B0B14]/10 text-center">
+              <p className="text-xs text-[#6E3A44] font-medium">کد تایید ارسال شد به:</p>
+              <p className="text-sm font-extrabold text-[#3B0B14] mt-1" dir="ltr">{userIdentifier}</p>
               <button 
                 type="button" 
                 onClick={() => setStep(2)} 
-                className="text-[11px] font-bold text-[#8B263E] underline mt-2 cursor-pointer"
+                className="text-[11px] font-bold text-[#8B142D] underline mt-2 cursor-pointer"
               >
                 بازگشت به رمز عبور
               </button>
             </div>
 
             <div>
-              <label className="block text-xs font-bold mb-2 text-[#1C3324]">کد تایید ۵ رقمی</label>
+              <label className="block text-xs font-bold mb-2 text-[#3B0B14]">کد تایید ۵ رقمی</label>
               <input 
                 {...register("otpCode")} 
                 type="text" 
                 maxLength={5}
                 placeholder="-----"
-                className="w-full p-4 border border-[#1C3324]/20 bg-[#FAF9F6] text-[#1C3324] rounded-2xl focus:border-[#8B263E] outline-none transition text-center text-xl tracking-[1em] font-bold" 
+                className="w-full p-4 border border-[#3B0B14]/20 bg-[#FDF8F9] text-[#3B0B14] rounded-2xl focus:border-[#8B142D] outline-none transition text-center text-xl tracking-[1em] font-bold" 
                 dir="ltr" 
                 autoFocus
               />
@@ -293,7 +300,7 @@ function LoginFormContent() {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full text-white font-bold py-4 flex justify-center items-center gap-2 rounded-2xl transition-all shadow-md bg-[#1C3324] hover:bg-[#8B263E] disabled:opacity-70 text-sm cursor-pointer"
+              className="w-full text-white font-bold py-4 flex justify-center items-center gap-2 rounded-2xl transition-all shadow-md bg-[#3B0B14] hover:bg-[#8B142D] disabled:opacity-70 text-sm cursor-pointer"
             >
               {isLoading && <Loader2 size={18} className="animate-spin" />}
               {isLoading ? "در حال تایید..." : "تایید و ورود"}
@@ -301,9 +308,9 @@ function LoginFormContent() {
           </form>
         )}
 
-        <p className="text-center text-xs mt-6 text-[#3A5A46] relative z-10 font-medium">
+        <p className="text-center text-xs mt-6 text-[#6E3A44] relative z-10 font-medium">
           هنوز به جمع ما نپیوسته‌اید؟{" "}
-          <Link href="/register" className="font-bold text-[#8B263E] hover:text-[#1C3324] transition-colors underline underline-offset-4">
+          <Link href="/register" className="font-bold text-[#8B142D] hover:text-[#3B0B14] transition-colors underline underline-offset-4">
             ثبت‌نام در پرنا زر
           </Link>
         </p>
@@ -314,7 +321,7 @@ function LoginFormContent() {
 
 export default function LoginPage() {
   return (
-    <Suspense fallback={<div className="min-h-screen bg-[#FAF9F6] flex items-center justify-center"><Loader2 className="animate-spin text-[#1C3324]" size={32} /></div>}>
+    <Suspense fallback={<div className="min-h-screen bg-[#FDF8F9] flex items-center justify-center"><Loader2 className="animate-spin text-[#3B0B14]" size={32} /></div>}>
       <LoginFormContent />
     </Suspense>
   );

@@ -394,11 +394,11 @@ export default function ProductDetailsPage() {
     return (
       <div
         dir="rtl"
-        className="flex min-h-screen items-center justify-center bg-[#FAF9F6] dark:bg-[#101813]"
+        className="flex min-h-screen items-center justify-center bg-[#FDF8F9] dark:bg-[#140508]"
       >
         <div className="flex flex-col items-center gap-3">
-          <RefreshCw className="h-8 w-8 animate-spin text-[#8B263E] dark:text-[#D8B65C]" />
-          <span className="text-xs font-bold text-[#3A5A46] dark:text-zinc-400">
+          <RefreshCw className="h-8 w-8 animate-spin text-[#8B142D] dark:text-[#DFB76C]" />
+          <span className="text-xs font-bold text-[#6E3A44] dark:text-zinc-400">
             در حال دریافت شناسنامه محصول و استعلام مظنه طلا...
           </span>
         </div>
@@ -414,15 +414,15 @@ export default function ProductDetailsPage() {
     return (
       <div
         dir="rtl"
-        className="min-h-screen bg-[#FAF9F6] p-6 font-sans text-[#1C3324] dark:bg-[#101813] dark:text-zinc-100"
+        className="min-h-screen bg-[#FDF8F9] p-6 font-sans text-[#3B0B14] dark:bg-[#140508] dark:text-zinc-100"
       >
         <div className="mx-auto max-w-3xl">
-          <div className="rounded-3xl border border-rose-200 bg-white p-8 text-center shadow-xs dark:border-rose-900/40 dark:bg-[#15221B]">
+          <div className="rounded-3xl border border-rose-200 bg-white p-8 text-center shadow-xs dark:border-rose-900/40 dark:bg-[#1C080E]">
             <XCircle className="mx-auto h-12 w-12 text-rose-600 dark:text-rose-400" />
-            <h1 className="mt-4 text-lg font-black text-[#1C3324] dark:text-zinc-100">
+            <h1 className="mt-4 text-lg font-black text-[#3B0B14] dark:text-zinc-100">
               محصول پیدا نشد
             </h1>
-            <p className="mt-2 text-xs font-medium text-[#3A5A46] dark:text-zinc-400">
+            <p className="mt-2 text-xs font-medium text-[#6E3A44] dark:text-zinc-400">
               {error || "اطلاعات این محصول در دیتابیس موجود نیست یا حذف شده است."}
             </p>
             <div className="mt-6 flex justify-center gap-3">
@@ -456,19 +456,19 @@ export default function ProductDetailsPage() {
   return (
     <div
       dir="rtl"
-      className="min-h-screen bg-[#FAF9F6] p-4 font-sans text-[#1C3324] sm:p-6 lg:p-8 dark:bg-[#101813] dark:text-zinc-100"
+      className="min-h-screen bg-[#FDF8F9] p-4 font-sans text-[#3B0B14] sm:p-6 lg:p-8 dark:bg-[#140508] dark:text-zinc-100"
     >
       <div className="mx-auto max-w-7xl space-y-6">
 
         {/* Top Header / Actions Bar */}
-        <div className="flex flex-col justify-between gap-5 rounded-3xl border border-[#1C3324]/12 bg-white/80 p-5 shadow-xs backdrop-blur-md transition-colors lg:flex-row lg:items-center lg:p-6 dark:border-white/10 dark:bg-[#15221B]/80">
+        <div className="flex flex-col justify-between gap-5 rounded-3xl border border-[#3B0B14]/12 bg-white/80 p-5 shadow-xs backdrop-blur-md transition-colors lg:flex-row lg:items-center lg:p-6 dark:border-white/10 dark:bg-[#1C080E]/80">
           <div>
             <div className="flex items-center gap-2 mb-2">
               <Button
                 asChild
                 variant="ghost"
                 size="sm"
-                className="h-8 gap-1 px-2 text-xs font-bold text-[#3A5A46] hover:text-[#8B263E] dark:text-zinc-400 dark:hover:text-[#D8B65C]"
+                className="h-8 gap-1 px-2 text-xs font-bold text-[#6E3A44] hover:text-[#8B142D] dark:text-zinc-400 dark:hover:text-[#DFB76C]"
               >
                 <Link href="/dashboard/products">
                   <ArrowRight className="h-4 w-4" />
@@ -478,15 +478,15 @@ export default function ProductDetailsPage() {
             </div>
 
             <div className="flex items-center gap-3">
-              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#1C3324] text-white shadow-xs dark:bg-[#D8B65C] dark:text-[#101813]">
+              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#3B0B14] text-white shadow-xs dark:bg-[#DFB76C] dark:text-[#140508]">
                 <Gem className="h-6 w-6" />
               </div>
               <div>
-                <h1 className="text-2xl font-black tracking-tight text-[#1C3324] sm:text-3xl dark:text-zinc-100">
+                <h1 className="text-2xl font-black tracking-tight text-[#3B0B14] sm:text-3xl dark:text-zinc-100">
                   {productName}
                 </h1>
                 <div className="mt-1 flex items-center gap-2">
-                  <span className="font-mono text-xs font-black text-[#8B263E] dark:text-[#D8B65C]">
+                  <span className="font-mono text-xs font-black text-[#8B142D] dark:text-[#DFB76C]">
                     {product.sku || `#${product.id.slice(0, 8)}`}
                   </span>
                   <button
@@ -497,8 +497,8 @@ export default function ProductDetailsPage() {
                   >
                     {copiedSku ? <Check className="h-3.5 w-3.5 text-emerald-600" /> : <Copy className="h-3.5 w-3.5" />}
                   </button>
-                  <span className="text-xs text-[#3A5A46] dark:text-zinc-400">·</span>
-                  <span className="text-xs text-[#3A5A46] dark:text-zinc-400">
+                  <span className="text-xs text-[#6E3A44] dark:text-zinc-400">·</span>
+                  <span className="text-xs text-[#6E3A44] dark:text-zinc-400">
                     مظنه مرجع طلا: {goldRate.toLocaleString("fa-IR")} تومان / گرم
                   </span>
                 </div>
@@ -601,7 +601,7 @@ export default function ProductDetailsPage() {
           )}
 
           <Badge variant="outline" className="gap-1.5 px-3 py-1 text-xs font-bold">
-            <Clock className="h-3.5 w-3.5 text-[#8B263E] dark:text-[#D8B65C]" />
+            <Clock className="h-3.5 w-3.5 text-[#8B142D] dark:text-[#DFB76C]" />
             زمان ساخت و تحویل: {leadTimeDays.toLocaleString("fa-IR")} روز کاری
           </Badge>
         </div>
@@ -611,8 +611,8 @@ export default function ProductDetailsPage() {
 
           {/* Left/Main Column: Image Gallery (4 Cols) */}
           <div className="space-y-4 lg:col-span-4">
-            <Card className="overflow-hidden border-[#1C3324]/12 bg-white/80 backdrop-blur-md dark:border-white/10 dark:bg-[#15221B]/80">
-              <div className="aspect-square bg-[#FAF9F6] relative overflow-hidden dark:bg-zinc-900/60 flex items-center justify-center">
+            <Card className="overflow-hidden border-[#3B0B14]/12 bg-white/80 backdrop-blur-md dark:border-white/10 dark:bg-[#1C080E]/80">
+              <div className="aspect-square bg-[#FDF8F9] relative overflow-hidden dark:bg-zinc-900/60 flex items-center justify-center">
                 {allImages.length > 0 ? (
                   <img
                     src={allImages[selectedImageIndex] || allImages[0]}
@@ -620,7 +620,7 @@ export default function ProductDetailsPage() {
                     className="h-full w-full object-cover transition duration-300"
                   />
                 ) : (
-                  <div className="flex flex-col items-center justify-center gap-3 text-[#3A5A46] dark:text-zinc-500">
+                  <div className="flex flex-col items-center justify-center gap-3 text-[#6E3A44] dark:text-zinc-500">
                     <Gem className="h-16 w-16" />
                     <span className="text-xs font-bold">تصویر محصول بارگذاری نشده است</span>
                   </div>
@@ -629,7 +629,7 @@ export default function ProductDetailsPage() {
 
               {/* Thumbnails Row */}
               {allImages.length > 1 && (
-                <div className="flex items-center gap-2 p-3 overflow-x-auto border-t border-[#1C3324]/10 dark:border-white/10">
+                <div className="flex items-center gap-2 p-3 overflow-x-auto border-t border-[#3B0B14]/10 dark:border-white/10">
                   {allImages.map((img, idx) => (
                     <button
                       key={img}
@@ -638,7 +638,7 @@ export default function ProductDetailsPage() {
                       className={cn(
                         "relative h-14 w-14 shrink-0 overflow-hidden rounded-xl border transition",
                         selectedImageIndex === idx
-                          ? "border-[#8B263E] ring-2 ring-[#8B263E]/20 dark:border-[#D8B65C]"
+                          ? "border-[#8B142D] ring-2 ring-[#8B142D]/20 dark:border-[#DFB76C]"
                           : "border-black/10 opacity-70 hover:opacity-100 dark:border-white/10"
                       )}
                     >
@@ -650,19 +650,19 @@ export default function ProductDetailsPage() {
             </Card>
 
             {/* Quick Details Card */}
-            <Card className="border-[#1C3324]/12 bg-white/80 p-5 backdrop-blur-md dark:border-white/10 dark:bg-[#15221B]/80">
-              <h3 className="text-xs font-black text-[#1C3324] mb-3 dark:text-zinc-100">
+            <Card className="border-[#3B0B14]/12 bg-white/80 p-5 backdrop-blur-md dark:border-white/10 dark:bg-[#1C080E]/80">
+              <h3 className="text-xs font-black text-[#3B0B14] mb-3 dark:text-zinc-100">
                 مشخصات ظاهری و دسته‌بندی
               </h3>
               <div className="space-y-2.5 text-xs">
                 <div className="flex items-center justify-between py-1.5 border-b border-black/5 dark:border-white/5">
-                  <span className="text-[#3A5A46] dark:text-zinc-400">رنگ طلای پایه:</span>
-                  <span className="font-bold text-[#1C3324] dark:text-zinc-200">
+                  <span className="text-[#6E3A44] dark:text-zinc-400">رنگ طلای پایه:</span>
+                  <span className="font-bold text-[#3B0B14] dark:text-zinc-200">
                     {color ? getColorName(color) : "طلای زرد"}
                   </span>
                 </div>
                 <div className="flex items-center justify-between py-1.5 border-b border-black/5 dark:border-white/5">
-                  <span className="text-[#3A5A46] dark:text-zinc-400">دسته‌بندی‌ها:</span>
+                  <span className="text-[#6E3A44] dark:text-zinc-400">دسته‌بندی‌ها:</span>
                   <div className="flex flex-wrap gap-1 justify-end">
                     {categories.length > 0 ? (
                       categories.map((c) => (
@@ -676,8 +676,8 @@ export default function ProductDetailsPage() {
                   </div>
                 </div>
                 <div className="flex items-center justify-between py-1.5">
-                  <span className="text-[#3A5A46] dark:text-zinc-400">کد انبارداری (SKU):</span>
-                  <span className="font-mono font-bold text-[#8B263E] dark:text-[#D8B65C]">
+                  <span className="text-[#6E3A44] dark:text-zinc-400">کد انبارداری (SKU):</span>
+                  <span className="font-mono font-bold text-[#8B142D] dark:text-[#DFB76C]">
                     {product.sku || "—"}
                   </span>
                 </div>
@@ -689,25 +689,25 @@ export default function ProductDetailsPage() {
           <div className="space-y-6 lg:col-span-8">
 
             {/* Live Gold Pricing Box (SOLVES "تماس بگیرید") */}
-            <Card className="border-[#1C3324]/12 bg-gradient-to-br from-white via-white to-amber-50/30 p-6 backdrop-blur-md dark:border-white/10 dark:from-[#15221B] dark:via-[#15221B] dark:to-emerald-950/30">
-              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-4 border-b border-[#1C3324]/10 dark:border-white/10">
+            <Card className="border-[#3B0B14]/12 bg-gradient-to-br from-white via-white to-amber-50/30 p-6 backdrop-blur-md dark:border-white/10 dark:from-[#1C080E] dark:via-[#1C080E] dark:to-emerald-950/30">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-4 border-b border-[#3B0B14]/10 dark:border-white/10">
                 <div>
                   <div className="flex items-center gap-2">
-                    <CircleDollarSign className="h-5 w-5 text-[#8B263E] dark:text-[#D8B65C]" />
-                    <h2 className="text-base font-black text-[#1C3324] dark:text-zinc-100">
+                    <CircleDollarSign className="h-5 w-5 text-[#8B142D] dark:text-[#DFB76C]" />
+                    <h2 className="text-base font-black text-[#3B0B14] dark:text-zinc-100">
                       محاسبه قیمت لحظه‌ای طلا (مظنه زنده بازار)
                     </h2>
                   </div>
-                  <p className="mt-1 text-xs text-[#3A5A46] dark:text-zinc-400">
+                  <p className="mt-1 text-xs text-[#6E3A44] dark:text-zinc-400">
                     محاسبه شفاف بر مبنای ماده ۲۶ قانون مالیات بر ارزش افزوده و فرمول مصوب اتحادیه طلا
                   </p>
                 </div>
 
-                <div className="flex items-center gap-2 rounded-2xl bg-[#FAF9F6] px-3.5 py-2 border border-[#1C3324]/10 dark:bg-zinc-900/60 dark:border-white/10">
-                  <TrendingUp className="h-4 w-4 text-[#8B263E] dark:text-[#D8B65C]" />
+                <div className="flex items-center gap-2 rounded-2xl bg-[#FDF8F9] px-3.5 py-2 border border-[#3B0B14]/10 dark:bg-zinc-900/60 dark:border-white/10">
+                  <TrendingUp className="h-4 w-4 text-[#8B142D] dark:text-[#DFB76C]" />
                   <div className="text-right">
-                    <div className="text-[10px] text-[#3A5A46] dark:text-zinc-400">مظنه طلای ۱۸ عیار</div>
-                    <div className="font-mono text-xs font-black text-[#1C3324] dark:text-zinc-100">
+                    <div className="text-[10px] text-[#6E3A44] dark:text-zinc-400">مظنه طلای ۱۸ عیار</div>
+                    <div className="font-mono text-xs font-black text-[#3B0B14] dark:text-zinc-100">
                       {goldRate.toLocaleString("fa-IR")} تومان/گرم
                     </div>
                   </div>
@@ -718,16 +718,16 @@ export default function ProductDetailsPage() {
               {priceCalculation ? (
                 <div className="mt-6 space-y-6">
                   {/* Hero Total Price */}
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 rounded-3xl bg-[#8B263E]/5 p-5 border border-[#8B263E]/15 dark:bg-[#D8B65C]/10 dark:border-[#D8B65C]/20">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 rounded-3xl bg-[#8B142D]/5 p-5 border border-[#8B142D]/15 dark:bg-[#DFB76C]/10 dark:border-[#DFB76C]/20">
                     <div>
-                      <span className="text-xs font-black text-[#8B263E] dark:text-[#D8B65C]">
+                      <span className="text-xs font-black text-[#8B142D] dark:text-[#DFB76C]">
                         قیمت فروش نهایی به مشتری (با احتساب کلیه کسورات قانونی)
                       </span>
                       <div className="mt-1 flex items-baseline gap-2">
-                        <span className="font-mono text-3xl font-black text-[#8B263E] sm:text-4xl dark:text-[#D8B65C]">
+                        <span className="font-mono text-3xl font-black text-[#8B142D] sm:text-4xl dark:text-[#DFB76C]">
                           {priceCalculation.total.toLocaleString("fa-IR")}
                         </span>
-                        <span className="text-sm font-bold text-[#8B263E] dark:text-[#D8B65C]">
+                        <span className="text-sm font-bold text-[#8B142D] dark:text-[#DFB76C]">
                           تومان
                         </span>
                       </div>
@@ -737,7 +737,7 @@ export default function ProductDetailsPage() {
                       <Badge variant="gold" className="px-3 py-1 font-bold">
                         محاسبه زنده بر اساس {displayWeight.toFixed(3)} گرم
                       </Badge>
-                      <p className="mt-1.5 text-[11px] text-[#3A5A46] dark:text-zinc-400">
+                      <p className="mt-1.5 text-[11px] text-[#6E3A44] dark:text-zinc-400">
                         قیمت با هر تغییر مظنه بازار خودکار بروز می‌شود.
                       </p>
                     </div>
@@ -745,11 +745,11 @@ export default function ProductDetailsPage() {
 
                   {/* 4 Pillars Grid: Raw, Wage, Profit, Tax */}
                   <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-                    <div className="rounded-2xl border border-[#1C3324]/10 bg-[#FAF9F6] p-4 dark:border-white/10 dark:bg-zinc-900/40">
-                      <span className="text-[11px] font-bold text-[#3A5A46] dark:text-zinc-400">
+                    <div className="rounded-2xl border border-[#3B0B14]/10 bg-[#FDF8F9] p-4 dark:border-white/10 dark:bg-zinc-900/40">
+                      <span className="text-[11px] font-bold text-[#6E3A44] dark:text-zinc-400">
                         ۱. ارزش طلای خام
                       </span>
-                      <div className="mt-1 font-mono text-sm font-black text-[#1C3324] dark:text-zinc-100">
+                      <div className="mt-1 font-mono text-sm font-black text-[#3B0B14] dark:text-zinc-100">
                         {priceCalculation.raw.toLocaleString("fa-IR")} تومان
                       </div>
                       <span className="text-[10px] text-zinc-400 dark:text-zinc-500">
@@ -757,11 +757,11 @@ export default function ProductDetailsPage() {
                       </span>
                     </div>
 
-                    <div className="rounded-2xl border border-[#1C3324]/10 bg-[#FAF9F6] p-4 dark:border-white/10 dark:bg-zinc-900/40">
-                      <span className="text-[11px] font-bold text-[#3A5A46] dark:text-zinc-400">
+                    <div className="rounded-2xl border border-[#3B0B14]/10 bg-[#FDF8F9] p-4 dark:border-white/10 dark:bg-zinc-900/40">
+                      <span className="text-[11px] font-bold text-[#6E3A44] dark:text-zinc-400">
                         ۲. اجرت ساخت ({wage}٪)
                       </span>
-                      <div className="mt-1 font-mono text-sm font-black text-[#1C3324] dark:text-zinc-100">
+                      <div className="mt-1 font-mono text-sm font-black text-[#3B0B14] dark:text-zinc-100">
                         {priceCalculation.wage.toLocaleString("fa-IR")} تومان
                       </div>
                       <span className="text-[10px] text-zinc-400 dark:text-zinc-500">
@@ -769,11 +769,11 @@ export default function ProductDetailsPage() {
                       </span>
                     </div>
 
-                    <div className="rounded-2xl border border-[#1C3324]/10 bg-[#FAF9F6] p-4 dark:border-white/10 dark:bg-zinc-900/40">
-                      <span className="text-[11px] font-bold text-[#3A5A46] dark:text-zinc-400">
+                    <div className="rounded-2xl border border-[#3B0B14]/10 bg-[#FDF8F9] p-4 dark:border-white/10 dark:bg-zinc-900/40">
+                      <span className="text-[11px] font-bold text-[#6E3A44] dark:text-zinc-400">
                         ۳. سود گالری ({profit}٪)
                       </span>
-                      <div className="mt-1 font-mono text-sm font-black text-[#1C3324] dark:text-zinc-100">
+                      <div className="mt-1 font-mono text-sm font-black text-[#3B0B14] dark:text-zinc-100">
                         {priceCalculation.profit.toLocaleString("fa-IR")} تومان
                       </div>
                       <span className="text-[10px] text-zinc-400 dark:text-zinc-500">
@@ -781,11 +781,11 @@ export default function ProductDetailsPage() {
                       </span>
                     </div>
 
-                    <div className="rounded-2xl border border-[#1C3324]/10 bg-[#FAF9F6] p-4 dark:border-white/10 dark:bg-zinc-900/40">
-                      <span className="text-[11px] font-bold text-[#3A5A46] dark:text-zinc-400">
+                    <div className="rounded-2xl border border-[#3B0B14]/10 bg-[#FDF8F9] p-4 dark:border-white/10 dark:bg-zinc-900/40">
+                      <span className="text-[11px] font-bold text-[#6E3A44] dark:text-zinc-400">
                         ۴. مالیات ارزش افزوده ({tax}٪)
                       </span>
-                      <div className="mt-1 font-mono text-sm font-black text-[#1C3324] dark:text-zinc-100">
+                      <div className="mt-1 font-mono text-sm font-black text-[#3B0B14] dark:text-zinc-100">
                         {priceCalculation.tax.toLocaleString("fa-IR")} تومان
                       </div>
                       <span className="text-[10px] text-zinc-400 dark:text-zinc-500">
@@ -802,12 +802,12 @@ export default function ProductDetailsPage() {
                   </div>
                 </div>
               ) : (
-                <div className="mt-6 rounded-2xl border border-dashed border-[#1C3324]/20 p-6 text-center dark:border-white/20">
+                <div className="mt-6 rounded-2xl border border-dashed border-[#3B0B14]/20 p-6 text-center dark:border-white/20">
                   <AlertCircle className="mx-auto h-8 w-8 text-amber-500" />
-                  <p className="mt-2 text-xs font-bold text-[#1C3324] dark:text-zinc-200">
+                  <p className="mt-2 text-xs font-bold text-[#3B0B14] dark:text-zinc-200">
                     وزن طلا جهت محاسبه مظنه ثبت نشده است (وزن: ۰ گرم)
                   </p>
-                  <p className="mt-1 text-xs text-[#3A5A46] dark:text-zinc-400">
+                  <p className="mt-1 text-xs text-[#6E3A44] dark:text-zinc-400">
                     لطفاً با کلیک بر روی دکمه ویرایش، وزن پایه یا تنوع وزنی را وارد کنید تا قیمت زنده محاسبه گردد.
                   </p>
                 </div>
@@ -815,52 +815,52 @@ export default function ProductDetailsPage() {
             </Card>
 
             {/* Core Specifications Grid */}
-            <Card className="border-[#1C3324]/12 bg-white/80 p-6 backdrop-blur-md dark:border-white/10 dark:bg-[#15221B]/80 space-y-4">
-              <div className="flex items-center gap-2 pb-3 border-b border-[#1C3324]/10 dark:border-white/10">
-                <Scale className="h-5 w-5 text-[#8B263E] dark:text-[#D8B65C]" />
-                <h2 className="text-base font-black text-[#1C3324] dark:text-zinc-100">
+            <Card className="border-[#3B0B14]/12 bg-white/80 p-6 backdrop-blur-md dark:border-white/10 dark:bg-[#1C080E]/80 space-y-4">
+              <div className="flex items-center gap-2 pb-3 border-b border-[#3B0B14]/10 dark:border-white/10">
+                <Scale className="h-5 w-5 text-[#8B142D] dark:text-[#DFB76C]" />
+                <h2 className="text-base font-black text-[#3B0B14] dark:text-zinc-100">
                   مشخصات فیزیکی و مقادیر انبارداری
                 </h2>
               </div>
 
               <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
                 <DetailCard
-                  icon={<Weight className="h-4 w-4 text-[#8B263E] dark:text-[#D8B65C]" />}
+                  icon={<Weight className="h-4 w-4 text-[#8B142D] dark:text-[#DFB76C]" />}
                   label="وزن انتخابی طلا"
                   value={`${formatWeight(displayWeight)} گرم`}
                   subLabel={selectedVariant ? "بر مبنای Variant فعال" : "وزن پیش‌فرض کالا"}
                 />
 
                 <DetailCard
-                  icon={<Gem className="h-4 w-4 text-[#8B263E] dark:text-[#D8B65C]" />}
+                  icon={<Gem className="h-4 w-4 text-[#8B142D] dark:text-[#DFB76C]" />}
                   label="عیار طلا"
                   value={`${displayKarat} عیار (۷۵۰)`}
                   subLabel="استاندارد طلای ۱۸"
                 />
 
                 <DetailCard
-                  icon={<Boxes className="h-4 w-4 text-[#8B263E] dark:text-[#D8B65C]" />}
+                  icon={<Boxes className="h-4 w-4 text-[#8B142D] dark:text-[#DFB76C]" />}
                   label="موجودی انبار"
                   value={`${formatNumber(stock)} عدد`}
                   subLabel={stock > 0 ? "آماده تحویل فوری" : "نیازمند ساخت مجدد"}
                 />
 
                 <DetailCard
-                  icon={<Percent className="h-4 w-4 text-[#8B263E] dark:text-[#D8B65C]" />}
+                  icon={<Percent className="h-4 w-4 text-[#8B142D] dark:text-[#DFB76C]" />}
                   label="درصد اجرت ساخت"
                   value={`${formatNumber(wage)}٪`}
                   subLabel="محاسبه روی طلای خام"
                 />
 
                 <DetailCard
-                  icon={<Percent className="h-4 w-4 text-[#8B263E] dark:text-[#D8B65C]" />}
+                  icon={<Percent className="h-4 w-4 text-[#8B142D] dark:text-[#DFB76C]" />}
                   label="درصد سود فروش"
                   value={`${formatNumber(profit)}٪`}
                   subLabel="سود مصوب گالری"
                 />
 
                 <DetailCard
-                  icon={<Percent className="h-4 w-4 text-[#8B263E] dark:text-[#D8B65C]" />}
+                  icon={<Percent className="h-4 w-4 text-[#8B142D] dark:text-[#DFB76C]" />}
                   label="درصد مالیات ارزش افزوده"
                   value={`${formatNumber(tax)}٪`}
                   subLabel="معافیت اصل طلا"
@@ -869,11 +869,11 @@ export default function ProductDetailsPage() {
             </Card>
 
             {/* Variants / Weights Options */}
-            <Card className="border-[#1C3324]/12 bg-white/80 p-6 backdrop-blur-md dark:border-white/10 dark:bg-[#15221B]/80 space-y-4">
-              <div className="flex items-center justify-between pb-3 border-b border-[#1C3324]/10 dark:border-white/10">
+            <Card className="border-[#3B0B14]/12 bg-white/80 p-6 backdrop-blur-md dark:border-white/10 dark:bg-[#1C080E]/80 space-y-4">
+              <div className="flex items-center justify-between pb-3 border-b border-[#3B0B14]/10 dark:border-white/10">
                 <div className="flex items-center gap-2">
-                  <Layers className="h-5 w-5 text-[#8B263E] dark:text-[#D8B65C]" />
-                  <h2 className="text-base font-black text-[#1C3324] dark:text-zinc-100">
+                  <Layers className="h-5 w-5 text-[#8B142D] dark:text-[#DFB76C]" />
+                  <h2 className="text-base font-black text-[#3B0B14] dark:text-zinc-100">
                     تنوع‌های وزنی (Variants) و موجودی هر اندازه
                   </h2>
                 </div>
@@ -883,12 +883,12 @@ export default function ProductDetailsPage() {
               </div>
 
               {variants.length === 0 ? (
-                <div className="rounded-2xl border border-dashed border-[#1C3324]/20 p-6 text-center dark:border-white/20">
-                  <Layers className="mx-auto h-6 w-6 text-[#3A5A46] dark:text-zinc-500" />
-                  <p className="mt-2 text-xs font-bold text-[#1C3324] dark:text-zinc-200">
+                <div className="rounded-2xl border border-dashed border-[#3B0B14]/20 p-6 text-center dark:border-white/20">
+                  <Layers className="mx-auto h-6 w-6 text-[#6E3A44] dark:text-zinc-500" />
+                  <p className="mt-2 text-xs font-bold text-[#3B0B14] dark:text-zinc-200">
                     برای این محصول تنوع وزنی ثبت نشده است.
                   </p>
-                  <p className="mt-1 text-xs text-[#3A5A46] dark:text-zinc-400">
+                  <p className="mt-1 text-xs text-[#6E3A44] dark:text-zinc-400">
                     قیمت و موجودی کالا بر اساس مشخصات اولیه (تک‌وزن) محاسبه می‌گردد.
                   </p>
                 </div>
@@ -920,8 +920,8 @@ export default function ProductDetailsPage() {
                         className={cn(
                           "flex items-center justify-between rounded-2xl border p-4 text-right transition cursor-pointer",
                           isSelected
-                            ? "border-[#8B263E] bg-[#8B263E]/5 shadow-xs dark:border-[#D8B65C] dark:bg-[#D8B65C]/10"
-                            : "border-[#1C3324]/12 bg-[#FAF9F6] hover:border-[#8B263E]/50 dark:border-white/10 dark:bg-zinc-900/40"
+                            ? "border-[#8B142D] bg-[#8B142D]/5 shadow-xs dark:border-[#DFB76C] dark:bg-[#DFB76C]/10"
+                            : "border-[#3B0B14]/12 bg-[#FDF8F9] hover:border-[#8B142D]/50 dark:border-white/10 dark:bg-zinc-900/40"
                         )}
                       >
                         <div className="flex items-center gap-3">
@@ -929,14 +929,14 @@ export default function ProductDetailsPage() {
                             className={cn(
                               "flex h-10 w-10 shrink-0 items-center justify-center rounded-xl font-bold text-xs",
                               isSelected
-                                ? "bg-[#8B263E] text-white dark:bg-[#D8B65C] dark:text-[#101813]"
-                                : "bg-white text-[#1C3324] border border-black/10 dark:bg-zinc-800 dark:border-white/10 dark:text-zinc-200"
+                                ? "bg-[#8B142D] text-white dark:bg-[#DFB76C] dark:text-[#140508]"
+                                : "bg-white text-[#3B0B14] border border-black/10 dark:bg-zinc-800 dark:border-white/10 dark:text-zinc-200"
                             )}
                           >
                             {v.is_default ? "اصلی" : `#${index + 1}`}
                           </div>
                           <div>
-                            <div className="font-mono text-xs font-black text-[#1C3324] dark:text-zinc-100">
+                            <div className="font-mono text-xs font-black text-[#3B0B14] dark:text-zinc-100">
                               {vWeight.toFixed(3)} گرم
                             </div>
                             <div className="font-mono text-[10px] text-zinc-400">
@@ -946,7 +946,7 @@ export default function ProductDetailsPage() {
                         </div>
 
                         <div className="text-left">
-                          <div className="font-mono text-xs font-black text-[#8B263E] dark:text-[#D8B65C]">
+                          <div className="font-mono text-xs font-black text-[#8B142D] dark:text-[#DFB76C]">
                             {vPriceCalc ? `${vPriceCalc.total.toLocaleString("fa-IR")} تومان` : "—"}
                           </div>
                           <div className="text-[10px] font-bold text-zinc-400">
@@ -961,27 +961,27 @@ export default function ProductDetailsPage() {
             </Card>
 
             {/* Description & Technical Summary */}
-            <Card className="border-[#1C3324]/12 bg-white/80 p-6 backdrop-blur-md dark:border-white/10 dark:bg-[#15221B]/80 space-y-4">
-              <h2 className="text-base font-black text-[#1C3324] dark:text-zinc-100">
+            <Card className="border-[#3B0B14]/12 bg-white/80 p-6 backdrop-blur-md dark:border-white/10 dark:bg-[#1C080E]/80 space-y-4">
+              <h2 className="text-base font-black text-[#3B0B14] dark:text-zinc-100">
                 توضیحات و مشخصات تکمیلی کالا
               </h2>
 
               {shortDetail && (
-                <div className="rounded-2xl bg-[#FAF9F6] p-4 border border-[#1C3324]/10 dark:bg-zinc-900/40 dark:border-white/10">
-                  <span className="text-xs font-bold text-[#8B263E] dark:text-[#D8B65C]">
+                <div className="rounded-2xl bg-[#FDF8F9] p-4 border border-[#3B0B14]/10 dark:bg-zinc-900/40 dark:border-white/10">
+                  <span className="text-xs font-bold text-[#8B142D] dark:text-[#DFB76C]">
                     معرفی کوتاه:
                   </span>
-                  <p className="mt-1 text-xs leading-6 text-[#1C3324] dark:text-zinc-200">
+                  <p className="mt-1 text-xs leading-6 text-[#3B0B14] dark:text-zinc-200">
                     {shortDetail}
                   </p>
                 </div>
               )}
 
-              <div className="text-xs leading-7 text-[#3A5A46] dark:text-zinc-300 whitespace-pre-line">
+              <div className="text-xs leading-7 text-[#6E3A44] dark:text-zinc-300 whitespace-pre-line">
                 {description || "توضیحاتی برای این محصول در سامانه ثبت نشده است."}
               </div>
 
-              <div className="grid grid-cols-2 gap-3 pt-4 border-t border-[#1C3324]/10 sm:grid-cols-4 dark:border-white/10">
+              <div className="grid grid-cols-2 gap-3 pt-4 border-t border-[#3B0B14]/10 sm:grid-cols-4 dark:border-white/10">
                 <TechnicalItem label="شناسه دیتابیس (PB ID)" value={product.id} mono />
                 <TechnicalItem label="کد کاتالوگ (SKU)" value={product.sku || "—"} mono />
                 <TechnicalItem
@@ -1017,14 +1017,14 @@ function DetailCard({
   subLabel?: string;
 }) {
   return (
-    <div className="rounded-2xl border border-[#1C3324]/10 bg-[#FAF9F6] p-4 transition dark:border-white/10 dark:bg-zinc-900/40">
+    <div className="rounded-2xl border border-[#3B0B14]/10 bg-[#FDF8F9] p-4 transition dark:border-white/10 dark:bg-zinc-900/40">
       <div className="flex items-center gap-2">
         {icon}
-        <span className="text-[11px] font-bold text-[#3A5A46] dark:text-zinc-400">
+        <span className="text-[11px] font-bold text-[#6E3A44] dark:text-zinc-400">
           {label}
         </span>
       </div>
-      <div className="mt-2 text-sm font-black text-[#1C3324] dark:text-zinc-100">
+      <div className="mt-2 text-sm font-black text-[#3B0B14] dark:text-zinc-100">
         {value}
       </div>
       {subLabel && (
@@ -1046,13 +1046,13 @@ function TechnicalItem({
   mono?: boolean;
 }) {
   return (
-    <div className="rounded-2xl border border-[#1C3324]/10 bg-[#FAF9F6] p-3 text-right dark:border-white/10 dark:bg-zinc-900/40">
-      <span className="text-[10px] font-bold text-[#3A5A46] dark:text-zinc-400">
+    <div className="rounded-2xl border border-[#3B0B14]/10 bg-[#FDF8F9] p-3 text-right dark:border-white/10 dark:bg-zinc-900/40">
+      <span className="text-[10px] font-bold text-[#6E3A44] dark:text-zinc-400">
         {label}
       </span>
       <div
         className={cn(
-          "mt-1 truncate text-xs font-bold text-[#1C3324] dark:text-zinc-200",
+          "mt-1 truncate text-xs font-bold text-[#3B0B14] dark:text-zinc-200",
           mono && "font-mono"
         )}
         title={value}

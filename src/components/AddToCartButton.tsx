@@ -207,22 +207,24 @@ export default function AddToCartButton({
         onClick={handleAddToCart}
         disabled={isAdded}
         className={[
-          "inline-flex min-w-[210px] items-center justify-center gap-2",
-          "rounded-2xl border px-6 py-3.5 text-center text-sm font-extrabold cursor-pointer",
+          // پایه: موبایل جمع‌وجور | دسکتاپ (sm به بالا): دقیقاً استایل اولیه
+          "inline-flex w-full min-w-0 sm:min-w-[210px] items-center justify-center gap-1.5 sm:gap-2 overflow-hidden sm:overflow-visible",
+          "rounded-xl sm:rounded-2xl border px-3 py-2.5 sm:px-5 sm:py-3.5 text-center text-xs sm:text-sm font-black cursor-pointer",
           "transition-all duration-300 ease-out shadow-xs",
           "focus:outline-none focus:ring-4",
           "disabled:cursor-default",
           isAdded
             ? [
-                "scale-[1.02] border-[#8B263E] bg-[#8B263E]",
-                "text-white shadow-md shadow-[#8B263E]/25",
-                "focus:ring-[#8B263E]/25",
+                "scale-[1.01] sm:scale-[1.02] border-[#DFB76C] bg-[#8B142D]",
+                "text-white shadow-md shadow-[#8B142D]/35",
+                "focus:ring-[#8B142D]/25",
               ].join(" ")
             : [
-                "border-[#1C3324] bg-white text-[#1C3324]",
-                "hover:-translate-y-0.5 hover:bg-[#1C3324] hover:text-white",
+                "border-[#DFB76C] bg-gradient-to-r from-[#DFB76C] via-[#F2CD86] to-[#DFB76C] text-[#1E050A]",
+                "shadow-[0_4px_18px_rgba(223,183,108,0.35)] hover:shadow-[0_6px_25px_rgba(223,183,108,0.55)]",
+                "hover:-translate-y-0.5 hover:brightness-105",
                 "active:translate-y-0 active:scale-[0.98]",
-                "focus:ring-[#1C3324]/20",
+                "focus:ring-[#DFB76C]/40",
               ].join(" "),
         ].join(" ")}
         aria-label={
@@ -234,19 +236,20 @@ export default function AddToCartButton({
       >
         <span
           className={[
-            "flex items-center justify-center",
+            "flex shrink-0 items-center justify-center",
             "transition-all duration-300 ease-out",
             isAdded ? "scale-110 rotate-0" : "scale-100 -rotate-6",
           ].join(" ")}
         >
           {isAdded ? (
-            <Check className="h-[19px] w-[19px] stroke-[3]" />
+            <Check className="h-4 w-4 sm:h-[19px] sm:w-[19px] stroke-[3]" />
           ) : (
-            <ShoppingCart className="h-[18px] w-[18px]" />
+            <ShoppingCart className="h-4 w-4 sm:h-[18px] sm:w-[18px]" />
           )}
         </span>
 
-        <span className="min-w-[132px]">
+        {/* در موبایل آزاد است تا بیرون نزند، در دسکتاپ همان min-w-[132px] قبلی را دارد */}
+        <span className="truncate whitespace-nowrap leading-none sm:min-w-[132px] sm:overflow-visible sm:leading-normal">
           {isAdded ? "به سبد اضافه شد" : "افزودن به سبد خرید"}
         </span>
       </button>

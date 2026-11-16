@@ -9,19 +9,19 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          "bg-[#1C3324] text-white hover:bg-[#2D4F38] shadow-xs dark:bg-[#D8B65C] dark:text-[#101813] dark:hover:bg-[#EAD9A0]",
+          "bg-[#3B0B14] text-white hover:bg-[#580F1F] shadow-xs dark:bg-[#DFB76C] dark:text-[#140508] dark:hover:bg-[#F3E5C2]",
         destructive:
           "bg-rose-600 text-white hover:bg-rose-700 shadow-xs dark:bg-rose-700 dark:hover:bg-rose-800",
         outline:
-          "border border-[#1C3324]/15 bg-white text-[#1C3324] hover:bg-[#1C3324]/5 hover:text-[#1C3324] dark:border-white/10 dark:bg-[#15221B] dark:text-zinc-100 dark:hover:bg-white/5",
+          "border border-[#580F1F]/15 bg-white text-[#3B0B14] hover:bg-[#580F1F]/5 hover:text-[#580F1F] dark:border-white/10 dark:bg-[#1C080E] dark:text-zinc-100 dark:hover:bg-white/5",
         secondary:
-          "bg-[#F3EFEA] text-[#1C3324] hover:bg-[#E9E4DC] dark:bg-zinc-800 dark:text-zinc-100 dark:hover:bg-zinc-700",
+          "bg-[#FDF8F9] text-[#3B0B14] hover:bg-[#F5EDEF] border border-[#580F1F]/10 dark:bg-zinc-800 dark:text-zinc-100 dark:hover:bg-zinc-700",
         ghost:
-          "hover:bg-[#1C3324]/5 text-[#1C3324] hover:text-[#1C3324] dark:text-zinc-200 dark:hover:bg-white/5",
-        link: "text-[#8B263E] underline-offset-4 hover:underline dark:text-[#D8B65C]",
-        gold: "bg-gradient-to-r from-[#B4901E] to-[#D8B65C] text-white font-extrabold shadow-sm hover:brightness-105",
+          "hover:bg-[#580F1F]/5 text-[#3B0B14] hover:text-[#580F1F] dark:text-zinc-200 dark:hover:bg-white/5",
+        link: "text-[#8B142D] underline-offset-4 hover:underline dark:text-[#DFB76C]",
+        gold: "bg-gradient-to-r from-[#C5A059] to-[#DFB76C] text-white font-extrabold shadow-sm hover:brightness-105",
         crimson:
-          "bg-[#8B263E] text-white font-extrabold shadow-xs hover:bg-[#721F33] dark:bg-[#8B263E] dark:hover:bg-[#A32D49]",
+          "bg-[#8B142D] text-white font-extrabold shadow-xs hover:bg-[#580F1F] dark:bg-[#8B142D] dark:hover:bg-[#A3203C]",
       },
       size: {
         default: "h-10 px-4 py-2",

@@ -12,7 +12,7 @@ const faqData: FaqItem[] = [
   {
     question: "قیمت کالا در پرنا زر چگونه محاسبه می‌شود؟",
     answer:
-      "قیمت تمامی محصولات بر اساس نرخ لحظه‌ای طلا و با فرمول رسمی صنف طلا و جواهر محاسبه می‌شود: (قیمت طلا خام + اجرت ساخت) × وزن طلا + متعلقات و سنگ (در صورت وجود) + ۷٪ سود فروشنده + ۹٪ مالیات ارزش افزوده.",
+      "قیمت تمامی محصولات بر اساس نرخ لحظه‌ای طلا و با فرمول رسمی صنف طلا محاسبه می‌شود: (قیمت طلا خام + اجرت ساخت) × وزن طلا + متعلقات و سنگ (در صورت وجود) + ۷٪ سود فروشنده + ۹٪ مالیات ارزش افزوده.",
   },
   {
     question: "طرح اقساط طلایی پرنا زر (۳ قسط بدون چک و ضامن) به چه صورت است؟",
@@ -49,17 +49,17 @@ export default function FAQPage() {
   };
 
   return (
-    <main dir="rtl" className="min-h-screen bg-[#FAF9F6] pt-36 lg:pt-44 pb-20 px-4 sm:px-6">
+    <main dir="rtl" className="min-h-screen bg-[#FDF8F9] pt-36 lg:pt-44 pb-20 px-4 sm:px-6">
       <section className="mx-auto max-w-4xl">
         <div className="text-center space-y-3 mb-12">
-          <span className="inline-flex items-center gap-1.5 rounded-full bg-[#1C3324]/5 px-4 py-1.5 text-xs font-bold text-[#8B263E]">
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-[#3B0B14]/5 px-4 py-1.5 text-xs font-bold text-[#8B142D]">
             <span>پاسخ به پرسش‌های شما</span>
-            <Leaf size={14} className="text-[#8B263E]" />
+            <Leaf size={14} className="text-[#8B142D]" />
           </span>
-          <h1 className="text-2xl sm:text-4xl font-black text-[#1C3324]">
+          <h1 className="text-2xl sm:text-4xl font-black text-[#3B0B14]">
             سوالات متداول
           </h1>
-          <p className="text-xs sm:text-sm text-[#3A5A46] max-w-lg mx-auto">
+          <p className="text-xs sm:text-sm text-[#6E3A44] max-w-lg mx-auto">
             هرآنچه درباره خرید آنلاین، محاسبه قیمت، طرح اقساط و ارسال محصولات پرنا زر باید بدانید.
           </p>
         </div>
@@ -71,30 +71,30 @@ export default function FAQPage() {
             return (
               <div
                 key={index}
-                className="rounded-3xl border border-[#1C3324]/15 bg-white transition-all duration-200 overflow-hidden shadow-xs"
+                className="rounded-3xl border border-[#3B0B14]/15 bg-white transition-all duration-200 overflow-hidden shadow-xs"
               >
                 <button
                   type="button"
                   onClick={() => toggleFaq(index)}
-                  className="w-full flex items-center justify-between p-5 sm:p-6 text-right font-black text-sm sm:text-base text-[#1C3324] hover:text-[#8B263E] transition cursor-pointer"
+                  className="w-full flex items-center justify-between p-5 sm:p-6 text-right font-black text-sm sm:text-base text-[#3B0B14] hover:text-[#8B142D] transition cursor-pointer"
                   aria-expanded={isOpen}
                 >
                   <span className="flex items-center gap-3">
-                    <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#FAF9F6] text-xs font-bold text-[#8B263E] border border-[#1C3324]/10">
+                    <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#FDF8F9] text-xs font-bold text-[#8B142D] border border-[#3B0B14]/10">
                       {index + 1}
                     </span>
                     {item.question}
                   </span>
                   <ChevronLeft
                     size={18}
-                    className={`shrink-0 text-[#1C3324]/60 transition-transform duration-300 ${
-                      isOpen ? "-rotate-90 text-[#8B263E]" : ""
+                    className={`shrink-0 text-[#3B0B14]/60 transition-transform duration-300 ${
+                      isOpen ? "-rotate-90 text-[#8B142D]" : ""
                     }`}
                   />
                 </button>
 
                 {isOpen && (
-                  <div className="px-6 pb-6 pt-0 text-xs sm:text-sm leading-8 text-[#3A5A46] border-t border-[#1C3324]/5 pt-4 mx-6">
+                  <div className="px-6 pb-6 pt-0 text-xs sm:text-sm leading-8 text-[#6E3A44] border-t border-[#3B0B14]/5 pt-4 mx-6">
                     {item.answer}
                   </div>
                 )}

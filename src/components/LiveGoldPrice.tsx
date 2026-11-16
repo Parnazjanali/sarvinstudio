@@ -50,24 +50,24 @@ export default function LiveGoldPrice() {
     };
   }, []);
 
-  if (loading) return <div className="text-[#3A5A46] text-xs font-bold animate-pulse">در حال دریافت نرخ لحظه‌ای طلا...</div>;
+  if (loading) return <div className="text-[#6E3A44] text-xs font-bold animate-pulse">در حال دریافت نرخ لحظه‌ای طلا...</div>;
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 w-full font-sans" dir="rtl">
       {rates.map((rate) => (
-        <div key={rate.id} className="bg-white border border-[#1C3324]/15 p-5 rounded-3xl flex flex-col gap-2.5 shadow-xs transition-all hover:border-[#8B263E]/40">
+        <div key={rate.id} className="bg-white border border-[#3B0B14]/15 p-5 rounded-3xl flex flex-col gap-2.5 shadow-xs transition-all hover:border-[#8B142D]/40">
           <div className="flex justify-between items-center">
-            <span className="text-xs font-bold text-[#3A5A46]">{rate.name}</span>
+            <span className="text-xs font-bold text-[#6E3A44]">{rate.name}</span>
             <div className={`flex items-center gap-1 text-xs font-black ${rate.change_percent >= 0 ? 'text-emerald-600' : 'text-rose-600'}`}>
               {rate.change_percent >= 0 ? <TrendingUp size={14} /> : <TrendingDown size={14} />}
               {Math.abs(rate.change_percent)}%
             </div>
           </div>
           <div className="flex items-baseline gap-2">
-            <span className="text-xl font-black text-[#1C3324] tracking-wider font-mono">
+            <span className="text-xl font-black text-[#3B0B14] tracking-wider font-mono">
               {rate.price.toLocaleString('fa-IR')}
             </span>
-            <span className="text-[11px] font-bold text-[#3A5A46]">{rate.unit}</span>
+            <span className="text-[11px] font-bold text-[#6E3A44]">{rate.unit}</span>
           </div>
         </div>
       ))}

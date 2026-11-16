@@ -47,14 +47,15 @@ export interface SettlementRecord {
 /**
  * دریافت فاکتور متصل به یک سفارش (در صورت وجود)
  */
-export async function getInvoiceForOrder(orderId: string): Promise<InvoiceRecord | null> {
+export async function getInvoiceForOrder(orderId: string, customPb?: any): Promise<InvoiceRecord | null> {
   if (!orderId) return null;
+  const client = customPb || pb;
   try {
-    const record = await pb.collection("invoices").getFirstListItem<InvoiceRecord>(
+    const record = await client.collection("invoices").getFirstListItem(
       `order = "${orderId}"`,
       { requestKey: null }
     );
-    return record;
+    return record as InvoiceRecord;
   } catch {
     return null;
   }
@@ -63,14 +64,15 @@ export async function getInvoiceForOrder(orderId: string): Promise<InvoiceRecord
 /**
  * دریافت رکورد تسویه متصل به یک فاکتور یا سفارش
  */
-export async function getSettlementForInvoice(invoiceId: string): Promise<SettlementRecord | null> {
+export async function getSettlementForInvoice(invoiceId: string, customPb?: any): Promise<SettlementRecord | null> {
   if (!invoiceId) return null;
+  const client = customPb || pb;
   try {
-    const record = await pb.collection("settlements").getFirstListItem<SettlementRecord>(
+    const record = await client.collection("settlements").getFirstListItem(
       `invoice = "${invoiceId}"`,
       { requestKey: null }
     );
-    return record;
+    return record as SettlementRecord;
   } catch {
     return null;
   }
@@ -85,7 +87,8 @@ export async function getSettlementForInvoice(invoiceId: string): Promise<Settle
  */
 export async function syncOrderToInvoiceAndSettlement(
   orderId: string,
-  options?: SyncOptions
+  options?: SyncOptions,
+  customPb?: any
 ): Promise<{
   invoice: InvoiceRecord;
   settlement?: SettlementRecord | null;
@@ -96,8 +99,10 @@ export async function syncOrderToInvoiceAndSettlement(
     throw new Error("شناسه سفارش نامعتبر است.");
   }
 
+  const client = customPb || pb;
+
   // ۱. دریافت سفارش همراه با اطلاعات مشتری و آدرس
-  const order = await pb.collection("orders").getOne(orderId, {
+  const order = await client.collection("orders").getOne(orderId, {
     expand: "user,address",
     requestKey: null,
   });
@@ -170,7 +175,7 @@ export async function syncOrderToInvoiceAndSettlement(
   const goldRate = await getGoldGramPrice();
 
   // ۲. بررسی وجود فاکتور قبلی برای این سفارش (Idempotency)
-  let existingInvoice = await getInvoiceForOrder(orderId);
+  let existingInvoice = await getInvoiceForOrder(orderId, client);
   let createdNewInvoice = false;
   let createdNewSettlement = false;
   let settlementRecord: SettlementRecord | null = null;
@@ -178,7 +183,7 @@ export async function syncOrderToInvoiceAndSettlement(
   if (existingInvoice) {
     // فاکتور از قبل صادر شده است؛ بررسی وضعیت تسویه
     if (isPaid && existingInvoice.paymentStatus !== "paid") {
-      existingInvoice = await pb.collection("invoices").update<InvoiceRecord>(
+      existingInvoice = await client.collection("invoices").update(
         existingInvoice.id,
         {
           paymentStatus: "paid",
@@ -206,12 +211,12 @@ export async function syncOrderToInvoiceAndSettlement(
       goldRate,
       items: invoiceItems,
       notes: options?.notes || `صدور خودکار از روی سفارش #${orderNumber}`,
-      sellerName: "گالری طلا و جواهر پرنا زر",
+      sellerName: "گالری طلا پرنا زر",
     };
 
-    existingInvoice = await pb.collection("invoices").create<InvoiceRecord>(invoicePayload, {
+    existingInvoice = (await client.collection("invoices").create(invoicePayload, {
       requestKey: null,
-    });
+    })) as InvoiceRecord;
     createdNewInvoice = true;
 
     // ثبت لاگ خودکار صدور فاکتور
@@ -222,7 +227,7 @@ export async function syncOrderToInvoiceAndSettlement(
         "fa-IR"
       )} تومان به صورت خودکار صادر شد. وضعیت پرداخت: ${isPaid ? "تسویه کامل" : "در انتظار پرداخت"}`,
       level: "info",
-      targetId: existingInvoice.id,
+      targetId: existingInvoice?.id || "",
       targetType: "invoice",
       metadata: {
         orderId: order.id,
@@ -235,7 +240,7 @@ export async function syncOrderToInvoiceAndSettlement(
 
   // ۳. بررسی و ثبت رکورد تسویه (Settlement) در صورت پرداخت آنلاین یا تایید واریز
   if (isPaid && existingInvoice) {
-    const existingSettlement = await getSettlementForInvoice(existingInvoice.id);
+    const existingSettlement = await getSettlementForInvoice(existingInvoice.id, client);
 
     if (existingSettlement) {
       settlementRecord = existingSettlement;
@@ -244,7 +249,7 @@ export async function syncOrderToInvoiceAndSettlement(
         const method = options?.paymentMethod || (order.paymentStatus === "paid" ? "online" : "card_to_card");
         const tracking = options?.trackingCode || `TXN-${orderNumber}-${Math.floor(100 + Math.random() * 900)}`;
 
-        settlementRecord = await pb.collection("settlements").create<SettlementRecord>(
+        settlementRecord = (await client.collection("settlements").create(
           {
             invoice: existingInvoice.id,
             order: order.id,
@@ -256,7 +261,7 @@ export async function syncOrderToInvoiceAndSettlement(
             notes: options?.notes || "تسویه خودکار پس از تایید مالی سفارش",
           },
           { requestKey: null }
-        );
+        )) as SettlementRecord;
         createdNewSettlement = true;
 
         void recordAuditLogClient({
@@ -266,7 +271,7 @@ export async function syncOrderToInvoiceAndSettlement(
             "fa-IR"
           )} تومان از طریق ${method === "online" ? "درگاه پرداخت آنلاین" : "کارت به کارت"} در سامانه ثبت گردید.`,
           level: "info",
-          targetId: settlementRecord.id,
+          targetId: settlementRecord?.id || "",
           targetType: "order",
           metadata: {
             orderId: order.id,
@@ -282,7 +287,7 @@ export async function syncOrderToInvoiceAndSettlement(
   }
 
   return {
-    invoice: existingInvoice,
+    invoice: existingInvoice!,
     settlement: settlementRecord,
     createdNewInvoice,
     createdNewSettlement,
@@ -299,10 +304,12 @@ export async function confirmOrderDepositAndSettle(
     trackingCode?: string;
     amount?: number;
     notes?: string;
-  }
+  },
+  customPb?: any
 ) {
+  const client = customPb || pb;
   // ۱. آپدیت وضعیت پرداخت سفارش در دیتابیس
-  await pb.collection("orders").update(
+  await client.collection("orders").update(
     orderId,
     {
       paymentStatus: "paid",
@@ -319,7 +326,7 @@ export async function confirmOrderDepositAndSettle(
     trackingCode: settlementData.trackingCode,
     settledAmount: settlementData.amount,
     notes: settlementData.notes,
-  });
+  }, client);
 
   return result;
 }

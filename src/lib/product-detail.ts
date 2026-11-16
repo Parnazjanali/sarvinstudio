@@ -403,7 +403,7 @@ export function calcProductPrice(
     raw *
     (wagePercent / 100);
 
-  // ۳. سود مصوب اتحادیه طلا و جواهر
+  // ۳. سود مصوب اتحادیه طلا
   const profit =
     (raw + wage) *
     (profitPercent / 100);

@@ -68,29 +68,53 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const decodedSlug = decodeURIComponent(slug).toLowerCase();
 
+  let colData: ExclusiveCollection | null = null;
   try {
     const records = await pb.collection("exclusive_collections").getFullList<ExclusiveCollection>({
       filter: `slug = "${decodedSlug}" || id = "${decodedSlug}"`,
       requestKey: null,
     });
     if (records.length > 0) {
-      return {
-        title: `${records[0].title} | پرنا زر - مثل زر بدرخش`,
-        description: records[0].description || records[0].subtitle,
-      };
+      colData = records[0];
     }
   } catch {}
 
-  const fallback = FALLBACK_COLLECTIONS[decodedSlug];
-  if (fallback) {
-    return {
-      title: `${fallback.title} | پرنا زر - مثل زر بدرخش`,
-      description: fallback.description || fallback.subtitle,
-    };
+  if (!colData) {
+    colData = FALLBACK_COLLECTIONS[decodedSlug] || null;
   }
 
+  const title = colData ? `${colData.title} | گالری طلا پرنا زر` : "کالکشن اختصاصی | گالری طلا پرنا زر";
+  const desc =
+    colData?.description ||
+    colData?.subtitle ||
+    "مجموعه‌های انحصاری و دست‌ساز طلای ۱۸ عیار پرنا زر با امکان خرید اقساطی ۳ ماهه بدون سود و کارمزد.";
+  const img = colData?.image || "/banner.webp";
+
   return {
-    title: "کالکشن اختصاصی | پرنا زر - مثل زر بدرخش",
+    title,
+    description: desc,
+    alternates: {
+      canonical: `/collections/${decodedSlug}`,
+    },
+    openGraph: {
+      title,
+      description: desc,
+      url: `https://parnazar.ir/collections/${decodedSlug}`,
+      images: [
+        {
+          url: img.startsWith("http") ? img : `https://parnazar.ir${img}`,
+          width: 1200,
+          height: 630,
+          alt: `${colData?.title || "کالکشن"} - پرنا زر`,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description: desc,
+      images: [img],
+    },
   };
 }
 
@@ -154,11 +178,58 @@ export default async function CollectionDetailPage({ params }: Props) {
     .filter((c) => c.slug !== collection!.slug)
     .slice(0, 4);
 
+  const collectionDetailJsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "CollectionPage",
+        "@id": `https://parnazar.ir/collections/${collection.slug}#webpage`,
+        url: `https://parnazar.ir/collections/${collection.slug}`,
+        name: `${collection.title} - کالکشن اختصاصی پرنا زر`,
+        description: collection.description || collection.subtitle,
+        image: collection.image ? [collection.image] : undefined,
+        isPartOf: {
+          "@id": "https://parnazar.ir/#website",
+        },
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": `https://parnazar.ir/collections/${collection.slug}#breadcrumb`,
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "صفحه اصلی",
+            item: "https://parnazar.ir",
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: "کالکشن‌های اختصاصی",
+            item: "https://parnazar.ir/collections",
+          },
+          {
+            "@type": "ListItem",
+            position: 3,
+            name: collection.title,
+            item: `https://parnazar.ir/collections/${collection.slug}`,
+          },
+        ],
+      },
+    ],
+  };
+
   return (
-    <CollectionDetailClient
-      collection={collection}
-      products={mappedProducts}
-      otherCollections={otherCollections}
-    />
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionDetailJsonLd) }}
+      />
+      <CollectionDetailClient
+        collection={collection}
+        products={mappedProducts}
+        otherCollections={otherCollections}
+      />
+    </>
   );
 }

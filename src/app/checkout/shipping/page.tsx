@@ -546,33 +546,33 @@ export default function ShippingPage() {
 
   if (loading) {
     return (
-      <main className="min-h-screen flex items-center justify-center pt-36 bg-[#FAF9F6]">
+      <main className="min-h-screen flex items-center justify-center pt-36 bg-[#FDF8F9]">
         <div className="flex flex-col items-center gap-3">
-          <Loader2 size={32} className="animate-spin text-[#8B263E]" />
-          <p className="text-sm font-bold text-[#3A5A46]">در حال بارگذاری اطلاعات ارسال...</p>
+          <Loader2 size={32} className="animate-spin text-[#8B142D]" />
+          <p className="text-sm font-bold text-[#6E3A44]">در حال بارگذاری اطلاعات ارسال...</p>
         </div>
       </main>
     );
   }
 
   return (
-    <main dir="rtl" className="min-h-screen pb-20 pt-32 lg:pt-40 bg-[#FAF9F6] text-[#1C3324] font-sans">
+    <main dir="rtl" className="min-h-screen pb-20 pt-32 lg:pt-40 bg-[#FDF8F9] text-[#3B0B14] font-sans">
       <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
         
         {/* مراحل خرید (Roadmap) */}
-        <section className="mb-8 overflow-hidden rounded-3xl border border-[#1C3324]/15 bg-white p-4 shadow-xs sm:p-6">
+        <section className="mb-8 overflow-hidden rounded-3xl border border-[#3B0B14]/15 bg-white p-4 shadow-xs sm:p-6">
           <div className="mb-5 flex items-center justify-between gap-3">
             <div>
-              <h1 className="text-base font-black sm:text-lg text-[#1C3324]">تکمیل فرآیند خرید</h1>
-              <p className="mt-1 text-xs sm:text-sm text-[#3A5A46]">مرحله دوم: نشانی و اطلاعات تحویل سفارش.</p>
+              <h1 className="text-base font-black sm:text-lg text-[#3B0B14]">تکمیل فرآیند خرید</h1>
+              <p className="mt-1 text-xs sm:text-sm text-[#6E3A44]">مرحله دوم: نشانی و اطلاعات تحویل سفارش.</p>
             </div>
-            <span className="rounded-full bg-[#1C3324]/5 px-3.5 py-1 text-xs font-bold text-[#8B263E]">
+            <span className="rounded-full bg-[#3B0B14]/5 px-3.5 py-1 text-xs font-bold text-[#8B142D]">
               مرحله ۲ از ۴
             </span>
           </div>
 
           <div className="relative">
-            <div className="absolute left-[12%] right-[12%] top-5 hidden h-0.5 bg-[#1C3324]/15 sm:block" />
+            <div className="absolute left-[12%] right-[12%] top-5 hidden h-0.5 bg-[#3B0B14]/15 sm:block" />
             <div className="relative grid grid-cols-4 gap-2">
               {checkoutSteps.map((step) => {
                 const Icon = step.icon;
@@ -584,15 +584,15 @@ export default function ShippingPage() {
                     <div
                       className={`relative z-10 flex h-10 w-10 items-center justify-center rounded-full border-2 transition-all sm:h-11 sm:w-11 ${
                         isCompleted || isActive
-                          ? "bg-[#1C3324] border-[#1C3324] text-white shadow-md"
-                          : "bg-white border-[#1C3324]/20 text-[#3A5A46]"
+                          ? "bg-[#3B0B14] border-[#3B0B14] text-white shadow-md"
+                          : "bg-white border-[#3B0B14]/20 text-[#6E3A44]"
                       }`}
                     >
                       {isCompleted ? <CheckCircle2 size={18} /> : <Icon size={17} />}
                     </div>
                     <span
                       className={`mt-2 max-w-20 text-[10px] font-bold leading-4 sm:max-w-none sm:text-xs ${
-                        isActive ? "text-[#8B263E]" : "text-[#3A5A46]"
+                        isActive ? "text-[#8B142D]" : "text-[#6E3A44]"
                       }`}
                     >
                       {step.title}
@@ -605,14 +605,14 @@ export default function ShippingPage() {
         </section>
 
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
-          <section className="rounded-3xl border border-[#1C3324]/15 bg-white p-5 shadow-xs sm:p-7 lg:col-span-2">
+          <section className="rounded-3xl border border-[#3B0B14]/15 bg-white p-5 shadow-xs sm:p-7 lg:col-span-2">
             <div className="mb-7 flex items-center gap-3">
-              <div className="flex h-11 w-11 items-center justify-center rounded-full bg-[#1C3324]/5 text-[#8B263E]">
+              <div className="flex h-11 w-11 items-center justify-center rounded-full bg-[#3B0B14]/5 text-[#8B142D]">
                 <MapPin size={21} />
               </div>
               <div>
-                <h2 className="text-lg font-black text-[#1C3324]">انتخاب آدرس ارسال</h2>
-                <p className="mt-1 text-xs text-[#3A5A46]">از بین آدرس‌های ذخیره‌شده انتخاب کنید یا آدرس جدید وارد نمایید.</p>
+                <h2 className="text-lg font-black text-[#3B0B14]">انتخاب آدرس ارسال</h2>
+                <p className="mt-1 text-xs text-[#6E3A44]">از بین آدرس‌های ذخیره‌شده انتخاب کنید یا آدرس جدید وارد نمایید.</p>
               </div>
             </div>
 
@@ -620,11 +620,11 @@ export default function ShippingPage() {
             {addresses.length > 0 && (
               <div className="mb-6 space-y-3">
                 <div className="flex items-center justify-between gap-3">
-                  <h3 className="text-sm font-bold text-[#1C3324]">آدرس‌های ثبت‌ شده شما</h3>
+                  <h3 className="text-sm font-bold text-[#3B0B14]">آدرس‌های ثبت‌ شده شما</h3>
                   <button
                     type="button"
                     onClick={handleEnableNewAddress}
-                    className="inline-flex items-center gap-1 rounded-2xl border border-[#1C3324]/15 px-4 py-2 text-xs font-bold transition hover:bg-[#FAF9F6] bg-[#1C3324]/5 text-[#1C3324] cursor-pointer"
+                    className="inline-flex items-center gap-1 rounded-2xl border border-[#3B0B14]/15 px-4 py-2 text-xs font-bold transition hover:bg-[#FDF8F9] bg-[#3B0B14]/5 text-[#3B0B14] cursor-pointer"
                   >
                     <PlusCircle size={15} />
                     افزودن آدرس جدید
@@ -639,27 +639,27 @@ export default function ShippingPage() {
                       onClick={() => handleSelectAddress(address)}
                       className={`block w-full rounded-2xl border p-4 text-right transition cursor-pointer ${
                         selectedAddressId === address.id && !isNewAddressMode
-                          ? "border-[#1C3324] bg-[#1C3324]/5 shadow-xs font-bold"
-                          : "border-[#1C3324]/15 bg-white hover:border-[#1C3324]/30 text-[#3A5A46]"
+                          ? "border-[#3B0B14] bg-[#3B0B14]/5 shadow-xs font-bold"
+                          : "border-[#3B0B14]/15 bg-white hover:border-[#3B0B14]/30 text-[#6E3A44]"
                       }`}
                     >
                       <div className="flex items-start justify-between gap-4">
                         <div className="min-w-0">
-                          <h4 className="text-sm font-black text-[#1C3324]">
+                          <h4 className="text-sm font-black text-[#3B0B14]">
                             {address.title || "آدرس"}
                           </h4>
-                          <p className="mt-2 text-xs sm:text-sm text-[#3A5A46]">
+                          <p className="mt-2 text-xs sm:text-sm text-[#6E3A44]">
                             گیرنده: {address.recipientName} | تلفن: {address.recipientPhone}
                           </p>
-                          <p className="mt-1 text-xs leading-6 sm:text-sm text-[#1C3324]">
+                          <p className="mt-1 text-xs leading-6 sm:text-sm text-[#3B0B14]">
                             {address.province}، {address.city}، {address.address}
                           </p>
                           {address.postalCode && (
-                            <p className="mt-1 text-xs text-[#3A5A46]">کد پستی: {address.postalCode}</p>
+                            <p className="mt-1 text-xs text-[#6E3A44]">کد پستی: {address.postalCode}</p>
                           )}
                         </div>
                         {address.isDefault && (
-                          <span className="shrink-0 rounded-full bg-[#8B263E]/10 px-3 py-1 text-xs font-bold text-[#8B263E]">
+                          <span className="shrink-0 rounded-full bg-[#8B142D]/10 px-3 py-1 text-xs font-bold text-[#8B142D]">
                             پیش‌فرض
                           </span>
                         )}
@@ -673,14 +673,14 @@ export default function ShippingPage() {
             {/* فرم مشخصات یا ورود آدرس جدید */}
             <form onSubmit={handleSubmit} className="space-y-5 pt-2">
               {isNewAddressMode && (
-                <div className="mb-4 rounded-2xl bg-[#8B263E]/10 border border-[#8B263E]/20 p-3 text-xs font-bold text-[#8B263E]">
+                <div className="mb-4 rounded-2xl bg-[#8B142D]/10 border border-[#8B142D]/20 p-3 text-xs font-bold text-[#8B142D]">
                   در حال ثبت اطلاعات آدرس جدید برای این سفارش هستید:
                 </div>
               )}
 
               <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
                 <label className="block">
-                  <span className="mb-2 block text-xs font-bold text-[#1C3324]">
+                  <span className="mb-2 block text-xs font-bold text-[#3B0B14]">
                     نام و نام خانوادگی تحویل‌گیرنده <span className="text-red-500">*</span>
                   </span>
                   <input
@@ -689,37 +689,38 @@ export default function ShippingPage() {
                     value={formData.fullName}
                     onChange={(e) => handleInputChange("fullName", e.target.value)}
                     placeholder="مثلاً رضا محمدی"
-                    className="w-full rounded-2xl border border-[#1C3324]/15 bg-[#FAF9F6] px-4 py-3.5 text-xs text-[#1C3324] outline-none transition focus:border-[#1C3324]"
+                    className="w-full rounded-2xl border border-[#3B0B14]/15 bg-[#FDF8F9] px-4 py-3.5 text-xs text-[#3B0B14] outline-none transition focus:border-[#3B0B14]"
                   />
                 </label>
 
                 <label className="block">
-                  <span className="mb-2 block text-xs font-bold text-[#1C3324]">
+                  <span className="mb-2 block text-xs font-bold text-[#3B0B14]">
                     شماره موبایل <span className="text-red-500">*</span>
                   </span>
                   <input
                     type="tel"
                     required
+                    maxLength={11}
                     inputMode="numeric"
                     dir="ltr"
                     value={formData.phone}
-                    onChange={(e) => handleInputChange("phone", e.target.value)}
+                    onChange={(e) => handleInputChange("phone", e.target.value.replace(/\D/g, "").slice(0, 11))}
                     placeholder="09123456789"
-                    className="w-full rounded-2xl border border-[#1C3324]/15 bg-[#FAF9F6] px-4 py-3.5 text-right text-xs text-[#1C3324] outline-none transition focus:border-[#1C3324]"
+                    className="w-full rounded-2xl border border-[#3B0B14]/15 bg-[#FDF8F9] px-4 py-3.5 text-right text-xs text-[#3B0B14] outline-none transition focus:border-[#3B0B14] font-mono"
                   />
                 </label>
               </div>
 
               <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
                 <label className="block">
-                  <span className="mb-2 block text-xs font-bold text-[#1C3324]">
+                  <span className="mb-2 block text-xs font-bold text-[#3B0B14]">
                     استان <span className="text-red-500">*</span>
                   </span>
                   <select
                     required
                     value={formData.province}
                     onChange={(e) => handleInputChange("province", e.target.value)}
-                    className="w-full rounded-2xl border border-[#1C3324]/15 bg-[#FAF9F6] px-4 py-3.5 text-xs text-[#1C3324] outline-none transition focus:border-[#1C3324] cursor-pointer"
+                    className="w-full rounded-2xl border border-[#3B0B14]/15 bg-[#FDF8F9] px-4 py-3.5 text-xs text-[#3B0B14] outline-none transition focus:border-[#3B0B14] cursor-pointer"
                   >
                     <option value="">-- انتخاب استان --</option>
                     {Object.keys(IRAN_PROVINCES_AND_CITIES).map((province) => (
@@ -731,7 +732,7 @@ export default function ShippingPage() {
                 </label>
 
                 <label className="block">
-                  <span className="mb-2 block text-xs font-bold text-[#1C3324]">
+                  <span className="mb-2 block text-xs font-bold text-[#3B0B14]">
                     شهر / شهرستان <span className="text-red-500">*</span>
                   </span>
                   <select
@@ -739,7 +740,7 @@ export default function ShippingPage() {
                     disabled={!formData.province}
                     value={formData.city}
                     onChange={(e) => handleInputChange("city", e.target.value)}
-                    className="w-full cursor-pointer rounded-2xl border border-[#1C3324]/15 bg-[#FAF9F6] px-4 py-3.5 text-xs text-[#1C3324] outline-none transition focus:border-[#1C3324] disabled:cursor-not-allowed disabled:bg-gray-100"
+                    className="w-full cursor-pointer rounded-2xl border border-[#3B0B14]/15 bg-[#FDF8F9] px-4 py-3.5 text-xs text-[#3B0B14] outline-none transition focus:border-[#3B0B14] disabled:cursor-not-allowed disabled:bg-gray-100"
                   >
                     <option value="">
                       {formData.province ? "-- انتخاب شهر --" : "-- ابتدا استان را انتخاب کنید --"}
@@ -754,7 +755,7 @@ export default function ShippingPage() {
               </div>
 
               <label className="block">
-                <span className="mb-2 block text-xs font-bold text-[#1C3324]">
+                <span className="mb-2 block text-xs font-bold text-[#3B0B14]">
                   کد پستی (۱۰ رقم)
                 </span>
                 <input
@@ -763,14 +764,14 @@ export default function ShippingPage() {
                   maxLength={10}
                   dir="ltr"
                   value={formData.postalCode}
-                  onChange={(e) => handleInputChange("postalCode", e.target.value)}
+                  onChange={(e) => handleInputChange("postalCode", e.target.value.replace(/\D/g, "").slice(0, 10))}
                   placeholder="1234567890"
-                  className="w-full rounded-2xl border border-[#1C3324]/15 bg-[#FAF9F6] px-4 py-3.5 text-right text-xs text-[#1C3324] outline-none transition focus:border-[#1C3324]"
+                  className="w-full rounded-2xl border border-[#3B0B14]/15 bg-[#FDF8F9] px-4 py-3.5 text-right text-xs text-[#3B0B14] outline-none transition focus:border-[#3B0B14] font-mono"
                 />
               </label>
 
               <label className="block">
-                <span className="mb-2 block text-xs font-bold text-[#1C3324]">
+                <span className="mb-2 block text-xs font-bold text-[#3B0B14]">
                   نشانی کامل پستی <span className="text-red-500">*</span>
                 </span>
                 <textarea
@@ -779,7 +780,7 @@ export default function ShippingPage() {
                   value={formData.address}
                   onChange={(e) => handleInputChange("address", e.target.value)}
                   placeholder="خیابان اصلی، کوچه، پلاک، واحد..."
-                  className="w-full resize-none rounded-2xl border border-[#1C3324]/15 bg-[#FAF9F6] px-4 py-3 text-xs leading-7 text-[#1C3324] outline-none transition focus:border-[#1C3324]"
+                  className="w-full resize-none rounded-2xl border border-[#3B0B14]/15 bg-[#FDF8F9] px-4 py-3 text-xs leading-7 text-[#3B0B14] outline-none transition focus:border-[#3B0B14]"
                 />
               </label>
 
@@ -789,10 +790,10 @@ export default function ShippingPage() {
                 </div>
               )}
 
-              <div className="flex flex-col gap-3 border-t border-[#1C3324]/15 pt-5 sm:flex-row sm:items-center sm:justify-between">
+              <div className="flex flex-col gap-3 border-t border-[#3B0B14]/15 pt-5 sm:flex-row sm:items-center sm:justify-between">
                 <Link
                   href="/cart"
-                  className="inline-flex items-center justify-center gap-2 rounded-2xl border border-[#1C3324]/15 bg-white px-5 py-3 text-xs font-bold text-[#1C3324] transition hover:bg-[#FAF9F6]"
+                  className="inline-flex items-center justify-center gap-2 rounded-2xl border border-[#3B0B14]/15 bg-white px-5 py-3 text-xs font-bold text-[#3B0B14] transition hover:bg-[#FDF8F9]"
                 >
                   <ArrowRight size={16} />
                   بازگشت به سبد خرید
@@ -800,7 +801,7 @@ export default function ShippingPage() {
 
                 <button
                   type="submit"
-                  className="inline-flex cursor-pointer items-center justify-center gap-2 rounded-2xl bg-[#1C3324] px-6 py-3.5 text-xs font-black text-white transition hover:bg-[#8B263E] shadow-sm"
+                  className="inline-flex cursor-pointer items-center justify-center gap-2 rounded-2xl bg-[#3B0B14] px-6 py-3.5 text-xs font-black text-white transition hover:bg-[#8B142D] shadow-sm"
                 >
                   ادامه به مرحله پرداخت
                   <ChevronLeft size={16} />
@@ -810,28 +811,28 @@ export default function ShippingPage() {
           </section>
 
           <aside className="space-y-4">
-            <section className="rounded-3xl border border-[#1C3324]/15 bg-white p-5 shadow-xs">
+            <section className="rounded-3xl border border-[#3B0B14]/15 bg-white p-5 shadow-xs">
               <div className="flex items-start gap-3">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#1C3324]/5 text-[#8B263E]">
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#3B0B14]/5 text-[#8B142D]">
                   <Truck size={19} />
                 </div>
                 <div>
-                  <h2 className="text-sm font-black sm:text-base text-[#1C3324]">ارسال بیمه‌شده و امن</h2>
-                  <p className="mt-2 text-xs leading-6 text-[#3A5A46]">
+                  <h2 className="text-sm font-black sm:text-base text-[#3B0B14]">ارسال بیمه‌شده و امن</h2>
+                  <p className="mt-2 text-xs leading-6 text-[#6E3A44]">
                     تمامی مرسولات طلا و زیورآلات با بسته‌بندی امن و بیمه کامل پستی تا لحظه تحویل به شما ارسال خواهند شد.
                   </p>
                 </div>
               </div>
             </section>
 
-            <section className="rounded-3xl border border-[#1C3324]/15 bg-white p-5 shadow-xs">
+            <section className="rounded-3xl border border-[#3B0B14]/15 bg-white p-5 shadow-xs">
               <div className="flex items-start gap-3">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#1C3324]/5 text-[#8B263E]">
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#3B0B14]/5 text-[#8B142D]">
                   <UserRound size={19} />
                 </div>
                 <div>
-                  <h2 className="text-sm font-black sm:text-base text-[#1C3324]">مشخصات گیرنده</h2>
-                  <p className="mt-2 text-xs leading-6 text-[#3A5A46]">
+                  <h2 className="text-sm font-black sm:text-base text-[#3B0B14]">مشخصات گیرنده</h2>
+                  <p className="mt-2 text-xs leading-6 text-[#6E3A44]">
                     ارائه کارت شناسایی معتبر شخص تحویل‌گیرنده هنگام دریافت سفارش الزامی است.
                   </p>
                 </div>

@@ -10,8 +10,12 @@ export async function getServerUser(): Promise<AuthUserData> {
     return null;
   }
 
+  // در سمت سرور Next.js اولویت با آدرس داخلی لوکال است
   const pbUrl =
-    process.env.NEXT_PUBLIC_POCKETBASE_URL || "http://127.0.0.1:8090";
+    process.env.POCKETBASE_URL ||
+    process.env.NEXT_PUBLIC_POCKETBASE_URL ||
+    "http://127.0.0.1:8090";
+
   const pb = new PocketBase(pbUrl);
 
   try {

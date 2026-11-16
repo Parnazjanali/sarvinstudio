@@ -97,8 +97,8 @@ export default function CustomOrderPage() {
 
   if (isSuccess) {
     return (
-      <main dir="rtl" className="min-h-screen flex items-center justify-center px-5 pt-36 sm:pt-44 pb-24 bg-[#FCFCFA] dark:bg-[#101813] text-[#1C3324] dark:text-zinc-100">
-        <div className="max-w-md w-full text-center bg-white dark:bg-[#15221B] p-8 sm:p-10 rounded-3xl border border-[#D8B65C]/40 shadow-2xl relative overflow-hidden animate-in fade-in zoom-in-95 duration-500">
+      <main dir="rtl" className="min-h-screen flex items-center justify-center px-5 pt-36 sm:pt-44 pb-24 bg-[#FFFFFF] dark:bg-[#140508] text-[#3B0B14] dark:text-zinc-100">
+        <div className="max-w-md w-full text-center bg-white dark:bg-[#1C080E] p-8 sm:p-10 rounded-3xl border border-[#DFB76C]/40 shadow-2xl relative overflow-hidden animate-in fade-in zoom-in-95 duration-500">
           
           <div className="absolute top-0 right-1/2 translate-x-1/2 w-40 h-40 bg-emerald-500/10 rounded-full blur-2xl pointer-events-none" />
 
@@ -106,13 +106,13 @@ export default function CustomOrderPage() {
             <CheckCircle2 size={44} className="stroke-[2.5]" />
           </div>
 
-          <h2 className="relative z-10 text-xl sm:text-2xl font-black mb-3 text-[#1C3324] dark:text-white">
+          <h2 className="relative z-10 text-xl sm:text-2xl font-black mb-3 text-[#3B0B14] dark:text-white">
             پیام شما با موفقیت ارسال شد
           </h2>
 
-          <div className="relative z-10 bg-[#FAF9F6] dark:bg-[#101813] p-4 rounded-2xl border border-[#1C3324]/10 dark:border-white/10 mb-6">
-            <p className="text-xs sm:text-sm text-[#3A5A46] dark:text-zinc-300 font-bold leading-relaxed flex items-center justify-center gap-2">
-              <PhoneCall size={16} className="text-[#8B263E] dark:text-[#D8B65C]" />
+          <div className="relative z-10 bg-[#FDF8F9] dark:bg-[#140508] p-4 rounded-2xl border border-[#3B0B14]/10 dark:border-white/10 mb-6">
+            <p className="text-xs sm:text-sm text-[#6E3A44] dark:text-zinc-300 font-bold leading-relaxed flex items-center justify-center gap-2">
+              <PhoneCall size={16} className="text-[#8B142D] dark:text-[#DFB76C]" />
               به زودی جهت هماهنگی و مشاوره با شما تماس گرفته می‌شود.
             </p>
           </div>
@@ -120,7 +120,7 @@ export default function CustomOrderPage() {
           <div className="relative z-10 flex flex-col gap-3">
             <Link
               href="/"
-              className="w-full py-3.5 bg-[#1C3324] dark:bg-[#D8B65C] text-white dark:text-[#101813] rounded-full text-xs font-black hover:bg-[#8B263E] dark:hover:bg-[#E6CA7A] transition-all flex items-center justify-center gap-2 shadow-md"
+              className="w-full py-3.5 bg-[#3B0B14] dark:bg-[#DFB76C] text-white dark:text-[#140508] rounded-full text-xs font-black hover:bg-[#8B142D] dark:hover:bg-[#E6CA7A] transition-all flex items-center justify-center gap-2 shadow-md"
             >
               بازگشت به ویترین و صفحه اصلی <ArrowLeft size={14} />
             </Link>
@@ -144,41 +144,41 @@ export default function CustomOrderPage() {
   }
 
   return (
-    <main dir="rtl" className="bg-[#FCFCFA] dark:bg-[#101813] text-[#1C3324] dark:text-zinc-100 min-h-screen pt-36 sm:pt-44 pb-24 px-5 sm:px-8">
+    <main dir="rtl" className="bg-[#FFFFFF] dark:bg-[#140508] text-[#3B0B14] dark:text-zinc-100 min-h-screen pt-36 sm:pt-44 pb-24 px-5 sm:px-8">
       <div className="max-w-3xl mx-auto">
 
         <div className="text-center mb-10">
-          <span className="inline-flex items-center gap-1.5 text-xs font-black text-[#8B263E] dark:text-[#D8B65C] uppercase tracking-wider mb-2">
+          <span className="inline-flex items-center gap-1.5 text-xs font-black text-[#8B142D] dark:text-[#DFB76C] uppercase tracking-wider mb-2">
             <Sparkles size={14} /> آتلیه زرگری و ساخت سفارشی
           </span>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-[#1C3324] dark:text-white mb-3">
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-[#3B0B14] dark:text-white mb-3">
             سفارش طراحی و ساخت اختصاصی طلا
           </h1>
-          <p className="text-xs sm:text-sm text-[#3A5A46] dark:text-zinc-300 max-w-lg mx-auto leading-relaxed">
+          <p className="text-xs sm:text-sm text-[#6E3A44] dark:text-zinc-300 max-w-lg mx-auto leading-relaxed">
             ایده، تصویر یا طرح ذهنی خود را ثبت کنید؛ ما آن را با طلای ۱۸ عیار استاندارد و شناسنامه معتبر به واقعیت تبدیل می‌کنیم.
           </p>
         </div>
 
         <div className="flex items-center justify-between mb-8 max-w-xs mx-auto px-4">
-          <div className={`flex items-center gap-2 text-xs font-bold transition-all ${step >= 1 ? "text-[#8B263E] dark:text-[#D8B65C]" : "opacity-40"}`}>
+          <div className={`flex items-center gap-2 text-xs font-bold transition-all ${step >= 1 ? "text-[#8B142D] dark:text-[#DFB76C]" : "opacity-40"}`}>
             <span className="w-6 h-6 rounded-full border border-current flex items-center justify-center text-[11px]">۱</span>
             <span>مشخصات اثر</span>
           </div>
           <div className="flex-1 h-px bg-current opacity-20 mx-3" />
-          <div className={`flex items-center gap-2 text-xs font-bold transition-all ${step >= 2 ? "text-[#8B263E] dark:text-[#D8B65C]" : "opacity-40"}`}>
+          <div className={`flex items-center gap-2 text-xs font-bold transition-all ${step >= 2 ? "text-[#8B142D] dark:text-[#DFB76C]" : "opacity-40"}`}>
             <span className="w-6 h-6 rounded-full border border-current flex items-center justify-center text-[11px]">۲</span>
             <span>طرح و اطلاعات تماس</span>
           </div>
         </div>
 
-        <div className="bg-white dark:bg-[#15221B] rounded-3xl p-6 sm:p-10 border border-[#1C3324]/10 dark:border-white/10 shadow-lg">
+        <div className="bg-white dark:bg-[#1C080E] rounded-3xl p-6 sm:p-10 border border-[#3B0B14]/10 dark:border-white/10 shadow-lg">
           <form onSubmit={handleSubmit} className="space-y-8">
 
             {step === 1 && (
               <div className="space-y-6">
 
                 <div>
-                  <label className="block text-xs font-black text-[#1C3324] dark:text-white mb-3">
+                  <label className="block text-xs font-black text-[#3B0B14] dark:text-white mb-3">
                     نوع قطعه مورد نظر:
                   </label>
                   <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
@@ -189,8 +189,8 @@ export default function CustomOrderPage() {
                         onClick={() => setCategory(cat.id)}
                         className={`py-3 px-4 rounded-xl text-xs font-bold transition-all border cursor-pointer ${
                           category === cat.id
-                            ? "bg-[#1C3324] dark:bg-[#D8B65C] text-white dark:text-[#101813] border-transparent shadow-xs"
-                            : "bg-[#FCFCFA] dark:bg-[#101813] text-[#3A5A46] dark:text-zinc-300 border-[#1C3324]/10 dark:border-white/10 hover:border-[#8B263E]"
+                            ? "bg-[#3B0B14] dark:bg-[#DFB76C] text-white dark:text-[#140508] border-transparent shadow-xs"
+                            : "bg-[#FFFFFF] dark:bg-[#140508] text-[#6E3A44] dark:text-zinc-300 border-[#3B0B14]/10 dark:border-white/10 hover:border-[#8B142D]"
                         }`}
                       >
                         {cat.label}
@@ -200,7 +200,7 @@ export default function CustomOrderPage() {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-black text-[#1C3324] dark:text-white mb-3">
+                  <label className="block text-xs font-black text-[#3B0B14] dark:text-white mb-3">
                     رنگ طلا (۱۸ عیار - ۷۵۰):
                   </label>
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
@@ -211,8 +211,8 @@ export default function CustomOrderPage() {
                         onClick={() => setGoldColor(col.id)}
                         className={`flex items-center gap-3 p-3 rounded-xl border text-xs font-bold transition-all cursor-pointer ${
                           goldColor === col.id
-                            ? "border-[#8B263E] dark:border-[#D8B65C] bg-[#FAF9F6] dark:bg-white/5"
-                            : "border-[#1C3324]/10 dark:border-white/10"
+                            ? "border-[#8B142D] dark:border-[#DFB76C] bg-[#FDF8F9] dark:bg-white/5"
+                            : "border-[#3B0B14]/10 dark:border-white/10"
                         }`}
                       >
                         <span className="w-4 h-4 rounded-full border border-black/10 shrink-0" style={{ backgroundColor: col.hex }} />
@@ -224,11 +224,11 @@ export default function CustomOrderPage() {
 
                 <div className="pt-2">
                   <div className="flex items-center justify-between mb-2">
-                    <label className="text-xs font-black text-[#1C3324] dark:text-white flex items-center gap-1.5">
-                      <Scale size={14} className="text-[#8B263E] dark:text-[#D8B65C]" />
+                    <label className="text-xs font-black text-[#3B0B14] dark:text-white flex items-center gap-1.5">
+                      <Scale size={14} className="text-[#8B142D] dark:text-[#DFB76C]" />
                       وزن تقریبی مدنظر (گرم):
                     </label>
-                    <span className="text-xs font-mono font-black text-[#8B263E] dark:text-[#D8B65C]">
+                    <span className="text-xs font-mono font-black text-[#8B142D] dark:text-[#DFB76C]">
                       {approxWeight} گرم
                     </span>
                   </div>
@@ -239,7 +239,7 @@ export default function CustomOrderPage() {
                     step="0.5"
                     value={approxWeight}
                     onChange={(e) => setApproxWeight(Number(e.target.value))}
-                    className="w-full accent-[#8B263E] dark:accent-[#D8B65C] cursor-pointer"
+                    className="w-full accent-[#8B142D] dark:accent-[#DFB76C] cursor-pointer"
                   />
                   <div className="flex justify-between text-[10px] text-zinc-400 mt-1">
                     <span>۱ گرم (بسیار سبک و ظریف)</span>
@@ -252,7 +252,7 @@ export default function CustomOrderPage() {
                   <button
                     type="button"
                     onClick={() => setStep(2)}
-                    className="px-6 py-3 bg-[#1C3324] dark:bg-[#D8B65C] text-white dark:text-[#101813] text-xs font-bold rounded-full hover:bg-[#8B263E] transition-all flex items-center gap-2 cursor-pointer shadow-sm"
+                    className="px-6 py-3 bg-[#3B0B14] dark:bg-[#DFB76C] text-white dark:text-[#140508] text-xs font-bold rounded-full hover:bg-[#8B142D] transition-all flex items-center gap-2 cursor-pointer shadow-sm"
                   >
                     مرحله بعد: ثبت طرح و اطلاعات <ArrowLeft size={14} />
                   </button>
@@ -265,12 +265,12 @@ export default function CustomOrderPage() {
               <div className="space-y-6">
 
                 <div>
-                  <label className="block text-xs font-black text-[#1C3324] dark:text-white mb-2">
+                  <label className="block text-xs font-black text-[#3B0B14] dark:text-white mb-2">
                     تصویر نمونه، عکس ژورنالی یا اتود طرح (اختیاری):
                   </label>
-                  <label className="border-2 border-dashed border-[#1C3324]/20 dark:border-white/20 hover:border-[#8B263E] rounded-2xl p-6 flex flex-col items-center justify-center text-center cursor-pointer transition-colors bg-[#FCFCFA] dark:bg-[#101813]">
-                    <UploadCloud size={28} className="text-[#8B263E] dark:text-[#D8B65C] mb-2" />
-                    <span className="text-xs font-bold text-[#1C3324] dark:text-zinc-200">
+                  <label className="border-2 border-dashed border-[#3B0B14]/20 dark:border-white/20 hover:border-[#8B142D] rounded-2xl p-6 flex flex-col items-center justify-center text-center cursor-pointer transition-colors bg-[#FFFFFF] dark:bg-[#140508]">
+                    <UploadCloud size={28} className="text-[#8B142D] dark:text-[#DFB76C] mb-2" />
+                    <span className="text-xs font-bold text-[#3B0B14] dark:text-zinc-200">
                       برای انتخاب عکس کلیک کنید یا فایل را اینجا رها کنید
                     </span>
                     <span className="text-[10px] text-zinc-400 mt-1">JPG, PNG (حداکثر ۱۰ مگابایت)</span>
@@ -280,7 +280,7 @@ export default function CustomOrderPage() {
                   {files.length > 0 && (
                     <div className="mt-4 flex flex-wrap gap-3">
                       {files.map((file, idx) => (
-                        <div key={idx} className="relative w-16 h-16 rounded-xl overflow-hidden border border-[#1C3324]/20 dark:border-white/20 group">
+                        <div key={idx} className="relative w-16 h-16 rounded-xl overflow-hidden border border-[#3B0B14]/20 dark:border-white/20 group">
                           <img
                             src={URL.createObjectURL(file)}
                             alt="preview"
@@ -301,7 +301,7 @@ export default function CustomOrderPage() {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-black text-[#1C3324] dark:text-white mb-2">
+                  <label className="block text-xs font-black text-[#3B0B14] dark:text-white mb-2">
                     توضیحات اختصاصی، سایز یا متن حکاکی:
                   </label>
                   <textarea
@@ -309,7 +309,7 @@ export default function CustomOrderPage() {
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
                     placeholder="مثال: انگشتر با نگین یاقوت کبود اشکی، روی بدنه عبارت خاصی حکاکی شود..."
-                    className="w-full text-xs p-3.5 rounded-xl border border-[#1C3324]/10 dark:border-white/10 bg-[#FCFCFA] dark:bg-[#101813] text-[#1C3324] dark:text-white focus:outline-none focus:border-[#8B263E]"
+                    className="w-full text-xs p-3.5 rounded-xl border border-[#3B0B14]/10 dark:border-white/10 bg-[#FFFFFF] dark:bg-[#140508] text-[#3B0B14] dark:text-white focus:outline-none focus:border-[#8B142D]"
                   />
                 </div>
 
@@ -321,7 +321,7 @@ export default function CustomOrderPage() {
                       value={customerName}
                       onChange={(e) => setCustomerName(e.target.value)}
                       placeholder="مثال: مریم محمدی"
-                      className="w-full text-xs p-3 rounded-xl border border-[#1C3324]/10 dark:border-white/10 bg-[#FCFCFA] dark:bg-[#101813] focus:outline-none focus:border-[#8B263E]"
+                      className="w-full text-xs p-3 rounded-xl border border-[#3B0B14]/10 dark:border-white/10 bg-[#FFFFFF] dark:bg-[#140508] focus:outline-none focus:border-[#8B142D]"
                     />
                   </div>
                   <div>
@@ -332,12 +332,12 @@ export default function CustomOrderPage() {
                       value={customerPhone}
                       onChange={(e) => setCustomerPhone(e.target.value)}
                       placeholder="0912..."
-                      className="w-full text-xs p-3 rounded-xl border border-[#1C3324]/10 dark:border-white/10 bg-[#FCFCFA] dark:bg-[#101813] focus:outline-none focus:border-[#8B263E] text-right"
+                      className="w-full text-xs p-3 rounded-xl border border-[#3B0B14]/10 dark:border-white/10 bg-[#FFFFFF] dark:bg-[#140508] focus:outline-none focus:border-[#8B142D] text-right"
                     />
                   </div>
                 </div>
 
-                <div className="flex items-center justify-between pt-4 border-t border-[#1C3324]/10 dark:border-white/10">
+                <div className="flex items-center justify-between pt-4 border-t border-[#3B0B14]/10 dark:border-white/10">
                   <button
                     type="button"
                     onClick={() => setStep(1)}
@@ -349,7 +349,7 @@ export default function CustomOrderPage() {
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="px-8 py-3.5 bg-[#8B263E] dark:bg-[#D8B65C] text-white dark:text-[#101813] text-xs font-black rounded-full hover:opacity-90 transition-all flex items-center gap-2 shadow-md disabled:opacity-50 cursor-pointer"
+                    className="px-8 py-3.5 bg-[#8B142D] dark:bg-[#DFB76C] text-white dark:text-[#140508] text-xs font-black rounded-full hover:opacity-90 transition-all flex items-center gap-2 shadow-md disabled:opacity-50 cursor-pointer"
                   >
                     {isSubmitting ? (
                       <span className="flex items-center gap-2">

@@ -112,41 +112,41 @@ export default function CollectionDetailClient({
   }, [initialProducts, sortBy, calculatedPrices]);
 
   return (
-    <div dir="rtl" className="min-h-screen bg-[#FCFCFA] dark:bg-[#101813] text-[#1C3324] dark:text-zinc-100 font-sans pb-28 pt-36 sm:pt-44 lg:pt-48 transition-colors duration-300">
+    <div dir="rtl" className="min-h-screen bg-[#FFFFFF] dark:bg-[#140508] text-[#3B0B14] dark:text-zinc-100 font-sans pb-28 pt-36 sm:pt-44 lg:pt-48 transition-colors duration-300">
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Breadcrumb Navigation */}
-        <nav className="mb-6 flex items-center gap-2 text-xs font-bold text-[#3A5A46] dark:text-zinc-400">
-          <Link href="/" className="hover:text-[#8B263E] transition-colors">خانه</Link>
+        <nav className="mb-6 flex items-center gap-2 text-xs font-bold text-[#6E3A44] dark:text-zinc-400">
+          <Link href="/" className="hover:text-[#8B142D] transition-colors">خانه</Link>
           <span>/</span>
-          <Link href="/collections" className="hover:text-[#8B263E] transition-colors">کالکشن‌های اختصاصی</Link>
+          <Link href="/collections" className="hover:text-[#8B142D] transition-colors">کالکشن‌های اختصاصی</Link>
           <span>/</span>
-          <span className="text-[#1C3324] dark:text-white">{collection.title}</span>
+          <span className="text-[#3B0B14] dark:text-white">{collection.title}</span>
         </nav>
 
         {/* Hero Banner for Collection */}
-        <div className="relative mb-14 overflow-hidden rounded-[2.5rem] border border-[#1C3324]/10 dark:border-white/10 bg-white dark:bg-[#15221B] shadow-md">
+        <div className="relative mb-14 overflow-hidden rounded-[2.5rem] border border-[#3B0B14]/10 dark:border-white/10 bg-white dark:bg-[#1C080E] shadow-md">
           <div className="grid grid-cols-1 lg:grid-cols-12 items-stretch">
             
             {/* Story & Info Side */}
             <div className="lg:col-span-7 p-8 sm:p-12 lg:p-14 flex flex-col justify-between">
               <div>
-                <div className="inline-flex items-center gap-2 rounded-full bg-[#8B263E]/10 dark:bg-[#D8B65C]/15 px-4 py-1.5 text-xs font-black text-[#8B263E] dark:text-[#D8B65C] mb-4 border border-[#8B263E]/20">
+                <div className="inline-flex items-center gap-2 rounded-full bg-[#8B142D]/10 dark:bg-[#DFB76C]/15 px-4 py-1.5 text-xs font-black text-[#8B142D] dark:text-[#DFB76C] mb-4 border border-[#8B142D]/20">
                   <Sparkles size={14} />
                   <span>شاهکار اختصاصی پرنا زر</span>
                 </div>
 
-                <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-[#1C3324] dark:text-white tracking-tight font-heading leading-tight mb-3">
+                <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-[#3B0B14] dark:text-white tracking-tight font-heading leading-tight mb-3">
                   {collection.title}
                 </h1>
 
                 {collection.subtitle && (
-                  <p className="text-base sm:text-lg font-bold text-[#8B263E] dark:text-[#D8B65C] mb-6">
+                  <p className="text-base sm:text-lg font-bold text-[#8B142D] dark:text-[#DFB76C] mb-6">
                     {collection.subtitle}
                   </p>
                 )}
 
-                <div className="space-y-4 text-xs sm:text-sm leading-relaxed text-[#3A5A46] dark:text-zinc-300 font-medium text-justify">
+                <div className="space-y-4 text-xs sm:text-sm leading-relaxed text-[#6E3A44] dark:text-zinc-300 font-medium text-justify">
                   {collection.story ? (
                     <p>{collection.story}</p>
                   ) : (
@@ -159,24 +159,24 @@ export default function CollectionDetailClient({
               </div>
 
               {/* Highlights in Hero */}
-              <div className="mt-8 pt-6 border-t border-[#1C3324]/10 dark:border-white/10 flex flex-wrap items-center gap-4 text-xs font-bold text-[#1C3324] dark:text-zinc-200">
-                <span className="flex items-center gap-1.5 bg-[#FAF9F6] dark:bg-[#101813] px-3.5 py-2 rounded-xl border border-[#1C3324]/5">
-                  <Scale size={15} className="text-[#8B263E] dark:text-[#D8B65C]" />
+              <div className="mt-8 pt-6 border-t border-[#3B0B14]/10 dark:border-white/10 flex flex-wrap items-center gap-4 text-xs font-bold text-[#3B0B14] dark:text-zinc-200">
+                <span className="flex items-center gap-1.5 bg-[#FDF8F9] dark:bg-[#140508] px-3.5 py-2 rounded-xl border border-[#3B0B14]/5">
+                  <Scale size={15} className="text-[#8B142D] dark:text-[#DFB76C]" />
                   <span>طلای ۱۸ عیار (۷۵۰)</span>
                 </span>
-                <span className="flex items-center gap-1.5 bg-[#FAF9F6] dark:bg-[#101813] px-3.5 py-2 rounded-xl border border-[#1C3324]/5">
-                  <CreditCard size={15} className="text-[#8B263E] dark:text-[#D8B65C]" />
+                <span className="flex items-center gap-1.5 bg-[#FDF8F9] dark:bg-[#140508] px-3.5 py-2 rounded-xl border border-[#3B0B14]/5">
+                  <CreditCard size={15} className="text-[#8B142D] dark:text-[#DFB76C]" />
                   <span>۳ قسط طلایی با قیمت روز</span>
                 </span>
-                <span className="flex items-center gap-1.5 bg-[#FAF9F6] dark:bg-[#101813] px-3.5 py-2 rounded-xl border border-[#1C3324]/5">
-                  <ShieldCheck size={15} className="text-[#8B263E] dark:text-[#D8B65C]" />
+                <span className="flex items-center gap-1.5 bg-[#FDF8F9] dark:bg-[#140508] px-3.5 py-2 rounded-xl border border-[#3B0B14]/5">
+                  <ShieldCheck size={15} className="text-[#8B142D] dark:text-[#DFB76C]" />
                   <span>شناسنامه و ضمانت مادام‌العمر</span>
                 </span>
               </div>
             </div>
 
             {/* Visual Cover Side */}
-            <div className="lg:col-span-5 relative min-h-[300px] lg:min-h-full overflow-hidden bg-[#FAF9F6] dark:bg-[#101813]">
+            <div className="lg:col-span-5 relative min-h-[300px] lg:min-h-full overflow-hidden bg-[#FDF8F9] dark:bg-[#140508]">
               <img
                 src={collection.image || "/banner.webp"}
                 alt={collection.title}
@@ -194,23 +194,23 @@ export default function CollectionDetailClient({
         </div>
 
         {/* Products Section Header */}
-        <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-4 mb-8 bg-white dark:bg-[#15221B] px-6 py-4 rounded-2xl border border-[#1C3324]/10 dark:border-white/10 shadow-xs">
+        <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-4 mb-8 bg-white dark:bg-[#1C080E] px-6 py-4 rounded-2xl border border-[#3B0B14]/10 dark:border-white/10 shadow-xs">
           <div>
-            <h2 className="text-xl sm:text-2xl font-black text-[#1C3324] dark:text-white font-heading m-0">
+            <h2 className="text-xl sm:text-2xl font-black text-[#3B0B14] dark:text-white font-heading m-0">
               آثار و قطعات {collection.title}
             </h2>
-            <p className="text-xs text-[#3A5A46] dark:text-zinc-400 mt-1">
+            <p className="text-xs text-[#6E3A44] dark:text-zinc-400 mt-1">
               مجموعاً {sortedProducts.length.toLocaleString("fa-IR")} قطعه طراحی‌شده در این کالکشن
             </p>
           </div>
 
           <div className="flex items-center gap-3">
-            <span className="text-xs text-[#3A5A46] dark:text-zinc-400 font-bold hidden sm:inline">مرتب‌سازی:</span>
+            <span className="text-xs text-[#6E3A44] dark:text-zinc-400 font-bold hidden sm:inline">مرتب‌سازی:</span>
             <div className="relative inline-block">
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value as SortOption)}
-                className="py-2 pl-7 pr-3 rounded-xl border border-[#1C3324]/10 dark:border-white/10 bg-[#FAF9F6] dark:bg-[#101813] text-[#1C3324] dark:text-zinc-200 text-xs font-bold outline-none focus:border-[#8B263E] cursor-pointer appearance-none"
+                className="py-2 pl-7 pr-3 rounded-xl border border-[#3B0B14]/10 dark:border-white/10 bg-[#FDF8F9] dark:bg-[#140508] text-[#3B0B14] dark:text-zinc-200 text-xs font-bold outline-none focus:border-[#8B142D] cursor-pointer appearance-none"
               >
                 <option value="newest">جدیدترین</option>
                 <option value="price_asc">ارزان‌ترین</option>
@@ -218,29 +218,29 @@ export default function CollectionDetailClient({
                 <option value="weight_asc">سبک‌ترین</option>
                 <option value="weight_desc">سنگین‌ترین</option>
               </select>
-              <ChevronDown size={13} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-[#3A5A46] dark:text-zinc-400 pointer-events-none" />
+              <ChevronDown size={13} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-[#6E3A44] dark:text-zinc-400 pointer-events-none" />
             </div>
           </div>
         </div>
 
         {/* Products Grid */}
         {sortedProducts.length === 0 ? (
-          <div className="bg-white dark:bg-[#15221B] border border-dashed border-[#1C3324]/20 dark:border-white/10 rounded-3xl py-16 px-6 text-center shadow-xs mb-16">
-            <p className="text-base sm:text-lg font-bold text-[#1C3324] dark:text-white mb-2">
+          <div className="bg-white dark:bg-[#1C080E] border border-dashed border-[#3B0B14]/20 dark:border-white/10 rounded-3xl py-16 px-6 text-center shadow-xs mb-16">
+            <p className="text-base sm:text-lg font-bold text-[#3B0B14] dark:text-white mb-2">
               قطعات این کالکشن به زودی به ویترین افزوده می‌شوند.
             </p>
-            <p className="text-xs text-[#3A5A46] dark:text-zinc-400 mb-6">
+            <p className="text-xs text-[#6E3A44] dark:text-zinc-400 mb-6">
               جهت سفارش اختصاصی قطعات کالکشن {collection.title} با پشتیبانی گالری در ارتباط باشید.
             </p>
             <Link
               href="/products"
-              className="inline-block bg-[#1C3324] dark:bg-[#D8B65C] text-white dark:text-[#101813] rounded-xl px-6 py-2.5 font-bold text-xs shadow-md hover:bg-[#8B263E] transition-colors"
+              className="inline-block bg-[#3B0B14] dark:bg-[#DFB76C] text-white dark:text-[#140508] rounded-xl px-6 py-2.5 font-bold text-xs shadow-md hover:bg-[#8B142D] transition-colors"
             >
               مشاهده تمامی آثار گالری
             </Link>
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 sm:gap-6 mb-20">
+          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-6 mb-20">
             {sortedProducts.map((product) => (
               <ProductCard
                 key={product.id}
@@ -255,20 +255,20 @@ export default function CollectionDetailClient({
 
         {/* Other Exclusive Collections Section */}
         {otherCollections.length > 0 && (
-          <div className="mt-16 pt-12 border-t border-[#1C3324]/10 dark:border-white/10">
+          <div className="mt-16 pt-12 border-t border-[#3B0B14]/10 dark:border-white/10">
             <div className="flex justify-between items-center mb-8">
               <div>
-                <h3 className="text-xl sm:text-2xl font-black text-[#1C3324] dark:text-white font-heading">
+                <h3 className="text-xl sm:text-2xl font-black text-[#3B0B14] dark:text-white font-heading">
                   سایر کالکشن‌های اختصاصی
                 </h3>
-                <p className="text-xs text-[#3A5A46] dark:text-zinc-400 mt-1">
+                <p className="text-xs text-[#6E3A44] dark:text-zinc-400 mt-1">
                   کالکشن‌های دیگر پرنا زر را کشف کنید
                 </p>
               </div>
 
               <Link
                 href="/collections"
-                className="text-xs font-bold text-[#8B263E] dark:text-[#D8B65C] hover:underline flex items-center gap-1"
+                className="text-xs font-bold text-[#8B142D] dark:text-[#DFB76C] hover:underline flex items-center gap-1"
               >
                 <span>مشاهده همه کالکشن‌ها</span>
                 <ChevronLeft size={14} />
@@ -280,20 +280,20 @@ export default function CollectionDetailClient({
                 <Link
                   key={col.id}
                   href={`/collections/${col.slug}`}
-                  className="group relative flex flex-col rounded-2xl border border-[#1C3324]/10 dark:border-white/10 bg-white dark:bg-[#15221B] p-4 shadow-xs transition hover:border-[#8B263E]/40 hover:shadow-lg dark:hover:border-[#D8B65C]/40"
+                  className="group relative flex flex-col rounded-2xl border border-[#3B0B14]/10 dark:border-white/10 bg-white dark:bg-[#1C080E] p-4 shadow-xs transition hover:border-[#8B142D]/40 hover:shadow-lg dark:hover:border-[#DFB76C]/40"
                 >
-                  <div className="relative aspect-[16/10] w-full overflow-hidden rounded-xl bg-[#FAF9F6] dark:bg-[#101813] mb-3">
+                  <div className="relative aspect-[16/10] w-full overflow-hidden rounded-xl bg-[#FDF8F9] dark:bg-[#140508] mb-3">
                     <img
                       src={col.image || "/header.webp"}
                       alt={col.title}
                       className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-108"
                     />
                   </div>
-                  <h4 className="text-sm font-black text-[#1C3324] dark:text-white font-heading">
+                  <h4 className="text-sm font-black text-[#3B0B14] dark:text-white font-heading">
                     {col.title}
                   </h4>
                   {col.subtitle && (
-                    <p className="text-[11px] font-bold text-[#8B263E] dark:text-[#D8B65C] mt-0.5 line-clamp-1">
+                    <p className="text-[11px] font-bold text-[#8B142D] dark:text-[#DFB76C] mt-0.5 line-clamp-1">
                       {col.subtitle}
                     </p>
                   )}

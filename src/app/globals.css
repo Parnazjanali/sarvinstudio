@@ -121,25 +121,25 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
-  --background: #FFFFFF; /* سفید خالص بدون هیچ تناژ کرم */
-  --foreground: #1C3324; /* سبز سروی تیره و عمیق به عنوان رنگ متن اصلی */
+  --background: #FAF8F5; /* سفید مرواریدی لوکس جهت جلوگیری از شوک کنتراست */
+  --foreground: #3B0B14; /* یاقوت سرخ عمیق / مخملی برای بیشترین وضوح و اصالت */
   --card: #FFFFFF;
-  --card-foreground: #1C3324;
+  --card-foreground: #3B0B14;
   --popover: #FFFFFF;
-  --popover-foreground: #1C3324;
-  --primary: #1C3324;
+  --popover-foreground: #3B0B14;
+  --primary: #580F1F; /* لعل سرخ عمیق */
   --primary-foreground: #FFFFFF;
-  --secondary: #F8F9FA; /* خاکستری بسیار ملایم و خنثی، جایگزین کرم */
-  --secondary-foreground: #1C3324;
-  --muted: #F8F9FA;
-  --muted-foreground: #3A5A46;
-  --accent: #F1F3F2;
-  --accent-foreground: #1C3324;
+  --secondary: #FDF8F9; /* سفید با هاله‌ای ملایم از یاقوت برای تفکیک سطوح */
+  --secondary-foreground: #3B0B14;
+  --muted: #FDF8F9;
+  --muted-foreground: #6E3A44; /* رنگ مخملی مات برای متن‌های فرعی */
+  --accent: #FBF4F5;
+  --accent-foreground: #3B0B14;
   --destructive: #DC2626;
   --destructive-foreground: #FFFFFF;
-  --border: rgba(28, 51, 36, 0.12);
-  --input: rgba(28, 51, 36, 0.14);
-  --ring: #1C3324;
+  --border: rgba(88, 15, 31, 0.12);
+  --input: rgba(88, 15, 31, 0.14);
+  --ring: #580F1F;
   --radius: 1rem;
   
   --font-doran: 'Doran', Tahoma, sans-serif;
@@ -156,30 +156,31 @@
 }
 
 html.dark {
-  --background: #101813;
-  --foreground: #F4F4F5;
-  --card: #15221B;
-  --card-foreground: #F4F4F5;
-  --popover: #15221B;
-  --popover-foreground: #F4F4F5;
-  --primary: #D8B65C;
-  --primary-foreground: #101813;
-  --secondary: #1C2D23;
-  --secondary-foreground: #F4F4F5;
-  --muted: #18281F;
-  --muted-foreground: #8FA597;
-  --accent: #1C2E24;
-  --accent-foreground: #F4F4F5;
+  --background: #140508;
+  --foreground: #FDF8F9;
+  --card: #1C080E;
+  --card-foreground: #FDF8F9;
+  --popover: #1C080E;
+  --popover-foreground: #FDF8F9;
+  --primary: #DFB76C;
+  --primary-foreground: #140508;
+  --secondary: #240B13;
+  --secondary-foreground: #FDF8F9;
+  --muted: #240B13;
+  --muted-foreground: #A8828A;
+  --accent: #2A0E16;
+  --accent-foreground: #FDF8F9;
   --destructive: #EF4444;
   --destructive-foreground: #FFFFFF;
   --border: rgba(255, 255, 255, 0.1);
   --input: rgba(255, 255, 255, 0.12);
-  --ring: #D8B65C;
+  --ring: #DFB76C;
   color-scheme: dark;
 }
 
 /* =========================================================
    بخش پیکربندی تیلویند ۴ (ریبرندینگ به پرنا زر — مثل زر بدرخش)
+   هویت سه‌گانه: یاقوت سرخ (سرخ لعل عمیق)، طلایی گرم اصیل، سفید خالص
 ========================================================= */
 @theme inline {
   --color-background: var(--background);
@@ -206,18 +207,18 @@ html.dark {
   --font-sans: var(--font-body);
   --font-heading: var(--font-heading);
 
-  /* پالت رنگی جدید پرنا زر (سفید خالص و خطوط شارپ) */
+  /* پالت رنگی هویت سه‌گانه پرنا زر */
   --color-cream: #FFFFFF;
-  --color-cream-deep: #F8F9FA;
+  --color-cream-deep: #FDF8F9;
   --color-paper: #FFFFFF;
-  --color-gold: #B4901E;
-  --color-gold-light: #D8B65C;
-  --color-gold-pale: #EAD9A0;
-  --color-gold-deep: #7C5E14;
-  --color-ink: #1C3324;        /* سبز سروی عمیق */
-  --color-ink-soft: #3A5A46;    /* سبز سروی ملایم‌تر برای متن‌های فرعی */
-  --color-accent-red: #8B263E;  /* سرخ لعل / عنابی برای المان‌های خاص */
-  --color-line: rgba(28, 51, 36, 0.1);
+  --color-gold: #C5A059;
+  --color-gold-light: #DFB76C;
+  --color-gold-pale: #F3E5C2;
+  --color-gold-deep: #9E782F;
+  --color-ink: #3B0B14;        /* یاقوت سرخ بسیار عمیق / مخملی */
+  --color-ink-soft: #6E3A44;   /* سرخ لعل ملایم برای متن‌های فرعی */
+  --color-accent-red: #8B142D; /* یاقوت سرخ درخشان (Deep Ruby) */
+  --color-line: rgba(88, 15, 31, 0.10);
 }
 
 /* =========================================================
@@ -281,7 +282,7 @@ select:not(:disabled) {
 }
 
 ::selection {
-  background: #1C3324;
+  background: #580F1F;
   color: #FFFFFF;
 }
 
@@ -301,8 +302,8 @@ select:not(:disabled) {
   padding: 11px 16px;
   border-radius: 14px;
   color: #ffffff;
-  background: linear-gradient(135deg, #1C3324 0%, #2D4F38 100%);
-  box-shadow: 0 6px 14px rgba(28, 51, 36, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+  background: linear-gradient(135deg, #3B0B14 0%, #580F1F 100%);
+  box-shadow: 0 6px 14px rgba(88, 15, 31, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.25);
   font-size: 14px;
   font-weight: 800;
   text-decoration: none;
@@ -334,8 +335,8 @@ select:not(:disabled) {
 .add-to-cart-button:hover,
 .view-details-button:hover {
   transform: translateY(-3px) scale(1.025);
-  background: linear-gradient(135deg, #2D4F38 0%, #1C3324 100%);
-  box-shadow: 0 0 0 1px rgba(28, 51, 36, 0.3), 0 8px 18px rgba(28, 51, 36, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  background: linear-gradient(135deg, #580F1F 0%, #8B142D 100%);
+  box-shadow: 0 0 0 1px rgba(88, 15, 31, 0.3), 0 8px 18px rgba(88, 15, 31, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.4);
 }
 
 .add-to-cart-button:hover::before,
@@ -346,12 +347,12 @@ select:not(:disabled) {
 .add-to-cart-button:active,
 .view-details-button:active {
   transform: translateY(-1px) scale(0.98);
-  box-shadow: 0 3px 8px rgba(28, 51, 36, 0.2);
+  box-shadow: 0 3px 8px rgba(88, 15, 31, 0.2);
 }
 
 .add-to-cart-button:focus-visible,
 .view-details-button:focus-visible {
-  outline: 3px solid rgba(28, 51, 36, 0.35);
+  outline: 3px solid rgba(88, 15, 31, 0.35);
   outline-offset: 4px;
 }
 

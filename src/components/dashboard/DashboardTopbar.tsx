@@ -460,7 +460,7 @@ export default function DashboardTopbar({
   return (
     <>
       <header
-        className="sticky top-0 z-30 border-b border-[#1C3324]/12 bg-white/85 px-4 py-3 backdrop-blur-xl transition-colors duration-300 sm:px-6 lg:px-8 font-sans dark:border-white/10 dark:bg-[#101813]/85"
+        className="sticky top-0 z-30 border-b border-[#3B0B14]/12 bg-white/85 px-4 py-3 backdrop-blur-xl transition-colors duration-300 sm:px-6 lg:px-8 font-sans dark:border-white/10 dark:bg-[#140508]/85"
         dir="rtl"
       >
         <div className="flex items-center justify-between gap-3 sm:gap-4">
@@ -469,7 +469,7 @@ export default function DashboardTopbar({
             <button
               type="button"
               onClick={onOpenSidebar}
-              className="flex h-10 w-10 items-center justify-center rounded-2xl border border-[#1C3324]/10 text-[#1C3324] transition-colors hover:bg-[#1C3324]/5 focus:outline-none dark:border-white/10 dark:text-zinc-200 dark:hover:bg-white/5 lg:hidden cursor-pointer"
+              className="flex h-10 w-10 items-center justify-center rounded-2xl border border-[#3B0B14]/10 text-[#3B0B14] transition-colors hover:bg-[#3B0B14]/5 focus:outline-none dark:border-white/10 dark:text-zinc-200 dark:hover:bg-white/5 lg:hidden cursor-pointer"
               aria-label="باز کردن منو"
             >
               <Menu size={20} />
@@ -477,7 +477,7 @@ export default function DashboardTopbar({
 
             <div>
               <div className="flex items-center gap-2">
-                <span className="text-sm font-black text-[#1C3324] sm:text-base dark:text-zinc-100">
+                <span className="text-sm font-black text-[#3B0B14] sm:text-base dark:text-zinc-100">
                   پیشخوان مدیریت
                 </span>
                 <span className="hidden sm:inline-block">
@@ -486,7 +486,7 @@ export default function DashboardTopbar({
                   </Badge>
                 </span>
               </div>
-              <p className="hidden text-[11px] text-[#3A5A46] sm:block dark:text-zinc-400">
+              <p className="hidden text-[11px] text-[#6E3A44] sm:block dark:text-zinc-400">
                 گالری طلا و جواهر پرنا زر — مثل زر بدرخش
               </p>
             </div>
@@ -497,20 +497,20 @@ export default function DashboardTopbar({
             {live18kPrice !== null && (
               <Link
                 href="/dashboard/gold-rate"
-                className="hidden md:flex items-center gap-2 rounded-2xl border border-[#B4901E]/30 bg-[#B4901E]/10 px-3 py-1.5 text-xs transition-colors hover:bg-[#B4901E]/15 dark:border-[#D8B65C]/30 dark:bg-[#D8B65C]/10"
+                className="hidden md:flex items-center gap-2 rounded-2xl border border-[#C5A059]/30 bg-[#C5A059]/10 px-3 py-1.5 text-xs transition-colors hover:bg-[#C5A059]/15 dark:border-[#DFB76C]/30 dark:bg-[#DFB76C]/10"
                 title="مشاهده و تغییر نرخ طلا"
               >
-                <div className="flex h-6 w-6 items-center justify-center rounded-xl bg-[#B4901E] text-white shadow-2xs dark:bg-[#D8B65C] dark:text-[#101813]">
+                <div className="flex h-6 w-6 items-center justify-center rounded-xl bg-[#C5A059] text-white shadow-2xs dark:bg-[#DFB76C] dark:text-[#140508]">
                   <Coins size={13} />
                 </div>
                 <div className="flex items-center gap-1.5 font-bold">
-                  <span className="text-[#3A5A46] text-[11px] dark:text-zinc-300">
+                  <span className="text-[#6E3A44] text-[11px] dark:text-zinc-300">
                     طلای ۱۸:
                   </span>
-                  <span className="font-mono text-[#1C3324] dark:text-[#D8B65C]">
+                  <span className="font-mono text-[#3B0B14] dark:text-[#DFB76C]">
                     {live18kPrice.toLocaleString("fa-IR")}
                   </span>
-                  <span className="text-[10px] text-[#3A5A46] dark:text-zinc-400">
+                  <span className="text-[10px] text-[#6E3A44] dark:text-zinc-400">
                     تومان
                   </span>
                   {live18kChange !== 0 && (
@@ -539,14 +539,14 @@ export default function DashboardTopbar({
               <label className="relative block">
                 <Search
                   size={15}
-                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-[#3A5A46] dark:text-zinc-400"
+                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-[#6E3A44] dark:text-zinc-400"
                 />
                 <input
                   type="search"
                   placeholder="جست‌وجو در پیشخوان..."
-                  className="h-9 w-full rounded-2xl border border-[#1C3324]/12 bg-[#FAF9F6] pl-9 pr-9 text-xs text-[#1C3324] placeholder:text-[#3A5A46]/60 focus:border-[#1C3324] focus:outline-none focus:ring-2 focus:ring-[#1C3324]/10 dark:border-white/10 dark:bg-zinc-900/60 dark:text-zinc-100 dark:placeholder:text-zinc-500 dark:focus:border-[#D8B65C]"
+                  className="h-9 w-full rounded-2xl border border-[#3B0B14]/12 bg-[#FFFFFF] pl-9 pr-9 text-xs text-[#3B0B14] placeholder:text-[#6E3A44]/60 focus:border-[#3B0B14] focus:outline-none focus:ring-2 focus:ring-[#3B0B14]/10 dark:border-white/10 dark:bg-zinc-900/60 dark:text-zinc-100 dark:placeholder:text-zinc-500 dark:focus:border-[#DFB76C]"
                 />
-                <kbd className="absolute left-2.5 top-1/2 -translate-y-1/2 rounded-md border border-[#1C3324]/10 bg-white px-1.5 py-0.5 text-[9px] font-mono text-[#3A5A46] dark:border-white/10 dark:bg-zinc-800 dark:text-zinc-400">
+                <kbd className="absolute left-2.5 top-1/2 -translate-y-1/2 rounded-md border border-[#3B0B14]/10 bg-white px-1.5 py-0.5 text-[9px] font-mono text-[#6E3A44] dark:border-white/10 dark:bg-zinc-800 dark:text-zinc-400">
                   ⌘K
                 </kbd>
               </label>
@@ -567,7 +567,7 @@ export default function DashboardTopbar({
                   if (!notificationsOpen) setHasNewNotification(false);
                 }}
                 className={cn(
-                  "relative flex h-10 w-10 items-center justify-center rounded-2xl border border-[#1C3324]/10 text-[#1C3324] transition-all hover:bg-[#1C3324]/5 focus:outline-none dark:border-white/10 dark:text-zinc-200 dark:hover:bg-white/5 cursor-pointer",
+                  "relative flex h-10 w-10 items-center justify-center rounded-2xl border border-[#3B0B14]/10 text-[#3B0B14] transition-all hover:bg-[#3B0B14]/5 focus:outline-none dark:border-white/10 dark:text-zinc-200 dark:hover:bg-white/5 cursor-pointer",
                   hasNewNotification && "animate-[pulse_1s_ease-in-out_3]"
                 )}
                 aria-label="اعلان‌ها"
@@ -577,11 +577,11 @@ export default function DashboardTopbar({
 
                 {unreadCount > 0 && (
                   <>
-                    <span className="absolute -left-1 -top-1 flex h-5 min-w-[20px] items-center justify-center rounded-full bg-[#8B263E] px-1 text-[10px] font-black text-white ring-2 ring-white dark:ring-[#101813]">
+                    <span className="absolute -left-1 -top-1 flex h-5 min-w-[20px] items-center justify-center rounded-full bg-[#8B142D] px-1 text-[10px] font-black text-white ring-2 ring-white dark:ring-[#140508]">
                       {unreadCount > 99 ? "۹۹+" : unreadCount.toLocaleString("fa-IR")}
                     </span>
                     {hasNewNotification && (
-                      <span className="absolute -left-1 -top-1 h-5 w-5 animate-ping rounded-full bg-[#8B263E]/60 opacity-75" />
+                      <span className="absolute -left-1 -top-1 h-5 w-5 animate-ping rounded-full bg-[#8B142D]/60 opacity-75" />
                     )}
                   </>
                 )}
@@ -590,20 +590,20 @@ export default function DashboardTopbar({
               {/* Notification Dropdown Panel */}
               {notificationsOpen && (
                 <div
-                  className="absolute left-0 mt-2 w-80 sm:w-96 origin-top-left rounded-3xl border border-[#1C3324]/15 bg-white p-4 shadow-2xl transition-all duration-200 z-50 dark:border-white/10 dark:bg-[#15221B] dark:text-zinc-100"
+                  className="absolute left-0 mt-2 w-80 sm:w-96 origin-top-left rounded-3xl border border-[#3B0B14]/15 bg-white p-4 shadow-2xl transition-all duration-200 z-50 dark:border-white/10 dark:bg-[#1C080E] dark:text-zinc-100"
                   role="menu"
                 >
                   {/* Header */}
-                  <div className="flex items-center justify-between border-b border-[#1C3324]/10 pb-3 dark:border-white/10">
+                  <div className="flex items-center justify-between border-b border-[#3B0B14]/10 pb-3 dark:border-white/10">
                     <div className="flex items-center gap-2">
-                      <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-[#8B263E]/10 text-[#8B263E] dark:bg-[#8B263E]/25 dark:text-rose-300">
+                      <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-[#8B142D]/10 text-[#8B142D] dark:bg-[#8B142D]/25 dark:text-rose-300">
                         <Bell size={16} />
                       </div>
                       <div>
-                        <h4 className="text-xs font-black text-[#1C3324] dark:text-zinc-100">
+                        <h4 className="text-xs font-black text-[#3B0B14] dark:text-zinc-100">
                           مرکز اعلان‌ها
                         </h4>
-                        <p className="text-[10px] text-[#3A5A46] dark:text-zinc-400">
+                        <p className="text-[10px] text-[#6E3A44] dark:text-zinc-400">
                           {isCheckingNotifications ? "در حال همگام‌سازی..." : "بروزرسانی لحظه‌ای"}
                         </p>
                       </div>
@@ -645,16 +645,16 @@ export default function DashboardTopbar({
                   </Tabs>
 
                   {/* List */}
-                  <div className="mt-3 max-h-80 divide-y divide-[#1C3324]/5 overflow-y-auto pr-1 dark:divide-white/5 scrollbar-thin">
+                  <div className="mt-3 max-h-80 divide-y divide-[#3B0B14]/5 overflow-y-auto pr-1 dark:divide-white/5 scrollbar-thin">
                     {filteredNotifications.length === 0 ? (
                       <div className="flex min-h-40 flex-col items-center justify-center px-4 py-8 text-center">
-                        <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#FAF9F6] text-[#3A5A46] border border-[#1C3324]/10 dark:bg-zinc-900 dark:border-white/10 dark:text-zinc-400">
+                        <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#FFFFFF] text-[#6E3A44] border border-[#3B0B14]/10 dark:bg-zinc-900 dark:border-white/10 dark:text-zinc-400">
                           <Bell size={20} />
                         </div>
-                        <p className="mt-3 text-xs font-bold text-[#1C3324] dark:text-zinc-200">
+                        <p className="mt-3 text-xs font-bold text-[#3B0B14] dark:text-zinc-200">
                           اعلان جدیدی وجود ندارد
                         </p>
-                        <p className="mt-1 text-[10px] text-[#3A5A46] dark:text-zinc-400">
+                        <p className="mt-1 text-[10px] text-[#6E3A44] dark:text-zinc-400">
                           سفارش‌های جدید به صورت خودکار در این بخش نمایش داده می‌شوند.
                         </p>
                       </div>
@@ -667,27 +667,27 @@ export default function DashboardTopbar({
                           return (
                             <div
                               key={notification.id}
-                              className="flex flex-col gap-1.5 rounded-2xl p-2.5 transition hover:bg-[#FAF9F6] dark:hover:bg-white/5"
+                              className="flex flex-col gap-1.5 rounded-2xl p-2.5 transition hover:bg-[#FFFFFF] dark:hover:bg-white/5"
                             >
                               <div className="flex items-center justify-between gap-2">
                                 <div className="flex items-center gap-2">
                                   <div className="flex h-7 w-7 items-center justify-center rounded-xl bg-amber-500/10 text-amber-600 dark:bg-amber-500/20 dark:text-amber-300">
                                     <Coins size={14} />
                                   </div>
-                                  <span className="text-xs font-bold text-[#1C3324] dark:text-zinc-200">
+                                  <span className="text-xs font-bold text-[#3B0B14] dark:text-zinc-200">
                                     تغییر مظنه بازار
                                   </span>
                                 </div>
-                                <span className="text-[10px] text-[#3A5A46] dark:text-zinc-400">
+                                <span className="text-[10px] text-[#6E3A44] dark:text-zinc-400">
                                   {getRelativeTime(notification.created)}
                                 </span>
                               </div>
 
                               <div className="mr-9 text-[11px]">
-                                <span className="text-[#3A5A46] dark:text-zinc-400">
+                                <span className="text-[#6E3A44] dark:text-zinc-400">
                                   {notification.goldName}:{" "}
                                 </span>
-                                <span className="font-mono font-bold text-[#8B263E] dark:text-[#D8B65C]">
+                                <span className="font-mono font-bold text-[#8B142D] dark:text-[#DFB76C]">
                                   {formatMoney(notification.newPrice)}
                                 </span>
                                 <span
@@ -715,32 +715,32 @@ export default function DashboardTopbar({
                             key={notification.id}
                             type="button"
                             onClick={() => openNotification(notification.id)}
-                            className="group flex w-full flex-col gap-1.5 rounded-2xl p-2.5 text-right transition hover:bg-[#FAF9F6] dark:hover:bg-white/5 cursor-pointer"
+                            className="group flex w-full flex-col gap-1.5 rounded-2xl p-2.5 text-right transition hover:bg-[#FFFFFF] dark:hover:bg-white/5 cursor-pointer"
                           >
                             <div className="flex items-center justify-between gap-2">
                               <div className="flex items-center gap-2">
-                                <div className="flex h-7 w-7 items-center justify-center rounded-xl bg-[#8B263E]/10 text-[#8B263E] dark:bg-[#8B263E]/20 dark:text-rose-300">
+                                <div className="flex h-7 w-7 items-center justify-center rounded-xl bg-[#8B142D]/10 text-[#8B142D] dark:bg-[#8B142D]/20 dark:text-rose-300">
                                   <ShoppingBag size={14} />
                                 </div>
                                 <div className="flex items-center gap-1.5">
-                                  <span className="text-xs font-black text-[#1C3324] dark:text-zinc-100">
+                                  <span className="text-xs font-black text-[#3B0B14] dark:text-zinc-100">
                                     سفارش جدید
                                   </span>
-                                  <span className="font-mono text-[10px] text-[#3A5A46] dark:text-zinc-400">
+                                  <span className="font-mono text-[10px] text-[#6E3A44] dark:text-zinc-400">
                                     #{notification.orderNumber}
                                   </span>
                                 </div>
                               </div>
-                              <span className="text-[10px] text-[#3A5A46] dark:text-zinc-400">
+                              <span className="text-[10px] text-[#6E3A44] dark:text-zinc-400">
                                 {getRelativeTime(notification.created)}
                               </span>
                             </div>
 
                             <div className="mr-9 flex items-center justify-between">
-                              <span className="text-xs font-bold text-[#1C3324] dark:text-zinc-200">
+                              <span className="text-xs font-bold text-[#3B0B14] dark:text-zinc-200">
                                 {notification.customerName}
                               </span>
-                              <span className="font-mono font-black text-xs text-[#8B263E] dark:text-[#D8B65C]">
+                              <span className="font-mono font-black text-xs text-[#8B142D] dark:text-[#DFB76C]">
                                 {formatMoney(notification.amount)}
                               </span>
                             </div>
@@ -768,7 +768,7 @@ export default function DashboardTopbar({
                   </div>
 
                   {/* Footer */}
-                  <div className="mt-3 border-t border-[#1C3324]/10 pt-2.5 dark:border-white/10">
+                  <div className="mt-3 border-t border-[#3B0B14]/10 pt-2.5 dark:border-white/10">
                     <Button
                       asChild
                       variant="default"
@@ -793,23 +793,23 @@ export default function DashboardTopbar({
               <DropdownMenuTrigger asChild>
                 <button
                   type="button"
-                  className="flex items-center gap-2.5 rounded-2xl border border-[#1C3324]/10 p-1.5 transition-all hover:bg-[#1C3324]/5 focus:outline-none dark:border-white/10 dark:hover:bg-white/5 cursor-pointer"
+                  className="flex items-center gap-2.5 rounded-2xl border border-[#3B0B14]/10 p-1.5 transition-all hover:bg-[#3B0B14]/5 focus:outline-none dark:border-white/10 dark:hover:bg-white/5 cursor-pointer"
                   aria-label="منوی کاربر مدیر"
                 >
-                  <div className="relative flex h-8 w-8 items-center justify-center rounded-xl bg-gradient-to-br from-[#1C3324] to-[#2D4F38] text-xs font-black text-white shadow-2xs dark:from-[#D8B65C] dark:to-[#B4901E] dark:text-[#101813]">
+                  <div className="relative flex h-8 w-8 items-center justify-center rounded-xl bg-gradient-to-br from-[#3B0B14] to-[#8B142D] text-xs font-black text-white shadow-2xs dark:from-[#DFB76C] dark:to-[#C5A059] dark:text-[#140508]">
                     {adminName.charAt(0)}
-                    <span className="absolute -bottom-0.5 -right-0.5 h-2 w-2 rounded-full bg-emerald-500 ring-2 ring-white dark:ring-[#101813]" />
+                    <span className="absolute -bottom-0.5 -right-0.5 h-2 w-2 rounded-full bg-emerald-500 ring-2 ring-white dark:ring-[#140508]" />
                   </div>
 
                   <div className="hidden text-right md:block">
                     <div className="flex items-center gap-1">
-                      <p className="text-xs font-black text-[#1C3324] dark:text-zinc-100">
+                      <p className="text-xs font-black text-[#3B0B14] dark:text-zinc-100">
                         {adminName}
                       </p>
                       <ShieldCheck size={13} className="text-emerald-600 dark:text-emerald-400" />
                     </div>
                     <p
-                      className="max-w-[120px] truncate text-[10px] text-[#3A5A46] dark:text-zinc-400"
+                      className="max-w-[120px] truncate text-[10px] text-[#6E3A44] dark:text-zinc-400"
                       dir="ltr"
                     >
                       {adminEmail}
@@ -818,7 +818,7 @@ export default function DashboardTopbar({
 
                   <ChevronDown
                     size={14}
-                    className="hidden text-[#3A5A46] transition-transform duration-200 md:block dark:text-zinc-400"
+                    className="hidden text-[#6E3A44] transition-transform duration-200 md:block dark:text-zinc-400"
                   />
                 </button>
               </DropdownMenuTrigger>
@@ -826,11 +826,11 @@ export default function DashboardTopbar({
               <DropdownMenuContent align="end" className="w-56 font-sans">
                 <DropdownMenuLabel className="font-normal p-2">
                   <div className="flex flex-col space-y-1">
-                    <p className="text-xs font-black text-[#1C3324] dark:text-zinc-100">
+                    <p className="text-xs font-black text-[#3B0B14] dark:text-zinc-100">
                       {adminName}
                     </p>
                     <p
-                      className="text-[10px] text-[#3A5A46] truncate dark:text-zinc-400"
+                      className="text-[10px] text-[#6E3A44] truncate dark:text-zinc-400"
                       dir="ltr"
                     >
                       {adminEmail}
@@ -894,7 +894,7 @@ export default function DashboardTopbar({
             </div>
           </DialogHeader>
 
-          <p className="text-xs leading-6 text-[#3A5A46] dark:text-zinc-300">
+          <p className="text-xs leading-6 text-[#6E3A44] dark:text-zinc-300">
             با خروج از حساب، برای دسترسی مجدد به پنل مدیریت لازم است اطلاعات حساب کاربری خود را وارد فرمایید.
           </p>
 

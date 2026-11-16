@@ -67,13 +67,13 @@ export default function InstallmentPaymentModal({
       dir="rtl"
     >
       <div
-        className="relative w-full max-w-md rounded-3xl bg-white p-6 shadow-2xl space-y-5 text-[#1C3324]"
+        className="relative w-full max-w-md rounded-3xl bg-white p-6 shadow-2xl space-y-5 text-[#3B0B14]"
         onClick={(e) => e.stopPropagation()}
       >
         {/* هدر مدال */}
-        <div className="flex items-center justify-between border-b border-[#1C3324]/10 pb-3">
+        <div className="flex items-center justify-between border-b border-[#3B0B14]/10 pb-3">
           <div className="flex items-center gap-2">
-            <Sparkles size={20} className="text-[#8B263E]" />
+            <Sparkles size={20} className="text-[#8B142D]" />
             <h3 className="text-base font-black">
               تسویه قسط {installmentNumber} از ۳ (سفارش #{orderNumber})
             </h3>
@@ -87,24 +87,24 @@ export default function InstallmentPaymentModal({
         </div>
 
         {/* فاکتور شفاف نرخ روز طلا */}
-        <div className="space-y-3 text-xs leading-6 bg-[#FAF9F6] p-4 rounded-2xl border border-[#1C3324]/10">
-          <div className="flex justify-between border-b border-[#1C3324]/5 pb-2">
-            <span className="text-[#3A5A46]">وزن سهمی این قسط:</span>
-            <strong className="font-bold">{shareWeight.toFixed(3)} گرم</strong>
+        <div className="space-y-3 text-xs leading-6 bg-[#FDF8F9] p-4 rounded-2xl border border-[#3B0B14]/10">
+          <div className="flex justify-between border-b border-[#3B0B14]/5 pb-2">
+            <span className="text-[#6E3A44]">وزن سهمی این قسط:</span>
+            <strong className="font-bold">{Number(shareWeight).toFixed(2)} گرم</strong>
           </div>
-          <div className="flex justify-between border-b border-[#1C3324]/5 pb-2">
-            <span className="text-[#3A5A46]">مظنه روز طلای ۱۸ عیار:</span>
+          <div className="flex justify-between border-b border-[#3B0B14]/5 pb-2">
+            <span className="text-[#6E3A44]">مظنه روز طلای ۱۸ عیار:</span>
             <strong className="font-bold">{formatProductPrice(currentGoldPrice)}</strong>
           </div>
           <div className="flex justify-between pt-1">
-            <span className="font-bold text-[#1C3324]">مبلغ نهایی قابل پرداخت:</span>
-            <strong className="text-sm font-black text-[#8B263E]">
+            <span className="font-bold text-[#3B0B14]">مبلغ نهایی قابل پرداخت:</span>
+            <strong className="text-sm font-black text-[#8B142D]">
               {formatProductPrice(calculatedAmount)}
             </strong>
           </div>
         </div>
 
-        <p className="text-[11px] text-[#3A5A46] leading-5">
+        <p className="text-[11px] text-[#6E3A44] leading-5">
           🔒 مبلغ اقساط بر پایه وزن قطعی طلا و نرخ زنده بازار محاسبه می‌شود. پس از واریز، فاکتور به‌صورت خودکار به‌روزرسانی خواهد شد.
         </p>
 
@@ -112,7 +112,7 @@ export default function InstallmentPaymentModal({
         <button
           onClick={handlePayInstallment}
           disabled={loading}
-          className="w-full h-12 rounded-2xl bg-[#1C3324] text-white text-xs font-black shadow-md hover:bg-[#8B263E] transition flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+          className="w-full h-12 rounded-2xl bg-[#3B0B14] text-white text-xs font-black shadow-md hover:bg-[#8B142D] transition flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
         >
           {loading ? (
             <>

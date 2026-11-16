@@ -1,4 +1,5 @@
 import { Suspense } from "react";
+import type { Metadata } from "next";
 import ProductsPageClient from "@/components/ProductsPageClient";
 
 import {
@@ -9,6 +10,20 @@ import {
 import pb from "@/lib/pocketbase";
 
 export const dynamic = "force-dynamic";
+
+export const metadata: Metadata = {
+  title: "ویترین طلای ۱۸ عیار | گالری طلا پرنا زر",
+  description: "مشاهده و خرید آنلاین تمامی دست‌ساخته‌های طلای ۱۸ عیار پرنا زر، شامل انگشتر، گردنبند، دستبند، النگو و گوشواره با امکان خرید در ۳ قسط ماهانه به قیمت روز طلا بدون سود و کارمزد.",
+  alternates: {
+    canonical: "/products",
+  },
+  openGraph: {
+    title: "ویترین طلای ۱۸ عیار | گالری طلا پرنا زر",
+    description: "خرید آنلاین انواع دست‌ساخته‌های طلا با طرح ویژه ۳ قسط به نرخ روز بدون سود و کارمزد.",
+    url: "https://parnazar.ir/products",
+    images: [{ url: "/banner.webp", width: 1200, height: 630, alt: "ویترین گالری طلا پرنا زر" }],
+  },
+};
 
 export default async function ProductsPage() {
   try {

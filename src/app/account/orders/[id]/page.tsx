@@ -9,9 +9,11 @@ import {
   FileText,
   CheckCircle2,
   Clock,
+  CreditCard,
 } from "lucide-react";
 import { toast } from "sonner";
 import { pb } from "@/lib/pocketbase";
+import { resolveOrderInstallmentWeights } from "@/lib/installment-utils";
 
 type OrderItem = {
   id?: string;
@@ -166,10 +168,10 @@ export default function OrderDetailPage({
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-[#FAF9F6]" dir="rtl">
+      <div className="min-h-screen flex items-center justify-center bg-[#FDF8F9]" dir="rtl">
         <div className="flex flex-col items-center gap-3">
-          <div className="h-10 w-10 animate-spin rounded-full border-4 border-[#1C3324]/20 border-t-[#1C3324]" />
-          <p className="text-sm font-bold text-[#1C3324]">در حال بارگذاری جزئیات سفارش...</p>
+          <div className="h-10 w-10 animate-spin rounded-full border-4 border-[#3B0B14]/20 border-t-[#3B0B14]" />
+          <p className="text-sm font-bold text-[#3B0B14]">در حال بارگذاری جزئیات سفارش...</p>
         </div>
       </div>
     );
@@ -177,11 +179,11 @@ export default function OrderDetailPage({
 
   if (!order) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-[#FAF9F6] p-4" dir="rtl">
-        <h2 className="text-lg font-bold text-[#1C3324] mb-2">سفارش مورد نظر یافت نشد</h2>
+      <div className="min-h-screen flex flex-col items-center justify-center bg-[#FDF8F9] p-4" dir="rtl">
+        <h2 className="text-lg font-bold text-[#3B0B14] mb-2">سفارش مورد نظر یافت نشد</h2>
         <button
           onClick={() => router.push("/account/orders")}
-          className="px-5 py-2.5 rounded-xl bg-[#1C3324] text-white text-xs font-bold cursor-pointer"
+          className="px-5 py-2.5 rounded-xl bg-[#3B0B14] text-white text-xs font-bold cursor-pointer"
         >
           بازگشت به سفارش‌ها
         </button>
@@ -194,7 +196,7 @@ export default function OrderDetailPage({
   return (
     <main
       dir="rtl"
-      className="min-h-screen pb-24 pt-36 lg:pt-42 px-4 sm:px-6 lg:px-8 font-sans bg-[#FAF9F6] text-[#1C3324]"
+      className="min-h-screen pb-24 pt-36 lg:pt-42 px-4 sm:px-6 lg:px-8 font-sans bg-[#FDF8F9] text-[#3B0B14]"
     >
       <div className="w-full max-w-4xl mx-auto space-y-6">
         
@@ -204,12 +206,12 @@ export default function OrderDetailPage({
             <button
               type="button"
               onClick={() => router.push("/account/orders")}
-              className="inline-flex items-center gap-1.5 border-none bg-transparent text-xs font-bold text-[#8B263E] cursor-pointer p-0 mb-3 transition hover:opacity-75"
+              className="inline-flex items-center gap-1.5 border-none bg-transparent text-xs font-bold text-[#8B142D] cursor-pointer p-0 mb-3 transition hover:opacity-75"
             >
               <ArrowRight size={16} />
               بازگشت به سفارش‌های من
             </button>
-            <h1 className="text-2xl font-black text-[#1C3324] m-0">
+            <h1 className="text-2xl font-black text-[#3B0B14] m-0">
               جزئیات سفارش #{order.orderNumber || order.id}
             </h1>
           </div>
@@ -217,7 +219,7 @@ export default function OrderDetailPage({
           <button
             type="button"
             onClick={() => router.push(`/account/orders/${order.id}/invoice`)}
-            className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-[#1C3324] text-white hover:bg-[#8B263E] text-xs font-bold transition shadow-xs cursor-pointer"
+            className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-[#3B0B14] text-white hover:bg-[#8B142D] text-xs font-bold transition shadow-xs cursor-pointer"
           >
             <FileText size={16} />
             <span>مشاهده و چاپ فاکتور رسمی</span>
@@ -226,16 +228,16 @@ export default function OrderDetailPage({
 
         {/* کارت‌های خلاصه وضعیت */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          <div className="p-4 rounded-2xl bg-white border border-[#1C3324]/15 shadow-xs">
-            <span className="text-xs text-[#3A5A46] block mb-1">تاریخ ثبت سفارش:</span>
-            <strong className="text-xs sm:text-sm text-[#1C3324] font-bold">{formatDate(order.created)}</strong>
+          <div className="p-4 rounded-2xl bg-white border border-[#3B0B14]/15 shadow-xs">
+            <span className="text-xs text-[#6E3A44] block mb-1">تاریخ ثبت سفارش:</span>
+            <strong className="text-xs sm:text-sm text-[#3B0B14] font-bold">{formatDate(order.created)}</strong>
           </div>
-          <div className="p-4 rounded-2xl bg-white border border-[#1C3324]/15 shadow-xs">
-            <span className="text-xs text-[#3A5A46] block mb-1">مبلغ کل پرداخت‌شده:</span>
-            <strong className="text-xs sm:text-sm text-[#8B263E] font-black">{formatPrice(order.totalAmount)}</strong>
+          <div className="p-4 rounded-2xl bg-white border border-[#3B0B14]/15 shadow-xs">
+            <span className="text-xs text-[#6E3A44] block mb-1">مبلغ کل پرداخت‌شده:</span>
+            <strong className="text-xs sm:text-sm text-[#8B142D] font-black">{formatPrice(order.totalAmount)}</strong>
           </div>
-          <div className="p-4 rounded-2xl bg-white border border-[#1C3324]/15 shadow-xs">
-            <span className="text-xs text-[#3A5A46] block mb-1">وضعیت پرداخت:</span>
+          <div className="p-4 rounded-2xl bg-white border border-[#3B0B14]/15 shadow-xs">
+            <span className="text-xs text-[#6E3A44] block mb-1">وضعیت پرداخت:</span>
             <strong className="text-xs sm:text-sm text-emerald-700 font-bold">
               {order.paymentStatus === "paid" ? "پرداخت شده موفق" : "نامشخص"}
             </strong>
@@ -243,16 +245,16 @@ export default function OrderDetailPage({
         </div>
 
         {/* جدول اقلام سفارش */}
-        <div className="bg-white border border-[#1C3324]/15 rounded-3xl p-6 sm:p-8 shadow-xs space-y-4">
-          <h2 className="text-base font-extrabold text-[#1C3324] flex items-center gap-2 border-b border-[#1C3324]/10 pb-3">
-            <Package size={20} className="text-[#8B263E]" />
+        <div className="bg-white border border-[#3B0B14]/15 rounded-3xl p-6 sm:p-8 shadow-xs space-y-4">
+          <h2 className="text-base font-extrabold text-[#3B0B14] flex items-center gap-2 border-b border-[#3B0B14]/10 pb-3">
+            <Package size={20} className="text-[#8B142D]" />
             <span>اقلام خریداری‌شده و جزئیات پرداخت</span>
           </h2>
 
           {itemsList.length > 0 ? (
-            <div className="overflow-x-auto border border-[#1C3324]/15 rounded-2xl">
+            <div className="overflow-x-auto border border-[#3B0B14]/15 rounded-2xl">
               <table className="w-full text-right text-xs">
-                <thead className="bg-[#FAF9F6] border-b border-[#1C3324]/15 text-[#1C3324]">
+                <thead className="bg-[#FDF8F9] border-b border-[#3B0B14]/15 text-[#3B0B14]">
                   <tr>
                     <th className="p-3.5 font-bold">نام کار ساخت (محصول)</th>
                     <th className="p-3.5 font-bold">نوع خرید (نقدی / قسطی)</th>
@@ -260,26 +262,40 @@ export default function OrderDetailPage({
                     <th className="p-3.5 font-bold">مبلغ پرداختی</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-[#1C3324]/10 text-[#3A5A46]">
+                <tbody className="divide-y divide-[#3B0B14]/10 text-[#6E3A44]">
                   {itemsList.map((item, idx) => {
                     const isInstallment = item.isInstallment === true;
                     const itemAmount = getItemPaidAmount(item, order, itemsList);
+                    const { totalWeight, shareWeight } = resolveOrderInstallmentWeights(item);
 
                     return (
-                      <tr key={idx} className="hover:bg-[#FAF9F6]/50 transition">
-                        <td className="p-3.5 font-bold text-[#1C3324]">
-                          <div>{item.productTitle || "طلا و جواهرات پرنا زر"}</div>
-                          {item.weight ? (
-                            <span className="text-[11px] text-[#3A5A46] font-normal">وزن: {item.weight} گرم</span>
+                      <tr key={idx} className="hover:bg-[#FDF8F9]/50 transition">
+                        <td className="p-3.5 font-bold text-[#3B0B14]">
+                          <div>{item.productTitle || "گالری طلا پرنا زر"}</div>
+                          {totalWeight > 0 ? (
+                            <span className="text-[11px] text-[#6E3A44] font-normal">
+                              {isInstallment
+                                ? `وزن کل اثر: ${totalWeight.toFixed(2)} گرم (سهم این قسط: ${shareWeight.toFixed(2)} گرم)`
+                                : `وزن: ${totalWeight.toFixed(2)} گرم`}
+                            </span>
                           ) : null}
                         </td>
 
                         <td className="p-3.5">
                           {isInstallment ? (
-                            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-amber-50 text-amber-800 border border-amber-200/60 font-bold text-[11px]">
-                              <Clock size={13} />
-                              قسطی {item.installmentNumber ? `(قسط ${item.installmentNumber} از ${item.installmentTotalCount || '؟'})` : ""}
-                            </span>
+                            <div className="flex flex-col gap-1 items-start">
+                              <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-amber-50 text-amber-800 border border-amber-200/60 font-bold text-[11px]">
+                                <Clock size={13} />
+                                قسطی {item.installmentNumber ? `(قسط ${item.installmentNumber} از ${item.installmentTotalCount || '۳'})` : ""}
+                              </span>
+                              <button
+                                type="button"
+                                onClick={() => router.push(`/account/orders/${order.id}/installments`)}
+                                className="text-[10px] text-[#8B142D] font-bold hover:underline cursor-pointer"
+                              >
+                                مشاهده جدول و پرداخت اقساط ←
+                              </button>
+                            </div>
                           ) : (
                             <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-emerald-50 text-emerald-700 border border-emerald-200/60 font-bold text-[11px]">
                               <CheckCircle2 size={13} />
@@ -292,7 +308,7 @@ export default function OrderDetailPage({
                           {item.goldPricePerGram ? formatPrice(item.goldPricePerGram) : "ثبت سیستمی"}
                         </td>
 
-                        <td className="p-3.5 font-black text-[#8B263E] font-mono">
+                        <td className="p-3.5 font-black text-[#8B142D] font-mono">
                           {formatPrice(itemAmount)}
                         </td>
                       </tr>
@@ -302,24 +318,24 @@ export default function OrderDetailPage({
               </table>
             </div>
           ) : (
-            <p className="text-xs text-[#3A5A46] italic py-4">هیچ اقلامی برای این سفارش ثبت نشده است.</p>
+            <p className="text-xs text-[#6E3A44] italic py-4">هیچ اقلامی برای این سفارش ثبت نشده است.</p>
           )}
         </div>
 
         {/* مشخصات نشانی و ارسال */}
-        <div className="bg-white border border-[#1C3324]/15 rounded-3xl p-6 sm:p-8 shadow-xs space-y-4">
-          <h2 className="text-base font-extrabold text-[#1C3324] flex items-center gap-2 border-b border-[#1C3324]/10 pb-3">
-            <MapPin size={20} className="text-[#8B263E]" />
+        <div className="bg-white border border-[#3B0B14]/15 rounded-3xl p-6 sm:p-8 shadow-xs space-y-4">
+          <h2 className="text-base font-extrabold text-[#3B0B14] flex items-center gap-2 border-b border-[#3B0B14]/10 pb-3">
+            <MapPin size={20} className="text-[#8B142D]" />
             <span>اطلاعات ارسال و نشانی تحویل</span>
           </h2>
 
-          <div className="grid sm:grid-cols-2 gap-4 text-xs text-[#3A5A46]">
-            <div><strong className="text-[#1C3324]">تحویل‌گیرنده:</strong> {order.shippingFullName || "—"}</div>
-            <div><strong className="text-[#1C3324]">شماره تماس:</strong> <span dir="ltr">{order.shippingPhone || "—"}</span></div>
-            <div><strong className="text-[#1C3324]">استان و شهر:</strong> {order.shippingProvince || "—"}</div>
-            <div><strong className="text-[#1C3324]">کد پستی:</strong> <span dir="ltr">{order.shippingPostalCode || "—"}</span></div>
+          <div className="grid sm:grid-cols-2 gap-4 text-xs text-[#6E3A44]">
+            <div><strong className="text-[#3B0B14]">تحویل‌گیرنده:</strong> {order.shippingFullName || "—"}</div>
+            <div><strong className="text-[#3B0B14]">شماره تماس:</strong> <span dir="ltr">{order.shippingPhone || "—"}</span></div>
+            <div><strong className="text-[#3B0B14]">استان و شهر:</strong> {order.shippingProvince || "—"}</div>
+            <div><strong className="text-[#3B0B14]">کد پستی:</strong> <span dir="ltr">{order.shippingPostalCode || "—"}</span></div>
             <div className="sm:col-span-2">
-              <strong className="text-[#1C3324]">آدرس پستی کامل:</strong> {order.address || "—"}
+              <strong className="text-[#3B0B14]">آدرس پستی کامل:</strong> {order.address || "—"}
             </div>
           </div>
         </div>

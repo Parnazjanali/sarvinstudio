@@ -9,30 +9,30 @@ export const metadata: Metadata = {
 
 export default function TermsPage() {
   return (
-    <main dir="rtl" className="min-h-screen bg-[#FAF9F6] pt-36 lg:pt-44 pb-20 px-4 sm:px-6 text-[#1C3324] font-sans">
+    <main dir="rtl" className="min-h-screen bg-[#FDF8F9] pt-36 lg:pt-44 pb-20 px-4 sm:px-6 text-[#3B0B14] font-sans">
       <div className="mx-auto max-w-4xl space-y-10">
         
         {/* هدر صفحه */}
         <div className="text-center space-y-3">
-          <span className="inline-flex items-center gap-1.5 rounded-full bg-[#1C3324]/5 px-4 py-1.5 text-xs font-bold text-[#8B263E]">
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-[#3B0B14]/5 px-4 py-1.5 text-xs font-bold text-[#8B142D]">
             <span>قوانین و ضوابط گالری</span>
-            <Leaf size={14} className="text-[#8B263E]" />
+            <Leaf size={14} className="text-[#8B142D]" />
           </span>
-          <h1 className="text-2xl sm:text-4xl font-black text-[#1C3324]">
+          <h1 className="text-2xl sm:text-4xl font-black text-[#3B0B14]">
             قوانین و مقررات پرنا زر
           </h1>
-          <p className="text-xs sm:text-sm text-[#3A5A46] max-w-lg mx-auto">
+          <p className="text-xs sm:text-sm text-[#6E3A44] max-w-lg mx-auto">
             ورود شما به سایت پرنا زر و استفاده از خدمات یا ثبت سفارش به معنای آگاه بودن و پذیرش کامل تمامی شرایط و قوانین زیر است.
           </p>
         </div>
 
         {/* محتوای قوانین */}
-        <div className="space-y-6 text-xs sm:text-sm leading-8 text-[#3A5A46]">
+        <div className="space-y-6 text-xs sm:text-sm leading-8 text-[#6E3A44]">
           
           {/* مقدمه و قوانین عمومی */}
-          <div className="rounded-3xl border border-[#1C3324]/15 bg-white p-6 sm:p-8 shadow-xs space-y-3">
-            <div className="flex items-center gap-3 text-[#1C3324] font-black text-base sm:text-lg">
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-[#FAF9F6] text-[#8B263E] border border-[#1C3324]/10">
+          <div className="rounded-3xl border border-[#3B0B14]/15 bg-white p-6 sm:p-8 shadow-xs space-y-3">
+            <div className="flex items-center gap-3 text-[#3B0B14] font-black text-base sm:text-lg">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-[#FDF8F9] text-[#8B142D] border border-[#3B0B14]/10">
                 <FileText size={20} />
               </div>
               <h2>قوانین و مقررات عمومی</h2>
@@ -43,9 +43,9 @@ export default function TermsPage() {
           </div>
 
           {/* خرید الکترونیکی و ثبت سفارش */}
-          <div className="rounded-3xl border border-[#1C3324]/15 bg-white p-6 sm:p-8 shadow-xs space-y-3">
-            <div className="flex items-center gap-3 text-[#1C3324] font-black text-base sm:text-lg">
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-[#FAF9F6] text-[#8B263E] border border-[#1C3324]/10">
+          <div className="rounded-3xl border border-[#3B0B14]/15 bg-white p-6 sm:p-8 shadow-xs space-y-3">
+            <div className="flex items-center gap-3 text-[#3B0B14] font-black text-base sm:text-lg">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-[#FDF8F9] text-[#8B142D] border border-[#3B0B14]/10">
                 <Gem size={20} />
               </div>
               <h2>خرید الکترونیکی و ثبت سفارش</h2>
@@ -59,9 +59,9 @@ export default function TermsPage() {
           </div>
 
           {/* نحوه محاسبه قیمت */}
-          <div className="rounded-3xl border border-[#1C3324]/15 bg-white p-6 sm:p-8 shadow-xs space-y-3">
-            <div className="flex items-center gap-3 text-[#1C3324] font-black text-base sm:text-lg">
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-[#FAF9F6] text-[#8B263E] border border-[#1C3324]/10">
+          <div className="rounded-3xl border border-[#3B0B14]/15 bg-white p-6 sm:p-8 shadow-xs space-y-3">
+            <div className="flex items-center gap-3 text-[#3B0B14] font-black text-base sm:text-lg">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-[#FDF8F9] text-[#8B142D] border border-[#3B0B14]/10">
                 <Scale size={20} />
               </div>
               <h2>نحوه محاسبه قیمت و طرح اقساط</h2>
@@ -72,9 +72,9 @@ export default function TermsPage() {
           </div>
 
           {/* دریافت و روش‌های ارسال */}
-          <div className="rounded-3xl border border-[#1C3324]/15 bg-white p-6 sm:p-8 shadow-xs space-y-3">
-            <div className="flex items-center gap-3 text-[#1C3324] font-black text-base sm:text-lg">
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-[#FAF9F6] text-[#8B263E] border border-[#1C3324]/10">
+          <div className="rounded-3xl border border-[#3B0B14]/15 bg-white p-6 sm:p-8 shadow-xs space-y-3">
+            <div className="flex items-center gap-3 text-[#3B0B14] font-black text-base sm:text-lg">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-[#FDF8F9] text-[#8B142D] border border-[#3B0B14]/10">
                 <Truck size={20} />
               </div>
               <h2>دریافت و روش‌های ارسال سفارشات</h2>
@@ -85,9 +85,9 @@ export default function TermsPage() {
           </div>
 
           {/* ضمانت تعویض و استرداد */}
-          <div className="rounded-3xl border border-[#1C3324]/15 bg-white p-6 sm:p-8 shadow-xs space-y-3">
-            <div className="flex items-center gap-3 text-[#1C3324] font-black text-base sm:text-lg">
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-[#FAF9F6] text-[#8B263E] border border-[#1C3324]/10">
+          <div className="rounded-3xl border border-[#3B0B14]/15 bg-white p-6 sm:p-8 shadow-xs space-y-3">
+            <div className="flex items-center gap-3 text-[#3B0B14] font-black text-base sm:text-lg">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-[#FDF8F9] text-[#8B142D] border border-[#3B0B14]/10">
                 <RefreshCcw size={20} />
               </div>
               <h2>ضمانت تعویض و ضوابط استرداد کالا</h2>
@@ -98,9 +98,9 @@ export default function TermsPage() {
           </div>
 
           {/* نظرات کاربران و حریم خصوصی */}
-          <div className="rounded-3xl border border-[#1C3324]/15 bg-white p-6 sm:p-8 shadow-xs space-y-3">
-            <div className="flex items-center gap-3 text-[#1C3324] font-black text-base sm:text-lg">
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-[#FAF9F6] text-[#8B263E] border border-[#1C3324]/10">
+          <div className="rounded-3xl border border-[#3B0B14]/15 bg-white p-6 sm:p-8 shadow-xs space-y-3">
+            <div className="flex items-center gap-3 text-[#3B0B14] font-black text-base sm:text-lg">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-[#FDF8F9] text-[#8B142D] border border-[#3B0B14]/10">
                 <MessageSquare size={20} />
               </div>
               <h2>نظرات کاربران و حفظ حریم خصوصی</h2>

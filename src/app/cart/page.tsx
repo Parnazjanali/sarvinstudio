@@ -157,27 +157,27 @@ function CheckoutRoadmap() {
 
   return (
     <section
-      className="mb-8 overflow-hidden rounded-3xl border border-[#1C3324]/15 bg-white p-5 sm:p-7 shadow-xs"
+      className="mb-8 overflow-hidden rounded-3xl border border-[#3B0B14]/15 bg-white p-5 sm:p-7 shadow-xs"
       aria-label="مراحل فرآیند خرید"
     >
       <div className="mb-5 flex items-center justify-between gap-3">
         <div>
-          <h2 className="text-base font-black sm:text-lg text-[#1C3324]">
+          <h2 className="text-base font-black sm:text-lg text-[#3B0B14]">
             مراحل تکمیل خرید
           </h2>
 
-          <p className="mt-1 text-xs sm:text-sm text-[#3A5A46]">
+          <p className="mt-1 text-xs sm:text-sm text-[#6E3A44]">
             مرحله اول: محصولات سبد خرید خود را بررسی کنید.
           </p>
         </div>
 
-        <span className="rounded-full bg-[#1C3324]/5 px-3.5 py-1 text-xs font-bold text-[#8B263E]">
+        <span className="rounded-full bg-[#3B0B14]/5 px-3.5 py-1 text-xs font-bold text-[#8B142D]">
           مرحله {activeStep} از {checkoutSteps.length}
         </span>
       </div>
 
       <div className="relative">
-        <div className="absolute right-[12%] left-[12%] top-5 hidden h-0.5 bg-[#1C3324]/15 sm:block" />
+        <div className="absolute right-[12%] left-[12%] top-5 hidden h-0.5 bg-[#3B0B14]/15 sm:block" />
 
         <div className="relative grid grid-cols-4 gap-2">
           {checkoutSteps.map((step) => {
@@ -194,8 +194,8 @@ function CheckoutRoadmap() {
                   className={[
                     "relative z-10 flex h-10 w-10 items-center justify-center rounded-full border-2 transition sm:h-11 sm:w-11",
                     isActive || isCompleted
-                      ? "bg-[#1C3324] border-[#1C3324] text-white shadow-md"
-                      : "bg-white border-[#1C3324]/20 text-[#3A5A46]",
+                      ? "bg-[#3B0B14] border-[#3B0B14] text-white shadow-md"
+                      : "bg-white border-[#3B0B14]/20 text-[#6E3A44]",
                   ].join(" ")}
                 >
                   {isCompleted ? <Check size={18} /> : <Icon size={17} />}
@@ -204,7 +204,7 @@ function CheckoutRoadmap() {
                 <span
                   className={[
                     "mt-2 max-w-20 text-[10px] leading-4 sm:max-w-none sm:text-xs font-bold",
-                    isActive ? "text-[#8B263E]" : "text-[#3A5A46]",
+                    isActive ? "text-[#8B142D]" : "text-[#6E3A44]",
                   ].join(" ")}
                 >
                   {step.title}
@@ -257,21 +257,21 @@ export default function CartPage() {
         <CheckoutRoadmap />
 
         <div className="flex flex-col items-center py-16 text-center sm:py-24">
-          <div className="mb-6 flex h-24 w-24 items-center justify-center rounded-full bg-[#1C3324]/5 text-[#8B263E]">
+          <div className="mb-6 flex h-24 w-24 items-center justify-center rounded-full bg-[#3B0B14]/5 text-[#8B142D]">
             <ShoppingBag size={40} />
           </div>
 
-          <h1 className="text-2xl font-black text-[#1C3324]">
+          <h1 className="text-2xl font-black text-[#3B0B14]">
             سبد خرید شما خالی است
           </h1>
 
-          <p className="mt-3 text-sm text-[#3A5A46]">
+          <p className="mt-3 text-sm text-[#6E3A44]">
             هنوز محصولی به سبد خرید اضافه نکرده‌اید.
           </p>
 
           <Link
             href="/products"
-            className="mt-8 inline-flex items-center gap-2 rounded-2xl bg-[#1C3324] px-6 py-3.5 text-xs font-black text-white shadow-sm transition hover:bg-[#8B263E]"
+            className="mt-8 inline-flex items-center gap-2 rounded-2xl bg-[#3B0B14] px-6 py-3.5 text-xs font-black text-white shadow-sm transition hover:bg-[#8B142D]"
           >
             <ShoppingBag size={16} />
             مشاهده محصولات
@@ -287,11 +287,11 @@ export default function CartPage() {
 
       <div className="mb-8 flex flex-wrap items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-black text-[#1C3324]">
+          <h1 className="text-2xl font-black text-[#3B0B14]">
             سبد خرید
           </h1>
 
-          <p className="mt-1 text-sm text-[#3A5A46]">
+          <p className="mt-1 text-sm text-[#6E3A44]">
             {formatNumber(totalItems)} کالا در سبد خرید شما قرار دارد.
           </p>
         </div>
@@ -326,11 +326,11 @@ export default function CartPage() {
             return (
               <article
                 key={item.id}
-                className="flex flex-col gap-4 rounded-2xl border border-[#1C3324]/15 bg-white p-4 sm:flex-row sm:items-center shadow-xs"
+                className="flex flex-col gap-4 rounded-2xl border border-[#3B0B14]/15 bg-white p-4 sm:flex-row sm:items-center shadow-xs"
               >
                 <Link
                   href={`/products/${product.id}`}
-                  className="h-24 w-24 shrink-0 overflow-hidden rounded-xl border border-[#1C3324]/10 bg-[#FAF9F6]"
+                  className="h-24 w-24 shrink-0 overflow-hidden rounded-xl border border-[#3B0B14]/10 bg-[#FDF8F9]"
                   aria-label={`مشاهده ${productName}`}
                 >
                   {imageUrl ? (
@@ -344,7 +344,7 @@ export default function CartPage() {
                       }}
                     />
                   ) : (
-                    <div className="flex h-full w-full items-center justify-center text-[#3A5A46]">
+                    <div className="flex h-full w-full items-center justify-center text-[#6E3A44]">
                       <ShoppingBag size={28} />
                     </div>
                   )}
@@ -353,42 +353,42 @@ export default function CartPage() {
                 <div className="flex flex-1 flex-col gap-2">
                   <Link
                     href={`/products/${product.id}`}
-                    className="font-black text-[#1C3324] transition hover:text-[#8B263E]"
+                    className="font-black text-[#3B0B14] transition hover:text-[#8B142D]"
                   >
                     {productName}
                   </Link>
 
-                  <p className="text-xs text-[#3A5A46]">
+                  <p className="text-xs text-[#6E3A44]">
                     {ayar > 0 && <span>عیار {formatNumber(ayar)}</span>}
                     {ayar > 0 && weight > 0 && <span> · </span>}
                     {weight > 0 && <span>{formatNumber(weight)} گرم</span>}
                     {ayar <= 0 && weight <= 0 && <span>جزئیات محصول ثبت نشده است</span>}
                   </p>
 
-                  <p className="text-sm font-black text-[#8B263E]">
+                  <p className="text-sm font-black text-[#8B142D]">
                     {formatPrice(price)}
                   </p>
                 </div>
 
                 <div className="flex items-center justify-between gap-4 sm:justify-end">
-                  <div className="flex items-center gap-1 rounded-2xl border border-[#1C3324]/15 p-1 bg-[#FAF9F6]">
+                  <div className="flex items-center gap-1 rounded-2xl border border-[#3B0B14]/15 p-1 bg-[#FDF8F9]">
                     <button
                       type="button"
                       onClick={() => updateQuantity(item.id, quantity + 1)}
-                      className="flex h-8 w-8 items-center justify-center rounded-xl text-[#1C3324] transition hover:bg-[#1C3324]/10 cursor-pointer"
+                      className="flex h-8 w-8 items-center justify-center rounded-xl text-[#3B0B14] transition hover:bg-[#3B0B14]/10 cursor-pointer"
                       aria-label={`افزایش تعداد ${productName}`}
                     >
                       <Plus size={14} />
                     </button>
 
-                    <span className="min-w-8 text-center text-xs font-bold text-[#1C3324]">
+                    <span className="min-w-8 text-center text-xs font-bold text-[#3B0B14]">
                       {formatNumber(quantity)}
                     </span>
 
                     <button
                       type="button"
                       onClick={() => updateQuantity(item.id, quantity - 1)}
-                      className="flex h-8 w-8 items-center justify-center rounded-xl text-[#1C3324] transition hover:bg-[#1C3324]/10 cursor-pointer"
+                      className="flex h-8 w-8 items-center justify-center rounded-xl text-[#3B0B14] transition hover:bg-[#3B0B14]/10 cursor-pointer"
                       aria-label={`کاهش تعداد ${productName}`}
                     >
                       <Minus size={14} />
@@ -414,26 +414,26 @@ export default function CartPage() {
           })}
         </div>
 
-        <aside className="h-fit rounded-3xl border border-[#1C3324]/15 bg-white p-6 lg:sticky lg:top-28 shadow-xs space-y-4">
-          <h2 className="text-base font-black text-[#1C3324]">
+        <aside className="h-fit rounded-3xl border border-[#3B0B14]/15 bg-white p-6 lg:sticky lg:top-28 shadow-xs space-y-4">
+          <h2 className="text-base font-black text-[#3B0B14]">
             خلاصه سفارش
           </h2>
 
           <div className="space-y-3 text-xs">
             <div className="flex items-center justify-between">
-              <span className="text-[#3A5A46]">تعداد اقلام</span>
-              <span className="font-bold text-[#1C3324]">{formatNumber(totalItems)}</span>
+              <span className="text-[#6E3A44]">تعداد اقلام</span>
+              <span className="font-bold text-[#3B0B14]">{formatNumber(totalItems)}</span>
             </div>
 
             <div className="flex items-center justify-between">
-              <span className="text-[#3A5A46]">جمع سبد خرید</span>
-              <span className="font-bold text-[#1C3324]">{formatPrice(totalPrice)}</span>
+              <span className="text-[#6E3A44]">جمع سبد خرید</span>
+              <span className="font-bold text-[#3B0B14]">{formatPrice(totalPrice)}</span>
             </div>
 
-            <div className="border-t border-[#1C3324]/10 pt-3">
+            <div className="border-t border-[#3B0B14]/10 pt-3">
               <div className="flex items-center justify-between gap-3">
-                <span className="font-bold text-[#1C3324]">مبلغ قابل پرداخت</span>
-                <span className="text-base font-black text-[#8B263E]">
+                <span className="font-bold text-[#3B0B14]">مبلغ قابل پرداخت</span>
+                <span className="text-base font-black text-[#8B142D]">
                   {formatPrice(totalPrice)}
                 </span>
               </div>
@@ -443,13 +443,13 @@ export default function CartPage() {
           <button
             type="button"
             onClick={handleContinueCheckout}
-            className="inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-[#1C3324] px-5 py-3.5 text-xs font-black text-white shadow-sm transition hover:bg-[#8B263E] cursor-pointer"
+            className="inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-[#3B0B14] px-5 py-3.5 text-xs font-black text-white shadow-sm transition hover:bg-[#8B142D] cursor-pointer"
           >
             ادامه فرآیند خرید
             <ChevronLeft size={16} />
           </button>
 
-          <p className="text-center text-[11px] text-[#3A5A46]">
+          <p className="text-center text-[11px] text-[#6E3A44]">
             قیمت‌ها به تومان و بر اساس ارزش روز طلا محاسبه می‌شوند.
           </p>
         </aside>

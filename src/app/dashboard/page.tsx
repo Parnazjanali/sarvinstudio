@@ -254,14 +254,14 @@ const actionItems = [
     title: "ثبت سفارش دستی",
     subtitle: "سفارش حضوری / تلفنی",
     icon: ShoppingCart,
-    iconBg: "bg-[#8B263E]/10 text-[#8B263E] dark:bg-[#8B263E]/20 dark:text-rose-300",
+    iconBg: "bg-[#8B142D]/10 text-[#8B142D] dark:bg-[#8B142D]/20 dark:text-rose-300",
   },
   {
     href: "/dashboard/gold-rate",
     title: "تنظیم مظنه طلا",
     subtitle: "بروزرسانی نرخ پایه",
     icon: Coins,
-    iconBg: "bg-[#B4901E]/10 text-[#B4901E] dark:bg-[#D8B65C]/20 dark:text-[#D8B65C]",
+    iconBg: "bg-[#C5A059]/10 text-[#C5A059] dark:bg-[#DFB76C]/20 dark:text-[#DFB76C]",
   },
   {
     href: "/dashboard/invoices/new",
@@ -282,7 +282,7 @@ const actionItems = [
     title: "ثبت مشتری جدید",
     subtitle: "ایجاد پرونده خریدار",
     icon: UserPlus,
-    iconBg: "bg-[#1C3324]/10 text-[#1C3324] dark:bg-white/10 dark:text-zinc-200",
+    iconBg: "bg-[#3B0B14]/10 text-[#3B0B14] dark:bg-white/10 dark:text-zinc-200",
   },
 ];
 
@@ -979,37 +979,37 @@ export default function DashboardPage() {
       {/* ===================================================
           Dashboard Hero Header
       =================================================== */}
-      <div className="flex flex-col justify-between gap-4 rounded-3xl border border-[#1C3324]/12 bg-white/80 p-5 shadow-xs backdrop-blur-md transition-colors lg:flex-row lg:items-center lg:p-6 dark:border-white/10 dark:bg-[#15221B]/80">
+      <div className="flex flex-col justify-between gap-4 rounded-3xl border border-[#3B0B14]/12 bg-white/80 p-5 shadow-xs backdrop-blur-md transition-colors lg:flex-row lg:items-center lg:p-6 dark:border-white/10 dark:bg-[#1C080E]/80">
         <div>
           <div className="flex items-center gap-2">
             <span className="relative flex h-2.5 w-2.5">
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
               <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald-500" />
             </span>
-            <span className="text-xs font-black text-[#8B263E] dark:text-[#D8B65C]">
+            <span className="text-xs font-black text-[#8B142D] dark:text-[#DFB76C]">
               پیشخوان مرکزی پرنا زر · مثل زر بدرخش ✨
             </span>
           </div>
 
-          <h1 className="mt-2 text-2xl font-black text-[#1C3324] sm:text-3xl dark:text-zinc-100">
+          <h1 className="mt-2 text-2xl font-black text-[#3B0B14] sm:text-3xl dark:text-zinc-100">
             داشبورد مدیریت و رصد بازار
           </h1>
-          <p className="mt-1 text-xs text-[#3A5A46] dark:text-zinc-400">
+          <p className="mt-1 text-xs text-[#6E3A44] dark:text-zinc-400">
             نمای یکپارچه فروش، موجودی طلا، مظنه لحظه‌ای و تراکنش‌های روزانه
           </p>
         </div>
 
         <div className="flex flex-wrap items-center gap-2.5">
-          <div className="flex items-center gap-3 rounded-2xl border border-[#1C3324]/12 bg-[#FAF9F6] px-3.5 py-2 text-xs font-bold text-[#3A5A46] dark:border-white/10 dark:bg-zinc-900/60 dark:text-zinc-300">
+          <div className="flex items-center gap-3 rounded-2xl border border-[#3B0B14]/12 bg-[#FDF8F9] px-3.5 py-2 text-xs font-bold text-[#6E3A44] dark:border-white/10 dark:bg-zinc-900/60 dark:text-zinc-300">
             <div className="flex items-center gap-1.5">
-              <Calendar className="h-4 w-4 text-[#8B263E] dark:text-[#D8B65C]" />
+              <Calendar className="h-4 w-4 text-[#8B142D] dark:text-[#DFB76C]" />
               <span>{currentDate || "در حال دریافت تاریخ..."}</span>
             </div>
 
-            <div className="h-3 w-px bg-[#1C3324]/15 dark:bg-white/15" />
+            <div className="h-3 w-px bg-[#3B0B14]/15 dark:bg-white/15" />
 
             <div className="flex items-center gap-1.5 font-mono text-xs">
-              <Clock className="h-4 w-4 text-[#8B263E] dark:text-[#D8B65C]" />
+              <Clock className="h-4 w-4 text-[#8B142D] dark:text-[#DFB76C]" />
               <span>{currentTime || "۰۰:۰۰:۰۰"}</span>
             </div>
           </div>
@@ -1129,10 +1129,10 @@ export default function DashboardPage() {
       {/* ===================================================
           Live Gold Rates Section
       =================================================== */}
-      <Card className="border-[#1C3324]/12 bg-white/80 backdrop-blur-md dark:border-white/10 dark:bg-[#15221B]/80">
+      <Card className="border-[#3B0B14]/12 bg-white/80 backdrop-blur-md dark:border-white/10 dark:bg-[#1C080E]/80">
         <CardHeader className="flex flex-col justify-between gap-3 pb-4 sm:flex-row sm:items-center">
           <div className="flex items-center gap-2.5">
-            <div className="flex h-9 w-9 items-center justify-center rounded-2xl bg-[#B4901E]/10 text-[#B4901E] dark:bg-[#D8B65C]/20 dark:text-[#D8B65C]">
+            <div className="flex h-9 w-9 items-center justify-center rounded-2xl bg-[#C5A059]/10 text-[#C5A059] dark:bg-[#DFB76C]/20 dark:text-[#DFB76C]">
               <Coins className="h-5 w-5" />
             </div>
             <div>
@@ -1176,7 +1176,7 @@ export default function DashboardPage() {
               {Array.from({ length: 4 }).map((_, i) => (
                 <div
                   key={i}
-                  className="h-28 animate-pulse rounded-2xl border border-[#1C3324]/10 bg-zinc-100 dark:border-white/10 dark:bg-zinc-900"
+                  className="h-28 animate-pulse rounded-2xl border border-[#3B0B14]/10 bg-zinc-100 dark:border-white/10 dark:bg-zinc-900"
                 />
               ))}
             </div>
@@ -1207,10 +1207,10 @@ export default function DashboardPage() {
                     <Link
                       key={rate.id}
                       href="/dashboard/gold-rate"
-                      className="group relative block overflow-hidden rounded-2xl border border-[#1C3324]/10 bg-[#FAF9F6] p-4 transition-all duration-200 hover:-translate-y-1 hover:border-[#8B263E] hover:shadow-xs dark:border-white/10 dark:bg-zinc-900/60 dark:hover:border-[#D8B65C]"
+                      className="group relative block overflow-hidden rounded-2xl border border-[#3B0B14]/10 bg-[#FDF8F9] p-4 transition-all duration-200 hover:-translate-y-1 hover:border-[#8B142D] hover:shadow-xs dark:border-white/10 dark:bg-zinc-900/60 dark:hover:border-[#DFB76C]"
                     >
                       <div className="flex items-center justify-between gap-2">
-                        <span className="text-xs font-bold text-[#3A5A46] dark:text-zinc-300">
+                        <span className="text-xs font-bold text-[#6E3A44] dark:text-zinc-300">
                           {rate.title}
                         </span>
 
@@ -1235,15 +1235,15 @@ export default function DashboardPage() {
                       </div>
 
                       <div className="mt-2.5 flex items-baseline justify-between gap-2">
-                        <span className="text-xl font-black text-[#1C3324] dark:text-zinc-100">
+                        <span className="text-xl font-black text-[#3B0B14] dark:text-zinc-100">
                           {rate.price}
                         </span>
-                        <span className="text-[10px] font-bold text-[#3A5A46] dark:text-zinc-400">
+                        <span className="text-[10px] font-bold text-[#6E3A44] dark:text-zinc-400">
                           {rate.unit}
                         </span>
                       </div>
 
-                      <div className="mt-2 flex items-center justify-between border-t border-[#1C3324]/8 pt-2 text-[11px] text-[#3A5A46] dark:border-white/8 dark:text-zinc-400">
+                      <div className="mt-2 flex items-center justify-between border-t border-[#3B0B14]/8 pt-2 text-[11px] text-[#6E3A44] dark:border-white/8 dark:text-zinc-400">
                         <span>نوسان روزانه:</span>
                         <span
                           className={cn(
@@ -1342,10 +1342,10 @@ export default function DashboardPage() {
       {/* ===================================================
           Quick Actions Grid
       =================================================== */}
-      <Card className="border-[#1C3324]/12 bg-white/80 backdrop-blur-md dark:border-white/10 dark:bg-[#15221B]/80">
+      <Card className="border-[#3B0B14]/12 bg-white/80 backdrop-blur-md dark:border-white/10 dark:bg-[#1C080E]/80">
         <CardHeader className="flex flex-row items-center justify-between pb-3">
           <div className="flex items-center gap-2">
-            <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-[#8B263E]/10 text-[#8B263E] dark:bg-[#8B263E]/20 dark:text-rose-300">
+            <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-[#8B142D]/10 text-[#8B142D] dark:bg-[#8B142D]/20 dark:text-rose-300">
               <Zap className="h-4 w-4" />
             </div>
             <div>
@@ -1368,7 +1368,7 @@ export default function DashboardPage() {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className="group flex flex-col items-center justify-center gap-2.5 rounded-2xl border border-[#1C3324]/10 bg-[#FAF9F6] p-4 text-center transition-all duration-200 hover:-translate-y-1 hover:border-[#8B263E] hover:shadow-xs dark:border-white/10 dark:bg-zinc-900/60 dark:hover:border-[#D8B65C]"
+                  className="group flex flex-col items-center justify-center gap-2.5 rounded-2xl border border-[#3B0B14]/10 bg-[#FDF8F9] p-4 text-center transition-all duration-200 hover:-translate-y-1 hover:border-[#8B142D] hover:shadow-xs dark:border-white/10 dark:bg-zinc-900/60 dark:hover:border-[#DFB76C]"
                 >
                   <div
                     className={cn(
@@ -1380,10 +1380,10 @@ export default function DashboardPage() {
                   </div>
 
                   <div>
-                    <span className="block text-xs font-black text-[#1C3324] dark:text-zinc-100">
+                    <span className="block text-xs font-black text-[#3B0B14] dark:text-zinc-100">
                       {item.title}
                     </span>
-                    <span className="mt-0.5 block text-[10px] text-[#3A5A46] dark:text-zinc-400">
+                    <span className="mt-0.5 block text-[10px] text-[#6E3A44] dark:text-zinc-400">
                       {item.subtitle}
                     </span>
                   </div>
@@ -1399,8 +1399,8 @@ export default function DashboardPage() {
       =================================================== */}
       <section className="grid grid-cols-1 gap-6 lg:grid-cols-12">
         {/* Weekly Chart */}
-        <Card className="border-[#1C3324]/12 bg-white/80 p-6 lg:col-span-7 dark:border-white/10 dark:bg-[#15221B]/80">
-          <div className="flex flex-col justify-between gap-3 border-b border-[#1C3324]/10 pb-4 sm:flex-row sm:items-center dark:border-white/10">
+        <Card className="border-[#3B0B14]/12 bg-white/80 p-6 lg:col-span-7 dark:border-white/10 dark:bg-[#1C080E]/80">
+          <div className="flex flex-col justify-between gap-3 border-b border-[#3B0B14]/10 pb-4 sm:flex-row sm:items-center dark:border-white/10">
             <div>
               <CardTitle className="text-base font-extrabold">
                 روند هفتگی فروش ریالی و وزنی
@@ -1412,14 +1412,14 @@ export default function DashboardPage() {
 
             <div className="flex items-center gap-3 text-xs font-bold">
               <div className="flex items-center gap-1.5">
-                <span className="h-3 w-3 rounded-md bg-[#1C3324] dark:bg-[#D8B65C]" />
-                <span className="text-[#3A5A46] dark:text-zinc-300">
+                <span className="h-3 w-3 rounded-md bg-[#3B0B14] dark:bg-[#DFB76C]" />
+                <span className="text-[#6E3A44] dark:text-zinc-300">
                   ارزش ریالی
                 </span>
               </div>
               <div className="flex items-center gap-1.5">
-                <span className="h-3 w-3 rounded-md bg-[#8B263E]" />
-                <span className="text-[#3A5A46] dark:text-zinc-300">وزن کل</span>
+                <span className="h-3 w-3 rounded-md bg-[#8B142D]" />
+                <span className="text-[#6E3A44] dark:text-zinc-300">وزن کل</span>
               </div>
             </div>
           </div>
@@ -1434,33 +1434,33 @@ export default function DashboardPage() {
                 <div className="flex h-full w-full items-end justify-center gap-1 sm:gap-1.5">
                   <div
                     title={`فروش ریالی: ${item.displayRial}`}
-                    className="w-full max-w-[14px] rounded-t-lg bg-[#1C3324] transition-all duration-300 group-hover:brightness-125 dark:bg-[#D8B65C]"
+                    className="w-full max-w-[14px] rounded-t-lg bg-[#3B0B14] transition-all duration-300 group-hover:brightness-125 dark:bg-[#DFB76C]"
                     style={{ height: item.rialHeight }}
                   />
 
                   <div
                     title={`فروش وزنی: ${item.displayGram}`}
-                    className="w-full max-w-[14px] rounded-t-lg bg-[#8B263E] transition-all duration-300 group-hover:brightness-125"
+                    className="w-full max-w-[14px] rounded-t-lg bg-[#8B142D] transition-all duration-300 group-hover:brightness-125"
                     style={{ height: item.gramHeight }}
                   />
                 </div>
 
-                <span className="max-w-full truncate text-[10px] font-bold text-[#3A5A46] sm:text-[11px] dark:text-zinc-400">
+                <span className="max-w-full truncate text-[10px] font-bold text-[#6E3A44] sm:text-[11px] dark:text-zinc-400">
                   {item.day}
                 </span>
               </div>
             ))}
           </div>
 
-          <div className="mt-4 flex flex-col items-start justify-between gap-2 rounded-2xl border border-[#1C3324]/10 bg-[#FAF9F6] p-3 text-xs dark:border-white/10 dark:bg-zinc-900/60 sm:flex-row sm:items-center">
-            <span className="text-[#3A5A46] dark:text-zinc-400">
+          <div className="mt-4 flex flex-col items-start justify-between gap-2 rounded-2xl border border-[#3B0B14]/10 bg-[#FDF8F9] p-3 text-xs dark:border-white/10 dark:bg-zinc-900/60 sm:flex-row sm:items-center">
+            <span className="text-[#6E3A44] dark:text-zinc-400">
               مجموع فروش ۷ روز گذشته:
             </span>
             <div className="flex flex-wrap items-center gap-3 font-bold">
-              <span className="text-[#1C3324] dark:text-zinc-100">
+              <span className="text-[#3B0B14] dark:text-zinc-100">
                 {formatMoney(weeklyTotals.rial)}
               </span>
-              <span className="text-[#8B263E] dark:text-[#D8B65C]">
+              <span className="text-[#8B142D] dark:text-[#DFB76C]">
                 {formatWeight(weeklyTotals.gram)}
               </span>
             </div>
@@ -1468,7 +1468,7 @@ export default function DashboardPage() {
         </Card>
 
         {/* Recent Products (Showcase) */}
-        <Card className="border-[#1C3324]/12 bg-white/80 p-6 lg:col-span-5 dark:border-white/10 dark:bg-[#15221B]/80">
+        <Card className="border-[#3B0B14]/12 bg-white/80 p-6 lg:col-span-5 dark:border-white/10 dark:bg-[#1C080E]/80">
           <div className="mb-4 flex items-center justify-between">
             <div>
               <CardTitle className="text-base font-extrabold">
@@ -1486,33 +1486,33 @@ export default function DashboardPage() {
 
           <div className="space-y-3">
             {loadingProducts ? (
-              <div className="py-12 text-center text-xs text-[#3A5A46] dark:text-zinc-400">
+              <div className="py-12 text-center text-xs text-[#6E3A44] dark:text-zinc-400">
                 در حال بارگذاری اقلام ویترین...
               </div>
             ) : visibleProducts.length === 0 ? (
-              <div className="py-12 text-center text-xs text-[#3A5A46] dark:text-zinc-400">
+              <div className="py-12 text-center text-xs text-[#6E3A44] dark:text-zinc-400">
                 محصولی در پایگاه داده ثبت نشده است.
               </div>
             ) : (
               visibleProducts.map((product) => (
                 <div
                   key={product.id}
-                  className="flex items-center justify-between rounded-2xl border border-[#1C3324]/10 bg-[#FAF9F6] p-3.5 dark:border-white/10 dark:bg-zinc-900/60"
+                  className="flex items-center justify-between rounded-2xl border border-[#3B0B14]/10 bg-[#FDF8F9] p-3.5 dark:border-white/10 dark:bg-zinc-900/60"
                 >
                   <div className="flex min-w-0 items-center gap-3">
-                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-[#1C3324] to-[#2D4F38] text-white shadow-2xs dark:from-[#D8B65C] dark:to-[#B4901E] dark:text-[#101813]">
+                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-[#3B0B14] to-[#580F1F] text-white shadow-2xs dark:from-[#DFB76C] dark:to-[#C5A059] dark:text-[#140508]">
                       <Sparkles className="h-5 w-5" />
                     </div>
 
                     <div className="min-w-0">
-                      <h4 className="truncate text-xs font-black text-[#1C3324] dark:text-zinc-100">
+                      <h4 className="truncate text-xs font-black text-[#3B0B14] dark:text-zinc-100">
                         {product.name}
                       </h4>
 
-                      <div className="mt-1 flex items-center gap-2 text-[10px] text-[#3A5A46] dark:text-zinc-400">
+                      <div className="mt-1 flex items-center gap-2 text-[10px] text-[#6E3A44] dark:text-zinc-400">
                         <span>
                           وزن:{" "}
-                          <span className="font-mono font-bold text-[#8B263E] dark:text-rose-300">
+                          <span className="font-mono font-bold text-[#8B142D] dark:text-rose-300">
                             {product.weight ?? "—"}
                           </span>{" "}
                           گرم
@@ -1550,7 +1550,7 @@ export default function DashboardPage() {
       {/* ===================================================
           Recent Orders Table (Shadcn Table)
       =================================================== */}
-      <Card className="border-[#1C3324]/12 bg-white/80 p-6 dark:border-white/10 dark:bg-[#15221B]/80">
+      <Card className="border-[#3B0B14]/12 bg-white/80 p-6 dark:border-white/10 dark:bg-[#1C080E]/80">
         <div className="mb-5 flex flex-col justify-between gap-3 sm:flex-row sm:items-center">
           <div>
             <CardTitle className="text-base font-extrabold">
@@ -1585,47 +1585,47 @@ export default function DashboardPage() {
           <TableBody>
             {loadingOrders ? (
               <TableRow>
-                <TableCell colSpan={7} className="py-10 text-center text-[#3A5A46] dark:text-zinc-400">
+                <TableCell colSpan={7} className="py-10 text-center text-[#6E3A44] dark:text-zinc-400">
                   در حال دریافت اطلاعات سفارش‌ها...
                 </TableCell>
               </TableRow>
             ) : orders.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={7} className="py-10 text-center text-[#3A5A46] dark:text-zinc-400">
+                <TableCell colSpan={7} className="py-10 text-center text-[#6E3A44] dark:text-zinc-400">
                   هنوز سفارشی در سیستم ثبت نشده است.
                 </TableCell>
               </TableRow>
             ) : (
               orders.map((order) => (
                 <TableRow key={order.id}>
-                  <TableCell className="font-mono font-bold text-[#8B263E] dark:text-rose-300">
+                  <TableCell className="font-mono font-bold text-[#8B142D] dark:text-rose-300">
                     {order.invoice_number || `#${order.id.slice(0, 7)}`}
                   </TableCell>
 
                   <TableCell>
-                    <div className="font-bold text-[#1C3324] dark:text-zinc-100">
+                    <div className="font-bold text-[#3B0B14] dark:text-zinc-100">
                       {order.customer_name ||
                         order.expand?.user?.name ||
                         "مشتری مهمان"}
                     </div>
-                    <div className="font-mono text-[10px] text-[#3A5A46] dark:text-zinc-400">
+                    <div className="font-mono text-[10px] text-[#6E3A44] dark:text-zinc-400">
                       {order.customer_phone ||
                         order.expand?.user?.phone ||
                         "—"}
                     </div>
                   </TableCell>
 
-                  <TableCell className="text-[#1C3324] dark:text-zinc-200">
+                  <TableCell className="text-[#3B0B14] dark:text-zinc-200">
                     {order.title || order.expand?.product?.name || "خرید طلا"}
                   </TableCell>
 
-                  <TableCell className="font-mono font-bold text-[#8B263E] dark:text-[#D8B65C]">
+                  <TableCell className="font-mono font-bold text-[#8B142D] dark:text-[#DFB76C]">
                     {order.weight
                       ? `${formatNumber(Number(order.weight), 2)} گرم`
                       : "—"}
                   </TableCell>
 
-                  <TableCell className="font-bold text-[#1C3324] dark:text-zinc-100">
+                  <TableCell className="font-bold text-[#3B0B14] dark:text-zinc-100">
                     {order.total_price
                       ? formatMoney(Number(order.total_price))
                       : "۰ تومان"}
@@ -1653,7 +1653,7 @@ export default function DashboardPage() {
       =================================================== */}
       <section className="grid grid-cols-1 gap-6 lg:grid-cols-12">
         {/* Audit Logs */}
-        <Card className="border-[#1C3324]/12 bg-white/80 p-6 lg:col-span-7 dark:border-white/10 dark:bg-[#15221B]/80">
+        <Card className="border-[#3B0B14]/12 bg-white/80 p-6 lg:col-span-7 dark:border-white/10 dark:bg-[#1C080E]/80">
           <div className="mb-5 flex items-center justify-between">
             <div>
               <CardTitle className="text-base font-extrabold">
@@ -1673,13 +1673,13 @@ export default function DashboardPage() {
           </div>
 
           {loadingLogs ? (
-            <div className="py-10 text-center text-xs text-[#3A5A46] dark:text-zinc-400">
+            <div className="py-10 text-center text-xs text-[#6E3A44] dark:text-zinc-400">
               در حال دریافت لاگ‌ها...
             </div>
           ) : logs.length === 0 ? (
             <div className="flex flex-col items-center justify-center py-10 text-center">
-              <ScrollText className="mb-2 h-8 w-8 text-[#1C3324]/30 dark:text-white/20" />
-              <span className="text-xs text-[#3A5A46] dark:text-zinc-400">
+              <ScrollText className="mb-2 h-8 w-8 text-[#3B0B14]/30 dark:text-white/20" />
+              <span className="text-xs text-[#6E3A44] dark:text-zinc-400">
                 هنوز فعالیتی در لاگ سیستم ثبت نشده است.
               </span>
             </div>
@@ -1688,28 +1688,28 @@ export default function DashboardPage() {
               {logs.slice(0, 5).map((log) => (
                 <div
                   key={log.id}
-                  className="flex items-center justify-between gap-3 rounded-2xl border border-[#1C3324]/10 bg-[#FAF9F6] px-3.5 py-3 dark:border-white/10 dark:bg-zinc-900/60"
+                  className="flex items-center justify-between gap-3 rounded-2xl border border-[#3B0B14]/10 bg-[#FDF8F9] px-3.5 py-3 dark:border-white/10 dark:bg-zinc-900/60"
                 >
                   <div className="flex min-w-0 items-center gap-3">
-                    <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-white border border-[#1C3324]/10 dark:bg-zinc-800 dark:border-white/10">
+                    <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-white border border-[#3B0B14]/10 dark:bg-zinc-800 dark:border-white/10">
                       {getLogIcon(log.level)}
                     </div>
 
                     <div className="min-w-0">
-                      <div className="truncate text-xs font-black text-[#1C3324] dark:text-zinc-100">
+                      <div className="truncate text-xs font-black text-[#3B0B14] dark:text-zinc-100">
                         {log.title || log.logCode || "رویداد سیستم"}
                       </div>
-                      <div className="mt-0.5 truncate text-[10px] text-[#3A5A46] dark:text-zinc-400">
+                      <div className="mt-0.5 truncate text-[10px] text-[#6E3A44] dark:text-zinc-400">
                         {log.description || log.operator || "—"}
                       </div>
                     </div>
                   </div>
 
                   <div className="shrink-0 text-left">
-                    <div className="font-mono text-[9px] font-bold text-[#8B263E] dark:text-[#D8B65C]">
+                    <div className="font-mono text-[9px] font-bold text-[#8B142D] dark:text-[#DFB76C]">
                       {log.logCode || "LOG"}
                     </div>
-                    <div className="mt-0.5 text-[9px] text-[#3A5A46] dark:text-zinc-400">
+                    <div className="mt-0.5 text-[9px] text-[#6E3A44] dark:text-zinc-400">
                       {formatDateTime(log.created || log.timestamp)}
                     </div>
                   </div>
@@ -1720,7 +1720,7 @@ export default function DashboardPage() {
         </Card>
 
         {/* System Services Status */}
-        <Card className="border-[#1C3324]/12 bg-white/80 p-6 lg:col-span-5 dark:border-white/10 dark:bg-[#15221B]/80">
+        <Card className="border-[#3B0B14]/12 bg-white/80 p-6 lg:col-span-5 dark:border-white/10 dark:bg-[#1C080E]/80">
           <div className="mb-5 flex items-center justify-between">
             <div>
               <CardTitle className="text-base font-extrabold">
@@ -1730,11 +1730,11 @@ export default function DashboardPage() {
                 پایش لحظه‌ای درگاه‌ها و ماژول‌های فعال
               </CardDescription>
             </div>
-            <Settings2 className="h-5 w-5 text-[#8B263E] dark:text-[#D8B65C]" />
+            <Settings2 className="h-5 w-5 text-[#8B142D] dark:text-[#DFB76C]" />
           </div>
 
           <div className="space-y-3">
-            <div className="flex items-center justify-between rounded-2xl border border-[#1C3324]/10 bg-[#FAF9F6] p-3.5 dark:border-white/10 dark:bg-zinc-900/60">
+            <div className="flex items-center justify-between rounded-2xl border border-[#3B0B14]/10 bg-[#FDF8F9] p-3.5 dark:border-white/10 dark:bg-zinc-900/60">
               <div className="flex items-center gap-2.5">
                 <span
                   className={cn(
@@ -1742,7 +1742,7 @@ export default function DashboardPage() {
                     goldRates.length > 0 ? "bg-emerald-500" : "bg-rose-500"
                   )}
                 />
-                <span className="text-xs font-bold text-[#1C3324] dark:text-zinc-200">
+                <span className="text-xs font-bold text-[#3B0B14] dark:text-zinc-200">
                   سرویس نرخ لحظه‌ای طلا
                 </span>
               </div>
@@ -1754,7 +1754,7 @@ export default function DashboardPage() {
               </Badge>
             </div>
 
-            <div className="flex items-center justify-between rounded-2xl border border-[#1C3324]/10 bg-[#FAF9F6] p-3.5 dark:border-white/10 dark:bg-zinc-900/60">
+            <div className="flex items-center justify-between rounded-2xl border border-[#3B0B14]/10 bg-[#FDF8F9] p-3.5 dark:border-white/10 dark:bg-zinc-900/60">
               <div className="flex items-center gap-2.5">
                 <span
                   className={cn(
@@ -1764,7 +1764,7 @@ export default function DashboardPage() {
                       : "bg-rose-500"
                   )}
                 />
-                <span className="text-xs font-bold text-[#1C3324] dark:text-zinc-200">
+                <span className="text-xs font-bold text-[#3B0B14] dark:text-zinc-200">
                   درگاه ثبت سفارش مشتریان
                 </span>
               </div>
@@ -1778,7 +1778,7 @@ export default function DashboardPage() {
               </Badge>
             </div>
 
-            <div className="flex items-center justify-between rounded-2xl border border-[#1C3324]/10 bg-[#FAF9F6] p-3.5 dark:border-white/10 dark:bg-zinc-900/60">
+            <div className="flex items-center justify-between rounded-2xl border border-[#3B0B14]/10 bg-[#FDF8F9] p-3.5 dark:border-white/10 dark:bg-zinc-900/60">
               <div className="flex items-center gap-2.5">
                 <span
                   className={cn(
@@ -1788,7 +1788,7 @@ export default function DashboardPage() {
                       : "bg-rose-500"
                   )}
                 />
-                <span className="text-xs font-bold text-[#1C3324] dark:text-zinc-200">
+                <span className="text-xs font-bold text-[#3B0B14] dark:text-zinc-200">
                   ثبت‌نام و عضویت اعضا
                 </span>
               </div>
@@ -1804,7 +1804,7 @@ export default function DashboardPage() {
               </Badge>
             </div>
 
-            <div className="flex items-center justify-between rounded-2xl border border-[#1C3324]/10 bg-[#FAF9F6] p-3.5 dark:border-white/10 dark:bg-zinc-900/60">
+            <div className="flex items-center justify-between rounded-2xl border border-[#3B0B14]/10 bg-[#FDF8F9] p-3.5 dark:border-white/10 dark:bg-zinc-900/60">
               <div className="flex items-center gap-2.5">
                 <span
                   className={cn(
@@ -1814,7 +1814,7 @@ export default function DashboardPage() {
                       : "bg-emerald-500"
                   )}
                 />
-                <span className="text-xs font-bold text-[#1C3324] dark:text-zinc-200">
+                <span className="text-xs font-bold text-[#3B0B14] dark:text-zinc-200">
                   وضعیت نگهداری و تعمیرات
                 </span>
               </div>
@@ -1827,21 +1827,21 @@ export default function DashboardPage() {
             </div>
 
             {/* Profit & Fee Summary */}
-            <div className="mt-4 rounded-2xl border border-[#1C3324]/15 bg-white p-3.5 dark:border-white/10 dark:bg-zinc-900/80">
+            <div className="mt-4 rounded-2xl border border-[#3B0B14]/15 bg-white p-3.5 dark:border-white/10 dark:bg-zinc-900/80">
               <div className="flex items-center justify-between">
-                <span className="text-[11px] font-bold text-[#3A5A46] dark:text-zinc-400">
+                <span className="text-[11px] font-bold text-[#6E3A44] dark:text-zinc-400">
                   حاشیه سود مصوب فروشگاه:
                 </span>
-                <span className="font-mono text-sm font-black text-[#8B263E] dark:text-[#D8B65C]">
+                <span className="font-mono text-sm font-black text-[#8B142D] dark:text-[#DFB76C]">
                   {formatNumber(Number(settings?.profitMargin || 0), 2)}٪
                 </span>
               </div>
 
-              <div className="mt-2 flex items-center justify-between border-t border-[#1C3324]/8 pt-2 dark:border-white/8">
-                <span className="text-[11px] font-bold text-[#3A5A46] dark:text-zinc-400">
+              <div className="mt-2 flex items-center justify-between border-t border-[#3B0B14]/8 pt-2 dark:border-white/8">
+                <span className="text-[11px] font-bold text-[#6E3A44] dark:text-zinc-400">
                   اجرت ساخت پایه سیستم:
                 </span>
-                <span className="font-mono text-xs font-bold text-[#1C3324] dark:text-zinc-200">
+                <span className="font-mono text-xs font-bold text-[#3B0B14] dark:text-zinc-200">
                   {formatNumber(Number(settings?.defaultWagePercent || 0), 2)}٪
                 </span>
               </div>
@@ -1873,25 +1873,25 @@ export default function DashboardPage() {
 
           <div className="mt-3 max-h-96 space-y-3 overflow-y-auto pr-1 scrollbar-thin">
             {receiptsList.length === 0 ? (
-              <div className="py-8 text-center text-xs text-[#3A5A46] dark:text-zinc-400">
+              <div className="py-8 text-center text-xs text-[#6E3A44] dark:text-zinc-400">
                 هیچ فیشی در صف انتظار تأیید نیست.
               </div>
             ) : (
               receiptsList.map((rec) => (
                 <div
                   key={rec.id}
-                  className="rounded-2xl border border-[#1C3324]/10 bg-[#FAF9F6] p-4 text-xs dark:border-white/10 dark:bg-zinc-900/60"
+                  className="rounded-2xl border border-[#3B0B14]/10 bg-[#FDF8F9] p-4 text-xs dark:border-white/10 dark:bg-zinc-900/60"
                 >
-                  <div className="flex items-center justify-between border-b border-[#1C3324]/10 pb-2.5 dark:border-white/10">
-                    <span className="font-black text-[#1C3324] dark:text-zinc-100">
+                  <div className="flex items-center justify-between border-b border-[#3B0B14]/10 pb-2.5 dark:border-white/10">
+                    <span className="font-black text-[#3B0B14] dark:text-zinc-100">
                       {rec.customerName}
                     </span>
-                    <span className="font-mono font-bold text-[#8B263E] dark:text-[#D8B65C]">
+                    <span className="font-mono font-bold text-[#8B142D] dark:text-[#DFB76C]">
                       {rec.invoiceNumber}
                     </span>
                   </div>
 
-                  <div className="mt-3 grid grid-cols-2 gap-2 text-[11px] text-[#3A5A46] dark:text-zinc-300">
+                  <div className="mt-3 grid grid-cols-2 gap-2 text-[11px] text-[#6E3A44] dark:text-zinc-300">
                     <div>
                       مبلغ واریزی:{" "}
                       <span className="font-black text-emerald-600 dark:text-emerald-400">
@@ -1915,7 +1915,7 @@ export default function DashboardPage() {
 
                     <div className="col-span-2">
                       کد پیگیری بانکی:{" "}
-                      <span className="font-mono font-bold text-[#1C3324] dark:text-zinc-100">
+                      <span className="font-mono font-bold text-[#3B0B14] dark:text-zinc-100">
                         {rec.trackingCode}
                       </span>
                     </div>

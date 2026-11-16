@@ -4,6 +4,7 @@ import React from "react";
 import { usePathname } from "next/navigation";
 import SiteHeader from "./SiteHeader";
 import SiteFooter from "./SiteFooter";
+import MobileBottomNav from "./MobileBottomNav";
 
 type UserData = {
   name: string;
@@ -32,8 +33,9 @@ export default function ConditionalSiteChrome({
   return (
     <div className="flex min-h-screen flex-col">
       <SiteHeader user={user} />
-      <main className="flex-1">{children}</main>
+      <main className="flex-1 pb-16 lg:pb-0">{children}</main>
       <SiteFooter />
+      <MobileBottomNav />
     </div>
   );
 }

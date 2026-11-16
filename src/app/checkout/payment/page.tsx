@@ -43,6 +43,8 @@ type CartItem = {
   id?: string;
   productTitle: string;
   weight?: number;
+  totalWeight?: number;
+  installmentWeight?: number;
   colour?: string;
   goldPricePerGram: number;
   totalPrice: number;
@@ -124,10 +126,18 @@ export default function PaymentPage() {
           const isInstallment = Boolean(prod.isInstallment || cartItem.isInstallment);
           const installmentNumber = prod.installmentNumber || cartItem.installmentNumber || (isInstallment ? 1 : undefined);
           const installmentTotalCount = prod.installmentTotalCount || cartItem.installmentTotalCount || (isInstallment ? 3 : undefined);
+          const rawW = Number(prod.weight) || 0;
+          const totalW = Number(prod.totalWeight) || (isInstallment ? rawW * 3 : rawW);
+          const installmentW = Number(prod.installmentWeight) || (isInstallment ? rawW : totalW / 3);
+
+          const roundedTotalWeight = Math.round(totalW * 100) / 100;
+          const roundedInstallmentWeight = Math.round(installmentW * 100) / 100;
 
           return {
-            productTitle: prod.name || prod.title || "طلا و جواهر پرنا زر",
-            weight: Number(prod.weight) || 0,
+            productTitle: prod.name || prod.title || "گالری طلا پرنا زر",
+            weight: isInstallment ? roundedInstallmentWeight : roundedTotalWeight,
+            totalWeight: roundedTotalWeight,
+            installmentWeight: isInstallment ? roundedInstallmentWeight : undefined,
             colour: prod.colour || prod.color || "زرد",
             goldPricePerGram: goldPrice,
             totalPrice: itemTotal, // مبلغ پرداختی کامل و همخوان با درگاه
@@ -235,7 +245,7 @@ export default function PaymentPage() {
           body: JSON.stringify({
             amount: sanitizedAmount,
             callbackUrl: `${window.location.origin}/checkout/verify?orderId=${createdOrder.id}`,
-            description: `خرید طلا و جواهرات از پرنا زر - فاکتور ${orderNumber}`,
+            description: `خرید طلا از گالری طلا پرنا زر - فاکتور ${orderNumber}`,
             mobile: shippingInfo.phone,
             email: pb.authStore.model.email || "",
           }),
@@ -271,32 +281,32 @@ export default function PaymentPage() {
   return (
     <main
       dir="rtl"
-      className="min-h-screen pb-24 pt-36 lg:pt-42 font-sans bg-[#FAF9F6] text-[#1C3324]"
+      className="min-h-screen pb-24 pt-36 lg:pt-42 font-sans bg-[#FDF8F9] text-[#3B0B14]"
     >
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         
         {/* مراحل خرید */}
         <section
-          className="mb-8 overflow-hidden rounded-3xl border border-[#1C3324]/15 p-4 sm:p-6 shadow-xs bg-white"
+          className="mb-8 overflow-hidden rounded-3xl border border-[#3B0B14]/15 p-4 sm:p-6 shadow-xs bg-white"
           aria-label="مراحل فرآیند خرید"
         >
           <div className="mb-5 flex items-center justify-between gap-3">
             <div>
-              <h1 className="text-base font-extrabold sm:text-lg text-[#1C3324]">
+              <h1 className="text-base font-extrabold sm:text-lg text-[#3B0B14]">
                 تکمیل فرآیند خرید
               </h1>
-              <p className="mt-1 text-xs sm:text-sm text-[#3A5A46]">
+              <p className="mt-1 text-xs sm:text-sm text-[#6E3A44]">
                 مرحله سوم: درگاه و شیوه پرداخت سفارش در پرنا زر.
               </p>
             </div>
 
-            <span className="rounded-full px-3 py-1 text-xs font-bold border bg-[#FAF9F6] text-[#1C3324] border-[#1C3324]/20">
+            <span className="rounded-full px-3 py-1 text-xs font-bold border bg-[#FDF8F9] text-[#3B0B14] border-[#3B0B14]/20">
               مرحله ۳ از ۴
             </span>
           </div>
 
           <div className="relative">
-            <div className="absolute right-[12%] left-[12%] top-5 hidden h-0.5 sm:block bg-[#1C3324]/15" />
+            <div className="absolute right-[12%] left-[12%] top-5 hidden h-0.5 sm:block bg-[#3B0B14]/15" />
             <div className="relative grid grid-cols-4 gap-2">
               {checkoutSteps.map((step) => {
                 const Icon = step.icon;
@@ -308,15 +318,15 @@ export default function PaymentPage() {
                     <div
                       className={`relative z-10 flex h-10 w-10 items-center justify-center rounded-full border-2 sm:h-11 sm:w-11 transition-all ${
                         isCompleted || isActive
-                          ? "bg-[#1C3324] border-[#1C3324] text-white shadow-md"
-                          : "bg-white border-[#1C3324]/20 text-[#3A5A46]"
+                          ? "bg-[#3B0B14] border-[#3B0B14] text-white shadow-md"
+                          : "bg-white border-[#3B0B14]/20 text-[#6E3A44]"
                       }`}
                     >
                       {isCompleted ? <CheckCircle2 size={18} /> : <Icon size={17} />}
                     </div>
                     <span
                       className={`mt-2 max-w-20 text-[10px] leading-4 font-bold sm:max-w-none sm:text-xs ${
-                        isActive ? "text-[#1C3324]" : "text-[#3A5A46]"
+                        isActive ? "text-[#3B0B14]" : "text-[#6E3A44]"
                       }`}
                     >
                       {step.title}
@@ -329,16 +339,16 @@ export default function PaymentPage() {
         </section>
 
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
-          <section className="rounded-3xl border border-[#1C3324]/15 bg-white p-5 sm:p-7 lg:col-span-2 shadow-xs space-y-6">
+          <section className="rounded-3xl border border-[#3B0B14]/15 bg-white p-5 sm:p-7 lg:col-span-2 shadow-xs space-y-6">
             <div className="flex items-center gap-3">
-              <div className="flex h-11 w-11 items-center justify-center rounded-full bg-[#FAF9F6] border border-[#1C3324]/15 text-[#1C3324]">
+              <div className="flex h-11 w-11 items-center justify-center rounded-full bg-[#FDF8F9] border border-[#3B0B14]/15 text-[#3B0B14]">
                 <CreditCard size={21} />
               </div>
               <div>
-                <h2 className="text-lg font-extrabold text-[#1C3324]">
+                <h2 className="text-lg font-extrabold text-[#3B0B14]">
                   انتخاب درگاه پرداخت الکترونیک
                 </h2>
-                <p className="mt-1 text-xs text-[#3A5A46]">
+                <p className="mt-1 text-xs text-[#6E3A44]">
                   درگاه امن بانکی پرنا زر.
                 </p>
               </div>
@@ -349,73 +359,73 @@ export default function PaymentPage() {
                 onClick={() => setPaymentMethod("zarinpal")}
                 className={`relative flex cursor-pointer items-center justify-between rounded-2xl border p-4 sm:p-5 transition-all ${
                   paymentMethod === "zarinpal"
-                    ? "border-[#1C3324] bg-[#FAF9F6] ring-1 ring-[#1C3324]"
-                    : "border-[#1C3324]/15 bg-white hover:border-[#1C3324]/40"
+                    ? "border-[#3B0B14] bg-[#FDF8F9] ring-1 ring-[#3B0B14]"
+                    : "border-[#3B0B14]/15 bg-white hover:border-[#3B0B14]/40"
                 }`}
               >
                 <div className="flex items-center gap-4">
                   <div
                     className={`flex h-6 w-6 items-center justify-center rounded-full border-2 transition-all ${
-                      paymentMethod === "zarinpal" ? "border-[#1C3324] bg-[#1C3324]" : "border-[#1C3324]/30 bg-white"
+                      paymentMethod === "zarinpal" ? "border-[#3B0B14] bg-[#3B0B14]" : "border-[#3B0B14]/30 bg-white"
                     }`}
                   >
                     {paymentMethod === "zarinpal" && <div className="h-2 w-2 rounded-full bg-white" />}
                   </div>
                   <div className="flex flex-col">
                     <div className="flex items-center gap-2">
-                      <span className="font-extrabold text-sm sm:text-base text-[#1C3324]">
+                      <span className="font-extrabold text-sm sm:text-base text-[#3B0B14]">
                         درگاه تستی زرین‌پال (Sandbox)
                       </span>
                       <span className="rounded-md bg-amber-50 px-2 py-0.5 text-[11px] font-bold text-amber-700 border border-amber-200">
                         آزمایشی
                       </span>
                     </div>
-                    <span className="text-xs text-[#3A5A46] mt-1">
+                    <span className="text-xs text-[#6E3A44] mt-1">
                       اتصال به درگاه تستی برای بررسی روند خرید
                     </span>
                   </div>
                 </div>
-                <Award className="h-6 w-6 text-[#8B263E] shrink-0" />
+                <Award className="h-6 w-6 text-[#8B142D] shrink-0" />
               </label>
 
               <label
                 onClick={() => setPaymentMethod("balepay")}
                 className={`relative flex cursor-pointer items-center justify-between rounded-2xl border p-4 sm:p-5 transition-all ${
                   paymentMethod === "balepay"
-                    ? "border-[#1C3324] bg-[#FAF9F6] ring-1 ring-[#1C3324]"
-                    : "border-[#1C3324]/15 bg-white hover:border-[#1C3324]/40"
+                    ? "border-[#3B0B14] bg-[#FDF8F9] ring-1 ring-[#3B0B14]"
+                    : "border-[#3B0B14]/15 bg-white hover:border-[#3B0B14]/40"
                 }`}
               >
                 <div className="flex items-center gap-4">
                   <div
                     className={`flex h-6 w-6 items-center justify-center rounded-full border-2 transition-all ${
-                      paymentMethod === "balepay" ? "border-[#1C3324] bg-[#1C3324]" : "border-[#1C3324]/30 bg-white"
+                      paymentMethod === "balepay" ? "border-[#3B0B14] bg-[#3B0B14]" : "border-[#3B0B14]/30 bg-white"
                     }`}
                   >
                     {paymentMethod === "balepay" && <div className="h-2 w-2 rounded-full bg-white" />}
                   </div>
                   <div className="flex flex-col">
                     <div className="flex items-center gap-2">
-                      <span className="font-extrabold text-sm sm:text-base text-[#1C3324]">
+                      <span className="font-extrabold text-sm sm:text-base text-[#3B0B14]">
                         درگاه بله‌پی (شبیه‌ساز مستقیم)
                       </span>
                       <span className="rounded-md bg-emerald-50 px-2 py-0.5 text-[11px] font-bold text-emerald-700 border border-emerald-200">
                         آنی
                       </span>
                     </div>
-                    <span className="text-xs text-[#3A5A46] mt-1">
+                    <span className="text-xs text-[#6E3A44] mt-1">
                       اتصال شبیه‌سازی‌شده مستقیم به اتمام خرید
                     </span>
                   </div>
                 </div>
-                <Wallet className="h-6 w-6 text-[#8B263E] shrink-0" />
+                <Wallet className="h-6 w-6 text-[#8B142D] shrink-0" />
               </label>
             </div>
 
             {/* بخش کد تخفیف */}
-            <div className="rounded-2xl border border-[#1C3324]/15 bg-[#FAF9F6] p-4 sm:p-5 space-y-3">
-              <div className="flex items-center gap-2 text-sm font-bold text-[#1C3324]">
-                <Tag size={16} className="text-[#8B263E]" />
+            <div className="rounded-2xl border border-[#3B0B14]/15 bg-[#FDF8F9] p-4 sm:p-5 space-y-3">
+              <div className="flex items-center gap-2 text-sm font-bold text-[#3B0B14]">
+                <Tag size={16} className="text-[#8B142D]" />
                 <span>کد تخفیف یا کارت هدیه دارید؟</span>
               </div>
               <div className="flex gap-2">
@@ -425,13 +435,13 @@ export default function PaymentPage() {
                   onChange={(e) => setDiscountCode(e.target.value)}
                   placeholder="مثلاً SARV10"
                   disabled={discountApplied}
-                  className="flex-1 rounded-xl border border-[#1C3324]/15 bg-white px-3.5 py-2.5 text-xs sm:text-sm outline-none focus:border-[#8B263E] font-medium"
+                  className="flex-1 rounded-xl border border-[#3B0B14]/15 bg-white px-3.5 py-2.5 text-xs sm:text-sm outline-none focus:border-[#8B142D] font-medium"
                 />
                 <button
                   type="button"
                   onClick={handleApplyDiscount}
                   disabled={discountApplied}
-                  className="rounded-xl bg-[#1C3324] px-4 py-2.5 text-xs font-bold text-white transition hover:bg-[#8B263E] cursor-pointer disabled:opacity-50"
+                  className="rounded-xl bg-[#3B0B14] px-4 py-2.5 text-xs font-bold text-white transition hover:bg-[#8B142D] cursor-pointer disabled:opacity-50"
                 >
                   {discountApplied ? "اعمال شد" : "اعمال کد"}
                 </button>
@@ -444,10 +454,10 @@ export default function PaymentPage() {
             </div>
 
             {/* دکمه‌های ناوبری پایین صفحه */}
-            <div className="flex flex-col-reverse gap-3 border-t border-[#1C3324]/10 pt-5 sm:flex-row sm:items-center sm:justify-between">
+            <div className="flex flex-col-reverse gap-3 border-t border-[#3B0B14]/10 pt-5 sm:flex-row sm:items-center sm:justify-between">
               <Link
                 href="/checkout/shipping"
-                className="inline-flex items-center justify-center gap-2 rounded-2xl border border-[#1C3324]/15 bg-[#FAF9F6] px-5 py-3 text-xs font-bold text-[#1C3324] transition hover:bg-[#1C3324]/5"
+                className="inline-flex items-center justify-center gap-2 rounded-2xl border border-[#3B0B14]/15 bg-[#FDF8F9] px-5 py-3 text-xs font-bold text-[#3B0B14] transition hover:bg-[#3B0B14]/5"
               >
                 <ArrowRight size={16} />
                 بازگشت به نشانی ارسال
@@ -457,7 +467,7 @@ export default function PaymentPage() {
                 type="button"
                 onClick={handlePayment}
                 disabled={isProcessing}
-                className="inline-flex items-center justify-center gap-2 rounded-2xl bg-[#1C3324] px-7 py-3 text-xs font-bold text-white transition hover:bg-[#8B263E] disabled:opacity-50 cursor-pointer shadow-md"
+                className="inline-flex items-center justify-center gap-2 rounded-2xl bg-[#3B0B14] px-7 py-3 text-xs font-bold text-white transition hover:bg-[#8B142D] disabled:opacity-50 cursor-pointer shadow-md"
               >
                 {isProcessing ? (
                   <>
@@ -476,31 +486,31 @@ export default function PaymentPage() {
 
           <aside className="space-y-4">
             {shippingInfo && (
-              <section className="rounded-3xl border border-[#1C3324]/15 p-5 shadow-xs bg-white">
-                <h3 className="font-extrabold text-sm mb-3 pb-2 border-b border-[#1C3324]/10 text-[#1C3324]">
+              <section className="rounded-3xl border border-[#3B0B14]/15 p-5 shadow-xs bg-white">
+                <h3 className="font-extrabold text-sm mb-3 pb-2 border-b border-[#3B0B14]/10 text-[#3B0B14]">
                   خلاصه نشانی تحویل
                 </h3>
-                <div className="text-xs space-y-2 text-[#3A5A46]">
-                  <p><strong className="text-[#1C3324]">تحویل‌گیرنده:</strong> {shippingInfo.fullName}</p>
-                  <p><strong className="text-[#1C3324]">شماره تماس:</strong> {shippingInfo.phone}</p>
+                <div className="text-xs space-y-2 text-[#6E3A44]">
+                  <p><strong className="text-[#3B0B14]">تحویل‌گیرنده:</strong> {shippingInfo.fullName}</p>
+                  <p><strong className="text-[#3B0B14]">شماره تماس:</strong> {shippingInfo.phone}</p>
                   <p className="leading-5">
-                    <strong className="text-[#1C3324]">مقصد:</strong> {shippingInfo.province}، {shippingInfo.city}، {shippingInfo.address}
+                    <strong className="text-[#3B0B14]">مقصد:</strong> {shippingInfo.province}، {shippingInfo.city}، {shippingInfo.address}
                   </p>
-                  <p><strong className="text-[#1C3324]">کد پستی:</strong> {shippingInfo.postalCode}</p>
+                  <p><strong className="text-[#3B0B14]">کد پستی:</strong> {shippingInfo.postalCode}</p>
                 </div>
               </section>
             )}
 
-            <section className="rounded-3xl border border-[#1C3324]/15 p-5 shadow-xs bg-white">
+            <section className="rounded-3xl border border-[#3B0B14]/15 p-5 shadow-xs bg-white">
               <div className="flex items-start gap-3">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#FAF9F6] border border-[#1C3324]/15 text-[#8B263E]">
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#FDF8F9] border border-[#3B0B14]/15 text-[#8B142D]">
                   <ShieldCheck size={19} />
                 </div>
                 <div>
-                  <h2 className="font-extrabold text-sm text-[#1C3324]">
+                  <h2 className="font-extrabold text-sm text-[#3B0B14]">
                     ضمانت اصالت و بازگشت
                   </h2>
-                  <p className="mt-2 text-xs leading-6 text-[#3A5A46]">
+                  <p className="mt-2 text-xs leading-6 text-[#6E3A44]">
                     تمام محصولات با فاکتور رسمی معتبر پرنا زر و ضمانت بازگشت ارسال می‌گردند.
                   </p>
                 </div>

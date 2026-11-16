@@ -163,8 +163,13 @@ export default function AddressesPage() {
       toast.error("نام گیرنده را وارد کنید.");
       return false;
     }
-    if (!form.recipientPhone.trim()) {
+    const cleanPhone = form.recipientPhone.trim().replace(/\s+/g, "");
+    if (!cleanPhone) {
       toast.error("شماره تماس گیرنده را وارد کنید.");
+      return false;
+    }
+    if (!/^(?:\+98|0098|0)?9\d{9}$/.test(cleanPhone)) {
+      toast.error("شماره تماس گیرنده باید ۱۱ رقم بوده و با ۰۹ شروع شود.");
       return false;
     }
     if (!form.province.trim()) {
@@ -173,6 +178,15 @@ export default function AddressesPage() {
     }
     if (!form.city.trim()) {
       toast.error("شهر را وارد کنید.");
+      return false;
+    }
+    const cleanPostal = form.postalCode.trim();
+    if (!cleanPostal) {
+      toast.error("کد پستی ۱۰ رقمی الزامی است.");
+      return false;
+    }
+    if (!/^\d{10}$/.test(cleanPostal)) {
+      toast.error("کد پستی باید دقیقاً ۱۰ رقم عددی باشد.");
       return false;
     }
     if (!form.address.trim()) {
@@ -402,11 +416,11 @@ export default function AddressesPage() {
     return (
       <main
         dir="rtl"
-        className="min-h-screen flex items-center justify-center pt-36 bg-[#FAF9F6]"
+        className="min-h-screen flex items-center justify-center pt-36 bg-[#FDF8F9]"
       >
         <div className="flex flex-col items-center gap-3">
-          <Loader2 size={34} className="animate-spin text-[#1C3324]" />
-          <p className="text-sm font-bold text-[#3A5A46]">
+          <Loader2 size={34} className="animate-spin text-[#3B0B14]" />
+          <p className="text-sm font-bold text-[#6E3A44]">
             در حال دریافت آدرس‌ها...
           </p>
         </div>
@@ -417,7 +431,7 @@ export default function AddressesPage() {
   return (
     <main
       dir="rtl"
-      className="min-h-screen pb-24 pt-36 lg:pt-42 px-4 sm:px-6 lg:px-8 font-sans bg-[#FAF9F6] text-[#1C3324]"
+      className="min-h-screen pb-24 pt-36 lg:pt-42 px-4 sm:px-6 lg:px-8 font-sans bg-[#FDF8F9] text-[#3B0B14]"
     >
       <div className="mx-auto w-full max-w-4xl">
         
@@ -426,7 +440,7 @@ export default function AddressesPage() {
           <button
             type="button"
             onClick={() => router.push("/account")}
-            className="inline-flex items-center gap-1.5 text-xs font-bold text-[#8B263E] transition hover:opacity-75 cursor-pointer border-none bg-transparent p-0"
+            className="inline-flex items-center gap-1.5 text-xs font-bold text-[#8B142D] transition hover:opacity-75 cursor-pointer border-none bg-transparent p-0"
           >
             <ArrowRight size={16} />
             بازگشت به حساب کاربری
@@ -437,12 +451,12 @@ export default function AddressesPage() {
         <div className="flex items-center justify-between gap-4 mb-8 flex-wrap">
           <div>
             <div className="flex items-center gap-2.5 mb-1">
-              <MapPin size={22} className="text-[#8B263E]" />
-              <h1 className="text-2xl font-black text-[#1C3324] m-0">
+              <MapPin size={22} className="text-[#8B142D]" />
+              <h1 className="text-2xl font-black text-[#3B0B14] m-0">
                 آدرس‌های من
               </h1>
             </div>
-            <p className="text-xs sm:text-sm text-[#3A5A46] m-0">
+            <p className="text-xs sm:text-sm text-[#6E3A44] m-0">
               نشانی‌های خود را جهت ارسال سفارشات در پرنا زر مدیریت کنید.
             </p>
           </div>
@@ -450,7 +464,7 @@ export default function AddressesPage() {
           <button
             type="button"
             onClick={openAddModal}
-            className="border-none bg-[#1C3324] text-white px-5 py-3 rounded-2xl cursor-pointer flex items-center gap-2 font-bold text-xs shadow-xs transition hover:bg-[#8B263E]"
+            className="border-none bg-[#3B0B14] text-white px-5 py-3 rounded-2xl cursor-pointer flex items-center gap-2 font-bold text-xs shadow-xs transition hover:bg-[#8B142D]"
           >
             <Plus size={16} />
             افزودن آدرس جدید
@@ -459,23 +473,23 @@ export default function AddressesPage() {
 
         {/* لیست آدرس‌ها یا حالت خالی */}
         {addresses.length === 0 ? (
-          <div className="bg-white border border-[#1C3324]/15 rounded-3xl py-20 px-6 text-center shadow-xs">
-            <div className="w-16 h-16 rounded-2xl mx-auto mb-4 bg-[#FAF9F6] border border-[#1C3324]/15 flex items-center justify-center text-[#1C3324]">
+          <div className="bg-white border border-[#3B0B14]/15 rounded-3xl py-20 px-6 text-center shadow-xs">
+            <div className="w-16 h-16 rounded-2xl mx-auto mb-4 bg-[#FDF8F9] border border-[#3B0B14]/15 flex items-center justify-center text-[#3B0B14]">
               <MapPin size={28} />
             </div>
 
-            <h2 className="text-lg font-extrabold text-[#1C3324] mb-2">
+            <h2 className="text-lg font-extrabold text-[#3B0B14] mb-2">
               هنوز آدرسی ثبت نکرده‌اید
             </h2>
 
-            <p className="text-xs sm:text-sm text-[#3A5A46] max-w-sm mx-auto mb-6 leading-6">
+            <p className="text-xs sm:text-sm text-[#6E3A44] max-w-sm mx-auto mb-6 leading-6">
               برای تسریع در ثبت سفارش، اولین نشانی تحویل مرسولات خود را اضافه کنید.
             </p>
 
             <button
               type="button"
               onClick={openAddModal}
-              className="border border-[#1C3324]/20 bg-white text-[#1C3324] px-6 py-3 rounded-2xl cursor-pointer font-bold text-xs transition hover:border-[#8B263E] hover:text-[#8B263E]"
+              className="border border-[#3B0B14]/20 bg-white text-[#3B0B14] px-6 py-3 rounded-2xl cursor-pointer font-bold text-xs transition hover:border-[#8B142D] hover:text-[#8B142D]"
             >
               افزودن آدرس
             </button>
@@ -487,24 +501,24 @@ export default function AddressesPage() {
                 key={address.id}
                 className={`bg-white rounded-3xl p-6 transition-all shadow-xs ${
                   address.isDefault
-                    ? "border-2 border-[#8B263E]"
-                    : "border border-[#1C3324]/15"
+                    ? "border-2 border-[#8B142D]"
+                    : "border border-[#3B0B14]/15"
                 } ${!address.isActive ? "opacity-65" : ""}`}
               >
                 <div className="flex items-start justify-between gap-4 flex-wrap">
                   <div className="flex items-center gap-3.5">
-                    <div className="w-11 h-11 rounded-2xl bg-[#FAF9F6] border border-[#1C3324]/10 flex items-center justify-center text-[#1C3324]">
+                    <div className="w-11 h-11 rounded-2xl bg-[#FDF8F9] border border-[#3B0B14]/10 flex items-center justify-center text-[#3B0B14]">
                       <MapPin size={20} />
                     </div>
 
                     <div>
                       <div className="flex items-center gap-2.5 flex-wrap">
-                        <h2 className="text-base font-extrabold text-[#1C3324] m-0">
+                        <h2 className="text-base font-extrabold text-[#3B0B14] m-0">
                           {address.title || "آدرس"}
                         </h2>
 
                         {address.isDefault && (
-                          <span className="inline-flex items-center gap-1 bg-[#FAF9F6] text-[#8B263E] rounded-full px-3 py-0.5 text-[11px] font-bold border border-[#8B263E]/30">
+                          <span className="inline-flex items-center gap-1 bg-[#FDF8F9] text-[#8B142D] rounded-full px-3 py-0.5 text-[11px] font-bold border border-[#8B142D]/30">
                             <Star size={11} />
                             پیش‌فرض
                           </span>
@@ -517,7 +531,7 @@ export default function AddressesPage() {
                         )}
                       </div>
 
-                      <p className="text-xs text-[#3A5A46] mt-1 m-0 font-medium">
+                      <p className="text-xs text-[#6E3A44] mt-1 m-0 font-medium">
                         گیرنده: {address.recipientName}
                       </p>
                     </div>
@@ -530,7 +544,7 @@ export default function AddressesPage() {
                       onClick={() => handleToggleActive(address)}
                       disabled={activeLoadingId === address.id}
                       title={address.isActive ? "غیرفعال کردن" : "فعال کردن"}
-                      className="w-9 h-9 rounded-xl border border-[#1C3324]/15 bg-[#FAF9F6] text-[#3A5A46] hover:text-[#1C3324] cursor-pointer flex items-center justify-center transition"
+                      className="w-9 h-9 rounded-xl border border-[#3B0B14]/15 bg-[#FDF8F9] text-[#6E3A44] hover:text-[#3B0B14] cursor-pointer flex items-center justify-center transition"
                     >
                       {activeLoadingId === address.id ? (
                         <Loader2 size={16} className="animate-spin" />
@@ -543,7 +557,7 @@ export default function AddressesPage() {
                       type="button"
                       onClick={() => openEditModal(address)}
                       title="ویرایش"
-                      className="w-9 h-9 rounded-xl border border-[#1C3324]/15 bg-[#FAF9F6] text-[#8B263E] hover:bg-[#8B263E] hover:text-white cursor-pointer flex items-center justify-center transition"
+                      className="w-9 h-9 rounded-xl border border-[#3B0B14]/15 bg-[#FDF8F9] text-[#8B142D] hover:bg-[#8B142D] hover:text-white cursor-pointer flex items-center justify-center transition"
                     >
                       <Pencil size={16} />
                     </button>
@@ -565,21 +579,21 @@ export default function AddressesPage() {
                 </div>
 
                 {/* جزئیات آدرس */}
-                <div className="mt-4 pt-4 border-t border-[#1C3324]/10 grid gap-2.5 text-xs sm:text-sm text-[#3A5A46]">
+                <div className="mt-4 pt-4 border-t border-[#3B0B14]/10 grid gap-2.5 text-xs sm:text-sm text-[#6E3A44]">
                   <div className="flex items-start gap-2.5">
-                    <Map size={16} className="text-[#8B263E] shrink-0 mt-0.5" />
+                    <Map size={16} className="text-[#8B142D] shrink-0 mt-0.5" />
                     <span>{address.province}، {address.city}، {address.address}</span>
                   </div>
 
                   {address.postalCode && (
                     <div className="flex items-center gap-2.5">
-                      <Mail size={16} className="text-[#8B263E] shrink-0" />
+                      <Mail size={16} className="text-[#8B142D] shrink-0" />
                       <span>کد پستی: {address.postalCode}</span>
                     </div>
                   )}
 
                   <div className="flex items-center gap-2.5">
-                    <Phone size={16} className="text-[#8B263E] shrink-0" />
+                    <Phone size={16} className="text-[#8B142D] shrink-0" />
                     <span dir="ltr">{address.recipientPhone}</span>
                   </div>
                 </div>
@@ -589,7 +603,7 @@ export default function AddressesPage() {
                     type="button"
                     onClick={() => handleSetDefault(address)}
                     disabled={defaultLoadingId === address.id}
-                    className="mt-4 border-none bg-transparent text-xs font-bold text-[#8B263E] hover:underline cursor-pointer p-0 flex items-center gap-1.5"
+                    className="mt-4 border-none bg-transparent text-xs font-bold text-[#8B142D] hover:underline cursor-pointer p-0 flex items-center gap-1.5"
                   >
                     {defaultLoadingId === address.id ? (
                       <Loader2 size={14} className="animate-spin" />
@@ -612,15 +626,15 @@ export default function AddressesPage() {
           onClick={(e) => {
             if (e.target === e.currentTarget) closeModal();
           }}
-          className="fixed inset-0 bg-[#1C3324]/40 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+          className="fixed inset-0 bg-[#3B0B14]/40 backdrop-blur-sm z-50 flex items-center justify-center p-4"
         >
-          <div className="w-full max-w-lg max-h-[90vh] overflow-y-auto bg-white rounded-3xl border border-[#1C3324]/15 shadow-2xl">
-            <div className="flex items-center justify-between p-6 border-b border-[#1C3324]/10">
+          <div className="w-full max-w-lg max-h-[90vh] overflow-y-auto bg-white rounded-3xl border border-[#3B0B14]/15 shadow-2xl">
+            <div className="flex items-center justify-between p-6 border-b border-[#3B0B14]/10">
               <div>
-                <h2 className="text-lg font-black text-[#1C3324] m-0">
+                <h2 className="text-lg font-black text-[#3B0B14] m-0">
                   {editingId ? "ویرایش آدرس" : "افزودن آدرس جدید"}
                 </h2>
-                <p className="text-xs text-[#3A5A46] mt-1 m-0">
+                <p className="text-xs text-[#6E3A44] mt-1 m-0">
                   اطلاعات تحویل‌گیرنده را با دقت وارد کنید.
                 </p>
               </div>
@@ -629,7 +643,7 @@ export default function AddressesPage() {
                 type="button"
                 onClick={closeModal}
                 disabled={saving}
-                className="w-9 h-9 rounded-xl border border-[#1C3324]/15 bg-[#FAF9F6] text-[#3A5A46] hover:text-[#1C3324] cursor-pointer flex items-center justify-center transition"
+                className="w-9 h-9 rounded-xl border border-[#3B0B14]/15 bg-[#FDF8F9] text-[#6E3A44] hover:text-[#3B0B14] cursor-pointer flex items-center justify-center transition"
               >
                 <X size={18} />
               </button>
@@ -637,87 +651,102 @@ export default function AddressesPage() {
 
             <div className="p-6 space-y-4">
               <div>
-                <label className="block text-xs font-bold text-[#1C3324] mb-1.5">
+                <label className="block text-xs font-bold text-[#3B0B14] mb-1.5">
                   عنوان آدرس <span className="text-red-500">*</span>
                 </label>
                 <input
                   value={form.title}
                   onChange={(e) => updateForm("title", e.target.value)}
                   placeholder="مثلاً منزل، محل کار"
-                  className="w-full rounded-2xl border border-[#1C3324]/15 bg-[#FAF9F6] py-3 px-4 text-xs sm:text-sm text-[#1C3324] outline-none focus:border-[#8B263E] font-medium"
+                  className="w-full rounded-2xl border border-[#3B0B14]/15 bg-[#FDF8F9] py-3 px-4 text-xs sm:text-sm text-[#3B0B14] outline-none focus:border-[#8B142D] font-medium"
                 />
               </div>
 
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-bold text-[#1C3324] mb-1.5">
+                  <label className="block text-xs font-bold text-[#3B0B14] mb-1.5">
                     نام گیرنده <span className="text-red-500">*</span>
                   </label>
                   <input
                     value={form.recipientName}
                     onChange={(e) => updateForm("recipientName", e.target.value)}
                     placeholder="نام و نام خانوادگی"
-                    className="w-full rounded-2xl border border-[#1C3324]/15 bg-[#FAF9F6] py-3 px-4 text-xs sm:text-sm text-[#1C3324] outline-none focus:border-[#8B263E] font-medium"
+                    className="w-full rounded-2xl border border-[#3B0B14]/15 bg-[#FDF8F9] py-3 px-4 text-xs sm:text-sm text-[#3B0B14] outline-none focus:border-[#8B142D] font-medium"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-[#1C3324] mb-1.5">
-                    شماره تماس <span className="text-red-500">*</span>
-                  </label>
+                  <div className="flex items-center justify-between mb-1.5">
+                    <label className="block text-xs font-bold text-[#3B0B14]">
+                      شماره تماس گیرنده <span className="text-red-500">*</span>
+                    </label>
+                    <span className="text-[10px] text-[#6E3A44] font-mono">
+                      {form.recipientPhone.length}/۱۱ رقم
+                    </span>
+                  </div>
                   <input
                     value={form.recipientPhone}
-                    onChange={(e) => updateForm("recipientPhone", e.target.value)}
-                    placeholder="0912..."
-                    inputMode="tel"
+                    maxLength={11}
+                    inputMode="numeric"
+                    onChange={(e) => updateForm("recipientPhone", e.target.value.replace(/\D/g, "").slice(0, 11))}
+                    placeholder="09120000000"
                     dir="ltr"
-                    className="w-full rounded-2xl border border-[#1C3324]/15 bg-[#FAF9F6] py-3 px-4 text-xs sm:text-sm text-[#1C3324] outline-none focus:border-[#8B263E] text-right font-medium"
+                    className="w-full rounded-2xl border border-[#3B0B14]/15 bg-[#FDF8F9] py-3 px-4 text-xs sm:text-sm text-[#3B0B14] outline-none focus:border-[#8B142D] text-right font-medium font-mono"
                   />
                 </div>
               </div>
 
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-bold text-[#1C3324] mb-1.5">
+                  <label className="block text-xs font-bold text-[#3B0B14] mb-1.5">
                     استان <span className="text-red-500">*</span>
                   </label>
                   <input
                     value={form.province}
                     onChange={(e) => updateForm("province", e.target.value)}
                     placeholder="مثلاً تهران"
-                    className="w-full rounded-2xl border border-[#1C3324]/15 bg-[#FAF9F6] py-3 px-4 text-xs sm:text-sm text-[#1C3324] outline-none focus:border-[#8B263E] font-medium"
+                    className="w-full rounded-2xl border border-[#3B0B14]/15 bg-[#FDF8F9] py-3 px-4 text-xs sm:text-sm text-[#3B0B14] outline-none focus:border-[#8B142D] font-medium"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-[#1C3324] mb-1.5">
+                  <label className="block text-xs font-bold text-[#3B0B14] mb-1.5">
                     شهر <span className="text-red-500">*</span>
                   </label>
                   <input
                     value={form.city}
                     onChange={(e) => updateForm("city", e.target.value)}
                     placeholder="مثلاً تهران"
-                    className="w-full rounded-2xl border border-[#1C3324]/15 bg-[#FAF9F6] py-3 px-4 text-xs sm:text-sm text-[#1C3324] outline-none focus:border-[#8B263E] font-medium"
+                    className="w-full rounded-2xl border border-[#3B0B14]/15 bg-[#FDF8F9] py-3 px-4 text-xs sm:text-sm text-[#3B0B14] outline-none focus:border-[#8B142D] font-medium"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-[#1C3324] mb-1.5">
-                  کد پستی
-                </label>
+                <div className="flex items-center justify-between mb-1.5">
+                  <label className="block text-xs font-bold text-[#3B0B14]">
+                    کد پستی <span className="text-red-500">*</span>
+                  </label>
+                  <span className="text-[10px] text-[#6E3A44] font-mono">
+                    {form.postalCode.length}/۱۰ رقم
+                  </span>
+                </div>
                 <input
                   value={form.postalCode}
-                  onChange={(e) => updateForm("postalCode", e.target.value)}
-                  placeholder="۱۰ رقم بدون خط تیره"
+                  maxLength={10}
                   inputMode="numeric"
+                  onChange={(e) => updateForm("postalCode", e.target.value.replace(/\D/g, "").slice(0, 10))}
+                  placeholder="۱۰ رقم بدون خط تیره"
                   dir="ltr"
-                  className="w-full rounded-2xl border border-[#1C3324]/15 bg-[#FAF9F6] py-3 px-4 text-xs sm:text-sm text-[#1C3324] outline-none focus:border-[#8B263E] text-right font-medium"
+                  className="w-full rounded-2xl border border-[#3B0B14]/15 bg-[#FDF8F9] py-3 px-4 text-xs sm:text-sm text-[#3B0B14] outline-none focus:border-[#8B142D] text-right font-medium font-mono"
                 />
+                <p className="mt-1 text-[11px] text-[#6E3A44]/70">
+                  کد پستی ۱۰ رقمی جهت درج در بارنامه و بیمه پیشتاز طلا الزامی است.
+                </p>
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-[#1C3324] mb-1.5">
+                <label className="block text-xs font-bold text-[#3B0B14] mb-1.5">
                   آدرس کامل پستی <span className="text-red-500">*</span>
                 </label>
                 <textarea
@@ -725,38 +754,38 @@ export default function AddressesPage() {
                   onChange={(e) => updateForm("address", e.target.value)}
                   placeholder="خیابان، کوچه، پلاک، واحد..."
                   rows={3}
-                  className="w-full rounded-2xl border border-[#1C3324]/15 bg-[#FAF9F6] py-3 px-4 text-xs sm:text-sm text-[#1C3324] outline-none focus:border-[#8B263E] resize-y font-medium"
+                  className="w-full rounded-2xl border border-[#3B0B14]/15 bg-[#FDF8F9] py-3 px-4 text-xs sm:text-sm text-[#3B0B14] outline-none focus:border-[#8B142D] resize-y font-medium"
                 />
               </div>
 
               <div className="space-y-2.5 pt-2">
-                <label className="flex items-center gap-2.5 cursor-pointer text-xs sm:text-sm font-medium text-[#1C3324]">
+                <label className="flex items-center gap-2.5 cursor-pointer text-xs sm:text-sm font-medium text-[#3B0B14]">
                   <input
                     type="checkbox"
                     checked={form.isDefault}
                     onChange={(e) => updateForm("isDefault", e.target.checked)}
-                    className="w-4 h-4 accent-[#1C3324] rounded"
+                    className="w-4 h-4 accent-[#3B0B14] rounded"
                   />
                   <span>انتخاب به عنوان آدرس پیش‌فرض</span>
                 </label>
 
-                <label className="flex items-center gap-2.5 cursor-pointer text-xs sm:text-sm font-medium text-[#1C3324]">
+                <label className="flex items-center gap-2.5 cursor-pointer text-xs sm:text-sm font-medium text-[#3B0B14]">
                   <input
                     type="checkbox"
                     checked={form.isActive}
                     onChange={(e) => updateForm("isActive", e.target.checked)}
-                    className="w-4 h-4 accent-[#1C3324] rounded"
+                    className="w-4 h-4 accent-[#3B0B14] rounded"
                   />
                   <span>این آدرس فعال باشد</span>
                 </label>
               </div>
 
-              <div className="flex gap-3 pt-4 border-t border-[#1C3324]/10">
+              <div className="flex gap-3 pt-4 border-t border-[#3B0B14]/10">
                 <button
                   type="button"
                   onClick={closeModal}
                   disabled={saving}
-                  className="flex-1 py-3 px-5 rounded-2xl border border-[#1C3324]/15 bg-[#FAF9F6] text-[#1C3324] text-xs font-bold transition hover:bg-[#1C3324]/5 cursor-pointer"
+                  className="flex-1 py-3 px-5 rounded-2xl border border-[#3B0B14]/15 bg-[#FDF8F9] text-[#3B0B14] text-xs font-bold transition hover:bg-[#3B0B14]/5 cursor-pointer"
                 >
                   انصراف
                 </button>
@@ -765,7 +794,7 @@ export default function AddressesPage() {
                   type="button"
                   onClick={handleSave}
                   disabled={saving}
-                  className="flex-1 py-3 px-5 rounded-2xl bg-[#1C3324] text-white text-xs font-bold transition hover:bg-[#8B263E] disabled:opacity-70 cursor-pointer flex items-center justify-center gap-2 shadow-xs"
+                  className="flex-1 py-3 px-5 rounded-2xl bg-[#3B0B14] text-white text-xs font-bold transition hover:bg-[#8B142D] disabled:opacity-70 cursor-pointer flex items-center justify-center gap-2 shadow-xs"
                 >
                   {saving ? (
                     <>

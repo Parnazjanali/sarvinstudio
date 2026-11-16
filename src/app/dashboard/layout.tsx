@@ -15,7 +15,7 @@ export default function DashboardLayout({
   return (
     <div
       dir="rtl"
-      className="min-h-screen bg-[#FCFCFA] text-[#1C3324] transition-colors duration-300 dark:bg-[#101813] dark:text-zinc-100 font-sans print:bg-white print:text-black print:min-h-0"
+      className="min-h-screen bg-[#FFFFFF] text-[#3B0B14] transition-colors duration-300 dark:bg-[#140508] dark:text-zinc-100 font-sans print:bg-white print:text-black print:min-h-0"
     >
       <div className="flex min-h-screen print:block">
         {/* سایدبار دسکتاپ (ثابت در سمت راست - مخفی در زمان چاپ) */}
@@ -33,12 +33,12 @@ export default function DashboardLayout({
               className="absolute inset-0 bg-black/60 backdrop-blur-xs transition-opacity cursor-pointer"
             />
 
-            <div className="absolute inset-y-0 right-0 w-[300px] max-w-[85vw] bg-white shadow-2xl transition-transform dark:bg-[#121A15] border-l border-[#1C3324]/10 dark:border-white/10">
+            <div className="absolute inset-y-0 right-0 w-[300px] max-w-[85vw] bg-white shadow-2xl transition-transform dark:bg-[#140508] border-l border-[#3B0B14]/10 dark:border-white/10">
               <button
                 type="button"
                 onClick={() => setMobileSidebarOpen(false)}
                 aria-label="بستن منو"
-                className="absolute left-3.5 top-4 z-10 flex h-8 w-8 items-center justify-center rounded-xl border border-[#1C3324]/10 bg-white text-[#1C3324] shadow-xs transition-colors hover:bg-zinc-100 dark:border-white/10 dark:bg-zinc-900 dark:text-zinc-100 dark:hover:bg-zinc-800 cursor-pointer"
+                className="absolute left-3.5 top-4 z-10 flex h-8 w-8 items-center justify-center rounded-xl border border-[#3B0B14]/10 bg-white text-[#3B0B14] shadow-xs transition-colors hover:bg-zinc-100 dark:border-white/10 dark:bg-zinc-900 dark:text-zinc-100 dark:hover:bg-zinc-800 cursor-pointer"
               >
                 <X className="h-4 w-4" />
               </button>

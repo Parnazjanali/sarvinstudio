@@ -30,9 +30,12 @@ import {
   Printer,
   Boxes,
   Scale,
+  Send,
+  Calendar,
 } from "lucide-react";
 import pb from "@/lib/pocketbase";
 import { recordAuditLogClient } from "@/lib/audit-client";
+import { resolveOrderInstallmentWeights, isInstallmentDue } from "@/lib/installment-utils";
 import {
   syncOrderToInvoiceAndSettlement,
   confirmOrderDepositAndSettle,
@@ -172,6 +175,33 @@ export default function OrderDetailsPage() {
   const [trackingCode, setTrackingCode] = useState("");
   const [settlementNotes, setSettlementNotes] = useState("");
   const [isSubmittingSettlement, setIsSubmittingSettlement] = useState(false);
+  const [isSendingSms, setIsSendingSms] = useState(false);
+
+  const handleSendSmsReminder = async (installmentNum?: number) => {
+    if (!order) return;
+    try {
+      setIsSendingSms(true);
+      const res = await fetch("/api/sms/send-installment-reminder", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          orderId: order.id,
+          installmentNumber: installmentNum,
+        }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        setSuccessMessage(data.message || "پیامک یادآوری قسط با موفقیت به شماره خریدار ارسال شد.");
+        setTimeout(() => setSuccessMessage(""), 5000);
+      } else {
+        setError(data.message || "خطا در ارسال پیامک");
+      }
+    } catch (e: any) {
+      setError(e.message || "خطا در برقراری ارتباط با سامانه پیامکی");
+    } finally {
+      setIsSendingSms(false);
+    }
+  };
 
   /* =======================================================
      Load Order, Linked Invoice & Settlement Record
@@ -325,9 +355,9 @@ export default function OrderDetailsPage() {
 
   if (isLoading) {
     return (
-      <div dir="rtl" className="flex min-h-screen items-center justify-center bg-[#FAF9F6] dark:bg-[#101813]">
-        <div className="flex flex-col items-center gap-3 text-[#3A5A46] dark:text-zinc-400">
-          <RefreshCw className="h-8 w-8 animate-spin text-[#8B263E] dark:text-[#D8B65C]" />
+      <div dir="rtl" className="flex min-h-screen items-center justify-center bg-[#FDF8F9] dark:bg-[#140508]">
+        <div className="flex flex-col items-center gap-3 text-[#6E3A44] dark:text-zinc-400">
+          <RefreshCw className="h-8 w-8 animate-spin text-[#8B142D] dark:text-[#DFB76C]" />
           <span className="text-xs font-bold">در حال دریافت پرونده سفارش و فاکتور...</span>
         </div>
       </div>
@@ -336,11 +366,11 @@ export default function OrderDetailsPage() {
 
   if (!order) {
     return (
-      <div dir="rtl" className="min-h-screen bg-[#FAF9F6] p-6 text-[#1C3324] dark:bg-[#101813] dark:text-zinc-100">
-        <div className="mx-auto max-w-xl rounded-3xl border border-rose-200 bg-white p-8 text-center shadow-xs dark:border-rose-900/40 dark:bg-[#15221B]">
+      <div dir="rtl" className="min-h-screen bg-[#FDF8F9] p-6 text-[#3B0B14] dark:bg-[#140508] dark:text-zinc-100">
+        <div className="mx-auto max-w-xl rounded-3xl border border-rose-200 bg-white p-8 text-center shadow-xs dark:border-rose-900/40 dark:bg-[#1C080E]">
           <XCircle className="mx-auto h-12 w-12 text-rose-600" />
           <h2 className="mt-4 text-base font-black">سفارش یافت نشد</h2>
-          <p className="mt-2 text-xs text-[#3A5A46] dark:text-zinc-400">
+          <p className="mt-2 text-xs text-[#6E3A44] dark:text-zinc-400">
             {error || "اطلاعات سفارش در پایگاه داده موجود نیست."}
           </p>
           <div className="mt-6 flex justify-center gap-3">
@@ -369,19 +399,19 @@ export default function OrderDetailsPage() {
   return (
     <div
       dir="rtl"
-      className="min-h-screen bg-[#FAF9F6] p-4 font-sans text-[#1C3324] sm:p-6 lg:p-8 dark:bg-[#101813] dark:text-zinc-100"
+      className="min-h-screen bg-[#FDF8F9] p-4 font-sans text-[#3B0B14] sm:p-6 lg:p-8 dark:bg-[#140508] dark:text-zinc-100"
     >
       <div className="mx-auto max-w-7xl space-y-6">
 
         {/* Top Header */}
-        <div className="flex flex-col justify-between gap-5 rounded-3xl border border-[#1C3324]/12 bg-white/80 p-5 shadow-xs backdrop-blur-md transition-colors lg:flex-row lg:items-center lg:p-6 dark:border-white/10 dark:bg-[#15221B]/80">
+        <div className="flex flex-col justify-between gap-5 rounded-3xl border border-[#3B0B14]/12 bg-white/80 p-5 shadow-xs backdrop-blur-md transition-colors lg:flex-row lg:items-center lg:p-6 dark:border-white/10 dark:bg-[#1C080E]/80">
           <div>
             <div className="flex items-center gap-2 mb-2">
               <Button
                 asChild
                 variant="ghost"
                 size="sm"
-                className="h-8 gap-1 px-2 text-xs font-bold text-[#3A5A46] hover:text-[#8B263E] dark:text-zinc-400 dark:hover:text-[#D8B65C]"
+                className="h-8 gap-1 px-2 text-xs font-bold text-[#6E3A44] hover:text-[#8B142D] dark:text-zinc-400 dark:hover:text-[#DFB76C]"
               >
                 <Link href="/dashboard/orders">
                   <ArrowRight className="h-4 w-4" />
@@ -391,12 +421,12 @@ export default function OrderDetailsPage() {
             </div>
 
             <div className="flex items-center gap-3">
-              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#1C3324] text-white shadow-xs dark:bg-[#D8B65C] dark:text-[#101813]">
+              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#3B0B14] text-white shadow-xs dark:bg-[#DFB76C] dark:text-[#140508]">
                 <ShoppingBag className="h-6 w-6" />
               </div>
               <div>
                 <div className="flex items-center gap-2 flex-wrap">
-                  <h1 className="text-2xl font-black tracking-tight text-[#1C3324] sm:text-3xl dark:text-zinc-100">
+                  <h1 className="text-2xl font-black tracking-tight text-[#3B0B14] sm:text-3xl dark:text-zinc-100">
                     پرونده سفارش #{order.orderNumber || order.id.slice(0, 8)}
                   </h1>
                   <Badge
@@ -422,7 +452,7 @@ export default function OrderDetailsPage() {
                     {order.paymentStatus === "paid" ? "تسویه کامل" : "در انتظار تسویه"}
                   </Badge>
                 </div>
-                <p className="mt-1 text-xs text-[#3A5A46] dark:text-zinc-400">
+                <p className="mt-1 text-xs text-[#6E3A44] dark:text-zinc-400">
                   ثبت شده در {formatDate(order.created)} · خریدار: {customerName}
                 </p>
               </div>
@@ -430,6 +460,24 @@ export default function OrderDetailsPage() {
           </div>
 
           <div className="flex flex-wrap items-center gap-2.5">
+            {orderItemsList.some((it: any) => it.isInstallment) && (() => {
+              const instItem = orderItemsList.find((it: any) => it.isInstallment);
+              const w = resolveOrderInstallmentWeights(instItem);
+              if (w.currentInstallmentNum >= 3) return null;
+              return (
+                <Button
+                  variant="outline"
+                  size="default"
+                  onClick={() => handleSendSmsReminder(w.currentInstallmentNum + 1)}
+                  disabled={isSendingSms}
+                  className="gap-2 border-[#DFB76C] text-[#9E782F] hover:bg-[#DFB76C]/10 cursor-pointer"
+                >
+                  <Send className="h-4 w-4" />
+                  <span>ارسال پیامک یادآوری قسط {w.currentInstallmentNum + 1}</span>
+                </Button>
+              );
+            })()}
+
             {invoice ? (
               <Button asChild variant="default" size="default" className="gap-2">
                 <Link href={`/dashboard/invoices/${invoice.id}`}>
@@ -494,11 +542,11 @@ export default function OrderDetailsPage() {
           <div className="space-y-6 lg:col-span-8">
 
             {/* Linked Invoice & Settlement Trigger Card */}
-            <Card className="border-[#1C3324]/12 bg-gradient-to-br from-white via-white to-amber-50/30 p-6 backdrop-blur-md dark:border-white/10 dark:from-[#15221B] dark:via-[#15221B] dark:to-emerald-950/30 space-y-4">
-              <div className="flex items-center justify-between pb-3 border-b border-[#1C3324]/10 dark:border-white/10">
+            <Card className="border-[#3B0B14]/12 bg-gradient-to-br from-white via-white to-amber-50/30 p-6 backdrop-blur-md dark:border-white/10 dark:from-[#1C080E] dark:via-[#1C080E] dark:to-emerald-950/30 space-y-4">
+              <div className="flex items-center justify-between pb-3 border-b border-[#3B0B14]/10 dark:border-white/10">
                 <div className="flex items-center gap-2">
-                  <Receipt className="h-5 w-5 text-[#8B263E] dark:text-[#D8B65C]" />
-                  <h2 className="text-base font-black text-[#1C3324] dark:text-zinc-100">
+                  <Receipt className="h-5 w-5 text-[#8B142D] dark:text-[#DFB76C]" />
+                  <h2 className="text-base font-black text-[#3B0B14] dark:text-zinc-100">
                     وضعیت فاکتور و تسویه خودکار
                   </h2>
                 </div>
@@ -512,11 +560,11 @@ export default function OrderDetailsPage() {
               {invoice ? (
                 <div className="space-y-4">
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                    <div className="rounded-2xl border border-[#1C3324]/10 bg-[#FAF9F6] p-4 dark:border-white/10 dark:bg-zinc-900/40">
-                      <span className="text-[10px] font-bold text-[#3A5A46] dark:text-zinc-400">
+                    <div className="rounded-2xl border border-[#3B0B14]/10 bg-[#FDF8F9] p-4 dark:border-white/10 dark:bg-zinc-900/40">
+                      <span className="text-[10px] font-bold text-[#6E3A44] dark:text-zinc-400">
                         شماره فاکتور رسمی
                       </span>
-                      <div className="mt-1 font-mono text-sm font-black text-[#8B263E] dark:text-[#D8B65C]">
+                      <div className="mt-1 font-mono text-sm font-black text-[#8B142D] dark:text-[#DFB76C]">
                         {invoice.invoiceNumber}
                       </div>
                       <span className="text-[10px] text-zinc-400">
@@ -524,8 +572,8 @@ export default function OrderDetailsPage() {
                       </span>
                     </div>
 
-                    <div className="rounded-2xl border border-[#1C3324]/10 bg-[#FAF9F6] p-4 dark:border-white/10 dark:bg-zinc-900/40">
-                      <span className="text-[10px] font-bold text-[#3A5A46] dark:text-zinc-400">
+                    <div className="rounded-2xl border border-[#3B0B14]/10 bg-[#FDF8F9] p-4 dark:border-white/10 dark:bg-zinc-900/40">
+                      <span className="text-[10px] font-bold text-[#6E3A44] dark:text-zinc-400">
                         وضعیت تسویه مالی فاکتور
                       </span>
                       <div className="mt-1 font-bold text-xs">
@@ -540,11 +588,11 @@ export default function OrderDetailsPage() {
                       </span>
                     </div>
 
-                    <div className="rounded-2xl border border-[#1C3324]/10 bg-[#FAF9F6] p-4 dark:border-white/10 dark:bg-zinc-900/40">
-                      <span className="text-[10px] font-bold text-[#3A5A46] dark:text-zinc-400">
+                    <div className="rounded-2xl border border-[#3B0B14]/10 bg-[#FDF8F9] p-4 dark:border-white/10 dark:bg-zinc-900/40">
+                      <span className="text-[10px] font-bold text-[#6E3A44] dark:text-zinc-400">
                         سند تسویه در settlements
                       </span>
-                      <div className="mt-1 font-mono text-xs font-black text-[#1C3324] dark:text-zinc-200">
+                      <div className="mt-1 font-mono text-xs font-black text-[#3B0B14] dark:text-zinc-200">
                         {settlement ? (
                           <span className="text-emerald-700 dark:text-emerald-400">
                             {settlement.trackingCode || "ثبت شده"}
@@ -584,12 +632,12 @@ export default function OrderDetailsPage() {
                   </div>
                 </div>
               ) : (
-                <div className="rounded-2xl border border-dashed border-[#1C3324]/20 p-6 text-center dark:border-white/20 space-y-3">
-                  <Receipt className="mx-auto h-8 w-8 text-[#8B263E] dark:text-[#D8B65C]" />
-                  <p className="text-xs font-bold text-[#1C3324] dark:text-zinc-200">
+                <div className="rounded-2xl border border-dashed border-[#3B0B14]/20 p-6 text-center dark:border-white/20 space-y-3">
+                  <Receipt className="mx-auto h-8 w-8 text-[#8B142D] dark:text-[#DFB76C]" />
+                  <p className="text-xs font-bold text-[#3B0B14] dark:text-zinc-200">
                     برای این سفارش هنوز فاکتوری صادر نشده است.
                   </p>
-                  <p className="text-xs text-[#3A5A46] dark:text-zinc-400">
+                  <p className="text-xs text-[#6E3A44] dark:text-zinc-400">
                     با کلیک روی دکمه زیر، فاکتور با کپی اقلام و مشخصات خریدار خودکار صادر می‌گردد.
                   </p>
                   <Button
@@ -607,11 +655,11 @@ export default function OrderDetailsPage() {
             </Card>
 
             {/* Order Items Breakdown */}
-            <Card className="border-[#1C3324]/12 bg-white/80 p-6 backdrop-blur-md dark:border-white/10 dark:bg-[#15221B]/80 space-y-4">
-              <div className="flex items-center justify-between pb-3 border-b border-[#1C3324]/10 dark:border-white/10">
+            <Card className="border-[#3B0B14]/12 bg-white/80 p-6 backdrop-blur-md dark:border-white/10 dark:bg-[#1C080E]/80 space-y-4">
+              <div className="flex items-center justify-between pb-3 border-b border-[#3B0B14]/10 dark:border-white/10">
                 <div className="flex items-center gap-2">
-                  <Boxes className="h-5 w-5 text-[#8B263E] dark:text-[#D8B65C]" />
-                  <h2 className="text-base font-black text-[#1C3324] dark:text-zinc-100">
+                  <Boxes className="h-5 w-5 text-[#8B142D] dark:text-[#DFB76C]" />
+                  <h2 className="text-base font-black text-[#3B0B14] dark:text-zinc-100">
                     اقلام سفارش
                   </h2>
                 </div>
@@ -625,52 +673,61 @@ export default function OrderDetailsPage() {
                   {orderItemsList.map((item: any, idx: number) => (
                     <div
                       key={idx}
-                      className="flex items-center justify-between rounded-2xl border border-[#1C3324]/10 bg-[#FAF9F6] p-4 dark:border-white/10 dark:bg-zinc-900/40"
+                      className="flex items-center justify-between rounded-2xl border border-[#3B0B14]/10 bg-[#FDF8F9] p-4 dark:border-white/10 dark:bg-zinc-900/40"
                     >
                       <div className="flex items-center gap-3">
                         <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white border border-black/10 font-bold text-xs dark:bg-zinc-800 dark:border-white/10">
                           #{idx + 1}
                         </div>
                         <div>
-                          <div className="text-xs font-black text-[#1C3324] dark:text-zinc-100">
+                          <div className="text-xs font-black text-[#3B0B14] dark:text-zinc-100">
                             {item.title || item.name || "زیورآلات طلا"}
                           </div>
-                          <div className="mt-0.5 flex items-center gap-2 text-[10px] text-zinc-400">
-                            {item.weight && <span>وزن: {Number(item.weight).toFixed(3)} گرم</span>}
+                          <div className="mt-0.5 flex items-center gap-2 text-[10px] text-zinc-400 flex-wrap">
+                            {item.weight && (
+                              <span>
+                                {item.isInstallment
+                                  ? (() => {
+                                      const w = resolveOrderInstallmentWeights(item);
+                                      return `طرح ۳ قسط طلایی | وزن کل: ${w.totalWeight.toFixed(2)} گرم (سهم این قسط: ${w.shareWeight.toFixed(2)} گرم)`;
+                                    })()
+                                  : `وزن: ${Number(item.weight).toFixed(2)} گرم`}
+                              </span>
+                            )}
                             {item.karat && <span>عیار: {item.karat}k</span>}
                             {item.quantity && <span>تعداد: {item.quantity} عدد</span>}
                           </div>
                         </div>
                       </div>
 
-                      <div className="font-mono text-xs font-black text-[#8B263E] dark:text-[#D8B65C]">
+                      <div className="font-mono text-xs font-black text-[#8B142D] dark:text-[#DFB76C]">
                         {formatMoney(item.price || item.totalPrice || 0)} تومان
                       </div>
                     </div>
                   ))}
                 </div>
               ) : (
-                <div className="flex items-center justify-between rounded-2xl bg-[#FAF9F6] p-4 dark:bg-zinc-900/40">
-                  <div className="text-xs font-bold text-[#1C3324] dark:text-zinc-200">
+                <div className="flex items-center justify-between rounded-2xl bg-[#FDF8F9] p-4 dark:bg-zinc-900/40">
+                  <div className="text-xs font-bold text-[#3B0B14] dark:text-zinc-200">
                     سفارش اینترنتی طلا و جواهر (سبد خرید #{order.orderNumber || order.id.slice(0, 7)})
                   </div>
-                  <div className="font-mono text-xs font-black text-[#8B263E] dark:text-[#D8B65C]">
+                  <div className="font-mono text-xs font-black text-[#8B142D] dark:text-[#DFB76C]">
                     {formatMoney(totalAmount)} تومان
                   </div>
                 </div>
               )}
 
               {/* Financial Totals */}
-              <div className="pt-4 border-t border-[#1C3324]/10 dark:border-white/10 space-y-2 text-xs">
+              <div className="pt-4 border-t border-[#3B0B14]/10 dark:border-white/10 space-y-2 text-xs">
                 <div className="flex justify-between">
-                  <span className="text-[#3A5A46] dark:text-zinc-400">مبلغ محصولات:</span>
+                  <span className="text-[#6E3A44] dark:text-zinc-400">مبلغ محصولات:</span>
                   <span className="font-mono font-bold">{formatMoney(totalAmount - shippingCost)} تومان</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-[#3A5A46] dark:text-zinc-400">هزینه ارسال و بیمه:</span>
+                  <span className="text-[#6E3A44] dark:text-zinc-400">هزینه ارسال و بیمه:</span>
                   <span className="font-mono font-bold">{formatMoney(shippingCost)} تومان</span>
                 </div>
-                <div className="flex justify-between pt-2 border-t border-black/5 dark:border-white/5 text-sm font-black text-[#8B263E] dark:text-[#D8B65C]">
+                <div className="flex justify-between pt-2 border-t border-black/5 dark:border-white/5 text-sm font-black text-[#8B142D] dark:text-[#DFB76C]">
                   <span>مبلغ کل قابل پرداخت:</span>
                   <span className="font-mono">{formatMoney(totalAmount)} تومان</span>
                 </div>
@@ -678,34 +735,34 @@ export default function OrderDetailsPage() {
             </Card>
 
             {/* Customer & Shipping Details */}
-            <Card className="border-[#1C3324]/12 bg-white/80 p-6 backdrop-blur-md dark:border-white/10 dark:bg-[#15221B]/80 space-y-4">
-              <div className="flex items-center gap-2 pb-3 border-b border-[#1C3324]/10 dark:border-white/10">
-                <Truck className="h-5 w-5 text-[#8B263E] dark:text-[#D8B65C]" />
-                <h2 className="text-base font-black text-[#1C3324] dark:text-zinc-100">
+            <Card className="border-[#3B0B14]/12 bg-white/80 p-6 backdrop-blur-md dark:border-white/10 dark:bg-[#1C080E]/80 space-y-4">
+              <div className="flex items-center gap-2 pb-3 border-b border-[#3B0B14]/10 dark:border-white/10">
+                <Truck className="h-5 w-5 text-[#8B142D] dark:text-[#DFB76C]" />
+                <h2 className="text-base font-black text-[#3B0B14] dark:text-zinc-100">
                   مشخصات تحویل‌گیرنده و آدرس ارسال
                 </h2>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
                 <div>
-                  <span className="text-[#3A5A46] dark:text-zinc-400">نام گیرنده:</span>
-                  <p className="mt-1 font-bold text-[#1C3324] dark:text-zinc-100">{customerName}</p>
+                  <span className="text-[#6E3A44] dark:text-zinc-400">نام گیرنده:</span>
+                  <p className="mt-1 font-bold text-[#3B0B14] dark:text-zinc-100">{customerName}</p>
                 </div>
                 <div>
-                  <span className="text-[#3A5A46] dark:text-zinc-400">شماره تماس همراه:</span>
-                  <p className="mt-1 font-mono font-bold text-[#1C3324] dark:text-zinc-100">{customerPhone}</p>
+                  <span className="text-[#6E3A44] dark:text-zinc-400">شماره تماس همراه:</span>
+                  <p className="mt-1 font-mono font-bold text-[#3B0B14] dark:text-zinc-100">{customerPhone}</p>
                 </div>
                 <div>
-                  <span className="text-[#3A5A46] dark:text-zinc-400">روش ارسال انتخابی:</span>
-                  <p className="mt-1 font-bold text-[#1C3324] dark:text-zinc-100">{order.shippingMethod || "پیک ویژه امن / پست پیشتاز"}</p>
+                  <span className="text-[#6E3A44] dark:text-zinc-400">روش ارسال انتخابی:</span>
+                  <p className="mt-1 font-bold text-[#3B0B14] dark:text-zinc-100">{order.shippingMethod || "پیک ویژه امن / پست پیشتاز"}</p>
                 </div>
                 <div>
-                  <span className="text-[#3A5A46] dark:text-zinc-400">کد پستی:</span>
-                  <p className="mt-1 font-mono font-bold text-[#1C3324] dark:text-zinc-100">{postalCode || "ثبت نشده"}</p>
+                  <span className="text-[#6E3A44] dark:text-zinc-400">کد پستی:</span>
+                  <p className="mt-1 font-mono font-bold text-[#3B0B14] dark:text-zinc-100">{postalCode || "ثبت نشده"}</p>
                 </div>
                 <div className="sm:col-span-2">
-                  <span className="text-[#3A5A46] dark:text-zinc-400">آدرس پستی کامل:</span>
-                  <p className="mt-1 leading-6 font-medium text-[#1C3324] dark:text-zinc-200">
+                  <span className="text-[#6E3A44] dark:text-zinc-400">آدرس پستی کامل:</span>
+                  <p className="mt-1 leading-6 font-medium text-[#3B0B14] dark:text-zinc-200">
                     {province && `${province} - `}
                     {city && `${city} - `}
                     {fullAddress || "آدرس کامل توسط کاربر ثبت نشده است."}
@@ -719,8 +776,8 @@ export default function OrderDetailsPage() {
           <div className="space-y-6 lg:col-span-4">
 
             {/* Workflow Progression Stepper */}
-            <Card className="border-[#1C3324]/12 bg-white/80 p-5 backdrop-blur-md dark:border-white/10 dark:bg-[#15221B]/80 space-y-4">
-              <h3 className="text-xs font-black text-[#1C3324] dark:text-zinc-100">
+            <Card className="border-[#3B0B14]/12 bg-white/80 p-5 backdrop-blur-md dark:border-white/10 dark:bg-[#1C080E]/80 space-y-4">
+              <h3 className="text-xs font-black text-[#3B0B14] dark:text-zinc-100">
                 مراحل پردازش و چرخه سفارش
               </h3>
 
@@ -731,7 +788,7 @@ export default function OrderDetailsPage() {
                     ✓
                   </div>
                   <div>
-                    <p className="text-xs font-bold text-[#1C3324] dark:text-zinc-100">ثبت سفارش توسط خریدار</p>
+                    <p className="text-xs font-bold text-[#3B0B14] dark:text-zinc-100">ثبت سفارش توسط خریدار</p>
                     <span className="text-[10px] text-zinc-400">{formatDate(order.created)}</span>
                   </div>
                 </div>
@@ -745,7 +802,7 @@ export default function OrderDetailsPage() {
                     {invoice ? "✓" : "۲"}
                   </div>
                   <div>
-                    <p className="text-xs font-bold text-[#1C3324] dark:text-zinc-100">صدور فاکتور رسمی</p>
+                    <p className="text-xs font-bold text-[#3B0B14] dark:text-zinc-100">صدور فاکتور رسمی</p>
                     <span className="text-[10px] text-zinc-400">
                       {invoice ? `فاکتور #${invoice.invoiceNumber}` : "در انتظار صدور یا تایید"}
                     </span>
@@ -761,7 +818,7 @@ export default function OrderDetailsPage() {
                     {order.paymentStatus === "paid" ? "✓" : "۳"}
                   </div>
                   <div>
-                    <p className="text-xs font-bold text-[#1C3324] dark:text-zinc-100">تسویه مالی و ثبت سند</p>
+                    <p className="text-xs font-bold text-[#3B0B14] dark:text-zinc-100">تسویه مالی و ثبت سند</p>
                     <span className="text-[10px] text-zinc-400">
                       {order.paymentStatus === "paid" ? "تسویه قطعی انجام شد" : "در انتظار پرداخت / تایید رسید"}
                     </span>
@@ -777,7 +834,7 @@ export default function OrderDetailsPage() {
                     {order.status === "delivered" ? "✓" : "۴"}
                   </div>
                   <div>
-                    <p className="text-xs font-bold text-[#1C3324] dark:text-zinc-100">آماده‌سازی در کارگاه طلا</p>
+                    <p className="text-xs font-bold text-[#3B0B14] dark:text-zinc-100">آماده‌سازی در کارگاه طلا</p>
                     <span className="text-[10px] text-zinc-400">کنترل کیفیت و بسته‌بندی</span>
                   </div>
                 </div>
@@ -791,7 +848,7 @@ export default function OrderDetailsPage() {
                     {order.status === "delivered" ? "✓" : "۵"}
                   </div>
                   <div>
-                    <p className="text-xs font-bold text-[#1C3324] dark:text-zinc-100">تحویل نهایی به مشتری</p>
+                    <p className="text-xs font-bold text-[#3B0B14] dark:text-zinc-100">تحویل نهایی به مشتری</p>
                     <span className="text-[10px] text-zinc-400">تکمیل چرخه سفارش</span>
                   </div>
                 </div>
@@ -799,8 +856,8 @@ export default function OrderDetailsPage() {
             </Card>
 
             {/* Quick Actions Card */}
-            <Card className="border-[#1C3324]/12 bg-white/80 p-5 backdrop-blur-md dark:border-white/10 dark:bg-[#15221B]/80 space-y-3">
-              <h3 className="text-xs font-black text-[#1C3324] dark:text-zinc-100">
+            <Card className="border-[#3B0B14]/12 bg-white/80 p-5 backdrop-blur-md dark:border-white/10 dark:bg-[#1C080E]/80 space-y-3">
+              <h3 className="text-xs font-black text-[#3B0B14] dark:text-zinc-100">
                 اقدامات مدیریتی سفارش
               </h3>
 
@@ -873,20 +930,20 @@ export default function OrderDetailsPage() {
             </Card>
 
             {/* Technical IDs Card */}
-            <Card className="border-[#1C3324]/12 bg-white/80 p-5 backdrop-blur-md dark:border-white/10 dark:bg-[#15221B]/80 space-y-2 text-xs">
+            <Card className="border-[#3B0B14]/12 bg-white/80 p-5 backdrop-blur-md dark:border-white/10 dark:bg-[#1C080E]/80 space-y-2 text-xs">
               <div className="flex justify-between py-1 border-b border-black/5 dark:border-white/5">
-                <span className="text-[#3A5A46] dark:text-zinc-400">شناسه سفارش:</span>
+                <span className="text-[#6E3A44] dark:text-zinc-400">شناسه سفارش:</span>
                 <span className="font-mono text-[11px] font-bold">{order.id}</span>
               </div>
               {order.user && (
                 <div className="flex justify-between py-1 border-b border-black/5 dark:border-white/5">
-                  <span className="text-[#3A5A46] dark:text-zinc-400">شناسه کاربر:</span>
+                  <span className="text-[#6E3A44] dark:text-zinc-400">شناسه کاربر:</span>
                   <span className="font-mono text-[11px] font-bold">{order.user}</span>
                 </div>
               )}
               {invoice && (
                 <div className="flex justify-between py-1">
-                  <span className="text-[#3A5A46] dark:text-zinc-400">شناسه فاکتور:</span>
+                  <span className="text-[#6E3A44] dark:text-zinc-400">شناسه فاکتور:</span>
                   <span className="font-mono text-[11px] font-bold">{invoice.id}</span>
                 </div>
               )}
@@ -897,17 +954,17 @@ export default function OrderDetailsPage() {
 
       {/* 1-Click Settlement Modal */}
       <Dialog open={isSettleModalOpen} onOpenChange={setIsSettleModalOpen}>
-        <DialogContent className="max-w-md dark:border-white/10 dark:bg-[#15221B]">
+        <DialogContent className="max-w-md dark:border-white/10 dark:bg-[#1C080E]">
           <DialogHeader>
             <div className="flex items-center gap-3">
               <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-emerald-100 text-emerald-700 dark:bg-emerald-950/50 dark:text-emerald-400">
                 <Receipt size={22} />
               </div>
               <div>
-                <DialogTitle className="text-base font-black text-[#1C3324] dark:text-zinc-100">
+                <DialogTitle className="text-base font-black text-[#3B0B14] dark:text-zinc-100">
                   تأیید واریز و ثبت خودکار تسویه مالی
                 </DialogTitle>
-                <DialogDescription className="mt-1 text-xs text-[#3A5A46] dark:text-zinc-400">
+                <DialogDescription className="mt-1 text-xs text-[#6E3A44] dark:text-zinc-400">
                   سفارش #{order.orderNumber || order.id.slice(0, 7)} به مبلغ {formatMoney(totalAmount)} تومان
                 </DialogDescription>
               </div>
@@ -916,13 +973,13 @@ export default function OrderDetailsPage() {
 
           <div className="space-y-4 py-2 text-xs">
             <div>
-              <label className="mb-1.5 block font-bold text-[#3A5A46] dark:text-zinc-300">
+              <label className="mb-1.5 block font-bold text-[#6E3A44] dark:text-zinc-300">
                 روش تسویه و پرداخت
               </label>
               <select
                 value={settlementMethod}
                 onChange={(e) => setSettlementMethod(e.target.value)}
-                className="w-full rounded-2xl border border-[#1C3324]/15 bg-[#FAF9F6] p-3 text-xs font-bold text-[#1C3324] outline-none dark:border-white/10 dark:bg-zinc-900/60 dark:text-zinc-100"
+                className="w-full rounded-2xl border border-[#3B0B14]/15 bg-[#FDF8F9] p-3 text-xs font-bold text-[#3B0B14] outline-none dark:border-white/10 dark:bg-zinc-900/60 dark:text-zinc-100"
               >
                 <option value="card_to_card">کارت به کارت (واریز مستقیم)</option>
                 <option value="installment">فروش اقساطی / اعتباری (اسنپ‌پی/تارا)</option>
@@ -932,7 +989,7 @@ export default function OrderDetailsPage() {
             </div>
 
             <div>
-              <label className="mb-1.5 block font-bold text-[#3A5A46] dark:text-zinc-300">
+              <label className="mb-1.5 block font-bold text-[#6E3A44] dark:text-zinc-300">
                 کد رهگیری / شماره ارجاع فیش بانکی
               </label>
               <Input
@@ -945,7 +1002,7 @@ export default function OrderDetailsPage() {
             </div>
 
             <div>
-              <label className="mb-1.5 block font-bold text-[#3A5A46] dark:text-zinc-300">
+              <label className="mb-1.5 block font-bold text-[#6E3A44] dark:text-zinc-300">
                 یادداشت تسویه
               </label>
               <Input

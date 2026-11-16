@@ -470,7 +470,7 @@ export default function ProductsPageClient({ initialProducts, availableCategorie
     if (selectedGender === "kids" || selectedCategory === "kids") {
       return "طراحی‌های ارگونومیک، ضد حساسیت و بدون لبه‌های تیز مخصوص نوزاد و کودک";
     }
-    return "تلفیق ظرافت و هنر در طلا و جواهر دست‌ساز";
+    return "تلفیق ظرافت و هنر در دست‌ساخته‌های طلای پرنا زر";
   }, [selectedGender, selectedCategory, selectedCollection]);
 
   const handlePillClick = (key: string, gender?: string) => {
@@ -530,7 +530,7 @@ export default function ProductsPageClient({ initialProducts, availableCategorie
   return (
     <main 
       dir="rtl" 
-      className="min-h-screen bg-[#FCFCFA] dark:bg-[#101813] text-[#1C3324] dark:text-zinc-100 font-sans pb-24 pt-36 sm:pt-44 lg:pt-48 transition-colors duration-300"
+      className="min-h-screen bg-[#FFFFFF] dark:bg-[#140508] text-[#3B0B14] dark:text-zinc-100 font-sans pb-24 pt-36 sm:pt-44 lg:pt-48 transition-colors duration-300"
     >
       <section className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
         
@@ -538,10 +538,10 @@ export default function ProductsPageClient({ initialProducts, availableCategorie
         <div className="mb-8 sm:mb-10">
           <div className="flex flex-col md:flex-row justify-between md:items-center gap-4 mb-6 sm:mb-8">
             <div>
-              <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#1C3324] dark:text-white m-0 mb-1 font-heading">
+              <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#3B0B14] dark:text-white m-0 mb-1 font-heading">
                 {pageTitle}
               </h1>
-              <p className="text-xs sm:text-sm text-[#3A5A46] dark:text-zinc-400 mt-1 max-w-2xl">
+              <p className="text-xs sm:text-sm text-[#6E3A44] dark:text-zinc-400 mt-1 max-w-2xl">
                 {pageSubtitle}
               </p>
             </div>
@@ -549,13 +549,13 @@ export default function ProductsPageClient({ initialProducts, availableCategorie
             <div className="flex items-center gap-3">
               <Link 
                 href="/collections" 
-                className="inline-flex items-center gap-2 text-[#8B263E] dark:text-[#D8B65C] font-bold text-xs sm:text-[13px] bg-[#8B263E]/10 dark:bg-[#D8B65C]/10 px-4 py-2.5 rounded-xl border border-[#8B263E]/20 hover:bg-[#8B263E]/20 transition-all w-fit shadow-xs whitespace-nowrap"
+                className="inline-flex items-center gap-2 text-[#8B142D] dark:text-[#DFB76C] font-bold text-xs sm:text-[13px] bg-[#8B142D]/10 dark:bg-[#DFB76C]/10 px-4 py-2.5 rounded-xl border border-[#8B142D]/20 hover:bg-[#8B142D]/20 transition-all w-fit shadow-xs whitespace-nowrap"
               >
                 <Gem size={14} /> مشاهده کالکشن‌های اختصاصی
               </Link>
               <Link 
                 href="/" 
-                className="inline-flex items-center gap-2 text-[#1C3324] dark:text-zinc-200 font-bold text-xs sm:text-[13px] bg-white dark:bg-[#15221B] px-4 py-2.5 rounded-xl border border-[#1C3324]/10 dark:border-white/10 hover:border-[#8B263E] dark:hover:border-[#D8B65C] transition-all w-fit shadow-xs whitespace-nowrap"
+                className="inline-flex items-center gap-2 text-[#3B0B14] dark:text-zinc-200 font-bold text-xs sm:text-[13px] bg-white dark:bg-[#1C080E] px-4 py-2.5 rounded-xl border border-[#3B0B14]/10 dark:border-white/10 hover:border-[#8B142D] dark:hover:border-[#DFB76C] transition-all w-fit shadow-xs whitespace-nowrap"
               >
                 <ArrowLeft size={14} /> بازگشت
               </Link>
@@ -573,8 +573,8 @@ export default function ProductsPageClient({ initialProducts, availableCategorie
                   onClick={() => handlePillClick(cat.key, cat.gender)}
                   className={`px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs font-bold whitespace-nowrap transition-all duration-300 cursor-pointer shrink-0 ${
                     active 
-                      ? "bg-[#1C3324] dark:bg-[#D8B65C] text-white dark:text-[#101813] shadow-md scale-102" 
-                      : "bg-white dark:bg-[#15221B] text-[#3A5A46] dark:text-zinc-300 border border-[#1C3324]/10 dark:border-white/10 hover:border-[#8B263E] dark:hover:border-[#D8B65C]"
+                      ? "bg-[#3B0B14] dark:bg-[#DFB76C] text-white dark:text-[#140508] shadow-md scale-102" 
+                      : "bg-white dark:bg-[#1C080E] text-[#6E3A44] dark:text-zinc-300 border border-[#3B0B14]/10 dark:border-white/10 hover:border-[#8B142D] dark:hover:border-[#DFB76C]"
                   }`}
                 >
                   {cat.label}
@@ -586,67 +586,67 @@ export default function ProductsPageClient({ initialProducts, availableCategorie
 
         {/* Active Filter Chips */}
         {hasActiveFilters && (
-          <div className="flex flex-wrap items-center gap-2 mb-6 bg-white dark:bg-[#15221B] p-3 sm:p-3.5 rounded-2xl border border-[#1C3324]/10 dark:border-white/10 shadow-xs text-xs">
-            <span className="font-bold text-[#3A5A46] dark:text-zinc-400 ml-2">فیلترهای فعال:</span>
+          <div className="flex flex-wrap items-center gap-2 mb-6 bg-white dark:bg-[#1C080E] p-3 sm:p-3.5 rounded-2xl border border-[#3B0B14]/10 dark:border-white/10 shadow-xs text-xs">
+            <span className="font-bold text-[#6E3A44] dark:text-zinc-400 ml-2">فیلترهای فعال:</span>
             
             {selectedGender !== "all" && (
-              <span className="inline-flex items-center gap-1 px-3 py-1 bg-[#FAF9F6] dark:bg-[#101813] border border-[#8B263E]/30 text-[#8B263E] dark:text-[#D8B65C] rounded-full font-bold">
+              <span className="inline-flex items-center gap-1 px-3 py-1 bg-[#FDF8F9] dark:bg-[#140508] border border-[#8B142D]/30 text-[#8B142D] dark:text-[#DFB76C] rounded-full font-bold">
                 مخاطب: {selectedGender === "women" ? "آثار زنانه" : selectedGender === "men" ? "مردانه" : "کودک و نوزاد"}
                 <button type="button" onClick={() => setSelectedGender("all")} className="hover:text-red-500 cursor-pointer"><X size={13} /></button>
               </span>
             )}
 
             {selectedCategory !== "all" && (
-              <span className="inline-flex items-center gap-1 px-3 py-1 bg-[#FAF9F6] dark:bg-[#101813] border border-[#8B263E]/30 text-[#8B263E] dark:text-[#D8B65C] rounded-full font-bold">
+              <span className="inline-flex items-center gap-1 px-3 py-1 bg-[#FDF8F9] dark:bg-[#140508] border border-[#8B142D]/30 text-[#8B142D] dark:text-[#DFB76C] rounded-full font-bold">
                 دسته: {DEFAULT_CATEGORY_PILLS.find(c => c.key === selectedCategory)?.label || selectedCategory}
                 <button type="button" onClick={() => setSelectedCategory("all")} className="hover:text-red-500 cursor-pointer"><X size={13} /></button>
               </span>
             )}
 
             {selectedType !== "all" && (
-              <span className="inline-flex items-center gap-1 px-3 py-1 bg-[#FAF9F6] dark:bg-[#101813] border border-[#8B263E]/30 text-[#8B263E] dark:text-[#D8B65C] rounded-full font-bold">
+              <span className="inline-flex items-center gap-1 px-3 py-1 bg-[#FDF8F9] dark:bg-[#140508] border border-[#8B142D]/30 text-[#8B142D] dark:text-[#DFB76C] rounded-full font-bold">
                 نوع: {DEFAULT_CATEGORY_PILLS.find(c => c.key === selectedType)?.label || selectedType}
                 <button type="button" onClick={() => setSelectedType("all")} className="hover:text-red-500 cursor-pointer"><X size={13} /></button>
               </span>
             )}
 
             {selectedCollection !== "all" && (
-              <span className="inline-flex items-center gap-1 px-3 py-1 bg-[#FAF9F6] dark:bg-[#101813] border border-[#8B263E]/30 text-[#8B263E] dark:text-[#D8B65C] rounded-full font-bold">
+              <span className="inline-flex items-center gap-1 px-3 py-1 bg-[#FDF8F9] dark:bg-[#140508] border border-[#8B142D]/30 text-[#8B142D] dark:text-[#DFB76C] rounded-full font-bold">
                 کالکشن: {selectedCollection}
                 <button type="button" onClick={() => setSelectedCollection("all")} className="hover:text-red-500 cursor-pointer"><X size={13} /></button>
               </span>
             )}
 
             {inStockOnly && (
-              <span className="inline-flex items-center gap-1 px-3 py-1 bg-[#FAF9F6] dark:bg-[#101813] border border-[#8B263E]/30 text-[#8B263E] dark:text-[#D8B65C] rounded-full font-bold">
+              <span className="inline-flex items-center gap-1 px-3 py-1 bg-[#FDF8F9] dark:bg-[#140508] border border-[#8B142D]/30 text-[#8B142D] dark:text-[#DFB76C] rounded-full font-bold">
                 آماده ارسال فوری
                 <button type="button" onClick={() => setInStockOnly(false)} className="hover:text-red-500 cursor-pointer"><X size={13} /></button>
               </span>
             )}
 
             {snappPayOnly && (
-              <span className="inline-flex items-center gap-1 px-3 py-1 bg-[#8B263E]/10 border border-[#8B263E]/30 text-[#8B263E] dark:text-[#D8B65C] rounded-full font-bold">
+              <span className="inline-flex items-center gap-1 px-3 py-1 bg-[#8B142D]/10 border border-[#8B142D]/30 text-[#8B142D] dark:text-[#DFB76C] rounded-full font-bold">
                 ۳ قسط با قیمت روز
                 <button type="button" onClick={() => setSnappPayOnly(false)} className="hover:text-red-500 cursor-pointer"><X size={13} /></button>
               </span>
             )}
 
             {weightRange !== "all" && (
-              <span className="inline-flex items-center gap-1 px-3 py-1 bg-[#FAF9F6] dark:bg-[#101813] border border-[#8B263E]/30 text-[#8B263E] dark:text-[#D8B65C] rounded-full font-bold">
+              <span className="inline-flex items-center gap-1 px-3 py-1 bg-[#FDF8F9] dark:bg-[#140508] border border-[#8B142D]/30 text-[#8B142D] dark:text-[#DFB76C] rounded-full font-bold">
                 وزن: {weightRange === "light" ? "سبک (زیر ۳ گرم)" : weightRange === "medium" ? "متوسط (۳ تا ۷ گرم)" : "سرمایه‌گذاری (بالای ۷ گرم)"}
                 <button type="button" onClick={() => { setWeightRange("all"); setMinWeight(""); setMaxWeight(""); }} className="hover:text-red-500 cursor-pointer"><X size={13} /></button>
               </span>
             )}
 
             {priceRange !== "all" && (
-              <span className="inline-flex items-center gap-1 px-3 py-1 bg-[#FAF9F6] dark:bg-[#101813] border border-[#8B263E]/30 text-[#8B263E] dark:text-[#D8B65C] rounded-full font-bold">
+              <span className="inline-flex items-center gap-1 px-3 py-1 bg-[#FDF8F9] dark:bg-[#140508] border border-[#8B142D]/30 text-[#8B142D] dark:text-[#DFB76C] rounded-full font-bold">
                 بودجه: {priceRange === "under10" ? "زیر ۱۰ م.ت" : priceRange === "10to30" ? "۱۰ تا ۳۰ م.ت" : priceRange === "30to70" ? "۳۰ تا ۷۰ م.ت" : "بالای ۷۰ م.ت"}
                 <button type="button" onClick={() => { setPriceRange("all"); setMinPrice(""); setMaxPrice(""); }} className="hover:text-red-500 cursor-pointer"><X size={13} /></button>
               </span>
             )}
 
             {searchQuery && (
-              <span className="inline-flex items-center gap-1 px-3 py-1 bg-[#FAF9F6] dark:bg-[#101813] border border-[#8B263E]/30 text-[#8B263E] dark:text-[#D8B65C] rounded-full font-bold">
+              <span className="inline-flex items-center gap-1 px-3 py-1 bg-[#FDF8F9] dark:bg-[#140508] border border-[#8B142D]/30 text-[#8B142D] dark:text-[#DFB76C] rounded-full font-bold">
                 جستجو: {searchQuery}
                 <button type="button" onClick={() => setSearchQuery("")} className="hover:text-red-500 cursor-pointer"><X size={13} /></button>
               </span>
@@ -659,27 +659,27 @@ export default function ProductsPageClient({ initialProducts, availableCategorie
         )}
 
         {/* Toolbar */}
-        <div className="flex justify-between items-center mb-6 sm:mb-8 bg-white dark:bg-[#15221B] px-4 sm:px-5 py-3 rounded-2xl border border-[#1C3324]/10 dark:border-white/10 shadow-xs">
+        <div className="flex justify-between items-center mb-6 sm:mb-8 bg-white dark:bg-[#1C080E] px-4 sm:px-5 py-3 rounded-2xl border border-[#3B0B14]/10 dark:border-white/10 shadow-xs">
           <div className="flex items-center gap-3">
             <button 
               type="button"
               onClick={() => setIsMobileFilterOpen(true)} 
-              className="lg:hidden flex items-center gap-1.5 px-3 py-2 rounded-xl border border-[#8B263E]/30 dark:border-[#D8B65C]/30 bg-[#FAF9F6] dark:bg-[#101813] text-[#8B263E] dark:text-[#D8B65C] font-bold text-xs cursor-pointer"
+              className="lg:hidden flex items-center gap-1.5 px-3 py-2 rounded-xl border border-[#8B142D]/30 dark:border-[#DFB76C]/30 bg-[#FDF8F9] dark:bg-[#140508] text-[#8B142D] dark:text-[#DFB76C] font-bold text-xs cursor-pointer"
             >
               <Filter size={14} /> فیلترها
             </button>
-            <span className="text-xs text-[#3A5A46] dark:text-zinc-400 font-bold">
-              تعداد آثار: <span className="text-[#1C3324] dark:text-white font-mono font-black">{filteredProducts.length.toLocaleString("fa-IR")}</span>
+            <span className="text-xs text-[#6E3A44] dark:text-zinc-400 font-bold">
+              تعداد آثار: <span className="text-[#3B0B14] dark:text-white font-mono font-black">{filteredProducts.length.toLocaleString("fa-IR")}</span>
             </span>
           </div>
 
           <div className="flex items-center gap-2">
-            <span className="text-xs text-[#3A5A46] dark:text-zinc-400 font-bold hidden sm:inline">مرتب‌سازی:</span>
+            <span className="text-xs text-[#6E3A44] dark:text-zinc-400 font-bold hidden sm:inline">مرتب‌سازی:</span>
             <div className="relative inline-block">
               <select 
                 value={sortBy} 
                 onChange={(e) => setSortBy(e.target.value as SortOption)} 
-                className="py-2 pl-7 pr-3 rounded-xl border border-[#1C3324]/10 dark:border-white/10 bg-[#FAF9F6] dark:bg-[#101813] text-[#1C3324] dark:text-zinc-200 text-xs font-bold outline-none focus:border-[#8B263E] cursor-pointer appearance-none"
+                className="py-2 pl-7 pr-3 rounded-xl border border-[#3B0B14]/10 dark:border-white/10 bg-[#FDF8F9] dark:bg-[#140508] text-[#3B0B14] dark:text-zinc-200 text-xs font-bold outline-none focus:border-[#8B142D] cursor-pointer appearance-none"
               >
                 <option value="newest">جدیدترین</option>
                 <option value="price_asc">ارزان‌ترین</option>
@@ -687,7 +687,7 @@ export default function ProductsPageClient({ initialProducts, availableCategorie
                 <option value="weight_asc">سبک‌ترین</option>
                 <option value="weight_desc">سنگین‌ترین</option>
               </select>
-              <ChevronDown size={13} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-[#3A5A46] dark:text-zinc-400 pointer-events-none" />
+              <ChevronDown size={13} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-[#6E3A44] dark:text-zinc-400 pointer-events-none" />
             </div>
           </div>
         </div>
@@ -696,9 +696,9 @@ export default function ProductsPageClient({ initialProducts, availableCategorie
         <div className="grid grid-cols-1 lg:grid-cols-[260px_minmax(0,1fr)] gap-6 items-start">
           
           {/* Desktop Sidebar Filters */}
-          <aside className="hidden lg:block bg-white dark:bg-[#15221B] border border-[#1C3324]/10 dark:border-white/10 rounded-2xl p-5 shadow-xs sticky top-36 lg:top-40 max-h-[calc(100vh-170px)] overflow-y-auto scrollbar-none">
-            <div className="flex items-center gap-2 font-bold text-sm text-[#1C3324] dark:text-white mb-5 pb-3 border-b border-[#1C3324]/10 dark:border-white/10">
-              <SlidersHorizontal size={16} className="text-[#8B263E] dark:text-[#D8B65C]" />
+          <aside className="hidden lg:block bg-white dark:bg-[#1C080E] border border-[#3B0B14]/10 dark:border-white/10 rounded-2xl p-5 shadow-xs sticky top-36 lg:top-40 max-h-[calc(100vh-170px)] overflow-y-auto scrollbar-none">
+            <div className="flex items-center gap-2 font-bold text-sm text-[#3B0B14] dark:text-white mb-5 pb-3 border-b border-[#3B0B14]/10 dark:border-white/10">
+              <SlidersHorizontal size={16} className="text-[#8B142D] dark:text-[#DFB76C]" />
               <span>فیلترهای گالری</span>
             </div>
             <ProductFilters {...filterProps} />
@@ -707,19 +707,19 @@ export default function ProductsPageClient({ initialProducts, availableCategorie
           {/* Products Grid */}
           <div className="min-w-0">
             {filteredProducts.length === 0 ? (
-              <div className="bg-white dark:bg-[#15221B] border border-dashed border-[#1C3324]/20 dark:border-white/10 rounded-3xl py-16 px-6 text-center shadow-xs">
-                <p className="text-base sm:text-lg font-bold text-[#1C3324] dark:text-white mb-2">اثری با این ویژگی‌ها یافت نشد!</p>
-                <p className="text-xs text-[#3A5A46] dark:text-zinc-400 mb-5">لطفاً فیلترها را تغییر دهید یا پاک کنید.</p>
+              <div className="bg-white dark:bg-[#1C080E] border border-dashed border-[#3B0B14]/20 dark:border-white/10 rounded-3xl py-16 px-6 text-center shadow-xs">
+                <p className="text-base sm:text-lg font-bold text-[#3B0B14] dark:text-white mb-2">اثری با این ویژگی‌ها یافت نشد!</p>
+                <p className="text-xs text-[#6E3A44] dark:text-zinc-400 mb-5">لطفاً فیلترها را تغییر دهید یا پاک کنید.</p>
                 <button 
                   type="button"
                   onClick={handleResetFilters} 
-                  className="bg-[#1C3324] dark:bg-[#D8B65C] text-white dark:text-[#101813] rounded-xl px-6 py-2.5 font-bold text-xs shadow-md cursor-pointer hover:bg-[#8B263E] transition-colors"
+                  className="bg-[#3B0B14] dark:bg-[#DFB76C] text-white dark:text-[#140508] rounded-xl px-6 py-2.5 font-bold text-xs shadow-md cursor-pointer hover:bg-[#8B142D] transition-colors"
                 >
                   مشاهده تمام آثار
                 </button>
               </div>
             ) : (
-              <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6">
+              <div className="grid grid-cols-2 sm:grid-cols-2 xl:grid-cols-3 gap-3 sm:gap-6">
                 {filteredProducts.map((product) => (
                   <ProductCard 
                     key={product.id} 
@@ -741,18 +741,18 @@ export default function ProductsPageClient({ initialProducts, availableCategorie
           onClick={(e) => { if (e.target === e.currentTarget) setIsMobileFilterOpen(false); }} 
           className="fixed inset-0 bg-black/60 backdrop-blur-xs z-[100] flex justify-end"
         >
-          <div className="w-[85%] max-w-[340px] bg-white dark:bg-[#15221B] h-full p-5 overflow-y-auto shadow-2xl flex flex-col justify-between">
+          <div className="w-[85%] max-w-[340px] bg-white dark:bg-[#1C080E] h-full p-5 overflow-y-auto shadow-2xl flex flex-col justify-between">
             <div>
-              <div className="flex justify-between items-center mb-5 pb-3 border-b border-[#1C3324]/10 dark:border-white/10">
-                <h3 className="m-0 text-base font-bold text-[#1C3324] dark:text-white">فیلترهای گالری</h3>
-                <button type="button" onClick={() => setIsMobileFilterOpen(false)} className="text-[#3A5A46] hover:text-red-500 cursor-pointer"><X size={20} /></button>
+              <div className="flex justify-between items-center mb-5 pb-3 border-b border-[#3B0B14]/10 dark:border-white/10">
+                <h3 className="m-0 text-base font-bold text-[#3B0B14] dark:text-white">فیلترهای گالری</h3>
+                <button type="button" onClick={() => setIsMobileFilterOpen(false)} className="text-[#6E3A44] hover:text-red-500 cursor-pointer"><X size={20} /></button>
               </div>
               <ProductFilters {...filterProps} />
             </div>
             <button 
               type="button"
               onClick={() => setIsMobileFilterOpen(false)} 
-              className="w-full py-3 rounded-xl bg-[#1C3324] dark:bg-[#D8B65C] text-white dark:text-[#101813] font-bold text-xs mt-6 shadow-md cursor-pointer hover:bg-[#8B263E] transition-colors"
+              className="w-full py-3 rounded-xl bg-[#3B0B14] dark:bg-[#DFB76C] text-white dark:text-[#140508] font-bold text-xs mt-6 shadow-md cursor-pointer hover:bg-[#8B142D] transition-colors"
             >
               اعمال فیلترها ({filteredProducts.length.toLocaleString("fa-IR")} اثر)
             </button>

@@ -237,7 +237,7 @@ export default function DashboardLogsPage() {
     switch (category) {
       case "price":
         return (
-          <span className="inline-flex items-center gap-1.5 rounded-xl border border-amber-200 bg-amber-50 px-3 py-1 text-xs font-bold text-amber-700 shadow-xs dark:border-amber-500/20 dark:bg-amber-950/40 dark:text-[#D8B65C]">
+          <span className="inline-flex items-center gap-1.5 rounded-xl border border-amber-200 bg-amber-50 px-3 py-1 text-xs font-bold text-amber-700 shadow-xs dark:border-amber-500/20 dark:bg-amber-950/40 dark:text-[#DFB76C]">
             <Coins className="h-3.5 w-3.5" />
             نرخ طلا
           </span>
@@ -277,15 +277,15 @@ export default function DashboardLogsPage() {
 
       case "settings":
         return (
-          <span className="inline-flex items-center gap-1.5 rounded-xl border border-[#1C3324]/15 bg-[#FAF9F6] px-3 py-1 text-xs font-bold text-[#3A5A46] shadow-xs dark:border-white/10 dark:bg-zinc-800 dark:text-zinc-300">
-            <Shield className="h-3.5 w-3.5 text-[#8B263E] dark:text-[#D8B65C]" />
+          <span className="inline-flex items-center gap-1.5 rounded-xl border border-[#3B0B14]/15 bg-[#FDF8F9] px-3 py-1 text-xs font-bold text-[#6E3A44] shadow-xs dark:border-white/10 dark:bg-zinc-800 dark:text-zinc-300">
+            <Shield className="h-3.5 w-3.5 text-[#8B142D] dark:text-[#DFB76C]" />
             تنظیمات
           </span>
         );
 
       default:
         return (
-          <span className="inline-flex items-center gap-1.5 rounded-xl border border-[#1C3324]/15 bg-[#FAF9F6] px-3 py-1 text-xs font-bold text-[#3A5A46] shadow-xs dark:border-white/10 dark:bg-zinc-800 dark:text-zinc-300">
+          <span className="inline-flex items-center gap-1.5 rounded-xl border border-[#3B0B14]/15 bg-[#FDF8F9] px-3 py-1 text-xs font-bold text-[#6E3A44] shadow-xs dark:border-white/10 dark:bg-zinc-800 dark:text-zinc-300">
             عمومی
           </span>
         );
@@ -332,16 +332,16 @@ export default function DashboardLogsPage() {
   return (
     <div className="space-y-6" dir="rtl">
       {/* Header */}
-      <div className="flex flex-col justify-between gap-4 rounded-3xl border border-[#1C3324]/12 bg-white/80 p-5 shadow-xs backdrop-blur-md transition-colors sm:flex-row sm:items-center lg:p-6 dark:border-white/10 dark:bg-[#15221B]/80">
+      <div className="flex flex-col justify-between gap-4 rounded-3xl border border-[#3B0B14]/12 bg-white/80 p-5 shadow-xs backdrop-blur-md transition-colors sm:flex-row sm:items-center lg:p-6 dark:border-white/10 dark:bg-[#1C080E]/80">
         <div>
           <div className="flex items-center gap-3">
-            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#1C3324] text-white shadow-xs dark:bg-emerald-950/60 dark:text-[#D8B65C] dark:border dark:border-[#D8B65C]/30">
+            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#3B0B14] text-white shadow-xs dark:bg-emerald-950/60 dark:text-[#DFB76C] dark:border dark:border-[#DFB76C]/30">
               <ScrollText className="h-5 w-5" />
             </div>
 
             <div>
               <div className="flex items-center gap-2">
-                <h1 className="text-xl font-black text-[#1C3324] dark:text-zinc-100">
+                <h1 className="text-xl font-black text-[#3B0B14] dark:text-zinc-100">
                   لاگ رویدادها و فعالیت‌های خودکار سیستم
                 </h1>
                 {isLiveActive && (
@@ -354,7 +354,7 @@ export default function DashboardLogsPage() {
             </div>
           </div>
 
-          <p className="mt-2 text-xs font-medium text-[#3A5A46] dark:text-zinc-400">
+          <p className="mt-2 text-xs font-medium text-[#6E3A44] dark:text-zinc-400">
             کلیه تغییرات قیمت طلا، ثبت فاکتورها، وضعیت سفارش‌ها، تغییرات ویترین و لاگین‌ها به صورت خودکار ثبت و رصد می‌شوند.
           </p>
         </div>
@@ -363,11 +363,11 @@ export default function DashboardLogsPage() {
           type="button"
           onClick={loadLogs}
           disabled={loading}
-          className="inline-flex items-center justify-center gap-2 rounded-2xl border border-[#1C3324]/15 bg-white px-5 py-3 text-xs font-black text-[#1C3324] shadow-xs transition hover:border-[#8B263E] hover:bg-[#8B263E]/5 hover:text-[#8B263E] disabled:cursor-not-allowed disabled:opacity-50 cursor-pointer dark:border-white/10 dark:bg-[#101813] dark:text-zinc-200 dark:hover:border-[#D8B65C] dark:hover:text-[#D8B65C]"
+          className="inline-flex items-center justify-center gap-2 rounded-2xl border border-[#3B0B14]/15 bg-white px-5 py-3 text-xs font-black text-[#3B0B14] shadow-xs transition hover:border-[#8B142D] hover:bg-[#8B142D]/5 hover:text-[#8B142D] disabled:cursor-not-allowed disabled:opacity-50 cursor-pointer dark:border-white/10 dark:bg-[#140508] dark:text-zinc-200 dark:hover:border-[#DFB76C] dark:hover:text-[#DFB76C]"
         >
           <RefreshCw
             className={`h-4 w-4 ${
-              loading ? "animate-spin text-[#8B263E] dark:text-[#D8B65C]" : ""
+              loading ? "animate-spin text-[#8B142D] dark:text-[#DFB76C]" : ""
             }`}
           />
           بروزرسانی لاگ‌ها
@@ -434,49 +434,49 @@ export default function DashboardLogsPage() {
       )}
 
       {/* Filters */}
-      <div className="rounded-3xl border border-[#1C3324]/12 bg-white/80 p-4 shadow-xs backdrop-blur-md dark:border-white/10 dark:bg-[#15221B]/80">
+      <div className="rounded-3xl border border-[#3B0B14]/12 bg-white/80 p-4 shadow-xs backdrop-blur-md dark:border-white/10 dark:bg-[#1C080E]/80">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           {/* Search */}
           <div className="relative flex-1">
-            <Search className="absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[#3A5A46] dark:text-zinc-400" />
+            <Search className="absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[#6E3A44] dark:text-zinc-400" />
 
             <input
               type="text"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               placeholder="جستجو در شرح رویداد، اپراتور، کد لاگ یا شناسه..."
-              className="w-full rounded-2xl border border-[#1C3324]/15 bg-[#FAF9F6] py-3 pl-4 pr-11 text-xs font-bold text-[#1C3324] outline-none transition placeholder:text-[#3A5A46]/60 focus:border-[#1C3324] focus:bg-white dark:border-white/10 dark:bg-[#101813] dark:text-zinc-100 dark:placeholder:text-zinc-500 dark:focus:border-[#D8B65C]"
+              className="w-full rounded-2xl border border-[#3B0B14]/15 bg-[#FDF8F9] py-3 pl-4 pr-11 text-xs font-bold text-[#3B0B14] outline-none transition placeholder:text-[#6E3A44]/60 focus:border-[#3B0B14] focus:bg-white dark:border-white/10 dark:bg-[#140508] dark:text-zinc-100 dark:placeholder:text-zinc-500 dark:focus:border-[#DFB76C]"
             />
           </div>
 
           {/* Category Dropdown */}
           <div className="flex items-center gap-2">
-            <Filter className="h-4 w-4 shrink-0 text-[#3A5A46] dark:text-zinc-400" />
+            <Filter className="h-4 w-4 shrink-0 text-[#6E3A44] dark:text-zinc-400" />
 
             <select
               value={categoryFilter}
               onChange={(e) => setCategoryFilter(e.target.value)}
-              className="rounded-2xl border border-[#1C3324]/15 bg-[#FAF9F6] px-4 py-3 text-xs font-black text-[#1C3324] outline-none transition focus:border-[#1C3324] cursor-pointer dark:border-white/10 dark:bg-[#101813] dark:text-zinc-100 dark:focus:border-[#D8B65C]"
+              className="rounded-2xl border border-[#3B0B14]/15 bg-[#FDF8F9] px-4 py-3 text-xs font-black text-[#3B0B14] outline-none transition focus:border-[#3B0B14] cursor-pointer dark:border-white/10 dark:bg-[#140508] dark:text-zinc-100 dark:focus:border-[#DFB76C]"
             >
-              <option value="all" className="dark:bg-[#101813]">
+              <option value="all" className="dark:bg-[#140508]">
                 همه دسته‌ها
               </option>
-              <option value="price" className="dark:bg-[#101813]">
+              <option value="price" className="dark:bg-[#140508]">
                 نرخ طلا و ارز
               </option>
-              <option value="invoice" className="dark:bg-[#101813]">
+              <option value="invoice" className="dark:bg-[#140508]">
                 فاکتورهای رسمی
               </option>
-              <option value="order" className="dark:bg-[#101813]">
+              <option value="order" className="dark:bg-[#140508]">
                 سفارشات مشتریان
               </option>
-              <option value="stock" className="dark:bg-[#101813]">
+              <option value="stock" className="dark:bg-[#140508]">
                 انبار و ویترین محصولات
               </option>
-              <option value="auth" className="dark:bg-[#101813]">
+              <option value="auth" className="dark:bg-[#140508]">
                 احراز هویت و ورود
               </option>
-              <option value="settings" className="dark:bg-[#101813]">
+              <option value="settings" className="dark:bg-[#140508]">
                 تنظیمات فروشگاه
               </option>
             </select>
@@ -485,11 +485,11 @@ export default function DashboardLogsPage() {
       </div>
 
       {/* Logs Table */}
-      <div className="overflow-hidden rounded-[2rem] border border-[#1C3324]/12 bg-white/80 shadow-xs backdrop-blur-md dark:border-white/10 dark:bg-[#15221B]/80">
+      <div className="overflow-hidden rounded-[2rem] border border-[#3B0B14]/12 bg-white/80 shadow-xs backdrop-blur-md dark:border-white/10 dark:bg-[#1C080E]/80">
         <div className="overflow-x-auto">
           <table className="w-full min-w-[950px] text-right text-xs">
             {/* Table Header */}
-            <thead className="border-b border-[#1C3324]/10 bg-[#FAF9F6]/80 font-black text-[#1C3324] dark:border-white/10 dark:bg-zinc-900/60 dark:text-zinc-200">
+            <thead className="border-b border-[#3B0B14]/10 bg-[#FDF8F9]/80 font-black text-[#3B0B14] dark:border-white/10 dark:bg-zinc-900/60 dark:text-zinc-200">
               <tr>
                 <th className="px-5 py-4 text-center">وضعیت</th>
                 <th className="px-5 py-4">کد لاگ</th>
@@ -502,15 +502,15 @@ export default function DashboardLogsPage() {
             </thead>
 
             {/* Table Body */}
-            <tbody className="divide-y divide-[#1C3324]/5 dark:divide-white/5">
+            <tbody className="divide-y divide-[#3B0B14]/5 dark:divide-white/5">
               {loading && logs.length === 0 ? (
                 <tr>
                   <td
                     colSpan={7}
-                    className="py-20 text-center text-xs text-[#3A5A46] dark:text-zinc-400"
+                    className="py-20 text-center text-xs text-[#6E3A44] dark:text-zinc-400"
                   >
                     <div className="flex flex-col items-center justify-center gap-3">
-                      <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#8B263E]/10 text-[#8B263E] dark:bg-rose-950/30 dark:text-rose-300">
+                      <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#8B142D]/10 text-[#8B142D] dark:bg-rose-950/30 dark:text-rose-300">
                         <RefreshCw className="h-5 w-5 animate-spin" />
                       </div>
                       <span className="font-bold">در حال دریافت لاگ‌های سیستمی...</span>
@@ -521,13 +521,13 @@ export default function DashboardLogsPage() {
                 <tr>
                   <td
                     colSpan={7}
-                    className="py-20 text-center text-xs text-[#3A5A46] dark:text-zinc-400"
+                    className="py-20 text-center text-xs text-[#6E3A44] dark:text-zinc-400"
                   >
                     <div className="flex flex-col items-center justify-center gap-3">
-                      <div className="flex h-14 w-14 items-center justify-center rounded-2xl border border-[#1C3324]/10 bg-[#FAF9F6] dark:border-white/10 dark:bg-zinc-900">
-                        <ScrollText className="h-7 w-7 text-[#8B263E] dark:text-[#D8B65C]" />
+                      <div className="flex h-14 w-14 items-center justify-center rounded-2xl border border-[#3B0B14]/10 bg-[#FDF8F9] dark:border-white/10 dark:bg-zinc-900">
+                        <ScrollText className="h-7 w-7 text-[#8B142D] dark:text-[#DFB76C]" />
                       </div>
-                      <span className="font-black text-[#1C3324] dark:text-zinc-100">
+                      <span className="font-black text-[#3B0B14] dark:text-zinc-100">
                         هیچ رویدادی در این دسته‌بندی یافت نشد.
                       </span>
 
@@ -538,7 +538,7 @@ export default function DashboardLogsPage() {
                             setSearchTerm("");
                             setCategoryFilter("all");
                           }}
-                          className="text-xs font-bold text-[#8B263E] underline underline-offset-4 cursor-pointer dark:text-[#D8B65C]"
+                          className="text-xs font-bold text-[#8B142D] underline underline-offset-4 cursor-pointer dark:text-[#DFB76C]"
                         >
                           پاک کردن فیلترها
                         </button>
@@ -550,7 +550,7 @@ export default function DashboardLogsPage() {
                 logs.map((log) => (
                   <tr
                     key={log.id}
-                    className="group transition-colors hover:bg-[#FAF9F6] dark:hover:bg-white/[0.03]"
+                    className="group transition-colors hover:bg-[#FDF8F9] dark:hover:bg-white/[0.03]"
                   >
                     {/* Level */}
                     <td className="px-5 py-4 text-center">
@@ -561,7 +561,7 @@ export default function DashboardLogsPage() {
 
                     {/* Code */}
                     <td className="px-5 py-4">
-                      <span className="rounded-xl border border-[#1C3324]/10 bg-[#FAF9F6] px-2.5 py-1 font-mono text-[11px] font-bold text-[#1C3324] dark:border-white/10 dark:bg-zinc-900 dark:text-zinc-300">
+                      <span className="rounded-xl border border-[#3B0B14]/10 bg-[#FDF8F9] px-2.5 py-1 font-mono text-[11px] font-bold text-[#3B0B14] dark:border-white/10 dark:bg-zinc-900 dark:text-zinc-300">
                         {log.logCode}
                       </span>
                     </td>
@@ -574,12 +574,12 @@ export default function DashboardLogsPage() {
                     {/* Description */}
                     <td className="px-5 py-4">
                       <div className="max-w-[420px]">
-                        <span className="block font-black text-[#1C3324] dark:text-zinc-100">
+                        <span className="block font-black text-[#3B0B14] dark:text-zinc-100">
                           {log.title}
                         </span>
 
                         {log.description && (
-                          <span className="mt-1 block text-[11px] font-medium leading-5 text-[#3A5A46] dark:text-zinc-400">
+                          <span className="mt-1 block text-[11px] font-medium leading-5 text-[#6E3A44] dark:text-zinc-400">
                             {log.description}
                           </span>
                         )}
@@ -589,11 +589,11 @@ export default function DashboardLogsPage() {
                     {/* Operator */}
                     <td className="px-5 py-4">
                       <div className="flex items-center gap-2">
-                        <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-[#1C3324] text-white dark:bg-emerald-900 dark:text-[#D8B65C]">
+                        <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-[#3B0B14] text-white dark:bg-[#8B142D] dark:text-[#DFB76C]">
                           <User className="h-3.5 w-3.5" />
                         </div>
 
-                        <span className="font-bold text-[#1C3324] dark:text-zinc-200">
+                        <span className="font-bold text-[#3B0B14] dark:text-zinc-200">
                           {log.operator || "سیستم خودکار"}
                         </span>
                       </div>
@@ -601,14 +601,14 @@ export default function DashboardLogsPage() {
 
                     {/* IP */}
                     <td className="px-5 py-4">
-                      <span className="font-mono text-xs font-medium text-[#3A5A46] dark:text-zinc-400">
+                      <span className="font-mono text-xs font-medium text-[#6E3A44] dark:text-zinc-400">
                         {log.ipAddress || "-"}
                       </span>
                     </td>
 
                     {/* Date */}
                     <td className="px-5 py-4">
-                      <span className="font-mono text-xs font-bold text-[#3A5A46] dark:text-zinc-400">
+                      <span className="font-mono text-xs font-bold text-[#6E3A44] dark:text-zinc-400">
                         {formatDate(log.created || log.timestamp)}
                       </span>
                     </td>
@@ -622,27 +622,27 @@ export default function DashboardLogsPage() {
 
       {/* Legend & Summary */}
       {!loading && logs.length > 0 && (
-        <div className="flex flex-wrap items-center gap-x-6 gap-y-2 rounded-3xl border border-[#1C3324]/12 bg-white/80 px-6 py-4 shadow-xs backdrop-blur-md dark:border-white/10 dark:bg-[#15221B]/80">
-          <span className="text-xs font-black text-[#1C3324] dark:text-zinc-200">
+        <div className="flex flex-wrap items-center gap-x-6 gap-y-2 rounded-3xl border border-[#3B0B14]/12 bg-white/80 px-6 py-4 shadow-xs backdrop-blur-md dark:border-white/10 dark:bg-[#1C080E]/80">
+          <span className="text-xs font-black text-[#3B0B14] dark:text-zinc-200">
             راهنمای وضعیت رویداد:
           </span>
 
-          <div className="flex items-center gap-1.5 text-xs font-bold text-[#3A5A46] dark:text-zinc-400">
+          <div className="flex items-center gap-1.5 text-xs font-bold text-[#6E3A44] dark:text-zinc-400">
             <CheckCircle2 className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
             عادی / موفق
           </div>
 
-          <div className="flex items-center gap-1.5 text-xs font-bold text-[#3A5A46] dark:text-zinc-400">
+          <div className="flex items-center gap-1.5 text-xs font-bold text-[#6E3A44] dark:text-zinc-400">
             <AlertTriangle className="h-4 w-4 text-amber-600 dark:text-amber-400" />
             هشدار / نیازمند توجه
           </div>
 
-          <div className="flex items-center gap-1.5 text-xs font-bold text-[#3A5A46] dark:text-zinc-400">
+          <div className="flex items-center gap-1.5 text-xs font-bold text-[#6E3A44] dark:text-zinc-400">
             <XCircle className="h-4 w-4 text-rose-600 dark:text-rose-400" />
             خطای سیستمی
           </div>
 
-          <span className="mr-auto text-xs font-bold text-[#3A5A46] dark:text-zinc-400">
+          <span className="mr-auto text-xs font-bold text-[#6E3A44] dark:text-zinc-400">
             {logs.length.toLocaleString("fa-IR")} رویداد خودکار ثبت‌شده
           </span>
         </div>

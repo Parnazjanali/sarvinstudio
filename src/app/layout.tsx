@@ -6,12 +6,136 @@ import pb from "@/lib/pocketbase";
 import { AuthUpdater } from "@/components/AuthUpdater";
 import { CartProvider } from "@/context/CartContext";
 import ConditionalSiteChrome from "@/components/ConditionalSiteChrome";
-
 import DynamicTypography from "@/components/DynamicTypography";
+import DueInstallmentModal from "@/components/DueInstallmentModal";
 
 export const metadata: Metadata = {
-  title: "پرنا زر | مثل زر بدرخش",
-  description: "گالری طلا و جواهر پرنا زر؛ مثل زر بدرخش. خرید و فروش مطمئن و آنلاین طلای ۱۸ عیار با اقساط طلایی و طراحی اختصاصی.",
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://parnazar.ir"),
+  title: {
+    default: "گالری طلا پرنا زر | مثل زر بدرخش",
+    template: "%s | پرنا زر",
+  },
+  description: "گالری طلا پرنا زر؛ خرید مطمئن و آنلاین طلای ۱۸ عیار استاندارد ۷۵۰ با امکان پرداخت در ۳ قسط ماهانه بدون سود و کارمزد، همراه با فاکتور رسمی معتبر و شناسنامه طلا. مثل زر بدرخش.",
+  keywords: [
+    "طلا آنلاین", 
+    "خرید آنلاین طلا",
+    "طلای ۱۸ عیار",
+    "اقساط طلا",
+    "خرید قسطی طلا",
+    "پرنا زر",
+    "مثل زر بدرخش",
+    "سفارش ساخت طلا",
+    "دستبند طلا",
+    "انگشتر طلا",
+    "گردنبند طلا",
+    "طلای بدون سود",
+    "طلا بدون چک",
+    "کالکشن طلا",
+    "طلا با فاکتور رسمی",
+  ],
+  authors: [{ name: "گالری طلا پرنا زر", url: "https://parnazar.ir" }],
+  creator: "پرنا زر (Parna Zar)",
+  publisher: "پرنا زر",
+  formatDetection: {
+    telephone: false,
+    date: false,
+    email: false,
+    address: false,
+  },
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    type: "website",
+    locale: "fa_IR",
+    url: "https://parnazar.ir",
+    siteName: "پرنا زر",
+    title: "گالری طلا پرنا زر | مثل زر بدرخش",
+    description: "خرید آنلاین دست‌ساخته‌های طلای ۱۸ عیار با طرح ویژه ۳ قسط ماهانه بدون سود و کارمزد به قیمت روز طلا با فاکتور رسمی.",
+    images: [
+      {
+        url: "/banner.webp",
+        width: 1200,
+        height: 630,
+        alt: "گالری طلا پرنا زر - مثل زر بدرخش",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "گالری طلا پرنا زر | مثل زر بدرخش",
+    description: "خرید آنلاین طلای ۱۸ عیار با طرح خرید در ۳ قسط ماهانه بدون سود.",
+    images: ["/banner.webp"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+};
+
+const jsonLdOrgAndStore = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": ["JewelryStore", "Store", "Organization"],
+      "@id": "https://parnazar.ir/#store",
+      name: "گالری طلا پرنا زر",
+      alternateName: ["پرنا زر", "Parna Zar Gold"],
+      slogan: "مثل زر بدرخش",
+      url: "https://parnazar.ir",
+      logo: "https://parnazar.ir/banner.webp",
+      image: "https://parnazar.ir/header.webp",
+      description: "گالری طلا پرنا زر؛ ساخت و عرضه تخصصی دست‌ساخته‌های طلای ۱۸ عیار استاندارد ۷۵۰ با طرح ویژه ۳ قسط ماهانه به قیمت روز طلا بدون سود و کارمزد، همراه با شناسنامه معتبر و فاکتور رسمی.",
+      telephone: "+989383080950",
+      priceRange: "$$$",
+      currenciesAccepted: "IRR",
+      paymentAccepted: "نقد، کارت به کارت، پرداخت آنلاین شتاب، اقساط طلایی ۳ ماهه",
+      address: {
+        "@type": "PostalAddress",
+        streetAddress: "بازار بزرگ، پاساژ تکیه دولت",
+        addressLocality: "تهران",
+        addressRegion: "تهران",
+        addressCountry: "IR",
+      },
+      openingHoursSpecification: {
+        "@type": "OpeningHoursSpecification",
+        dayOfWeek: ["Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday"],
+        opens: "10:00",
+        closes: "19:00",
+      },
+      sameAs: [
+        "https://instagram.com/parnazar.gold",
+        "https://wa.me/989383080950",
+      ],
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://parnazar.ir/#website",
+      url: "https://parnazar.ir",
+      name: "گالری طلا پرنا زر",
+      alternateName: "پرنا زر",
+      description: "خرید آنلاین طلای ۱۸ عیار با اقساط ماهانه بدون سود - مثل زر بدرخش",
+      inLanguage: "fa-IR",
+      publisher: {
+        "@id": "https://parnazar.ir/#store",
+      },
+      potentialAction: {
+        "@type": "SearchAction",
+        target: {
+          "@type": "EntryPoint",
+          urlTemplate: "https://parnazar.ir/products?search={search_term_string}",
+        },
+        "query-input": "required name=search_term_string",
+      },
+    },
+  ],
 };
 
 const themeNoFlashScript = `
@@ -101,11 +225,16 @@ export default async function RootLayout({
           strategy="beforeInteractive"
           dangerouslySetInnerHTML={{ __html: themeNoFlashScript }}
         />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdOrgAndStore) }}
+        />
       </head>
-      <body className="min-h-screen bg-[#FBF6EA] text-zinc-900 antialiased transition-colors duration-300 dark:bg-[#12100D] dark:text-zinc-100">
+      <body className="min-h-screen bg-[#FAF8F5] text-[#3B0B14] antialiased transition-colors duration-300 dark:bg-[#140508] dark:text-[#FDF8F9]">
         <CartProvider>
           <AuthUpdater />
           <DynamicTypography />
+          <DueInstallmentModal />
 
           <ConditionalSiteChrome user={userData}>
             {children}

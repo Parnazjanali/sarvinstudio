@@ -14,8 +14,11 @@ import {
   User,
   X,
   CreditCard,
+  Lock,
+  ShieldCheck,
 } from "lucide-react";
 import { toast } from "sonner";
+import { z } from "zod";
 import { pb } from "@/lib/pocketbase";
 
 interface UserProfile {
@@ -29,6 +32,40 @@ interface UserProfile {
   collectionName?: string;
 }
 
+/**
+ * الگوریتم استاندارد صحت‌سنجی کد ملی جمهوری اسلامی ایران
+ */
+export function checkIranianNationalCode(code: string): boolean {
+  if (!/^\d{10}$/.test(code)) return false;
+  // کدهای تکراری مانند 1111111111 یا 0000000000 نامعتبرند
+  if (/^(\d)\1{9}$/.test(code)) return false;
+
+  const check = parseInt(code.charAt(9), 10);
+  let sum = 0;
+  for (let i = 0; i < 9; i++) {
+    sum += parseInt(code.charAt(i), 10) * (10 - i);
+  }
+  const remainder = sum % 11;
+  return (remainder < 2 && check === remainder) || (remainder >= 2 && check === 11 - remainder);
+}
+
+// ساختار اعتبارسنجی با Zod
+const profileValidationSchema = z.object({
+  name: z.string().trim().min(2, { message: "نام و نام خانوادگی باید حداقل ۲ کاراکتر باشد." }),
+  phone: z
+    .string()
+    .trim()
+    .refine((val) => val === "" || /^09\d{9}$/.test(val), {
+      message: "شماره تماس باید دقیقاً ۱۱ رقم و با ۰۹ شروع شود (مثال: 09123456789).",
+    }),
+  nationalId: z
+    .string()
+    .trim()
+    .refine((val) => val === "" || checkIranianNationalCode(val), {
+      message: "کد ملی وارد شده ۱۰ رقمی معتبر نمی‌باشد (خطای الگوریتم هویت ملی).",
+    }),
+});
+
 export default function EditAccountPage() {
   const router = useRouter();
 
@@ -37,6 +74,7 @@ export default function EditAccountPage() {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [nationalId, setNationalId] = useState("");
+  const [isNationalIdLocked, setIsNationalIdLocked] = useState(false);
 
   const [avatarFile, setAvatarFile] = useState<File | null>(null);
   const [avatarPreview, setAvatarPreview] = useState("");
@@ -58,12 +96,20 @@ export default function EditAccountPage() {
       }
 
       const record = pb.authStore.model as UserProfile;
-
       setUser(record);
 
       setName(record.name || "");
       setPhone(record.phone || "");
-      setNationalId(record.nationalId || "");
+
+      const cleanSavedNationalId = (record.nationalId || "").trim();
+      setNationalId(cleanSavedNationalId);
+
+      // در صورتی که کد ملی قبلاً ثبت شده باشد، قفل می‌شود و کاربر دیگر نمی‌تواند آن را تغییر دهد
+      if (cleanSavedNationalId && checkIranianNationalCode(cleanSavedNationalId)) {
+        setIsNationalIdLocked(true);
+      } else {
+        setIsNationalIdLocked(false);
+      }
 
       if (record.avatar && record.collectionId) {
         setAvatarPreview(
@@ -117,34 +163,6 @@ export default function EditAccountPage() {
     }
   };
 
-  const validateForm = () => {
-    const cleanName = name.trim();
-    const cleanPhone = phone.trim();
-    const cleanNationalId = nationalId.trim();
-
-    if (!cleanName || cleanName.length < 2) {
-      toast.error("نام باید حداقل ۲ کاراکتر باشد.");
-      return false;
-    }
-
-    if (cleanPhone) {
-      const normalizedPhone = cleanPhone.replace(/\s+/g, "");
-      const iranPhoneRegex = /^(?:\+98|0098|0)?9\d{9}$/;
-
-      if (!iranPhoneRegex.test(normalizedPhone)) {
-        toast.error("شماره موبایل واردشده معتبر نیست.");
-        return false;
-      }
-    }
-
-    if (cleanNationalId && !/^\d{10}$/.test(cleanNationalId)) {
-      toast.error("کد ملی باید دقیقاً ۱۰ رقم باشد.");
-      return false;
-    }
-
-    return true;
-  };
-
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -154,7 +172,21 @@ export default function EditAccountPage() {
       return;
     }
 
-    if (!validateForm()) return;
+    // مقدار نهایی کد ملی: اگر قبلاً قفل شده، مقدار ثبت‌شده قبلی؛ در غیر این صورت مقدار واردشده جدید
+    const effectiveNationalId = isNationalIdLocked ? (user.nationalId || "") : nationalId.trim();
+
+    // اعتبارسنجی دقیق فرم با کتابخانه Zod
+    const validationResult = profileValidationSchema.safeParse({
+      name: name.trim(),
+      phone: phone.trim(),
+      nationalId: effectiveNationalId,
+    });
+
+    if (!validationResult.success) {
+      const firstIssue = validationResult.error.issues[0];
+      toast.error(firstIssue?.message || "اطلاعات وارد شده نامعتبر است.");
+      return;
+    }
 
     try {
       setSaving(true);
@@ -162,7 +194,11 @@ export default function EditAccountPage() {
       const formData = new FormData();
       formData.append("name", name.trim());
       formData.append("phone", phone.trim());
-      formData.append("nationalId", nationalId.trim());
+
+      // فقط در صورتی که کد ملی تغییر نکرده باشد یا برای اولین بار با Zod تایید شده ثبت شود
+      if (!isNationalIdLocked && effectiveNationalId) {
+        formData.append("nationalId", effectiveNationalId);
+      }
 
       if (avatarFile) {
         formData.append("avatar", avatarFile);
@@ -220,11 +256,11 @@ export default function EditAccountPage() {
     return (
       <main
         dir="rtl"
-        className="min-h-screen flex items-center justify-center pt-36 bg-[#FAF9F6]"
+        className="min-h-screen flex items-center justify-center pt-36 bg-[#FDF8F9]"
       >
         <div className="flex flex-col items-center gap-4">
-          <Loader2 size={34} className="animate-spin text-[#1C3324]" />
-          <p className="text-sm font-bold text-[#3A5A46]">
+          <Loader2 size={34} className="animate-spin text-[#3B0B14]" />
+          <p className="text-sm font-bold text-[#6E3A44]">
             در حال دریافت اطلاعات حساب...
           </p>
         </div>
@@ -239,7 +275,7 @@ export default function EditAccountPage() {
   return (
     <main
       dir="rtl"
-      className="min-h-screen pb-24 pt-36 lg:pt-42 px-4 sm:px-6 lg:px-8 font-sans bg-[#FAF9F6] text-[#1C3324]"
+      className="min-h-screen pb-24 pt-36 lg:pt-42 px-4 sm:px-6 lg:px-8 font-sans bg-[#FDF8F9] text-[#3B0B14]"
     >
       <div className="mx-auto w-full max-w-4xl">
         
@@ -247,17 +283,17 @@ export default function EditAccountPage() {
         <div className="mb-7">
           <Link
             href="/account"
-            className="mb-4 inline-flex items-center gap-1.5 text-xs font-bold text-[#8B263E] transition hover:opacity-75"
+            className="mb-4 inline-flex items-center gap-1.5 text-xs font-bold text-[#8B142D] transition hover:opacity-75"
           >
             <ArrowRight size={16} />
             بازگشت به حساب کاربری
           </Link>
 
-          <h1 className="text-2xl md:text-3xl font-black text-[#1C3324]">
+          <h1 className="text-2xl md:text-3xl font-black text-[#3B0B14]">
             ویرایش اطلاعات شخصی
           </h1>
 
-          <p className="mt-1.5 text-xs sm:text-sm text-[#3A5A46]">
+          <p className="mt-1.5 text-xs sm:text-sm text-[#6E3A44]">
             مشخصات فردی و اطلاعات حساب کاربری خود را در پرنا زر مدیریت کنید.
           </p>
         </div>
@@ -266,10 +302,10 @@ export default function EditAccountPage() {
           <div className="grid gap-6 md:grid-cols-[260px_1fr]">
             
             {/* بخش آواتار */}
-            <section className="h-fit rounded-3xl border border-[#1C3324]/15 bg-white p-6 shadow-xs">
+            <section className="h-fit rounded-3xl border border-[#DFB76C]/30 bg-white p-6 shadow-xs">
               <div className="flex flex-col items-center">
                 <div className="relative">
-                  <div className="flex h-32 w-32 items-center justify-center overflow-hidden rounded-full bg-[#FAF9F6] border border-[#1C3324]/15 shadow-inner">
+                  <div className="flex h-32 w-32 items-center justify-center overflow-hidden rounded-full bg-[#FDF8F9] border border-[#DFB76C]/30 shadow-inner">
                     {avatarPreview ? (
                       <img
                         src={avatarPreview}
@@ -277,13 +313,13 @@ export default function EditAccountPage() {
                         className="h-full w-full object-cover"
                       />
                     ) : (
-                      <User size={52} strokeWidth={1.5} className="text-[#1C3324]" />
+                      <User size={52} strokeWidth={1.5} className="text-[#3B0B14]" />
                     )}
                   </div>
 
                   <label
                     htmlFor="avatar"
-                    className="absolute bottom-0 left-0 flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-[#8B263E] text-white shadow-md transition-transform hover:scale-105"
+                    className="absolute bottom-0 left-0 flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-[#8B142D] text-white shadow-md transition-transform hover:scale-105"
                   >
                     <Camera size={18} />
                     <input
@@ -296,19 +332,19 @@ export default function EditAccountPage() {
                   </label>
                 </div>
 
-                <h2 className="mt-5 text-base font-bold text-[#1C3324]">
+                <h2 className="mt-5 text-base font-bold text-[#3B0B14]">
                   تصویر پروفایل
                 </h2>
 
-                <p className="mt-1 text-center text-xs text-[#3A5A46]">
+                <p className="mt-1 text-center text-xs text-[#6E3A44]">
                   حداکثر حجم: ۵ مگابایت
                 </p>
 
                 {avatarFile && (
-                  <div className="mt-4 flex w-full items-center justify-between rounded-2xl bg-[#FAF9F6] border border-[#1C3324]/15 px-3.5 py-2">
+                  <div className="mt-4 flex w-full items-center justify-between rounded-2xl bg-[#FDF8F9] border border-[#DFB76C]/30 px-3.5 py-2">
                     <div className="flex min-w-0 items-center gap-2">
                       <Check size={16} className="text-emerald-600" />
-                      <span className="truncate text-xs text-[#1C3324] font-semibold">
+                      <span className="truncate text-xs text-[#3B0B14] font-semibold">
                         تصویر جدید انتخاب شد
                       </span>
                     </div>
@@ -316,7 +352,7 @@ export default function EditAccountPage() {
                     <button
                       type="button"
                       onClick={removeSelectedAvatar}
-                      className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full hover:bg-black/5 text-[#3A5A46] cursor-pointer"
+                      className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full hover:bg-black/5 text-[#6E3A44] cursor-pointer"
                     >
                       <X size={15} />
                     </button>
@@ -326,12 +362,12 @@ export default function EditAccountPage() {
             </section>
 
             {/* فرم اطلاعات فردی */}
-            <section className="rounded-3xl border border-[#1C3324]/15 bg-white p-6 md:p-8 shadow-xs">
+            <section className="rounded-3xl border border-[#DFB76C]/30 bg-white p-6 md:p-8 shadow-xs">
               <div className="mb-6">
-                <h2 className="text-lg font-black text-[#1C3324]">
+                <h2 className="text-lg font-black text-[#3B0B14]">
                   مشخصات هویتی
                 </h2>
-                <p className="mt-1 text-xs text-[#3A5A46]">
+                <p className="mt-1 text-xs text-[#6E3A44]">
                   اطلاعات شناسایی و ارتباطی شما
                 </p>
               </div>
@@ -339,88 +375,126 @@ export default function EditAccountPage() {
               <div className="space-y-4">
                 {/* نام و نام خانوادگی */}
                 <div>
-                  <label htmlFor="name" className="mb-2 block text-xs font-bold text-[#1C3324]">
-                    نام و نام خانوادگی
+                  <label htmlFor="name" className="mb-2 block text-xs font-bold text-[#3B0B14]">
+                    نام و نام خانوادگی <span className="text-red-500">*</span>
                   </label>
                   <div className="relative">
-                    <User size={18} className="absolute right-4 top-1/2 -translate-y-1/2 text-[#8B263E]" />
+                    <User size={18} className="absolute right-4 top-1/2 -translate-y-1/2 text-[#8B142D]" />
                     <input
                       id="name"
                       type="text"
                       value={name}
                       onChange={(e) => setName(e.target.value)}
                       placeholder="مثلاً پرناز جلالی"
-                      className="w-full rounded-2xl border border-[#1C3324]/15 bg-[#FAF9F6] py-3 pl-4 pr-12 text-sm text-[#1C3324] outline-none transition focus:border-[#8B263E] font-medium"
+                      className="w-full rounded-2xl border border-[#3B0B14]/15 bg-[#FDF8F9] py-3 pl-4 pr-12 text-sm text-[#3B0B14] outline-none transition focus:border-[#8B142D] font-medium"
                     />
                   </div>
                 </div>
 
                 {/* ایمیل (غیرقابل تغییر) */}
                 <div>
-                  <label htmlFor="email" className="mb-2 block text-xs font-bold text-[#1C3324]">
+                  <label htmlFor="email" className="mb-2 block text-xs font-bold text-[#3B0B14]">
                     ایمیل (شناسه کاربری)
                   </label>
                   <div className="relative">
-                    <Mail size={18} className="absolute right-4 top-1/2 -translate-y-1/2 text-[#3A5A46]" />
+                    <Mail size={18} className="absolute right-4 top-1/2 -translate-y-1/2 text-[#6E3A44]" />
                     <input
                       id="email"
                       type="email"
                       value={user.email || ""}
                       readOnly
                       disabled
-                      className="w-full cursor-not-allowed rounded-2xl border border-[#1C3324]/10 bg-[#FAF9F6]/50 py-3 pl-4 pr-12 text-sm text-[#3A5A46] outline-none font-medium"
+                      className="w-full cursor-not-allowed rounded-2xl border border-[#3B0B14]/10 bg-[#FDF8F9]/50 py-3 pl-4 pr-12 text-sm text-[#6E3A44] outline-none font-medium"
                     />
                   </div>
-                  <p className="mt-1 text-[11px] text-[#3A5A46]/70">
-                    امکان تغییر ایمیل وجود ندارد.
+                  <p className="mt-1 text-[11px] text-[#6E3A44]/70">
+                    امکان تغییر ایمیل حساب کاربری وجود ندارد.
                   </p>
                 </div>
 
-                {/* شماره موبایل */}
+                {/* شماره موبایل - محدود شده به دقیقاً حداکثر ۱۱ رقم */}
                 <div>
-                  <label htmlFor="phone" className="mb-2 block text-xs font-bold text-[#1C3324]">
-                    شماره موبایل
-                  </label>
+                  <div className="flex items-center justify-between mb-2">
+                    <label htmlFor="phone" className="block text-xs font-bold text-[#3B0B14]">
+                      شماره موبایل
+                    </label>
+                    <span className="text-[10px] text-[#6E3A44] font-mono">
+                      {phone.length}/۱۱ رقم
+                    </span>
+                  </div>
                   <div className="relative">
-                    <Phone size={18} className="absolute right-4 top-1/2 -translate-y-1/2 text-[#8B263E]" />
+                    <Phone size={18} className="absolute right-4 top-1/2 -translate-y-1/2 text-[#8B142D]" />
                     <input
                       id="phone"
                       type="tel"
+                      maxLength={11}
+                      inputMode="numeric"
                       value={phone}
-                      onChange={(e) => setPhone(e.target.value)}
+                      onChange={(e) => setPhone(e.target.value.replace(/\D/g, "").slice(0, 11))}
                       placeholder="09120000000"
                       dir="ltr"
-                      className="w-full rounded-2xl border border-[#1C3324]/15 bg-[#FAF9F6] py-3 pl-4 pr-12 text-right text-sm text-[#1C3324] outline-none transition focus:border-[#8B263E] font-medium"
+                      className="w-full rounded-2xl border border-[#3B0B14]/15 bg-[#FDF8F9] py-3 pl-4 pr-12 text-right text-sm text-[#3B0B14] outline-none transition focus:border-[#8B142D] font-medium font-mono"
                     />
                   </div>
+                  <p className="mt-1 text-[11px] text-[#6E3A44]/70">
+                    شماره موبایل جهت هماهنگی ارسال سفارش‌ها و یادآور اقساط (۱۱ رقم با پیش‌شماره ۰۹).
+                  </p>
                 </div>
 
-                {/* کد ملی */}
+                {/* کد ملی با اعتبارسنجی Zod و امکان قفل شدن */}
                 <div>
-                  <label htmlFor="nationalId" className="mb-2 block text-xs font-bold text-[#1C3324]">
-                    کد ملی
-                  </label>
+                  <div className="flex items-center justify-between mb-2">
+                    <label htmlFor="nationalId" className="block text-xs font-bold text-[#3B0B14]">
+                      کد ملی
+                    </label>
+                    {isNationalIdLocked && (
+                      <span className="inline-flex items-center gap-1 text-[10px] font-bold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
+                        <ShieldCheck size={12} />
+                        احراز هویت شده (قفل)
+                      </span>
+                    )}
+                  </div>
                   <div className="relative">
-                    <CreditCard size={18} className="absolute right-4 top-1/2 -translate-y-1/2 text-[#8B263E]" />
+                    {isNationalIdLocked ? (
+                      <Lock size={18} className="absolute right-4 top-1/2 -translate-y-1/2 text-emerald-700" />
+                    ) : (
+                      <CreditCard size={18} className="absolute right-4 top-1/2 -translate-y-1/2 text-[#8B142D]" />
+                    )}
                     <input
                       id="nationalId"
                       type="text"
                       maxLength={10}
+                      inputMode="numeric"
+                      disabled={isNationalIdLocked}
+                      readOnly={isNationalIdLocked}
                       value={nationalId}
-                      onChange={(e) => setNationalId(e.target.value)}
+                      onChange={(e) => setNationalId(e.target.value.replace(/\D/g, "").slice(0, 10))}
                       placeholder="۱۰ رقم بدون خط تیره"
                       dir="ltr"
-                      className="w-full rounded-2xl border border-[#1C3324]/15 bg-[#FAF9F6] py-3 pl-4 pr-12 text-right text-sm text-[#1C3324] outline-none transition focus:border-[#8B263E] font-medium"
+                      className={`w-full rounded-2xl border py-3 pl-4 pr-12 text-right text-sm outline-none transition font-medium font-mono ${
+                        isNationalIdLocked
+                          ? "cursor-not-allowed border-emerald-200 bg-emerald-50/40 text-emerald-900"
+                          : "border-[#3B0B14]/15 bg-[#FDF8F9] text-[#3B0B14] focus:border-[#8B142D]"
+                      }`}
                     />
                   </div>
+                  {isNationalIdLocked ? (
+                    <p className="mt-1 text-[11px] text-emerald-800 font-medium">
+                      کد ملی شما با موفقیت تایید و احراز شده و جهت رعایت الزامات قانونی اتحادیه طلا غیرقابل تغییر است.
+                    </p>
+                  ) : (
+                    <p className="mt-1 text-[11px] text-[#6E3A44]/70">
+                      کد ملی جهت صدور فاکتور رسمی اتحادیه طلا الزامی است و با الگوریتم ملی صحت‌سنجی می‌شود. پس از ثبت، قفل خواهد شد.
+                    </p>
+                  )}
                 </div>
               </div>
 
               {/* دکمه‌های عملیاتی */}
-              <div className="mt-8 flex flex-col-reverse gap-3 sm:flex-row pt-4 border-t border-[#1C3324]/10">
+              <div className="mt-8 flex flex-col-reverse gap-3 sm:flex-row pt-4 border-t border-[#3B0B14]/10">
                 <Link
                   href="/account"
-                  className="flex-1 flex items-center justify-center rounded-2xl border border-[#1C3324]/15 bg-[#FAF9F6] px-5 py-3 text-xs font-bold text-[#1C3324] transition hover:bg-[#1C3324]/5"
+                  className="flex-1 flex items-center justify-center rounded-2xl border border-[#3B0B14]/15 bg-[#FDF8F9] px-5 py-3 text-xs font-bold text-[#3B0B14] transition hover:bg-[#3B0B14]/5"
                 >
                   انصراف
                 </Link>
@@ -428,7 +502,7 @@ export default function EditAccountPage() {
                 <button
                   type="submit"
                   disabled={saving}
-                  className="flex-1 flex items-center justify-center gap-2 rounded-2xl bg-[#1C3324] px-5 py-3 text-xs font-bold text-white transition hover:bg-[#8B263E] disabled:cursor-not-allowed disabled:opacity-60 shadow-xs cursor-pointer"
+                  className="flex-1 flex items-center justify-center gap-2 rounded-2xl bg-[#3B0B14] px-5 py-3 text-xs font-bold text-white transition hover:bg-[#8B142D] disabled:cursor-not-allowed disabled:opacity-60 shadow-xs cursor-pointer"
                 >
                   {saving ? (
                     <>

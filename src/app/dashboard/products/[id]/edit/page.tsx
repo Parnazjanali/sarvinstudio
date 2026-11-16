@@ -542,9 +542,9 @@ export default function EditProductPage() {
 
   if (isLoading) {
     return (
-      <div dir="rtl" className="flex min-h-screen items-center justify-center bg-[#FAF9F6] dark:bg-[#101813]">
-        <div className="inline-flex flex-col items-center gap-3 text-[#3A5A46] dark:text-zinc-400">
-          <Loader2 className="h-8 w-8 animate-spin text-[#8B263E] dark:text-[#D8B65C]" />
+      <div dir="rtl" className="flex min-h-screen items-center justify-center bg-[#FDF8F9] dark:bg-[#140508]">
+        <div className="inline-flex flex-col items-center gap-3 text-[#6E3A44] dark:text-zinc-400">
+          <Loader2 className="h-8 w-8 animate-spin text-[#8B142D] dark:text-[#DFB76C]" />
           <span className="text-xs font-bold">در حال بارگذاری اطلاعات محصول و مظنه طلا...</span>
         </div>
       </div>
@@ -553,11 +553,11 @@ export default function EditProductPage() {
 
   if (loadError) {
     return (
-      <div dir="rtl" className="min-h-screen bg-[#FAF9F6] p-6 text-[#1C3324] dark:bg-[#101813] dark:text-zinc-100">
-        <div className="mx-auto max-w-xl rounded-3xl border border-rose-200 bg-white p-8 text-center shadow-xs dark:border-rose-900/40 dark:bg-[#15221B]">
+      <div dir="rtl" className="min-h-screen bg-[#FDF8F9] p-6 text-[#3B0B14] dark:bg-[#140508] dark:text-zinc-100">
+        <div className="mx-auto max-w-xl rounded-3xl border border-rose-200 bg-white p-8 text-center shadow-xs dark:border-rose-900/40 dark:bg-[#1C080E]">
           <X className="mx-auto h-12 w-12 text-rose-600" />
           <h2 className="mt-4 text-base font-black">خطا در بارگذاری اطلاعات کالا</h2>
-          <p className="mt-2 text-xs text-[#3A5A46] dark:text-zinc-400">{loadError}</p>
+          <p className="mt-2 text-xs text-[#6E3A44] dark:text-zinc-400">{loadError}</p>
           <div className="mt-6 flex justify-center gap-3">
             <Button variant="default" onClick={() => void loadProduct()}>
               تلاش مجدد
@@ -574,7 +574,7 @@ export default function EditProductPage() {
   return (
     <div
       dir="rtl"
-      className="min-h-screen bg-[#FAF9F6] px-4 py-6 font-sans text-[#1C3324] sm:px-6 lg:px-8 dark:bg-[#101813] dark:text-zinc-100"
+      className="min-h-screen bg-[#FDF8F9] px-4 py-6 font-sans text-[#3B0B14] sm:px-6 lg:px-8 dark:bg-[#140508] dark:text-zinc-100"
     >
       {/* Top Bar Navigation */}
       <div className="mx-auto mb-8 flex max-w-7xl items-center justify-between gap-4">
@@ -583,7 +583,7 @@ export default function EditProductPage() {
             asChild
             variant="outline"
             size="icon"
-            className="h-12 w-12 rounded-2xl dark:border-white/10 dark:bg-[#15221B]"
+            className="h-12 w-12 rounded-2xl dark:border-white/10 dark:bg-[#1C080E]"
           >
             <Link href="/dashboard/products">
               <ArrowRight className="h-5 w-5" />
@@ -591,13 +591,13 @@ export default function EditProductPage() {
           </Button>
 
           <div>
-            <h1 className="flex items-center gap-2 text-2xl font-black tracking-tight text-[#1C3324] sm:text-3xl dark:text-zinc-100">
+            <h1 className="flex items-center gap-2 text-2xl font-black tracking-tight text-[#3B0B14] sm:text-3xl dark:text-zinc-100">
               ویرایش محصول
-              <span className="inline-flex items-center rounded-xl bg-[#8B263E]/10 px-2.5 py-1 text-xs font-black text-[#8B263E] border border-[#8B263E]/20 dark:bg-[#D8B65C]/10 dark:text-[#D8B65C] dark:border-[#D8B65C]/20">
+              <span className="inline-flex items-center rounded-xl bg-[#8B142D]/10 px-2.5 py-1 text-xs font-black text-[#8B142D] border border-[#8B142D]/20 dark:bg-[#DFB76C]/10 dark:text-[#DFB76C] dark:border-[#DFB76C]/20">
                 {form.title || "پرنا زر"}
               </span>
             </h1>
-            <p className="mt-1 text-xs text-[#3A5A46] dark:text-zinc-400">
+            <p className="mt-1 text-xs text-[#6E3A44] dark:text-zinc-400">
               ویرایش اوزان، درصد اجرت، عیار، گالری تصاویر، وضعیت ویترین آنلاین و دسته‌بندی
             </p>
           </div>
@@ -642,18 +642,18 @@ export default function EditProductPage() {
         <div className="space-y-6 lg:col-span-8">
 
           {/* Section 1: Title & Identity */}
-          <Card className="border-[#1C3324]/12 bg-white/80 p-6 backdrop-blur-md dark:border-white/10 dark:bg-[#15221B]/80 space-y-5">
+          <Card className="border-[#3B0B14]/12 bg-white/80 p-6 backdrop-blur-md dark:border-white/10 dark:bg-[#1C080E]/80 space-y-5">
             <div className="flex items-center gap-2 pb-3 border-b border-black/5 dark:border-white/5">
-              <Package className="h-5 w-5 text-[#8B263E] dark:text-[#D8B65C]" />
-              <h2 className="text-base font-black text-[#1C3324] dark:text-zinc-100">
+              <Package className="h-5 w-5 text-[#8B142D] dark:text-[#DFB76C]" />
+              <h2 className="text-base font-black text-[#3B0B14] dark:text-zinc-100">
                 مشخصات شناسنامه‌ای و کد کالا
               </h2>
             </div>
 
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div className="sm:col-span-2">
-                <label className="mb-2 block text-xs font-bold text-[#3A5A46] dark:text-zinc-400">
-                  نام محصول <span className="text-[#8B263E] dark:text-rose-400">*</span>
+                <label className="mb-2 block text-xs font-bold text-[#6E3A44] dark:text-zinc-400">
+                  نام محصول <span className="text-[#8B142D] dark:text-rose-400">*</span>
                 </label>
                 <Input
                   type="text"
@@ -666,7 +666,7 @@ export default function EditProductPage() {
               </div>
 
               <div>
-                <label className="mb-2 block text-xs font-bold text-[#3A5A46] dark:text-zinc-400">
+                <label className="mb-2 block text-xs font-bold text-[#6E3A44] dark:text-zinc-400">
                   شناسه کالا / SKU
                 </label>
                 <Input
@@ -679,7 +679,7 @@ export default function EditProductPage() {
               </div>
 
               <div>
-                <label className="mb-2 block text-xs font-bold text-[#3A5A46] dark:text-zinc-400">
+                <label className="mb-2 block text-xs font-bold text-[#6E3A44] dark:text-zinc-400">
                   زمان ساخت و تحویل (روز کاری)
                 </label>
                 <Input
@@ -693,7 +693,7 @@ export default function EditProductPage() {
 
               {/* Colors Multi-Select */}
               <div className="sm:col-span-2">
-                <label className="mb-2 block text-xs font-bold text-[#3A5A46] dark:text-zinc-400">
+                <label className="mb-2 block text-xs font-bold text-[#6E3A44] dark:text-zinc-400">
                   رنگ‌های قابل سفارش طلا
                 </label>
                 <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
@@ -707,8 +707,8 @@ export default function EditProductPage() {
                         className={cn(
                           "flex items-center justify-between rounded-2xl border p-3 text-xs font-bold transition cursor-pointer",
                           isSelected
-                            ? "border-[#8B263E] bg-[#8B263E]/5 text-[#8B263E] dark:border-[#D8B65C] dark:bg-[#D8B65C]/10 dark:text-[#D8B65C]"
-                            : "border-[#1C3324]/12 bg-[#FAF9F6] text-[#3A5A46] hover:border-[#8B263E]/40 dark:border-white/10 dark:bg-zinc-900/60 dark:text-zinc-300"
+                            ? "border-[#8B142D] bg-[#8B142D]/5 text-[#8B142D] dark:border-[#DFB76C] dark:bg-[#DFB76C]/10 dark:text-[#DFB76C]"
+                            : "border-[#3B0B14]/12 bg-[#FDF8F9] text-[#6E3A44] hover:border-[#8B142D]/40 dark:border-white/10 dark:bg-zinc-900/60 dark:text-zinc-300"
                         )}
                       >
                         <span>{color.label}</span>
@@ -722,17 +722,17 @@ export default function EditProductPage() {
           </Card>
 
           {/* Section 2: Weight, Karat, Wage & Guild Parameters */}
-          <Card className="border-[#1C3324]/12 bg-white/80 p-6 backdrop-blur-md dark:border-white/10 dark:bg-[#15221B]/80 space-y-5">
+          <Card className="border-[#3B0B14]/12 bg-white/80 p-6 backdrop-blur-md dark:border-white/10 dark:bg-[#1C080E]/80 space-y-5">
             <div className="flex items-center gap-2 pb-3 border-b border-black/5 dark:border-white/5">
-              <Scale className="h-5 w-5 text-[#8B263E] dark:text-[#D8B65C]" />
-              <h2 className="text-base font-black text-[#1C3324] dark:text-zinc-100">
+              <Scale className="h-5 w-5 text-[#8B142D] dark:text-[#DFB76C]" />
+              <h2 className="text-base font-black text-[#3B0B14] dark:text-zinc-100">
                 مشخصات وزنی، عیار و درصدهای قانونی قیمت‌گذاری
               </h2>
             </div>
 
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
               <div>
-                <label className="mb-2 block text-xs font-bold text-[#3A5A46] dark:text-zinc-400">
+                <label className="mb-2 block text-xs font-bold text-[#6E3A44] dark:text-zinc-400">
                   وزن پایه طلا (گرم)
                 </label>
                 <Input
@@ -747,13 +747,13 @@ export default function EditProductPage() {
               </div>
 
               <div>
-                <label className="mb-2 block text-xs font-bold text-[#3A5A46] dark:text-zinc-400">
+                <label className="mb-2 block text-xs font-bold text-[#6E3A44] dark:text-zinc-400">
                   عیار طلا (پیش‌فرض ۱۸)
                 </label>
                 <select
                   value={form.karat}
                   onChange={(e) => updateForm("karat", e.target.value)}
-                  className="w-full rounded-2xl border border-[#1C3324]/15 bg-[#FAF9F6] px-4 py-2.5 text-xs font-bold text-[#1C3324] outline-none dark:border-white/10 dark:bg-zinc-900/60 dark:text-zinc-100"
+                  className="w-full rounded-2xl border border-[#3B0B14]/15 bg-[#FDF8F9] px-4 py-2.5 text-xs font-bold text-[#3B0B14] outline-none dark:border-white/10 dark:bg-zinc-900/60 dark:text-zinc-100"
                 >
                   <option value="18">۱۸ عیار (۷۵۰)</option>
                   <option value="21">۲۱ عیار (۸۷۵)</option>
@@ -762,7 +762,7 @@ export default function EditProductPage() {
               </div>
 
               <div>
-                <label className="mb-2 block text-xs font-bold text-[#3A5A46] dark:text-zinc-400">
+                <label className="mb-2 block text-xs font-bold text-[#6E3A44] dark:text-zinc-400">
                   موجودی کلی در انبار
                 </label>
                 <Input
@@ -775,7 +775,7 @@ export default function EditProductPage() {
               </div>
 
               <div>
-                <label className="mb-2 block text-xs font-bold text-[#3A5A46] dark:text-zinc-400">
+                <label className="mb-2 block text-xs font-bold text-[#6E3A44] dark:text-zinc-400">
                   اجرت ساخت کارگاه (درصد ٪)
                 </label>
                 <Input
@@ -790,7 +790,7 @@ export default function EditProductPage() {
               </div>
 
               <div>
-                <label className="mb-2 block text-xs font-bold text-[#3A5A46] dark:text-zinc-400">
+                <label className="mb-2 block text-xs font-bold text-[#6E3A44] dark:text-zinc-400">
                   سود گالری (درصد ٪ - مصوب ۷٪)
                 </label>
                 <Input
@@ -805,7 +805,7 @@ export default function EditProductPage() {
               </div>
 
               <div>
-                <label className="mb-2 block text-xs font-bold text-[#3A5A46] dark:text-zinc-400">
+                <label className="mb-2 block text-xs font-bold text-[#6E3A44] dark:text-zinc-400">
                   مالیات ارزش افزوده (درصد ٪)
                 </label>
                 <Input
@@ -822,11 +822,11 @@ export default function EditProductPage() {
           </Card>
 
           {/* Section 3: Variants (تنوع وزنی) */}
-          <Card className="border-[#1C3324]/12 bg-white/80 p-6 backdrop-blur-md dark:border-white/10 dark:bg-[#15221B]/80 space-y-5">
+          <Card className="border-[#3B0B14]/12 bg-white/80 p-6 backdrop-blur-md dark:border-white/10 dark:bg-[#1C080E]/80 space-y-5">
             <div className="flex items-center justify-between pb-3 border-b border-black/5 dark:border-white/5">
               <div className="flex items-center gap-2">
-                <Layers className="h-5 w-5 text-[#8B263E] dark:text-[#D8B65C]" />
-                <h2 className="text-base font-black text-[#1C3324] dark:text-zinc-100">
+                <Layers className="h-5 w-5 text-[#8B142D] dark:text-[#DFB76C]" />
+                <h2 className="text-base font-black text-[#3B0B14] dark:text-zinc-100">
                   تنوع‌های وزنی محصول (Variants)
                 </h2>
               </div>
@@ -837,8 +837,8 @@ export default function EditProductPage() {
             </div>
 
             {variants.length === 0 ? (
-              <div className="rounded-2xl border border-dashed border-[#1C3324]/20 p-6 text-center dark:border-white/20">
-                <p className="text-xs text-[#3A5A46] dark:text-zinc-400">
+              <div className="rounded-2xl border border-dashed border-[#3B0B14]/20 p-6 text-center dark:border-white/20">
+                <p className="text-xs text-[#6E3A44] dark:text-zinc-400">
                   محصول به صورت تک‌وزن با وزن اصلی فرم ثبت خواهد شد. جهت افزودن سایزبندی یا وزن‌های گوناگون دکمه بالا را بزنید.
                 </p>
               </div>
@@ -847,7 +847,7 @@ export default function EditProductPage() {
                 {variants.map((v, idx) => (
                   <div
                     key={v.id}
-                    className="flex flex-col gap-3 rounded-2xl border border-[#1C3324]/10 bg-[#FAF9F6] p-4 sm:flex-row sm:items-center dark:border-white/10 dark:bg-zinc-900/40"
+                    className="flex flex-col gap-3 rounded-2xl border border-[#3B0B14]/10 bg-[#FDF8F9] p-4 sm:flex-row sm:items-center dark:border-white/10 dark:bg-zinc-900/40"
                   >
                     <div className="flex items-center gap-2">
                       <input
@@ -856,9 +856,9 @@ export default function EditProductPage() {
                         name="default_variant"
                         checked={v.is_default}
                         onChange={() => updateVariant(v.id, "is_default", true)}
-                        className="h-4 w-4 text-[#8B263E] cursor-pointer"
+                        className="h-4 w-4 text-[#8B142D] cursor-pointer"
                       />
-                      <label htmlFor={`default-${v.id}`} className="text-xs font-bold text-[#1C3324] dark:text-zinc-200">
+                      <label htmlFor={`default-${v.id}`} className="text-xs font-bold text-[#3B0B14] dark:text-zinc-200">
                         سایز پیش‌فرض
                       </label>
                     </div>
@@ -904,13 +904,13 @@ export default function EditProductPage() {
           </Card>
 
           {/* Section 4: Descriptions */}
-          <Card className="border-[#1C3324]/12 bg-white/80 p-6 backdrop-blur-md dark:border-white/10 dark:bg-[#15221B]/80 space-y-4">
-            <h2 className="text-base font-black text-[#1C3324] dark:text-zinc-100">
+          <Card className="border-[#3B0B14]/12 bg-white/80 p-6 backdrop-blur-md dark:border-white/10 dark:bg-[#1C080E]/80 space-y-4">
+            <h2 className="text-base font-black text-[#3B0B14] dark:text-zinc-100">
               توضیحات و معرفی محصول
             </h2>
 
             <div>
-              <label className="mb-2 block text-xs font-bold text-[#3A5A46] dark:text-zinc-400">
+              <label className="mb-2 block text-xs font-bold text-[#6E3A44] dark:text-zinc-400">
                 خلاصه مشخصات (نمایش در کارت محصول)
               </label>
               <Input
@@ -923,7 +923,7 @@ export default function EditProductPage() {
             </div>
 
             <div>
-              <label className="mb-2 block text-xs font-bold text-[#3A5A46] dark:text-zinc-400">
+              <label className="mb-2 block text-xs font-bold text-[#6E3A44] dark:text-zinc-400">
                 توضیحات کامل کالا و ویژگی‌های طلا
               </label>
               <textarea
@@ -931,7 +931,7 @@ export default function EditProductPage() {
                 value={form.description}
                 onChange={(e) => updateForm("description", e.target.value)}
                 placeholder="توضیحات فنی، جزئیات قفل، ابعاد و نکات نگهداری..."
-                className="w-full rounded-2xl border border-[#1C3324]/15 bg-[#FAF9F6] p-4 text-xs font-medium text-[#1C3324] outline-none transition focus:border-[#1C3324] dark:border-white/10 dark:bg-zinc-900/60 dark:text-zinc-100"
+                className="w-full rounded-2xl border border-[#3B0B14]/15 bg-[#FDF8F9] p-4 text-xs font-medium text-[#3B0B14] outline-none transition focus:border-[#3B0B14] dark:border-white/10 dark:bg-zinc-900/60 dark:text-zinc-100"
               />
             </div>
           </Card>
@@ -941,11 +941,11 @@ export default function EditProductPage() {
         <div className="space-y-6 lg:col-span-4">
 
           {/* Live Gold Price Calculator Preview */}
-          <Card className="border-[#1C3324]/12 bg-gradient-to-br from-white to-amber-50/40 p-5 backdrop-blur-md dark:border-white/10 dark:from-[#15221B] dark:to-emerald-950/30 space-y-4 sticky top-6">
+          <Card className="border-[#3B0B14]/12 bg-gradient-to-br from-white to-amber-50/40 p-5 backdrop-blur-md dark:border-white/10 dark:from-[#1C080E] dark:to-emerald-950/30 space-y-4 sticky top-6">
             <div className="flex items-center justify-between pb-3 border-b border-black/5 dark:border-white/5">
               <div className="flex items-center gap-2">
-                <CircleDollarSign className="h-5 w-5 text-[#8B263E] dark:text-[#D8B65C]" />
-                <h3 className="text-xs font-black text-[#1C3324] dark:text-zinc-100">
+                <CircleDollarSign className="h-5 w-5 text-[#8B142D] dark:text-[#DFB76C]" />
+                <h3 className="text-xs font-black text-[#3B0B14] dark:text-zinc-100">
                   پیش‌نمایش زنده قیمت فروش
                 </h3>
               </div>
@@ -956,53 +956,53 @@ export default function EditProductPage() {
 
             {livePricePreview ? (
               <div className="space-y-3">
-                <div className="rounded-2xl bg-[#8B263E]/5 p-4 border border-[#8B263E]/15 text-center dark:bg-[#D8B65C]/10 dark:border-[#D8B65C]/20">
-                  <span className="text-[11px] font-bold text-[#8B263E] dark:text-[#D8B65C]">
+                <div className="rounded-2xl bg-[#8B142D]/5 p-4 border border-[#8B142D]/15 text-center dark:bg-[#DFB76C]/10 dark:border-[#DFB76C]/20">
+                  <span className="text-[11px] font-bold text-[#8B142D] dark:text-[#DFB76C]">
                     قیمت نهایی مصرف‌کننده
                   </span>
-                  <div className="mt-1 font-mono text-2xl font-black text-[#8B263E] dark:text-[#D8B65C]">
+                  <div className="mt-1 font-mono text-2xl font-black text-[#8B142D] dark:text-[#DFB76C]">
                     {livePricePreview.total.toLocaleString("fa-IR")} تومان
                   </div>
                 </div>
 
                 <div className="space-y-2 text-xs">
                   <div className="flex justify-between py-1 border-b border-black/5 dark:border-white/5">
-                    <span className="text-[#3A5A46] dark:text-zinc-400">ارزش طلای خام:</span>
+                    <span className="text-[#6E3A44] dark:text-zinc-400">ارزش طلای خام:</span>
                     <span className="font-mono font-bold">{livePricePreview.raw.toLocaleString("fa-IR")} تومان</span>
                   </div>
                   <div className="flex justify-between py-1 border-b border-black/5 dark:border-white/5">
-                    <span className="text-[#3A5A46] dark:text-zinc-400">مبلغ اجرت ساخت:</span>
+                    <span className="text-[#6E3A44] dark:text-zinc-400">مبلغ اجرت ساخت:</span>
                     <span className="font-mono font-bold">{livePricePreview.wage.toLocaleString("fa-IR")} تومان</span>
                   </div>
                   <div className="flex justify-between py-1 border-b border-black/5 dark:border-white/5">
-                    <span className="text-[#3A5A46] dark:text-zinc-400">مبلغ سود گالری:</span>
+                    <span className="text-[#6E3A44] dark:text-zinc-400">مبلغ سود گالری:</span>
                     <span className="font-mono font-bold">{livePricePreview.profit.toLocaleString("fa-IR")} تومان</span>
                   </div>
                   <div className="flex justify-between py-1">
-                    <span className="text-[#3A5A46] dark:text-zinc-400">مالیات ارزش افزوده:</span>
+                    <span className="text-[#6E3A44] dark:text-zinc-400">مالیات ارزش افزوده:</span>
                     <span className="font-mono font-bold">{livePricePreview.tax.toLocaleString("fa-IR")} تومان</span>
                   </div>
                 </div>
               </div>
             ) : (
-              <div className="py-4 text-center text-xs text-[#3A5A46] dark:text-zinc-400">
+              <div className="py-4 text-center text-xs text-[#6E3A44] dark:text-zinc-400">
                 با وارد کردن وزن طلا در کادر سمت چپ، قیمت زنده در اینجا محاسبه و نمایش داده می‌شود.
               </div>
             )}
           </Card>
 
           {/* Vitrine Status & Publication */}
-          <Card className="border-[#1C3324]/12 bg-white/80 p-5 backdrop-blur-md dark:border-white/10 dark:bg-[#15221B]/80 space-y-4">
-            <h3 className="text-xs font-black text-[#1C3324] dark:text-zinc-100">
+          <Card className="border-[#3B0B14]/12 bg-white/80 p-5 backdrop-blur-md dark:border-white/10 dark:bg-[#1C080E]/80 space-y-4">
+            <h3 className="text-xs font-black text-[#3B0B14] dark:text-zinc-100">
               تنظیمات انتشار در ویترین آنلاین
             </h3>
 
-            <div className="flex items-center justify-between rounded-2xl bg-[#FAF9F6] p-4 border border-[#1C3324]/10 dark:bg-zinc-900/60 dark:border-white/10">
+            <div className="flex items-center justify-between rounded-2xl bg-[#FDF8F9] p-4 border border-[#3B0B14]/10 dark:bg-zinc-900/60 dark:border-white/10">
               <div>
-                <span className="text-xs font-bold text-[#1C3324] dark:text-zinc-200">
+                <span className="text-xs font-bold text-[#3B0B14] dark:text-zinc-200">
                   نمایش در ویترین فروشگاه
                 </span>
-                <p className="mt-0.5 text-[10px] text-[#3A5A46] dark:text-zinc-400">
+                <p className="mt-0.5 text-[10px] text-[#6E3A44] dark:text-zinc-400">
                   در صورت غیرفعال بودن، کالا تنها در انبار است
                 </p>
               </div>
@@ -1011,15 +1011,15 @@ export default function EditProductPage() {
                 type="checkbox"
                 checked={form.isactive}
                 onChange={(e) => updateForm("isactive", e.target.checked)}
-                className="h-5 w-5 accent-[#1C3324] cursor-pointer"
+                className="h-5 w-5 accent-[#3B0B14] cursor-pointer"
               />
             </div>
           </Card>
 
           {/* Categories Assignment */}
-          <Card className="border-[#1C3324]/12 bg-white/80 p-5 backdrop-blur-md dark:border-white/10 dark:bg-[#15221B]/80 space-y-4">
+          <Card className="border-[#3B0B14]/12 bg-white/80 p-5 backdrop-blur-md dark:border-white/10 dark:bg-[#1C080E]/80 space-y-4">
             <div className="flex items-center justify-between">
-              <h3 className="text-xs font-black text-[#1C3324] dark:text-zinc-100">
+              <h3 className="text-xs font-black text-[#3B0B14] dark:text-zinc-100">
                 دسته‌بندی کالا
               </h3>
               <Button
@@ -1027,7 +1027,7 @@ export default function EditProductPage() {
                 variant="ghost"
                 size="sm"
                 onClick={() => setIsCategoryModalOpen(true)}
-                className="h-7 text-[11px] font-bold text-[#8B263E] dark:text-[#D8B65C]"
+                className="h-7 text-[11px] font-bold text-[#8B142D] dark:text-[#DFB76C]"
               >
                 + دسته جدید
               </Button>
@@ -1042,7 +1042,7 @@ export default function EditProductPage() {
                   }
                   e.target.value = "";
                 }}
-                className="w-full rounded-2xl border border-[#1C3324]/15 bg-[#FAF9F6] p-3 text-xs font-bold text-[#1C3324] outline-none dark:border-white/10 dark:bg-zinc-900/60 dark:text-zinc-100"
+                className="w-full rounded-2xl border border-[#3B0B14]/15 bg-[#FDF8F9] p-3 text-xs font-bold text-[#3B0B14] outline-none dark:border-white/10 dark:bg-zinc-900/60 dark:text-zinc-100"
               >
                 <option value="">انتخاب دسته برای افزودن...</option>
                 {categories.map((c) => (
@@ -1078,15 +1078,15 @@ export default function EditProductPage() {
           </Card>
 
           {/* Images Management */}
-          <Card className="border-[#1C3324]/12 bg-white/80 p-5 backdrop-blur-md dark:border-white/10 dark:bg-[#15221B]/80 space-y-4">
-            <h3 className="text-xs font-black text-[#1C3324] dark:text-zinc-100">
+          <Card className="border-[#3B0B14]/12 bg-white/80 p-5 backdrop-blur-md dark:border-white/10 dark:bg-[#1C080E]/80 space-y-4">
+            <h3 className="text-xs font-black text-[#3B0B14] dark:text-zinc-100">
               تصاویر و گالری ویترین
             </h3>
 
             {/* Existing Images */}
             {existingImages.length > 0 && (
               <div>
-                <span className="text-[11px] font-bold text-[#3A5A46] dark:text-zinc-400">
+                <span className="text-[11px] font-bold text-[#6E3A44] dark:text-zinc-400">
                   تصاویر موجود در پاکت‌بیس:
                 </span>
                 <div className="mt-2 grid grid-cols-3 gap-2">
@@ -1165,18 +1165,18 @@ export default function EditProductPage() {
 
       {/* New Category Modal */}
       <Dialog open={isCategoryModalOpen} onOpenChange={setIsCategoryModalOpen}>
-        <DialogContent className="max-w-md dark:border-white/10 dark:bg-[#15221B]">
+        <DialogContent className="max-w-md dark:border-white/10 dark:bg-[#1C080E]">
           <DialogHeader>
-            <DialogTitle className="text-base font-black text-[#1C3324] dark:text-zinc-100">
+            <DialogTitle className="text-base font-black text-[#3B0B14] dark:text-zinc-100">
               افزودن دسته‌بندی جدید
             </DialogTitle>
-            <DialogDescription className="text-xs text-[#3A5A46] dark:text-zinc-400">
+            <DialogDescription className="text-xs text-[#6E3A44] dark:text-zinc-400">
               دسته‌بندی جدید در پاکت‌بیس ثبت و به این کالا متصل می‌گردد.
             </DialogDescription>
           </DialogHeader>
 
           <div className="py-2">
-            <label className="mb-2 block text-xs font-bold text-[#3A5A46] dark:text-zinc-300">
+            <label className="mb-2 block text-xs font-bold text-[#6E3A44] dark:text-zinc-300">
               نام دسته‌بندی
             </label>
             <Input

@@ -463,10 +463,10 @@ export default function GoldRatePage() {
     return (
       <div className="flex min-h-[60vh] items-center justify-center">
         <div className="flex flex-col items-center gap-3">
-          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#1C3324]/5 dark:bg-white/5">
-            <Loader2 size={24} className="animate-spin text-[#8B263E] dark:text-[#D8B65C]" />
+          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#3B0B14]/5 dark:bg-white/5">
+            <Loader2 size={24} className="animate-spin text-[#8B142D] dark:text-[#DFB76C]" />
           </div>
-          <span className="text-xs font-bold text-[#3A5A46] dark:text-zinc-400">
+          <span className="text-xs font-bold text-[#6E3A44] dark:text-zinc-400">
             در حال بارگذاری مظنه بازار طلا و مسکوکات...
           </span>
         </div>
@@ -479,36 +479,36 @@ export default function GoldRatePage() {
       {/* Price Alert Floating Pill */}
       {priceAlert && (
         <div className="fixed left-4 right-4 top-4 z-50 mx-auto max-w-lg animate-in slide-in-from-top-4 duration-300">
-          <Card className="border-[#8B263E]/40 bg-white/95 p-4 shadow-2xl backdrop-blur-md dark:border-[#D8B65C]/40 dark:bg-[#15221B]/95">
+          <Card className="border-[#8B142D]/40 bg-white/95 p-4 shadow-2xl backdrop-blur-md dark:border-[#DFB76C]/40 dark:bg-[#1C080E]/95">
             <div className="flex items-start gap-3">
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#8B263E]/10 text-[#8B263E] dark:bg-[#8B263E]/20 dark:text-rose-300">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#8B142D]/10 text-[#8B142D] dark:bg-[#8B142D]/20 dark:text-rose-300">
                 <BellRing size={20} className="animate-pulse" />
               </div>
 
               <div className="flex-1 min-w-0">
                 <div className="flex items-center justify-between gap-2">
-                  <h4 className="text-xs font-black text-[#1C3324] dark:text-zinc-100">
+                  <h4 className="text-xs font-black text-[#3B0B14] dark:text-zinc-100">
                     نوسان قیمت در بازار طلا
                   </h4>
                   <button
                     type="button"
                     onClick={() => setPriceAlert(null)}
-                    className="rounded-lg p-1 text-[#3A5A46] hover:bg-black/5 dark:text-zinc-400 dark:hover:bg-white/5"
+                    className="rounded-lg p-1 text-[#6E3A44] hover:bg-black/5 dark:text-zinc-400 dark:hover:bg-white/5"
                   >
                     <X size={15} />
                   </button>
                 </div>
 
-                <p className="mt-0.5 text-xs font-bold text-[#3A5A46] dark:text-zinc-300">
+                <p className="mt-0.5 text-xs font-bold text-[#6E3A44] dark:text-zinc-300">
                   {priceAlert.name}
                 </p>
 
                 <div className="mt-2.5 flex flex-wrap items-center gap-2 text-xs">
-                  <span className="rounded-xl bg-[#FAF9F6] px-2.5 py-1 text-[11px] font-mono text-zinc-500 border border-[#1C3324]/10 dark:bg-zinc-800 dark:border-white/10 dark:text-zinc-400">
+                  <span className="rounded-xl bg-[#FDF8F9] px-2.5 py-1 text-[11px] font-mono text-zinc-500 border border-[#3B0B14]/10 dark:bg-zinc-800 dark:border-white/10 dark:text-zinc-400">
                     قبل: {formatNumber(priceAlert.oldPrice)}
                   </span>
                   <span>←</span>
-                  <span className="rounded-xl bg-[#1C3324] px-2.5 py-1 text-[11px] font-mono font-bold text-white dark:bg-[#D8B65C] dark:text-black">
+                  <span className="rounded-xl bg-[#3B0B14] px-2.5 py-1 text-[11px] font-mono font-bold text-white dark:bg-[#DFB76C] dark:text-black">
                     جدید: {formatNumber(priceAlert.newPrice)}
                   </span>
 
@@ -528,22 +528,22 @@ export default function GoldRatePage() {
       )}
 
       {/* Hero Header */}
-      <div className="flex flex-col justify-between gap-5 rounded-3xl border border-[#1C3324]/12 bg-white/80 p-5 shadow-xs backdrop-blur-md transition-colors lg:flex-row lg:items-center lg:p-6 dark:border-white/10 dark:bg-[#15221B]/80">
+      <div className="flex flex-col justify-between gap-5 rounded-3xl border border-[#3B0B14]/12 bg-white/80 p-5 shadow-xs backdrop-blur-md transition-colors lg:flex-row lg:items-center lg:p-6 dark:border-white/10 dark:bg-[#1C080E]/80">
         <div>
           <div className="flex items-center gap-2">
             <span className="relative flex h-2.5 w-2.5">
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
               <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald-500" />
             </span>
-            <span className="text-xs font-black text-[#8B263E] dark:text-[#D8B65C]">
+            <span className="text-xs font-black text-[#8B142D] dark:text-[#DFB76C]">
               مرکز استعلام و مانیتورینگ مظنه زنده بازار
             </span>
           </div>
 
-          <h1 className="mt-2 text-2xl font-black text-[#1C3324] sm:text-3xl dark:text-zinc-100">
+          <h1 className="mt-2 text-2xl font-black text-[#3B0B14] sm:text-3xl dark:text-zinc-100">
             مظنه لحظه‌ای طلا و مسکوکات
           </h1>
-          <p className="mt-1 text-xs text-[#3A5A46] dark:text-zinc-400">
+          <p className="mt-1 text-xs text-[#6E3A44] dark:text-zinc-400">
             دریافت زنده قیمت‌های تابلوی طلا، آب‌شده، سکه و انس جهانی با سیستم اعلان صوتی و هشدار نوسان
           </p>
         </div>
@@ -574,7 +574,7 @@ export default function GoldRatePage() {
             title={soundEnabled ? "غیرفعال‌سازی هشدار صوتی" : "فعال‌سازی هشدار صوتی"}
           >
             {soundEnabled ? (
-              <Volume2 size={16} className="text-[#8B263E] dark:text-[#D8B65C]" />
+              <Volume2 size={16} className="text-[#8B142D] dark:text-[#DFB76C]" />
             ) : (
               <VolumeX size={16} className="text-zinc-400" />
             )}
@@ -604,7 +604,7 @@ export default function GoldRatePage() {
       </div>
 
       {/* Auto-update ticker & Countdown strip */}
-      <div className="flex flex-col gap-3 rounded-2xl border border-[#1C3324]/10 bg-white/70 p-4 backdrop-blur-sm sm:flex-row sm:items-center sm:justify-between dark:border-white/10 dark:bg-zinc-900/50">
+      <div className="flex flex-col gap-3 rounded-2xl border border-[#3B0B14]/10 bg-white/70 p-4 backdrop-blur-sm sm:flex-row sm:items-center sm:justify-between dark:border-white/10 dark:bg-zinc-900/50">
         <div className="flex items-center gap-3">
           <div
             className={cn(
@@ -622,7 +622,7 @@ export default function GoldRatePage() {
 
           <div>
             <div className="flex items-center gap-2">
-              <span className="text-xs font-black text-[#1C3324] dark:text-zinc-100">
+              <span className="text-xs font-black text-[#3B0B14] dark:text-zinc-100">
                 پایش خودکار بازار
               </span>
               <Badge
@@ -632,7 +632,7 @@ export default function GoldRatePage() {
                 {autoUpdate ? "فعال" : "غیرفعال"}
               </Badge>
             </div>
-            <p className="text-[11px] text-[#3A5A46] dark:text-zinc-400">
+            <p className="text-[11px] text-[#6E3A44] dark:text-zinc-400">
               سیستم هر ۶۰ ثانیه نوسانات را رصد کرده و در صورت تغییر قیمت اعلان ارسال می‌کند.
             </p>
           </div>
@@ -640,10 +640,10 @@ export default function GoldRatePage() {
 
         <div className="flex items-center gap-3 self-end sm:self-center">
           {autoUpdate && (
-            <div className="flex items-center gap-2 rounded-xl bg-[#FAF9F6] px-3 py-1.5 text-xs font-bold text-[#3A5A46] border border-[#1C3324]/10 dark:bg-zinc-800/80 dark:border-white/10 dark:text-zinc-300">
-              <Clock3 size={14} className="text-[#8B263E] dark:text-[#D8B65C]" />
+            <div className="flex items-center gap-2 rounded-xl bg-[#FDF8F9] px-3 py-1.5 text-xs font-bold text-[#6E3A44] border border-[#3B0B14]/10 dark:bg-zinc-800/80 dark:border-white/10 dark:text-zinc-300">
+              <Clock3 size={14} className="text-[#8B142D] dark:text-[#DFB76C]" />
               <span>استعلام بعدی:</span>
-              <span className="font-mono font-black text-[#1C3324] dark:text-white">
+              <span className="font-mono font-black text-[#3B0B14] dark:text-white">
                 {secondsUntilUpdate} ثانیه
               </span>
             </div>
@@ -799,10 +799,10 @@ export default function GoldRatePage() {
       </section>
 
       {/* Live Gold Calculator (ماشین‌حساب زنده طلا و جواهر) */}
-      <Card className="border-[#B4901E]/30 bg-gradient-to-br from-white via-[#FAF9F6] to-[#F7F4EA] p-6 shadow-xs dark:border-[#D8B65C]/30 dark:from-[#15221B] dark:via-[#131E17] dark:to-[#17251D]">
-        <div className="flex flex-col gap-2 border-b border-[#1C3324]/10 pb-4 sm:flex-row sm:items-center sm:justify-between dark:border-white/10">
+      <Card className="border-[#C5A059]/30 bg-gradient-to-br from-white via-[#FDF8F9] to-[#F7F4EA] p-6 shadow-xs dark:border-[#DFB76C]/30 dark:from-[#1C080E] dark:via-[#131E17] dark:to-[#17251D]">
+        <div className="flex flex-col gap-2 border-b border-[#3B0B14]/10 pb-4 sm:flex-row sm:items-center sm:justify-between dark:border-white/10">
           <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-[#B4901E] text-white shadow-xs dark:bg-[#D8B65C] dark:text-[#101813]">
+            <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-[#C5A059] text-white shadow-xs dark:bg-[#DFB76C] dark:text-[#140508]">
               <Calculator size={20} />
             </div>
             <div>
@@ -824,7 +824,7 @@ export default function GoldRatePage() {
         {/* Inputs */}
         <div className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-4">
           <div className="space-y-1.5">
-            <label className="text-[11px] font-bold text-[#3A5A46] dark:text-zinc-300">
+            <label className="text-[11px] font-bold text-[#6E3A44] dark:text-zinc-300">
               وزن طلا (گرم):
             </label>
             <Input
@@ -838,7 +838,7 @@ export default function GoldRatePage() {
           </div>
 
           <div className="space-y-1.5">
-            <label className="text-[11px] font-bold text-[#3A5A46] dark:text-zinc-300">
+            <label className="text-[11px] font-bold text-[#6E3A44] dark:text-zinc-300">
               اجرت ساخت (%):
             </label>
             <Input
@@ -852,7 +852,7 @@ export default function GoldRatePage() {
           </div>
 
           <div className="space-y-1.5">
-            <label className="text-[11px] font-bold text-[#3A5A46] dark:text-zinc-300">
+            <label className="text-[11px] font-bold text-[#6E3A44] dark:text-zinc-300">
               سود گالری (%):
             </label>
             <Input
@@ -866,7 +866,7 @@ export default function GoldRatePage() {
           </div>
 
           <div className="space-y-1.5">
-            <label className="text-[11px] font-bold text-[#3A5A46] dark:text-zinc-300">
+            <label className="text-[11px] font-bold text-[#6E3A44] dark:text-zinc-300">
               مالیات ارزش افزوده (%):
             </label>
             <Input
@@ -881,29 +881,29 @@ export default function GoldRatePage() {
         </div>
 
         {/* Result Breakdown Card */}
-        <div className="mt-5 rounded-2xl border border-[#1C3324]/10 bg-white/90 p-4 dark:border-white/10 dark:bg-zinc-900/90">
-          <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 text-xs border-b border-[#1C3324]/10 pb-3 dark:border-white/10">
+        <div className="mt-5 rounded-2xl border border-[#3B0B14]/10 bg-white/90 p-4 dark:border-white/10 dark:bg-zinc-900/90">
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 text-xs border-b border-[#3B0B14]/10 pb-3 dark:border-white/10">
             <div>
-              <span className="text-[#3A5A46] dark:text-zinc-400">طلای خام:</span>
-              <p className="mt-0.5 font-mono font-black text-[#1C3324] dark:text-zinc-100">
+              <span className="text-[#6E3A44] dark:text-zinc-400">طلای خام:</span>
+              <p className="mt-0.5 font-mono font-black text-[#3B0B14] dark:text-zinc-100">
                 {formatNumber(calculatedGold.rawGoldValue)} ت
               </p>
             </div>
             <div>
-              <span className="text-[#3A5A46] dark:text-zinc-400">مبلغ اجرت ({calcWage}٪):</span>
-              <p className="mt-0.5 font-mono font-black text-[#1C3324] dark:text-zinc-100">
+              <span className="text-[#6E3A44] dark:text-zinc-400">مبلغ اجرت ({calcWage}٪):</span>
+              <p className="mt-0.5 font-mono font-black text-[#3B0B14] dark:text-zinc-100">
                 {formatNumber(calculatedGold.wageValue)} ت
               </p>
             </div>
             <div>
-              <span className="text-[#3A5A46] dark:text-zinc-400">مبلغ سود ({calcProfit}٪):</span>
-              <p className="mt-0.5 font-mono font-black text-[#1C3324] dark:text-zinc-100">
+              <span className="text-[#6E3A44] dark:text-zinc-400">مبلغ سود ({calcProfit}٪):</span>
+              <p className="mt-0.5 font-mono font-black text-[#3B0B14] dark:text-zinc-100">
                 {formatNumber(calculatedGold.profitValue)} ت
               </p>
             </div>
             <div>
-              <span className="text-[#3A5A46] dark:text-zinc-400">مالیات اجرت و سود:</span>
-              <p className="mt-0.5 font-mono font-black text-[#1C3324] dark:text-zinc-100">
+              <span className="text-[#6E3A44] dark:text-zinc-400">مالیات اجرت و سود:</span>
+              <p className="mt-0.5 font-mono font-black text-[#3B0B14] dark:text-zinc-100">
                 {formatNumber(calculatedGold.taxValue)} ت
               </p>
             </div>
@@ -911,13 +911,13 @@ export default function GoldRatePage() {
 
           <div className="mt-3 flex flex-col justify-between gap-2 sm:flex-row sm:items-center">
             <div className="flex items-center gap-2">
-              <span className="text-xs font-bold text-[#3A5A46] dark:text-zinc-300">
+              <span className="text-xs font-bold text-[#6E3A44] dark:text-zinc-300">
                 قیمت نهایی قطعه ساخته شده:
               </span>
-              <span className="text-xl font-black text-[#8B263E] sm:text-2xl dark:text-[#D8B65C]">
+              <span className="text-xl font-black text-[#8B142D] sm:text-2xl dark:text-[#DFB76C]">
                 {formatNumber(calculatedGold.finalTotal)}
               </span>
-              <span className="text-xs font-bold text-[#3A5A46] dark:text-zinc-400">
+              <span className="text-xs font-bold text-[#6E3A44] dark:text-zinc-400">
                 تومان
               </span>
             </div>
@@ -944,10 +944,10 @@ export default function GoldRatePage() {
         {/* Section Header with View Switcher */}
         <div className="flex flex-col justify-between gap-3 sm:flex-row sm:items-center">
           <div>
-            <h2 className="text-lg font-black text-[#1C3324] dark:text-zinc-100">
+            <h2 className="text-lg font-black text-[#3B0B14] dark:text-zinc-100">
               نرخ‌های زنده بازار طلا و مسکوکات
             </h2>
-            <p className="text-xs text-[#3A5A46] dark:text-zinc-400">
+            <p className="text-xs text-[#6E3A44] dark:text-zinc-400">
               واکشی شده از سرور مرکزی BRS • آخرین زمان:{" "}
               {lastSync
                 ? new Date(lastSync).toLocaleTimeString("fa-IR")
@@ -956,7 +956,7 @@ export default function GoldRatePage() {
           </div>
 
           <div className="flex items-center gap-2">
-            <div className="flex items-center rounded-2xl border border-[#1C3324]/12 bg-white/80 p-1 shadow-2xs backdrop-blur-sm dark:border-white/10 dark:bg-[#15221B]">
+            <div className="flex items-center rounded-2xl border border-[#3B0B14]/12 bg-white/80 p-1 shadow-2xs backdrop-blur-sm dark:border-white/10 dark:bg-[#1C080E]">
               <Button
                 variant={viewMode === "cards" ? "default" : "ghost"}
                 size="sm"
@@ -990,7 +990,7 @@ export default function GoldRatePage() {
               return (
                 <div
                   key={rate.id}
-                  className="group relative overflow-hidden rounded-3xl border border-[#1C3324]/12 bg-white/95 p-5 shadow-xs backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md dark:border-white/10 dark:bg-[#15221B]/95"
+                  className="group relative overflow-hidden rounded-3xl border border-[#3B0B14]/12 bg-white/95 p-5 shadow-xs backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md dark:border-white/10 dark:bg-[#1C080E]/95"
                 >
                   {/* Decorative top gradient bar */}
                   <div
@@ -999,8 +999,8 @@ export default function GoldRatePage() {
                       isUp
                         ? "from-emerald-500/40 via-emerald-500/10 to-transparent"
                         : isDown
-                        ? "from-[#8B263E]/40 via-[#8B263E]/10 to-transparent"
-                        : "from-[#D8B65C]/40 via-[#D8B65C]/10 to-transparent"
+                        ? "from-[#8B142D]/40 via-[#8B142D]/10 to-transparent"
+                        : "from-[#DFB76C]/40 via-[#DFB76C]/10 to-transparent"
                     )}
                   />
 
@@ -1011,18 +1011,18 @@ export default function GoldRatePage() {
                         className={cn(
                           "flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border shadow-2xs transition-transform duration-300 group-hover:scale-105",
                           rate.symbol.includes("COIN")
-                            ? "border-[#8B263E]/10 bg-[#8B263E]/10 text-[#8B263E] dark:border-rose-900/40 dark:bg-rose-950/40 dark:text-rose-300"
-                            : "border-[#1C3324]/10 bg-emerald-500/10 text-emerald-700 dark:border-emerald-900/40 dark:bg-emerald-950/40 dark:text-emerald-300"
+                            ? "border-[#8B142D]/10 bg-[#8B142D]/10 text-[#8B142D] dark:border-rose-900/40 dark:bg-rose-950/40 dark:text-rose-300"
+                            : "border-[#3B0B14]/10 bg-emerald-500/10 text-emerald-700 dark:border-emerald-900/40 dark:bg-emerald-950/40 dark:text-emerald-300"
                         )}
                       >
                         <CardIcon size={20} />
                       </div>
 
                       <div>
-                        <h3 className="text-sm font-black text-[#1C3324] dark:text-zinc-100">
+                        <h3 className="text-sm font-black text-[#3B0B14] dark:text-zinc-100">
                           {rate.name || getSymbolLabel(rate.symbol)}
                         </h3>
-                        <span className="font-mono text-[11px] font-bold text-[#3A5A46] dark:text-zinc-400">
+                        <span className="font-mono text-[11px] font-bold text-[#6E3A44] dark:text-zinc-400">
                           {rate.symbol}
                         </span>
                       </div>
@@ -1047,16 +1047,16 @@ export default function GoldRatePage() {
                   {/* Main Price */}
                   <div className="mt-4">
                     <div className="flex items-baseline gap-1.5 flex-wrap">
-                      <span className="text-2xl font-black tracking-tight text-[#1C3324] dark:text-zinc-100 font-mono">
+                      <span className="text-2xl font-black tracking-tight text-[#3B0B14] dark:text-zinc-100 font-mono">
                         {formatNumber(rate.price)}
                       </span>
-                      <span className="text-xs font-bold text-[#3A5A46] dark:text-zinc-400">
+                      <span className="text-xs font-bold text-[#6E3A44] dark:text-zinc-400">
                         {getPersianUnit(rate.unit)}
                       </span>
                     </div>
 
                     <div className="mt-1.5 flex items-center gap-2 text-xs">
-                      <span className="text-[11px] text-[#3A5A46] dark:text-zinc-400">
+                      <span className="text-[11px] text-[#6E3A44] dark:text-zinc-400">
                         نوسان ریالی:
                       </span>
                       <span
@@ -1077,9 +1077,9 @@ export default function GoldRatePage() {
                   </div>
 
                   {/* Card Footer: Market Time & Date */}
-                  <div className="mt-4 flex items-center justify-between border-t border-[#1C3324]/8 pt-3 text-[11px] font-medium text-[#3A5A46] dark:border-white/8 dark:text-zinc-400">
+                  <div className="mt-4 flex items-center justify-between border-t border-[#3B0B14]/8 pt-3 text-[11px] font-medium text-[#6E3A44] dark:border-white/8 dark:text-zinc-400">
                     <div className="flex items-center gap-1.5 font-mono">
-                      <Clock3 size={13} className="text-[#8B263E] dark:text-[#D8B65C]" />
+                      <Clock3 size={13} className="text-[#8B142D] dark:text-[#DFB76C]" />
                       <span>{rate.market_time || "—"}</span>
                     </div>
 
@@ -1091,7 +1091,7 @@ export default function GoldRatePage() {
           </div>
         ) : (
           /* View Mode: Table */
-          <Card className="border-[#1C3324]/12 bg-white/80 p-6 dark:border-white/10 dark:bg-[#15221B]/80">
+          <Card className="border-[#3B0B14]/12 bg-white/80 p-6 dark:border-white/10 dark:bg-[#1C080E]/80">
             <Table>
               <TableHeader>
                 <TableRow>
@@ -1113,28 +1113,28 @@ export default function GoldRatePage() {
 
                   return (
                     <TableRow key={rate.id}>
-                      <TableCell className="font-black text-[#1C3324] dark:text-zinc-100">
+                      <TableCell className="font-black text-[#3B0B14] dark:text-zinc-100">
                         <div className="flex items-center gap-2">
-                          <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-[#FAF9F6] border border-[#1C3324]/10 dark:bg-zinc-800 dark:border-white/10">
+                          <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-[#FDF8F9] border border-[#3B0B14]/10 dark:bg-zinc-800 dark:border-white/10">
                             {rate.symbol.includes("COIN") ? (
-                              <Coins size={14} className="text-[#8B263E] dark:text-[#D8B65C]" />
+                              <Coins size={14} className="text-[#8B142D] dark:text-[#DFB76C]" />
                             ) : (
-                              <Gem size={14} className="text-[#1C3324] dark:text-[#D8B65C]" />
+                              <Gem size={14} className="text-[#3B0B14] dark:text-[#DFB76C]" />
                             )}
                           </div>
                           <span>{rate.name || getSymbolLabel(rate.symbol)}</span>
                         </div>
                       </TableCell>
 
-                      <TableCell className="font-mono text-xs text-[#3A5A46] dark:text-zinc-400">
+                      <TableCell className="font-mono text-xs text-[#6E3A44] dark:text-zinc-400">
                         {rate.symbol}
                       </TableCell>
 
-                      <TableCell className="font-mono text-sm font-black text-[#1C3324] dark:text-zinc-100">
+                      <TableCell className="font-mono text-sm font-black text-[#3B0B14] dark:text-zinc-100">
                         {formatNumber(rate.price)}
                       </TableCell>
 
-                      <TableCell className="text-xs text-[#3A5A46] dark:text-zinc-400">
+                      <TableCell className="text-xs text-[#6E3A44] dark:text-zinc-400">
                         {getPersianUnit(rate.unit)}
                       </TableCell>
 
@@ -1166,11 +1166,11 @@ export default function GoldRatePage() {
                         {formatNumber(rate.change_value)} {getPersianUnit(rate.unit)}
                       </TableCell>
 
-                      <TableCell className="font-mono text-xs text-[#3A5A46] dark:text-zinc-400">
+                      <TableCell className="font-mono text-xs text-[#6E3A44] dark:text-zinc-400">
                         {rate.market_time || "—"}
                       </TableCell>
 
-                      <TableCell className="font-mono text-xs text-left text-[#3A5A46] dark:text-zinc-400">
+                      <TableCell className="font-mono text-xs text-left text-[#6E3A44] dark:text-zinc-400">
                         {rate.market_date || "—"}
                       </TableCell>
                     </TableRow>

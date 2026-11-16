@@ -1087,19 +1087,19 @@ export default function DashboardReportsPage() {
   return (
     <div className="space-y-6" dir="rtl">
       {/* هدر اصلی همراه تب‌های تفکیک گزارش (روزانه / ماهیانه / سالیانه / کلی) */}
-      <div className="flex flex-col justify-between gap-4 rounded-3xl border border-[#1C3324]/12 bg-white/80 p-5 shadow-xs backdrop-blur-md transition-colors lg:flex-row lg:items-center lg:p-6 dark:border-white/10 dark:bg-[#15221B]/80">
+      <div className="flex flex-col justify-between gap-4 rounded-3xl border border-[#3B0B14]/12 bg-white/80 p-5 shadow-xs backdrop-blur-md transition-colors lg:flex-row lg:items-center lg:p-6 dark:border-white/10 dark:bg-[#1C080E]/80">
         <div>
           <div className="flex items-center gap-3">
-            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#1C3324] text-white shadow-xs dark:bg-emerald-950/60 dark:text-[#D8B65C] dark:border dark:border-[#D8B65C]/30">
+            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#3B0B14] text-white shadow-xs dark:bg-emerald-950/60 dark:text-[#DFB76C] dark:border dark:border-[#DFB76C]/30">
               <BarChart3 className="h-5 w-5" />
             </div>
 
-            <h1 className="text-xl font-black text-[#1C3324] dark:text-zinc-100">
+            <h1 className="text-xl font-black text-[#3B0B14] dark:text-zinc-100">
               گزارش‌های فروش و تحلیل سود و زیان طلا (P&L)
             </h1>
           </div>
 
-          <p className="mt-2 text-xs font-medium text-[#3A5A46] dark:text-zinc-400">
+          <p className="mt-2 text-xs font-medium text-[#6E3A44] dark:text-zinc-400">
             محاسبه دوطرفه سود و زیان (ضررهای ناشی از فروش زیر قیمت یا تخفیف مازاد)، گزارش‌های روزانه، ماهیانه و سالیانه پرنا زر.
           </p>
         </div>
@@ -1107,14 +1107,14 @@ export default function DashboardReportsPage() {
         {/* دکمه‌های ناوبری تب‌های گزارش */}
         <div className="flex flex-wrap items-center gap-2">
           {/* تب‌های اصلی: کلی، روزانه، ماهیانه، سالیانه */}
-          <div className="flex items-center rounded-2xl border border-[#1C3324]/12 bg-[#FAF9F6] p-1 shadow-xs dark:border-white/10 dark:bg-[#101813]">
+          <div className="flex items-center rounded-2xl border border-[#3B0B14]/12 bg-[#FDF8F9] p-1 shadow-xs dark:border-white/10 dark:bg-[#140508]">
             <button
               type="button"
               onClick={() => setReportView("overview")}
               className={`flex items-center gap-1.5 rounded-xl px-3.5 py-2 text-xs font-black transition cursor-pointer ${
                 reportView === "overview"
-                  ? "bg-[#1C3324] text-white shadow-xs dark:bg-[#D8B65C] dark:text-[#101813]"
-                  : "text-[#3A5A46] hover:text-[#1C3324] dark:text-zinc-400 dark:hover:text-zinc-100"
+                  ? "bg-[#3B0B14] text-white shadow-xs dark:bg-[#DFB76C] dark:text-[#140508]"
+                  : "text-[#6E3A44] hover:text-[#3B0B14] dark:text-zinc-400 dark:hover:text-zinc-100"
               }`}
             >
               <PieChart className="h-3.5 w-3.5" />
@@ -1126,8 +1126,8 @@ export default function DashboardReportsPage() {
               onClick={() => setReportView("daily")}
               className={`flex items-center gap-1.5 rounded-xl px-3.5 py-2 text-xs font-black transition cursor-pointer ${
                 reportView === "daily"
-                  ? "bg-[#1C3324] text-white shadow-xs dark:bg-[#D8B65C] dark:text-[#101813]"
-                  : "text-[#3A5A46] hover:text-[#1C3324] dark:text-zinc-400 dark:hover:text-zinc-100"
+                  ? "bg-[#3B0B14] text-white shadow-xs dark:bg-[#DFB76C] dark:text-[#140508]"
+                  : "text-[#6E3A44] hover:text-[#3B0B14] dark:text-zinc-400 dark:hover:text-zinc-100"
               }`}
             >
               <CalendarDays className="h-3.5 w-3.5" />
@@ -1139,8 +1139,8 @@ export default function DashboardReportsPage() {
               onClick={() => setReportView("monthly")}
               className={`flex items-center gap-1.5 rounded-xl px-3.5 py-2 text-xs font-black transition cursor-pointer ${
                 reportView === "monthly"
-                  ? "bg-[#1C3324] text-white shadow-xs dark:bg-[#D8B65C] dark:text-[#101813]"
-                  : "text-[#3A5A46] hover:text-[#1C3324] dark:text-zinc-400 dark:hover:text-zinc-100"
+                  ? "bg-[#3B0B14] text-white shadow-xs dark:bg-[#DFB76C] dark:text-[#140508]"
+                  : "text-[#6E3A44] hover:text-[#3B0B14] dark:text-zinc-400 dark:hover:text-zinc-100"
               }`}
             >
               <Calendar className="h-3.5 w-3.5" />
@@ -1152,8 +1152,8 @@ export default function DashboardReportsPage() {
               onClick={() => setReportView("yearly")}
               className={`flex items-center gap-1.5 rounded-xl px-3.5 py-2 text-xs font-black transition cursor-pointer ${
                 reportView === "yearly"
-                  ? "bg-[#1C3324] text-white shadow-xs dark:bg-[#D8B65C] dark:text-[#101813]"
-                  : "text-[#3A5A46] hover:text-[#1C3324] dark:text-zinc-400 dark:hover:text-zinc-100"
+                  ? "bg-[#3B0B14] text-white shadow-xs dark:bg-[#DFB76C] dark:text-[#140508]"
+                  : "text-[#6E3A44] hover:text-[#3B0B14] dark:text-zinc-400 dark:hover:text-zinc-100"
               }`}
             >
               <CalendarRange className="h-3.5 w-3.5" />
@@ -1163,18 +1163,18 @@ export default function DashboardReportsPage() {
 
           {/* فیلتر دوره (فقط در نمای کلی) */}
           {reportView === "overview" && (
-            <div className="flex items-center gap-2 rounded-2xl border border-[#1C3324]/15 bg-white px-3 py-2 shadow-xs dark:border-white/10 dark:bg-[#101813]">
-              <Filter className="h-3.5 w-3.5 text-[#8B263E] dark:text-[#D8B65C]" />
+            <div className="flex items-center gap-2 rounded-2xl border border-[#3B0B14]/15 bg-white px-3 py-2 shadow-xs dark:border-white/10 dark:bg-[#140508]">
+              <Filter className="h-3.5 w-3.5 text-[#8B142D] dark:text-[#DFB76C]" />
               <select
                 value={timeRange}
                 onChange={(e) => setTimeRange(e.target.value as any)}
-                className="bg-transparent text-xs font-bold text-[#1C3324] outline-none cursor-pointer dark:text-zinc-100"
+                className="bg-transparent text-xs font-bold text-[#3B0B14] outline-none cursor-pointer dark:text-zinc-100"
               >
-                <option value="today" className="dark:bg-[#101813]">امروز</option>
-                <option value="week" className="dark:bg-[#101813]">۷ روز اخیر</option>
-                <option value="month" className="dark:bg-[#101813]">۳۰ روز اخیر</option>
-                <option value="year" className="dark:bg-[#101813]">سال جاری</option>
-                <option value="all" className="dark:bg-[#101813]">همه دوره‌ها</option>
+                <option value="today" className="dark:bg-[#140508]">امروز</option>
+                <option value="week" className="dark:bg-[#140508]">۷ روز اخیر</option>
+                <option value="month" className="dark:bg-[#140508]">۳۰ روز اخیر</option>
+                <option value="year" className="dark:bg-[#140508]">سال جاری</option>
+                <option value="all" className="dark:bg-[#140508]">همه دوره‌ها</option>
               </select>
             </div>
           )}
@@ -1184,10 +1184,10 @@ export default function DashboardReportsPage() {
             type="button"
             onClick={() => fetchData(true)}
             disabled={isRefreshing}
-            className="flex h-10 w-10 items-center justify-center rounded-2xl border border-[#1C3324]/15 bg-white text-[#1C3324] shadow-xs transition hover:border-[#8B263E] hover:text-[#8B263E] cursor-pointer dark:border-white/10 dark:bg-[#101813] dark:text-zinc-300 dark:hover:text-[#D8B65C]"
+            className="flex h-10 w-10 items-center justify-center rounded-2xl border border-[#3B0B14]/15 bg-white text-[#3B0B14] shadow-xs transition hover:border-[#8B142D] hover:text-[#8B142D] cursor-pointer dark:border-white/10 dark:bg-[#140508] dark:text-zinc-300 dark:hover:text-[#DFB76C]"
             title="بروزرسانی داده‌ها"
           >
-            <RefreshCw className={`h-4 w-4 ${isRefreshing ? "animate-spin text-[#8B263E] dark:text-[#D8B65C]" : ""}`} />
+            <RefreshCw className={`h-4 w-4 ${isRefreshing ? "animate-spin text-[#8B142D] dark:text-[#DFB76C]" : ""}`} />
           </button>
 
           {/* دکمه‌های خروجی */}
@@ -1195,7 +1195,7 @@ export default function DashboardReportsPage() {
             <button
               type="button"
               onClick={handleExcelExport}
-              className="inline-flex items-center gap-1.5 rounded-2xl bg-[#1C3324] px-4 py-2.5 text-xs font-black text-white shadow-sm transition hover:bg-[#8B263E] cursor-pointer dark:bg-emerald-900/80 dark:hover:bg-emerald-800"
+              className="inline-flex items-center gap-1.5 rounded-2xl bg-[#3B0B14] px-4 py-2.5 text-xs font-black text-white shadow-sm transition hover:bg-[#8B142D] cursor-pointer dark:bg-[#8B142D] dark:hover:bg-[#580F1F]"
               title="خروجی فایل اکسل"
             >
               <FileSpreadsheet className="h-4 w-4" />
@@ -1206,10 +1206,10 @@ export default function DashboardReportsPage() {
               type="button"
               onClick={handlePDFExport}
               disabled={isExporting}
-              className="inline-flex items-center gap-1.5 rounded-2xl border border-[#1C3324]/15 bg-white px-4 py-2.5 text-xs font-black text-[#1C3324] shadow-sm transition hover:border-[#8B263E] hover:text-[#8B263E] disabled:opacity-50 cursor-pointer dark:border-white/10 dark:bg-[#101813] dark:text-zinc-200 dark:hover:border-[#D8B65C] dark:hover:text-[#D8B65C]"
+              className="inline-flex items-center gap-1.5 rounded-2xl border border-[#3B0B14]/15 bg-white px-4 py-2.5 text-xs font-black text-[#3B0B14] shadow-sm transition hover:border-[#8B142D] hover:text-[#8B142D] disabled:opacity-50 cursor-pointer dark:border-white/10 dark:bg-[#140508] dark:text-zinc-200 dark:hover:border-[#DFB76C] dark:hover:text-[#DFB76C]"
               title="خروجی فایل PDF"
             >
-              <FileText className="h-4 w-4 text-[#8B263E] dark:text-[#D8B65C]" />
+              <FileText className="h-4 w-4 text-[#8B142D] dark:text-[#DFB76C]" />
               <span>{isExporting ? "در حال ساخت..." : "PDF"}</span>
             </button>
           </div>
@@ -1264,7 +1264,7 @@ export default function DashboardReportsPage() {
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-rose-100 pb-3 dark:border-rose-900/40">
                 <div className="flex items-center gap-2">
                   <XCircle className="h-4 w-4 text-rose-600 dark:text-rose-400" />
-                  <span className="font-black text-xs text-[#1C3324] dark:text-zinc-100">
+                  <span className="font-black text-xs text-[#3B0B14] dark:text-zinc-100">
                     ریز مشخصات معاملات دارای زیان ({lossTransactions.length} معامله ثبت‌شده):
                   </span>
                 </div>
@@ -1298,19 +1298,19 @@ export default function DashboardReportsPage() {
                   <tbody className="divide-y divide-rose-100 dark:divide-rose-950/40 font-medium">
                     {lossTransactions.map((tx) => (
                       <tr key={tx.code} className="hover:bg-rose-50/40 dark:hover:bg-rose-950/20">
-                        <td className="px-3 py-3 font-mono font-bold text-[#1C3324] dark:text-zinc-100">
+                        <td className="px-3 py-3 font-mono font-bold text-[#3B0B14] dark:text-zinc-100">
                           {tx.code}
                         </td>
-                        <td className="px-3 py-3 font-bold text-[#1C3324] dark:text-zinc-200">
+                        <td className="px-3 py-3 font-bold text-[#3B0B14] dark:text-zinc-200">
                           {tx.customer}
                         </td>
-                        <td className="px-3 py-3 text-center font-mono font-bold text-amber-700 dark:text-[#D8B65C]">
+                        <td className="px-3 py-3 text-center font-mono font-bold text-amber-700 dark:text-[#DFB76C]">
                           {tx.weight > 0 ? `${tx.weight.toFixed(2)} گرم` : "—"}
                         </td>
-                        <td className="px-3 py-3 text-left font-mono font-black text-[#1C3324] dark:text-zinc-100">
+                        <td className="px-3 py-3 text-left font-mono font-black text-[#3B0B14] dark:text-zinc-100">
                           {formatNumber(tx.amount)} تومان
                         </td>
-                        <td className="px-3 py-3 text-left font-mono text-[#3A5A46] dark:text-zinc-400">
+                        <td className="px-3 py-3 text-left font-mono text-[#6E3A44] dark:text-zinc-400">
                           {formatNumber(tx.costBasis)} تومان
                         </td>
                         <td className="px-3 py-3 text-left font-mono font-black text-rose-600 dark:text-rose-400">
@@ -1402,28 +1402,28 @@ export default function DashboardReportsPage() {
           </div>
 
           {/* جدول تفکیک روزشمار معاملات و سود و ضرر */}
-          <Card className="rounded-3xl border border-[#1C3324]/12 bg-white/80 p-6 shadow-xs backdrop-blur-md space-y-4 dark:border-white/10 dark:bg-[#15221B]/80">
-            <div className="flex flex-col justify-between gap-2 border-b border-[#1C3324]/10 pb-4 sm:flex-row sm:items-center dark:border-white/10">
+          <Card className="rounded-3xl border border-[#3B0B14]/12 bg-white/80 p-6 shadow-xs backdrop-blur-md space-y-4 dark:border-white/10 dark:bg-[#1C080E]/80">
+            <div className="flex flex-col justify-between gap-2 border-b border-[#3B0B14]/10 pb-4 sm:flex-row sm:items-center dark:border-white/10">
               <div>
                 <div className="flex items-center gap-2">
-                  <CalendarDays className="h-5 w-5 text-[#8B263E] dark:text-[#D8B65C]" />
-                  <h2 className="text-base font-black text-[#1C3324] dark:text-zinc-100">
+                  <CalendarDays className="h-5 w-5 text-[#8B142D] dark:text-[#DFB76C]" />
+                  <h2 className="text-base font-black text-[#3B0B14] dark:text-zinc-100">
                     جدول کارنامه روزشمار فروش، سود و زیان طلا
                   </h2>
                 </div>
-                <p className="mt-1 text-xs text-[#3A5A46] dark:text-zinc-400">
+                <p className="mt-1 text-xs text-[#6E3A44] dark:text-zinc-400">
                   تفکیک تمام روزهای فعال به همراه فروش کل، سود یا ضرر خالص سهم گالری، اجرت ساخت، مالیات و وزن طلا
                 </p>
               </div>
 
-              <div className="text-xs font-bold text-[#3A5A46] dark:text-zinc-400">
+              <div className="text-xs font-bold text-[#6E3A44] dark:text-zinc-400">
                 {periodicAggregations.dailyList.length.toLocaleString("fa-IR")} روز معاملاتی ثبت‌شده
               </div>
             </div>
 
             <div className="overflow-x-auto">
               <table className="w-full text-right text-xs">
-                <thead className="border-b border-[#1C3324]/10 bg-[#FAF9F6] font-black text-[#1C3324] dark:border-white/10 dark:bg-zinc-900/60 dark:text-zinc-300">
+                <thead className="border-b border-[#3B0B14]/10 bg-[#FDF8F9] font-black text-[#3B0B14] dark:border-white/10 dark:bg-zinc-900/60 dark:text-zinc-300">
                   <tr>
                     <th className="px-4 py-3">تاریخ روز</th>
                     <th className="px-4 py-3">روز هفته</th>
@@ -1435,10 +1435,10 @@ export default function DashboardReportsPage() {
                     <th className="px-4 py-3 text-left">سود/زیان هر گرم</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-[#1C3324]/5 dark:divide-white/5 font-medium">
+                <tbody className="divide-y divide-[#3B0B14]/5 dark:divide-white/5 font-medium">
                   {periodicAggregations.dailyList.length === 0 ? (
                     <tr>
-                      <td colSpan={8} className="py-12 text-center text-xs text-[#3A5A46] dark:text-zinc-400">
+                      <td colSpan={8} className="py-12 text-center text-xs text-[#6E3A44] dark:text-zinc-400">
                         هنوز معامله‌ای در دیتابیس ثبت نشده است.
                       </td>
                     </tr>
@@ -1447,22 +1447,22 @@ export default function DashboardReportsPage() {
                       const isDayLoss = d.profit < 0;
                       const profitPerG = d.weight > 0 ? Math.round(d.profit / d.weight) : 0;
                       return (
-                        <tr key={d.dayKey} className="hover:bg-[#FAF9F6] dark:hover:bg-white/[0.02]">
-                          <td className="px-4 py-3.5 font-bold text-[#1C3324] dark:text-zinc-100">
+                        <tr key={d.dayKey} className="hover:bg-[#FDF8F9] dark:hover:bg-white/[0.02]">
+                          <td className="px-4 py-3.5 font-bold text-[#3B0B14] dark:text-zinc-100">
                             {d.dayFa}
                           </td>
                           <td className="px-4 py-3.5">
-                            <span className="inline-flex rounded-lg bg-zinc-100 px-2 py-0.5 text-[11px] font-bold text-[#3A5A46] dark:bg-zinc-800 dark:text-zinc-300">
+                            <span className="inline-flex rounded-lg bg-zinc-100 px-2 py-0.5 text-[11px] font-bold text-[#6E3A44] dark:bg-zinc-800 dark:text-zinc-300">
                               {d.weekday}
                             </span>
                           </td>
                           <td className="px-4 py-3.5 text-center font-mono">
                             {d.count} معامله
                           </td>
-                          <td className="px-4 py-3.5 text-center font-mono font-bold text-amber-700 dark:text-[#D8B65C]">
+                          <td className="px-4 py-3.5 text-center font-mono font-bold text-amber-700 dark:text-[#DFB76C]">
                             {d.weight > 0 ? `${d.weight.toFixed(2)} گرم` : "—"}
                           </td>
-                          <td className="px-4 py-3.5 text-left font-mono font-black text-[#1C3324] dark:text-zinc-100">
+                          <td className="px-4 py-3.5 text-left font-mono font-black text-[#3B0B14] dark:text-zinc-100">
                             {formatNumber(d.sales)} تومان
                           </td>
                           <td className="px-4 py-3.5 text-left font-mono font-bold">
@@ -1489,7 +1489,7 @@ export default function DashboardReportsPage() {
                           </td>
                           <td className="px-4 py-3.5 text-left font-mono text-[11px] font-bold">
                             {profitPerG !== 0 ? (
-                              <span className={profitPerG < 0 ? "text-rose-600 dark:text-rose-400" : "text-[#8B263E] dark:text-[#D8B65C]"}>
+                              <span className={profitPerG < 0 ? "text-rose-600 dark:text-rose-400" : "text-[#8B142D] dark:text-[#DFB76C]"}>
                                 {profitPerG < 0 ? "−" : ""}{formatNumber(Math.abs(profitPerG))} ت/گرم
                               </span>
                             ) : (
@@ -1559,16 +1559,16 @@ export default function DashboardReportsPage() {
           </div>
 
           {/* جدول مقایسه ماه به ماه */}
-          <Card className="rounded-3xl border border-[#1C3324]/12 bg-white/80 p-6 shadow-xs backdrop-blur-md space-y-4 dark:border-white/10 dark:bg-[#15221B]/80">
-            <div className="flex flex-col justify-between gap-2 border-b border-[#1C3324]/10 pb-4 sm:flex-row sm:items-center dark:border-white/10">
+          <Card className="rounded-3xl border border-[#3B0B14]/12 bg-white/80 p-6 shadow-xs backdrop-blur-md space-y-4 dark:border-white/10 dark:bg-[#1C080E]/80">
+            <div className="flex flex-col justify-between gap-2 border-b border-[#3B0B14]/10 pb-4 sm:flex-row sm:items-center dark:border-white/10">
               <div>
                 <div className="flex items-center gap-2">
-                  <Calendar className="h-5 w-5 text-[#8B263E] dark:text-[#D8B65C]" />
-                  <h2 className="text-base font-black text-[#1C3324] dark:text-zinc-100">
+                  <Calendar className="h-5 w-5 text-[#8B142D] dark:text-[#DFB76C]" />
+                  <h2 className="text-base font-black text-[#3B0B14] dark:text-zinc-100">
                     جدول مقایسه عملکرد ماه به ماه طلا
                   </h2>
                 </div>
-                <p className="mt-1 text-xs text-[#3A5A46] dark:text-zinc-400">
+                <p className="mt-1 text-xs text-[#6E3A44] dark:text-zinc-400">
                   روند تغییرات فروش ناخالص، سود یا زیان خالص گالری، و معاملات دارای زیان به تفکیک ماه‌های سال
                 </p>
               </div>
@@ -1576,7 +1576,7 @@ export default function DashboardReportsPage() {
 
             <div className="overflow-x-auto">
               <table className="w-full text-right text-xs">
-                <thead className="border-b border-[#1C3324]/10 bg-[#FAF9F6] font-black text-[#1C3324] dark:border-white/10 dark:bg-zinc-900/60 dark:text-zinc-300">
+                <thead className="border-b border-[#3B0B14]/10 bg-[#FDF8F9] font-black text-[#3B0B14] dark:border-white/10 dark:bg-zinc-900/60 dark:text-zinc-300">
                   <tr>
                     <th className="px-4 py-3">نام ماه و سال</th>
                     <th className="px-4 py-3 text-center">تعداد معاملات</th>
@@ -1587,25 +1587,25 @@ export default function DashboardReportsPage() {
                     <th className="px-4 py-3 text-center">حاشیه سود/زیان</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-[#1C3324]/5 dark:divide-white/5 font-medium">
+                <tbody className="divide-y divide-[#3B0B14]/5 dark:divide-white/5 font-medium">
                   {periodicAggregations.monthlyList.map((m) => {
                     const isMonthLoss = m.profit < 0;
                     const margin = m.sales > 0 ? ((m.profit / m.sales) * 100).toFixed(1) : "۰.۰";
                     return (
-                      <tr key={m.monthKey} className="hover:bg-[#FAF9F6] dark:hover:bg-white/[0.02]">
-                        <td className="px-4 py-4 font-bold text-[#1C3324] dark:text-zinc-100">
+                      <tr key={m.monthKey} className="hover:bg-[#FDF8F9] dark:hover:bg-white/[0.02]">
+                        <td className="px-4 py-4 font-bold text-[#3B0B14] dark:text-zinc-100">
                           <span className="flex items-center gap-2">
-                            <span className={`h-2.5 w-2.5 rounded-full ${isMonthLoss ? "bg-rose-500" : "bg-[#D8B65C]"}`} />
+                            <span className={`h-2.5 w-2.5 rounded-full ${isMonthLoss ? "bg-rose-500" : "bg-[#DFB76C]"}`} />
                             {m.monthKey}
                           </span>
                         </td>
                         <td className="px-4 py-4 text-center font-mono">
                           {m.count} معامله
                         </td>
-                        <td className="px-4 py-4 text-center font-mono font-bold text-amber-700 dark:text-[#D8B65C]">
+                        <td className="px-4 py-4 text-center font-mono font-bold text-amber-700 dark:text-[#DFB76C]">
                           {m.weight > 0 ? `${m.weight.toFixed(2)} گرم` : "—"}
                         </td>
-                        <td className="px-4 py-4 text-left font-mono font-black text-[#1C3324] dark:text-zinc-100">
+                        <td className="px-4 py-4 text-left font-mono font-black text-[#3B0B14] dark:text-zinc-100">
                           {formatNumber(m.sales)} تومان
                         </td>
                         <td className="px-4 py-4 text-left font-mono font-bold">
@@ -1698,28 +1698,28 @@ export default function DashboardReportsPage() {
           </div>
 
           {/* جدول جامع ۱۲ ماهه سال */}
-          <Card className="rounded-3xl border border-[#1C3324]/12 bg-white/80 p-6 shadow-xs backdrop-blur-md space-y-4 dark:border-white/10 dark:bg-[#15221B]/80">
-            <div className="flex flex-col justify-between gap-2 border-b border-[#1C3324]/10 pb-4 sm:flex-row sm:items-center dark:border-white/10">
+          <Card className="rounded-3xl border border-[#3B0B14]/12 bg-white/80 p-6 shadow-xs backdrop-blur-md space-y-4 dark:border-white/10 dark:bg-[#1C080E]/80">
+            <div className="flex flex-col justify-between gap-2 border-b border-[#3B0B14]/10 pb-4 sm:flex-row sm:items-center dark:border-white/10">
               <div>
                 <div className="flex items-center gap-2">
-                  <CalendarRange className="h-5 w-5 text-[#8B263E] dark:text-[#D8B65C]" />
-                  <h2 className="text-base font-black text-[#1C3324] dark:text-zinc-100">
+                  <CalendarRange className="h-5 w-5 text-[#8B142D] dark:text-[#DFB76C]" />
+                  <h2 className="text-base font-black text-[#3B0B14] dark:text-zinc-100">
                     کارنامه جامع مالی ۱۲ ماهه سال (تقویم خورشیدی)
                   </h2>
                 </div>
-                <p className="mt-1 text-xs text-[#3A5A46] dark:text-zinc-400">
+                <p className="mt-1 text-xs text-[#6E3A44] dark:text-zinc-400">
                   تفکیک و پایش مبالغ فروش، سود خالص گالری، و سهم درصد هر ماه از درآمد سال
                 </p>
               </div>
 
-              <div className="rounded-xl bg-[#FAF9F6] px-3 py-1.5 text-xs font-bold text-[#1C3324] dark:bg-[#101813] dark:text-zinc-300">
+              <div className="rounded-xl bg-[#FDF8F9] px-3 py-1.5 text-xs font-bold text-[#3B0B14] dark:bg-[#140508] dark:text-zinc-300">
                 سال مالی: ۱۴۰۵
               </div>
             </div>
 
             <div className="overflow-x-auto">
               <table className="w-full text-right text-xs">
-                <thead className="border-b border-[#1C3324]/10 bg-[#FAF9F6] font-black text-[#1C3324] dark:border-white/10 dark:bg-zinc-900/60 dark:text-zinc-300">
+                <thead className="border-b border-[#3B0B14]/10 bg-[#FDF8F9] font-black text-[#3B0B14] dark:border-white/10 dark:bg-zinc-900/60 dark:text-zinc-300">
                   <tr>
                     <th className="px-4 py-3">ماه خورشیدی</th>
                     <th className="px-4 py-3 text-center">وضعیت فعالیت</th>
@@ -1729,7 +1729,7 @@ export default function DashboardReportsPage() {
                     <th className="px-4 py-3 text-center">سهم از کل سال</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-[#1C3324]/5 dark:divide-white/5 font-medium">
+                <tbody className="divide-y divide-[#3B0B14]/5 dark:divide-white/5 font-medium">
                   {PERSIAN_MONTHS.map((mName, idx) => {
                     const matched = periodicAggregations.monthlyList.find(
                       (m) => m.monthName === mName
@@ -1744,9 +1744,9 @@ export default function DashboardReportsPage() {
                         : 0;
 
                     return (
-                      <tr key={mName} className="hover:bg-[#FAF9F6] dark:hover:bg-white/[0.02]">
-                        <td className="px-4 py-3 font-bold text-[#1C3324] dark:text-zinc-100">
-                          <span className="ml-2 inline-flex h-5 w-5 items-center justify-center rounded-full bg-[#1C3324]/10 text-[10px] font-black dark:bg-white/10">
+                      <tr key={mName} className="hover:bg-[#FDF8F9] dark:hover:bg-white/[0.02]">
+                        <td className="px-4 py-3 font-bold text-[#3B0B14] dark:text-zinc-100">
+                          <span className="ml-2 inline-flex h-5 w-5 items-center justify-center rounded-full bg-[#3B0B14]/10 text-[10px] font-black dark:bg-white/10">
                             {idx + 1}
                           </span>
                           {mName}
@@ -1766,7 +1766,7 @@ export default function DashboardReportsPage() {
                         <td className="px-4 py-3 text-center font-mono">
                           {weight > 0 ? `${weight.toFixed(2)} گرم` : "—"}
                         </td>
-                        <td className="px-4 py-3 text-left font-mono font-bold text-[#1C3324] dark:text-zinc-100">
+                        <td className="px-4 py-3 text-left font-mono font-bold text-[#3B0B14] dark:text-zinc-100">
                           {sales > 0 ? `${formatNumber(sales)} تومان` : "—"}
                         </td>
                         <td className="px-4 py-3 text-left font-mono font-bold">
@@ -1790,10 +1790,10 @@ export default function DashboardReportsPage() {
                               <div className="h-2 w-16 overflow-hidden rounded-full bg-zinc-100 dark:bg-zinc-800">
                                 <div
                                   style={{ width: `${share}%` }}
-                                  className="h-full bg-[#D8B65C]"
+                                  className="h-full bg-[#DFB76C]"
                                 />
                               </div>
-                              <span className="text-[11px] font-bold text-[#1C3324] dark:text-zinc-200">
+                              <span className="text-[11px] font-bold text-[#3B0B14] dark:text-zinc-200">
                                 {share}٪
                               </span>
                             </div>
@@ -1872,16 +1872,16 @@ export default function DashboardReportsPage() {
           </div>
 
           {/* کارت گزارش تخصصی فروش اقساطی طلا و تعهدات مشتریان */}
-          <Card className="rounded-3xl border border-[#1C3324]/12 bg-white/80 p-6 shadow-xs backdrop-blur-md dark:border-white/10 dark:bg-[#15221B]/80">
-            <div className="flex flex-col justify-between gap-3 border-b border-[#1C3324]/10 pb-4 sm:flex-row sm:items-center dark:border-white/10">
+          <Card className="rounded-3xl border border-[#3B0B14]/12 bg-white/80 p-6 shadow-xs backdrop-blur-md dark:border-white/10 dark:bg-[#1C080E]/80">
+            <div className="flex flex-col justify-between gap-3 border-b border-[#3B0B14]/10 pb-4 sm:flex-row sm:items-center dark:border-white/10">
               <div>
                 <div className="flex items-center gap-2">
-                  <CreditCard className="h-5 w-5 text-[#8B263E] dark:text-[#D8B65C]" />
-                  <h2 className="text-base font-black text-[#1C3324] dark:text-zinc-100">
+                  <CreditCard className="h-5 w-5 text-[#8B142D] dark:text-[#DFB76C]" />
+                  <h2 className="text-base font-black text-[#3B0B14] dark:text-zinc-100">
                     گزارش جامع فروش اقساطی طلا و تعهدات وصولی
                   </h2>
                 </div>
-                <p className="mt-1 text-xs text-[#3A5A46] dark:text-zinc-400">
+                <p className="mt-1 text-xs text-[#6E3A44] dark:text-zinc-400">
                   رصد میزان طلای فروخته‌شده به صورت اقساطی، سود حاصله، اقساط وصول‌شده و مانده تعهدات مشتریان گالری پرنا زر
                 </p>
               </div>
@@ -1906,10 +1906,10 @@ export default function DashboardReportsPage() {
                   <span className="text-xs font-bold text-indigo-900 dark:text-indigo-300">مجموع وصولی اقساط</span>
                   <Wallet className="h-4 w-4 text-indigo-600 dark:text-indigo-400" />
                 </div>
-                <div className="mt-2 text-lg font-black text-[#1C3324] dark:text-zinc-100">
+                <div className="mt-2 text-lg font-black text-[#3B0B14] dark:text-zinc-100">
                   {formatNumber(metrics.installmentSales)} <span className="text-xs font-normal">تومان</span>
                 </div>
-                <span className="mt-1 block text-[11px] font-medium text-[#3A5A46] dark:text-zinc-400">
+                <span className="mt-1 block text-[11px] font-medium text-[#6E3A44] dark:text-zinc-400">
                   سهم {metrics.installmentSharePercent}٪ از کل فروش ناخالص
                 </span>
               </div>
@@ -1923,7 +1923,7 @@ export default function DashboardReportsPage() {
                 <div className="mt-2 text-lg font-black text-amber-800 dark:text-amber-300">
                   {formatNumber(metrics.installmentCommitment)} <span className="text-xs font-normal">تومان</span>
                 </div>
-                <span className="mt-1 block text-[11px] font-medium text-[#3A5A46] dark:text-zinc-400">
+                <span className="mt-1 block text-[11px] font-medium text-[#6E3A44] dark:text-zinc-400">
                   اقساط سررسید نشده در دست مشتریان
                 </span>
               </div>
@@ -1937,43 +1937,43 @@ export default function DashboardReportsPage() {
                 <div className="mt-2 text-lg font-black text-emerald-800 dark:text-emerald-300">
                   +{formatNumber(metrics.installmentProfit)} <span className="text-xs font-normal">تومان</span>
                 </div>
-                <span className="mt-1 block text-[11px] font-medium text-[#3A5A46] dark:text-zinc-400">
+                <span className="mt-1 block text-[11px] font-medium text-[#6E3A44] dark:text-zinc-400">
                   سود قطعی محقق‌شده از اقساط وصولی
                 </span>
               </div>
 
               {/* وزن طلای واگذارشده اقساطی */}
-              <div className="rounded-2xl border border-[#1C3324]/12 bg-[#FAF9F6] p-4 dark:border-white/10 dark:bg-zinc-900/60">
+              <div className="rounded-2xl border border-[#3B0B14]/12 bg-[#FDF8F9] p-4 dark:border-white/10 dark:bg-zinc-900/60">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold text-[#1C3324] dark:text-zinc-300">وزن طلای فروش اقساطی</span>
-                  <Scale className="h-4 w-4 text-[#D8B65C]" />
+                  <span className="text-xs font-bold text-[#3B0B14] dark:text-zinc-300">وزن طلای فروش اقساطی</span>
+                  <Scale className="h-4 w-4 text-[#DFB76C]" />
                 </div>
-                <div className="mt-2 text-lg font-black text-[#1C3324] dark:text-zinc-100">
+                <div className="mt-2 text-lg font-black text-[#3B0B14] dark:text-zinc-100">
                   {metrics.installmentWeight.toFixed(2)} <span className="text-xs font-normal">گرم</span>
                 </div>
-                <span className="mt-1 block text-[11px] font-medium text-[#3A5A46] dark:text-zinc-400">
+                <span className="mt-1 block text-[11px] font-medium text-[#6E3A44] dark:text-zinc-400">
                   {metrics.totalGoldWeight > 0 ? ((metrics.installmentWeight / metrics.totalGoldWeight) * 100).toFixed(1) : 0}٪ از کل طلای واگذارشده
                 </span>
               </div>
             </div>
 
             {/* نوار مقایسه فروش نقدی و فروش اقساطی */}
-            <div className="mt-6 rounded-2xl border border-[#1C3324]/10 bg-[#FAF9F6] p-4 dark:border-white/10 dark:bg-[#101813] space-y-3">
+            <div className="mt-6 rounded-2xl border border-[#3B0B14]/10 bg-[#FDF8F9] p-4 dark:border-white/10 dark:bg-[#140508] space-y-3">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs font-bold">
                 <div className="flex items-center gap-2">
-                  <span className="text-[#1C3324] dark:text-zinc-200">سهم شیوه‌های فروش:</span>
+                  <span className="text-[#3B0B14] dark:text-zinc-200">سهم شیوه‌های فروش:</span>
                   <span className="text-emerald-700 dark:text-emerald-400">فروش نقدی ({metrics.cashSharePercent}٪)</span>
                   <span className="text-zinc-400">|</span>
                   <span className="text-indigo-700 dark:text-indigo-400">فروش اقساطی ({metrics.installmentSharePercent}٪)</span>
                 </div>
 
-                <div className="flex items-center gap-4 text-[11px] text-[#3A5A46] dark:text-zinc-400 font-mono">
+                <div className="flex items-center gap-4 text-[11px] text-[#6E3A44] dark:text-zinc-400 font-mono">
                   <span>نقدی: {formatNumber(metrics.cashSales)} ت ({metrics.cashWeight.toFixed(2)} گرم)</span>
                   <span>اقساطی: {formatNumber(metrics.installmentSales)} ت ({metrics.installmentWeight.toFixed(2)} گرم)</span>
                 </div>
               </div>
 
-              <div className="flex h-3 w-full overflow-hidden rounded-full border border-[#1C3324]/10 bg-zinc-200 dark:border-white/10 dark:bg-zinc-800">
+              <div className="flex h-3 w-full overflow-hidden rounded-full border border-[#3B0B14]/10 bg-zinc-200 dark:border-white/10 dark:bg-zinc-800">
                 <div
                   style={{ width: `${Number(metrics.cashSharePercent) || 50}%` }}
                   className="bg-emerald-600 transition-all duration-500"
@@ -1989,22 +1989,22 @@ export default function DashboardReportsPage() {
           </Card>
 
           {/* تفکیک حسابداری طلا (Decomposition according to Article 26 Gold Tax Law) */}
-          <Card className="rounded-3xl border border-[#1C3324]/12 bg-white/80 p-6 shadow-xs backdrop-blur-md dark:border-white/10 dark:bg-[#15221B]/80">
-            <div className="flex flex-col justify-between gap-2 border-b border-[#1C3324]/10 pb-4 sm:flex-row sm:items-center dark:border-white/10">
+          <Card className="rounded-3xl border border-[#3B0B14]/12 bg-white/80 p-6 shadow-xs backdrop-blur-md dark:border-white/10 dark:bg-[#1C080E]/80">
+            <div className="flex flex-col justify-between gap-2 border-b border-[#3B0B14]/10 pb-4 sm:flex-row sm:items-center dark:border-white/10">
               <div>
                 <div className="flex items-center gap-2">
-                  <Receipt className="h-5 w-5 text-[#8B263E] dark:text-[#D8B65C]" />
-                  <h2 className="text-base font-black text-[#1C3324] dark:text-zinc-100">
+                  <Receipt className="h-5 w-5 text-[#8B142D] dark:text-[#DFB76C]" />
+                  <h2 className="text-base font-black text-[#3B0B14] dark:text-zinc-100">
                     تفکیک حسابداری فروش و مالیات طلا (ماده ۲۶ قانون پایانه‌های فروشگاهی)
                   </h2>
                 </div>
-                <p className="mt-1 text-xs text-[#3A5A46] dark:text-zinc-400">
+                <p className="mt-1 text-xs text-[#6E3A44] dark:text-zinc-400">
                   اصل طلای خام از مالیات معاف بوده و مالیات ارزش افزوده (۹٪) صرفاً بر مجموع «اجرت ساخت + سود گالری» اعمال می‌شود.
                 </p>
               </div>
 
-              <div className="flex items-center gap-2 rounded-2xl bg-[#FAF9F6] px-3 py-1.5 text-xs font-bold text-[#1C3324] dark:bg-[#101813] dark:text-zinc-300">
-                <Coins className="h-4 w-4 text-[#D8B65C]" />
+              <div className="flex items-center gap-2 rounded-2xl bg-[#FDF8F9] px-3 py-1.5 text-xs font-bold text-[#3B0B14] dark:bg-[#140508] dark:text-zinc-300">
+                <Coins className="h-4 w-4 text-[#DFB76C]" />
                 <span>مظنه روز هر گرم: {formatNumber(goldRate18K)} تومان</span>
               </div>
             </div>
@@ -2014,10 +2014,10 @@ export default function DashboardReportsPage() {
               {/* ارزش طلای خام */}
               <div className="rounded-2xl border border-amber-200/80 bg-amber-50/50 p-4 dark:border-amber-500/20 dark:bg-amber-950/20">
                 <span className="text-xs font-bold text-amber-900 dark:text-amber-300">ارزش طلای خام (سرمایه)</span>
-                <div className="mt-2 text-lg font-black text-[#1C3324] dark:text-zinc-100">
+                <div className="mt-2 text-lg font-black text-[#3B0B14] dark:text-zinc-100">
                   {formatNumber(metrics.totalRawGold)} <span className="text-xs font-normal">تومان</span>
                 </div>
-                <span className="mt-1 block text-[11px] text-[#3A5A46] dark:text-zinc-400">
+                <span className="mt-1 block text-[11px] text-[#6E3A44] dark:text-zinc-400">
                   بهای تمام‌شده و اصل شمش طلا
                 </span>
               </div>
@@ -2025,10 +2025,10 @@ export default function DashboardReportsPage() {
               {/* اجرت ساخت */}
               <div className="rounded-2xl border border-blue-200/80 bg-blue-50/50 p-4 dark:border-blue-500/20 dark:bg-blue-950/20">
                 <span className="text-xs font-bold text-blue-900 dark:text-blue-300">مجموع اجرت ساخت کارگاه</span>
-                <div className="mt-2 text-lg font-black text-[#1C3324] dark:text-zinc-100">
+                <div className="mt-2 text-lg font-black text-[#3B0B14] dark:text-zinc-100">
                   {formatNumber(metrics.totalWorkshopWages)} <span className="text-xs font-normal">تومان</span>
                 </div>
-                <span className="mt-1 block text-[11px] text-[#3A5A46] dark:text-zinc-400">
+                <span className="mt-1 block text-[11px] text-[#6E3A44] dark:text-zinc-400">
                   سهم پرداخت‌شده به کارگاه‌های طلاسازی
                 </span>
               </div>
@@ -2041,7 +2041,7 @@ export default function DashboardReportsPage() {
                 <div className={`mt-2 text-lg font-black ${metrics.totalGalleryNetProfit >= 0 ? "text-emerald-800 dark:text-emerald-300" : "text-rose-700 dark:text-rose-300"}`}>
                   {metrics.totalGalleryNetProfit < 0 ? "−" : ""}{formatNumber(Math.abs(metrics.totalGalleryNetProfit))} <span className="text-xs font-normal">تومان</span>
                 </div>
-                <span className="mt-1 block text-[11px] text-[#3A5A46] dark:text-zinc-400">
+                <span className="mt-1 block text-[11px] text-[#6E3A44] dark:text-zinc-400">
                   درآمد نهایی پس از کسر تخفیف‌ها و زیان‌ها
                 </span>
               </div>
@@ -2049,10 +2049,10 @@ export default function DashboardReportsPage() {
               {/* مالیات بر ارزش افزوده */}
               <div className="rounded-2xl border border-purple-200/80 bg-purple-50/50 p-4 dark:border-purple-500/20 dark:bg-purple-950/20">
                 <span className="text-xs font-bold text-purple-900 dark:text-purple-300">مالیات ارزش افزوده (۹٪)</span>
-                <div className="mt-2 text-lg font-black text-[#1C3324] dark:text-zinc-100">
+                <div className="mt-2 text-lg font-black text-[#3B0B14] dark:text-zinc-100">
                   {formatNumber(metrics.totalVatTax)} <span className="text-xs font-normal">تومان</span>
                 </div>
-                <span className="mt-1 block text-[11px] text-[#3A5A46] dark:text-zinc-400">
+                <span className="mt-1 block text-[11px] text-[#6E3A44] dark:text-zinc-400">
                   سهم امور مالیاتی از (اجرت + سود)
                 </span>
               </div>
@@ -2060,11 +2060,11 @@ export default function DashboardReportsPage() {
 
             {/* نوار تجسمی نسبت‌های مالی */}
             <div className="mt-6 space-y-2">
-              <div className="flex justify-between text-xs font-bold text-[#3A5A46] dark:text-zinc-400">
+              <div className="flex justify-between text-xs font-bold text-[#6E3A44] dark:text-zinc-400">
                 <span>ترکیب ارزش مالی فروش</span>
                 <span>۱۰۰٪ از کل فروش</span>
               </div>
-              <div className="flex h-3 w-full overflow-hidden rounded-full border border-[#1C3324]/10 bg-zinc-100 dark:border-white/10 dark:bg-zinc-800">
+              <div className="flex h-3 w-full overflow-hidden rounded-full border border-[#3B0B14]/10 bg-zinc-100 dark:border-white/10 dark:bg-zinc-800">
                 <div
                   style={{
                     width: `${metrics.totalGrossSales > 0 ? (metrics.totalRawGold / metrics.totalGrossSales) * 100 : 80}%`,
@@ -2118,15 +2118,15 @@ export default function DashboardReportsPage() {
           {/* تفکیک تحلیل متریال و وضعیت تحویل */}
           <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
             {/* تحلیل فروش بر اساس رنگ متریال طلا */}
-            <Card className="rounded-3xl border border-[#1C3324]/12 bg-white/80 p-6 shadow-xs backdrop-blur-md space-y-4 dark:border-white/10 dark:bg-[#15221B]/80">
+            <Card className="rounded-3xl border border-[#3B0B14]/12 bg-white/80 p-6 shadow-xs backdrop-blur-md space-y-4 dark:border-white/10 dark:bg-[#1C080E]/80">
               <div>
                 <div className="flex items-center gap-2">
-                  <Gem className="h-4 w-4 text-[#8B263E] dark:text-[#D8B65C]" />
-                  <h3 className="text-base font-black text-[#1C3324] dark:text-zinc-100">
+                  <Gem className="h-4 w-4 text-[#8B142D] dark:text-[#DFB76C]" />
+                  <h3 className="text-base font-black text-[#3B0B14] dark:text-zinc-100">
                     سهم فروش بر اساس رنگ متریال طلا
                   </h3>
                 </div>
-                <p className="mt-1 text-xs text-[#3A5A46] dark:text-zinc-400">
+                <p className="mt-1 text-xs text-[#6E3A44] dark:text-zinc-400">
                   توزیع تقاضای مشتریان بر مبنای رنگ‌های طلای ۱۸ عیار پرنا زر
                 </p>
               </div>
@@ -2155,22 +2155,22 @@ export default function DashboardReportsPage() {
                     label: "دورنگ / ترکیبی لوکس",
                     percent: metrics.colorPercentages.twotone,
                     weight: metrics.colorsCount.twotone,
-                    color: "bg-[#1C3324] dark:bg-[#D8B65C]",
+                    color: "bg-[#3B0B14] dark:bg-[#DFB76C]",
                   },
                 ].map((item) => (
                   <div key={item.label} className="space-y-1.5">
                     <div className="flex justify-between text-xs font-bold">
-                      <span className="text-[#1C3324] dark:text-zinc-200">{item.label}</span>
+                      <span className="text-[#3B0B14] dark:text-zinc-200">{item.label}</span>
                       <div className="flex items-center gap-2">
-                        <span className="text-[11px] text-[#3A5A46] dark:text-zinc-400">
+                        <span className="text-[11px] text-[#6E3A44] dark:text-zinc-400">
                           {item.weight.toFixed(2)} گرم
                         </span>
-                        <span className="font-mono font-black text-[#1C3324] dark:text-zinc-100">
+                        <span className="font-mono font-black text-[#3B0B14] dark:text-zinc-100">
                           {item.percent}٪
                         </span>
                       </div>
                     </div>
-                    <div className="h-2.5 w-full rounded-full bg-zinc-100 border border-[#1C3324]/10 overflow-hidden dark:bg-zinc-800 dark:border-white/10">
+                    <div className="h-2.5 w-full rounded-full bg-zinc-100 border border-[#3B0B14]/10 overflow-hidden dark:bg-zinc-800 dark:border-white/10">
                       <div
                         style={{ width: `${item.percent}%` }}
                         className={`h-full ${item.color} transition-all duration-700`}
@@ -2182,15 +2182,15 @@ export default function DashboardReportsPage() {
             </Card>
 
             {/* وضعیت سفارشات و تحویل */}
-            <Card className="rounded-3xl border border-[#1C3324]/12 bg-white/80 p-6 shadow-xs backdrop-blur-md space-y-4 dark:border-white/10 dark:bg-[#15221B]/80">
+            <Card className="rounded-3xl border border-[#3B0B14]/12 bg-white/80 p-6 shadow-xs backdrop-blur-md space-y-4 dark:border-white/10 dark:bg-[#1C080E]/80">
               <div>
                 <div className="flex items-center gap-2">
-                  <Package className="h-4 w-4 text-[#8B263E] dark:text-[#D8B65C]" />
-                  <h3 className="text-base font-black text-[#1C3324] dark:text-zinc-100">
+                  <Package className="h-4 w-4 text-[#8B142D] dark:text-[#DFB76C]" />
+                  <h3 className="text-base font-black text-[#3B0B14] dark:text-zinc-100">
                     وضعیت تحویل و آماده‌سازی سفارشات
                   </h3>
                 </div>
-                <p className="mt-1 text-xs text-[#3A5A46] dark:text-zinc-400">
+                <p className="mt-1 text-xs text-[#6E3A44] dark:text-zinc-400">
                   نسبت سفارش‌های «موجود و تحویل‌شده» به «ساخت سفارشی کارگاه»
                 </p>
               </div>
@@ -2200,44 +2200,44 @@ export default function DashboardReportsPage() {
                   <span className="text-xs font-bold text-emerald-800 dark:text-emerald-300">
                     ارسال فوری / تحویل قطعی
                   </span>
-                  <div className="mt-2 text-2xl font-black text-[#1C3324] dark:text-zinc-100">
+                  <div className="mt-2 text-2xl font-black text-[#3B0B14] dark:text-zinc-100">
                     {metrics.deliveredPercent}٪
                   </div>
-                  <span className="text-[11px] text-[#3A5A46] dark:text-zinc-400">تحویل با بسته بندی لوکس</span>
+                  <span className="text-[11px] text-[#6E3A44] dark:text-zinc-400">تحویل با بسته بندی لوکس</span>
                 </div>
 
                 <div className="rounded-2xl border border-amber-200/80 bg-amber-50/50 p-4 text-center shadow-xs dark:border-amber-500/20 dark:bg-amber-950/20">
                   <span className="text-xs font-bold text-amber-800 dark:text-amber-300">
                     ساخت سفارشی کارگاه
                   </span>
-                  <div className="mt-2 text-2xl font-black text-[#1C3324] dark:text-zinc-100">
+                  <div className="mt-2 text-2xl font-black text-[#3B0B14] dark:text-zinc-100">
                     {metrics.customPercent}٪
                   </div>
-                  <span className="text-[11px] text-[#3A5A46] dark:text-zinc-400">تولید اختصاصی و ریخته‌گری</span>
+                  <span className="text-[11px] text-[#6E3A44] dark:text-zinc-400">تولید اختصاصی و ریخته‌گری</span>
                 </div>
               </div>
 
-              <div className="rounded-2xl border border-[#1C3324]/10 bg-[#FAF9F6] p-4 text-xs font-bold text-[#1C3324] dark:border-white/10 dark:bg-zinc-900 dark:text-zinc-300 flex items-center justify-between">
+              <div className="rounded-2xl border border-[#3B0B14]/10 bg-[#FDF8F9] p-4 text-xs font-bold text-[#3B0B14] dark:border-white/10 dark:bg-zinc-900 dark:text-zinc-300 flex items-center justify-between">
                 <span className="flex items-center gap-2">
-                  <Clock className="h-4 w-4 text-[#8B263E] dark:text-[#D8B65C]" />
+                  <Clock className="h-4 w-4 text-[#8B142D] dark:text-[#DFB76C]" />
                   میانگین زمان تحویل سفارش‌های سفارشی:
                 </span>
-                <span className="font-black text-[#8B263E] dark:text-[#D8B65C]">۳ الی ۵ روز کاری</span>
+                <span className="font-black text-[#8B142D] dark:text-[#DFB76C]">۳ الی ۵ روز کاری</span>
               </div>
             </Card>
           </div>
 
           {/* جدول معاملات با تفکیک سود و ضرر، شیوه فروش و فیلترهای اختصاصی */}
-          <Card id="transactions-table" className="rounded-3xl border border-[#1C3324]/12 bg-white/80 p-6 shadow-xs backdrop-blur-md space-y-4 dark:border-white/10 dark:bg-[#15221B]/80">
-            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between border-b border-[#1C3324]/10 pb-4 dark:border-white/10">
+          <Card id="transactions-table" className="rounded-3xl border border-[#3B0B14]/12 bg-white/80 p-6 shadow-xs backdrop-blur-md space-y-4 dark:border-white/10 dark:bg-[#1C080E]/80">
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between border-b border-[#3B0B14]/10 pb-4 dark:border-white/10">
               <div>
                 <div className="flex items-center gap-2">
                   <CheckCircle2 className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
-                  <h3 className="text-base font-black text-[#1C3324] dark:text-zinc-100">
+                  <h3 className="text-base font-black text-[#3B0B14] dark:text-zinc-100">
                     ریز معاملات تسویه‌شده و سود و زیان هر اثر
                   </h3>
                 </div>
-                <p className="mt-1 text-xs text-[#3A5A46] dark:text-zinc-400">
+                <p className="mt-1 text-xs text-[#6E3A44] dark:text-zinc-400">
                   امکان فیلتر و رصد معاملات بر مبنای شیوه تسویه (نقدی یا اقساطی) و سود و زیان (دارای سود یا زیان)
                 </p>
               </div>
@@ -2245,14 +2245,14 @@ export default function DashboardReportsPage() {
               {/* فیلترهای دوگانه: روش فروش و وضعیت سود و زیان */}
               <div className="flex flex-wrap items-center gap-2">
                 {/* فیلتر روش فروش: نقدی / اقساطی */}
-                <div className="flex items-center rounded-2xl border border-[#1C3324]/12 bg-[#FAF9F6] p-1 shadow-xs dark:border-white/10 dark:bg-[#101813]">
+                <div className="flex items-center rounded-2xl border border-[#3B0B14]/12 bg-[#FDF8F9] p-1 shadow-xs dark:border-white/10 dark:bg-[#140508]">
                   <button
                     type="button"
                     onClick={() => setSaleTypeFilter("all")}
                     className={`rounded-xl px-2.5 py-1.5 text-[11px] font-black transition cursor-pointer ${
                       saleTypeFilter === "all"
-                        ? "bg-[#1C3324] text-white shadow-xs dark:bg-[#D8B65C] dark:text-[#101813]"
-                        : "text-[#3A5A46] hover:text-[#1C3324] dark:text-zinc-400"
+                        ? "bg-[#3B0B14] text-white shadow-xs dark:bg-[#DFB76C] dark:text-[#140508]"
+                        : "text-[#6E3A44] hover:text-[#3B0B14] dark:text-zinc-400"
                     }`}
                   >
                     همه روش‌ها
@@ -2286,14 +2286,14 @@ export default function DashboardReportsPage() {
                 </div>
 
                 {/* فیلتر وضعیت سود و زیان */}
-                <div className="flex items-center rounded-2xl border border-[#1C3324]/12 bg-[#FAF9F6] p-1 shadow-xs dark:border-white/10 dark:bg-[#101813]">
+                <div className="flex items-center rounded-2xl border border-[#3B0B14]/12 bg-[#FDF8F9] p-1 shadow-xs dark:border-white/10 dark:bg-[#140508]">
                   <button
                     type="button"
                     onClick={() => setProfitFilter("all")}
                     className={`rounded-xl px-2.5 py-1.5 text-[11px] font-black transition cursor-pointer ${
                       profitFilter === "all"
-                        ? "bg-[#1C3324] text-white shadow-xs dark:bg-[#D8B65C] dark:text-[#101813]"
-                        : "text-[#3A5A46] hover:text-[#1C3324] dark:text-zinc-400"
+                        ? "bg-[#3B0B14] text-white shadow-xs dark:bg-[#DFB76C] dark:text-[#140508]"
+                        : "text-[#6E3A44] hover:text-[#3B0B14] dark:text-zinc-400"
                     }`}
                   >
                     همه سود/زیان
@@ -2328,7 +2328,7 @@ export default function DashboardReportsPage() {
 
             <div className="overflow-x-auto">
               <table className="w-full text-right text-xs">
-                <thead className="border-b border-[#1C3324]/10 bg-[#FAF9F6] font-black text-[#1C3324] dark:border-white/10 dark:bg-zinc-900/60 dark:text-zinc-300">
+                <thead className="border-b border-[#3B0B14]/10 bg-[#FDF8F9] font-black text-[#3B0B14] dark:border-white/10 dark:bg-zinc-900/60 dark:text-zinc-300">
                   <tr>
                     <th className="px-4 py-3">کد / شماره</th>
                     <th className="px-4 py-3">نوع معامله</th>
@@ -2341,10 +2341,10 @@ export default function DashboardReportsPage() {
                     <th className="px-4 py-3 text-center">وضعیت</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-[#1C3324]/5 dark:divide-white/5 font-medium">
+                <tbody className="divide-y divide-[#3B0B14]/5 dark:divide-white/5 font-medium">
                   {metrics.recentTransactions.length === 0 ? (
                     <tr>
-                      <td colSpan={9} className="py-8 text-center text-xs text-[#3A5A46] dark:text-zinc-400">
+                      <td colSpan={9} className="py-8 text-center text-xs text-[#6E3A44] dark:text-zinc-400">
                         {profitFilter === "loss"
                           ? "هیچ معامله دارای زیانی در این دوره وجود ندارد."
                           : saleTypeFilter === "installment"
@@ -2354,12 +2354,12 @@ export default function DashboardReportsPage() {
                     </tr>
                   ) : (
                     metrics.recentTransactions.map((tx) => (
-                      <tr key={tx.code} className="hover:bg-[#FAF9F6] dark:hover:bg-white/[0.02]">
-                        <td className="px-4 py-3 font-mono font-bold text-[#1C3324] dark:text-zinc-200">
+                      <tr key={tx.code} className="hover:bg-[#FDF8F9] dark:hover:bg-white/[0.02]">
+                        <td className="px-4 py-3 font-mono font-bold text-[#3B0B14] dark:text-zinc-200">
                           {tx.code}
                         </td>
                         <td className="px-4 py-3">
-                          <span className="inline-flex rounded-lg bg-zinc-100 px-2 py-0.5 text-[10px] font-bold text-[#1C3324] dark:bg-zinc-800 dark:text-zinc-300">
+                          <span className="inline-flex rounded-lg bg-zinc-100 px-2 py-0.5 text-[10px] font-bold text-[#3B0B14] dark:bg-zinc-800 dark:text-zinc-300">
                             {tx.type === "invoice" ? "فاکتور رسمی" : "سفارش آنلاین"}
                           </span>
                         </td>
@@ -2376,16 +2376,16 @@ export default function DashboardReportsPage() {
                             </span>
                           )}
                         </td>
-                        <td className="px-4 py-3 font-bold text-[#1C3324] dark:text-zinc-200">
+                        <td className="px-4 py-3 font-bold text-[#3B0B14] dark:text-zinc-200">
                           {tx.customer}
                         </td>
                         <td className="px-4 py-3 text-center font-mono">
                           {tx.weight > 0 ? `${tx.weight.toFixed(2)} گرم` : "—"}
                         </td>
-                        <td className="px-4 py-3 text-left font-mono font-black text-[#1C3324] dark:text-zinc-100">
+                        <td className="px-4 py-3 text-left font-mono font-black text-[#3B0B14] dark:text-zinc-100">
                           {formatNumber(tx.amount)} تومان
                         </td>
-                        <td className="px-4 py-3 text-left font-mono text-[#3A5A46] dark:text-zinc-400">
+                        <td className="px-4 py-3 text-left font-mono text-[#6E3A44] dark:text-zinc-400">
                           {formatNumber(tx.costBasis)} تومان
                         </td>
                         <td className="px-4 py-3 text-left font-mono font-bold">
@@ -2432,7 +2432,7 @@ export default function DashboardReportsPage() {
         style={{
           width: "794px",
           backgroundColor: "#ffffff",
-          color: "#1C3324",
+          color: "#3B0B14",
           padding: "36px 40px",
           direction: "rtl",
           fontFamily: "var(--font-print, var(--font-body)), Tahoma, Arial, sans-serif",
@@ -2440,21 +2440,21 @@ export default function DashboardReportsPage() {
         }}
       >
         {/* سربرگ رسمی با مهر و نشان گالری */}
-        <div style={{ borderBottom: "3px double #1C3324", paddingBottom: "16px", marginBottom: "20px" }}>
+        <div style={{ borderBottom: "3px double #3B0B14", paddingBottom: "16px", marginBottom: "20px" }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
             <div>
-              <div style={{ fontSize: "20px", fontWeight: 900, color: "#1C3324", letterSpacing: "-0.5px" }}>
+              <div style={{ fontSize: "20px", fontWeight: 900, color: "#3B0B14", letterSpacing: "-0.5px" }}>
                 گالری طلا و جواهرات پرنا زر — مثل زر بدرخش
               </div>
-              <div style={{ fontSize: "11px", fontWeight: 700, color: "#8B263E", marginTop: "4px" }}>
+              <div style={{ fontSize: "11px", fontWeight: 700, color: "#8B142D", marginTop: "4px" }}>
                 PARNA ZAR GOLD &amp; JEWELRY GALLERY — OFFICIAL AUDIT STATEMENT
               </div>
-              <div style={{ fontSize: "10px", color: "#3A5A46", marginTop: "2px" }}>
+              <div style={{ fontSize: "10px", color: "#6E3A44", marginTop: "2px" }}>
                 سامانه پایانه‌های فروشگاهی و گزارشات رسمی حسابرسی صنف طلا و جواهر (ماده ۲۶ قانون م.ا.ا)
               </div>
             </div>
 
-            <div style={{ textAlign: "left", fontSize: "10px", lineHeight: "1.6", color: "#1C3324" }}>
+            <div style={{ textAlign: "left", fontSize: "10px", lineHeight: "1.6", color: "#3B0B14" }}>
               <div><strong>شماره سند:</strong> <span style={{ fontFamily: "monospace" }}>SRV-PNL-{new Date().getFullYear()}</span></div>
               <div><strong>تاریخ گزارش:</strong> {new Intl.DateTimeFormat("fa-IR", { dateStyle: "full" }).format(new Date())}</div>
               <div><strong>دوره مالی:</strong> {reportView === "daily" ? "کارنامه روزانه" : reportView === "monthly" ? "کارنامه ماهانه" : reportView === "yearly" ? "گزارش سالیانه" : "نمای جامع"}</div>
@@ -2465,7 +2465,7 @@ export default function DashboardReportsPage() {
 
         {/* عنوان سند */}
         <div style={{ textAlign: "center", marginBottom: "20px" }}>
-          <div style={{ fontSize: "15px", fontWeight: 900, color: "#1C3324" }}>
+          <div style={{ fontSize: "15px", fontWeight: 900, color: "#3B0B14" }}>
             صورت جامع حسابرسی مالی، سود و زیان (P&amp;L) و فروش اقساطی طلا
           </div>
           <div style={{ fontSize: "10px", color: "#666", marginTop: "4px" }}>
@@ -2479,7 +2479,7 @@ export default function DashboardReportsPage() {
             <tr>
               <td style={{ border: "1px solid #ddd", padding: "10px", backgroundColor: "#fbfaf8", width: "25%" }}>
                 <div style={{ color: "#666", fontSize: "9px" }}>مجموع فروش کل ناخالص</div>
-                <div style={{ fontSize: "13px", fontWeight: 900, color: "#1C3324", marginTop: "4px" }}>
+                <div style={{ fontSize: "13px", fontWeight: 900, color: "#3B0B14", marginTop: "4px" }}>
                   {formatNumber(metrics.totalGrossSales)} <span style={{ fontSize: "9px" }}>تومان</span>
                 </div>
                 <div style={{ fontSize: "9px", color: "#888", marginTop: "2px" }}>{metrics.successfulTransactionsCount} معامله تسویه‌شده</div>
@@ -2495,14 +2495,14 @@ export default function DashboardReportsPage() {
               </td>
               <td style={{ border: "1px solid #ddd", padding: "10px", backgroundColor: "#fbfaf8", width: "25%" }}>
                 <div style={{ color: "#666", fontSize: "9px" }}>وزن کل طلای واگذارشده</div>
-                <div style={{ fontSize: "13px", fontWeight: 900, color: "#1C3324", marginTop: "4px" }}>
+                <div style={{ fontSize: "13px", fontWeight: 900, color: "#3B0B14", marginTop: "4px" }}>
                   {metrics.totalGoldWeight.toFixed(2)} <span style={{ fontSize: "9px" }}>گرم</span>
                 </div>
                 <div style={{ fontSize: "9px", color: "#888", marginTop: "2px" }}>طلای استاندارد ۱۸ عیار</div>
               </td>
               <td style={{ border: "1px solid #ddd", padding: "10px", backgroundColor: "#fbfaf8", width: "25%" }}>
                 <div style={{ color: "#666", fontSize: "9px" }}>سود به ازای هر گرم طلا</div>
-                <div style={{ fontSize: "13px", fontWeight: 900, color: "#8B263E", marginTop: "4px" }}>
+                <div style={{ fontSize: "13px", fontWeight: 900, color: "#8B142D", marginTop: "4px" }}>
                   {metrics.profitPerGram < 0 ? "−" : ""}{formatNumber(Math.abs(metrics.profitPerGram))} <span style={{ fontSize: "9px" }}>ت/گرم</span>
                 </div>
                 <div style={{ fontSize: "9px", color: "#888", marginTop: "2px" }}>میانگین عایدی هر گرم</div>
@@ -2513,7 +2513,7 @@ export default function DashboardReportsPage() {
 
         {/* تفکیک ارزش طلا طبق ماده ۲۶ قانون پایانه‌های فروشگاهی */}
         <div style={{ marginBottom: "16px", padding: "12px", border: "1px solid #ddd", borderRadius: "8px", backgroundColor: "#faf9f6" }}>
-          <div style={{ fontSize: "11px", fontWeight: 900, color: "#1C3324", marginBottom: "8px" }}>
+          <div style={{ fontSize: "11px", fontWeight: 900, color: "#3B0B14", marginBottom: "8px" }}>
             تفکیک حسابداری طلا و مالیات ارزش افزوده (ماده ۲۶):
           </div>
           <div style={{ display: "flex", justifyContent: "space-between", fontSize: "10px", lineHeight: "1.8" }}>
@@ -2553,7 +2553,7 @@ export default function DashboardReportsPage() {
 
         {/* خلاصه تفکیک سود و زیان معاملات */}
         <div style={{ marginBottom: "16px", padding: "12px", border: "1px solid #ddd", borderRadius: "8px" }}>
-          <div style={{ fontSize: "11px", fontWeight: 900, color: "#1C3324", marginBottom: "8px" }}>
+          <div style={{ fontSize: "11px", fontWeight: 900, color: "#3B0B14", marginBottom: "8px" }}>
             وضعیت تفکیک سود و زیان معاملات گالری:
           </div>
           <div style={{ display: "flex", justifyContent: "space-between", fontSize: "10px", lineHeight: "1.8" }}>
@@ -2603,12 +2603,12 @@ export default function DashboardReportsPage() {
 
         {/* جدول ریز آخرین معاملات */}
         <div style={{ marginBottom: "20px" }}>
-          <div style={{ fontSize: "11px", fontWeight: 900, color: "#1C3324", marginBottom: "6px" }}>
+          <div style={{ fontSize: "11px", fontWeight: 900, color: "#3B0B14", marginBottom: "6px" }}>
             ریز معاملات اخیر دوره:
           </div>
           <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "9px", textAlign: "right" }}>
             <thead>
-              <tr style={{ backgroundColor: "#f3f4f6", color: "#1C3324", fontWeight: 900 }}>
+              <tr style={{ backgroundColor: "#f3f4f6", color: "#3B0B14", fontWeight: 900 }}>
                 <th style={{ border: "1px solid #e5e7eb", padding: "6px" }}>کد معامله</th>
                 <th style={{ border: "1px solid #e5e7eb", padding: "6px" }}>نوع</th>
                 <th style={{ border: "1px solid #e5e7eb", padding: "6px", textAlign: "center" }}>شیوه تسویه</th>
@@ -2643,7 +2643,7 @@ export default function DashboardReportsPage() {
             <div style={{ color: "#888", marginTop: "2px" }}>گالری طلا و جواهرات پرنا زر — مثل زر بدرخش | نسخه سامانه ابری معتبر</div>
           </div>
           <div style={{ textAlign: "center", minWidth: "160px" }}>
-            <div style={{ fontWeight: 700, color: "#1C3324", marginBottom: "30px" }}>امضا و مهر رسمی مدیریت مالی</div>
+            <div style={{ fontWeight: 700, color: "#3B0B14", marginBottom: "30px" }}>امضا و مهر رسمی مدیریت مالی</div>
             <div style={{ borderBottom: "1px dotted #888" }} />
           </div>
         </div>

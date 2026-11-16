@@ -51,18 +51,18 @@ const accentMap: Record<
     topBorder: "from-emerald-500/40 via-emerald-500/10 to-transparent",
   },
   crimson: {
-    iconBg: "bg-[#8B263E]/10 dark:bg-[#8B263E]/25",
-    iconText: "text-[#8B263E] dark:text-rose-300",
-    glow: "group-hover:border-[#8B263E]/40",
+    iconBg: "bg-[#8B142D]/10 dark:bg-[#8B142D]/25",
+    iconText: "text-[#8B142D] dark:text-rose-300",
+    glow: "group-hover:border-[#8B142D]/40",
     badgeVariant: "crimson",
-    topBorder: "from-[#8B263E]/40 via-[#8B263E]/10 to-transparent",
+    topBorder: "from-[#8B142D]/40 via-[#8B142D]/10 to-transparent",
   },
   gold: {
-    iconBg: "bg-[#B4901E]/10 dark:bg-[#D8B65C]/20",
-    iconText: "text-[#B4901E] dark:text-[#D8B65C]",
-    glow: "group-hover:border-[#B4901E]/40",
+    iconBg: "bg-[#C5A059]/10 dark:bg-[#DFB76C]/20",
+    iconText: "text-[#C5A059] dark:text-[#DFB76C]",
+    glow: "group-hover:border-[#C5A059]/40",
     badgeVariant: "gold",
-    topBorder: "from-[#D8B65C]/40 via-[#D8B65C]/10 to-transparent",
+    topBorder: "from-[#DFB76C]/40 via-[#DFB76C]/10 to-transparent",
   },
   blue: {
     iconBg: "bg-sky-500/10 dark:bg-sky-500/20",
@@ -72,11 +72,11 @@ const accentMap: Record<
     topBorder: "from-sky-500/40 via-sky-500/10 to-transparent",
   },
   default: {
-    iconBg: "bg-[#1C3324]/10 dark:bg-white/10",
-    iconText: "text-[#1C3324] dark:text-zinc-200",
-    glow: "group-hover:border-[#1C3324]/30",
+    iconBg: "bg-[#3B0B14]/10 dark:bg-white/10",
+    iconText: "text-[#3B0B14] dark:text-zinc-200",
+    glow: "group-hover:border-[#3B0B14]/30",
     badgeVariant: "secondary",
-    topBorder: "from-[#1C3324]/30 via-transparent to-transparent",
+    topBorder: "from-[#3B0B14]/30 via-transparent to-transparent",
   },
 };
 
@@ -100,7 +100,7 @@ export default function DashboardStatCard({
   const content = (
     <Card
       className={cn(
-        "group relative overflow-hidden rounded-3xl border border-[#1C3324]/12 bg-white/95 p-5 shadow-xs backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md dark:border-white/10 dark:bg-[#15221B]/95",
+        "group relative overflow-hidden rounded-3xl border border-[#3B0B14]/12 bg-white/95 p-5 shadow-xs backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md dark:border-white/10 dark:bg-[#1C080E]/95",
         styles.glow,
         href && "cursor-pointer",
         className
@@ -128,17 +128,17 @@ export default function DashboardStatCard({
           {/* Header row */}
           <div className="flex items-start justify-between gap-3">
             <div className="min-w-0 flex-1">
-              <span className="text-xs font-bold text-[#3A5A46] dark:text-zinc-400">
+              <span className="text-xs font-bold text-[#6E3A44] dark:text-zinc-400">
                 {title}
               </span>
 
               {/* Main Value */}
               <div className="mt-2.5 flex items-baseline gap-1.5 flex-wrap">
-                <span className="text-2xl font-black tracking-tight text-[#1C3324] sm:text-3xl dark:text-zinc-100">
+                <span className="text-2xl font-black tracking-tight text-[#3B0B14] sm:text-3xl dark:text-zinc-100">
                   {value}
                 </span>
                 {unit && (
-                  <span className="text-xs font-bold text-[#3A5A46] dark:text-zinc-400">
+                  <span className="text-xs font-bold text-[#6E3A44] dark:text-zinc-400">
                     {unit}
                   </span>
                 )}
@@ -182,7 +182,7 @@ export default function DashboardStatCard({
             )}
 
             {description && (
-              <span className="text-[11px] text-[#3A5A46] dark:text-zinc-400">
+              <span className="text-[11px] text-[#6E3A44] dark:text-zinc-400">
                 {description}
               </span>
             )}
@@ -190,16 +190,16 @@ export default function DashboardStatCard({
 
           {/* Secondary Footer Info */}
           {(secondaryInfo || (href && actionText)) && (
-            <div className="mt-4 flex items-center justify-between border-t border-[#1C3324]/8 pt-3 text-xs dark:border-white/8">
+            <div className="mt-4 flex items-center justify-between border-t border-[#3B0B14]/8 pt-3 text-xs dark:border-white/8">
               {secondaryInfo && (
-                <div className="flex items-center gap-1.5 text-[11px] text-[#3A5A46] dark:text-zinc-400">
+                <div className="flex items-center gap-1.5 text-[11px] text-[#6E3A44] dark:text-zinc-400">
                   <span>{secondaryInfo.label}:</span>
                   <span
                     className={cn(
                       "font-bold font-mono",
                       secondaryInfo.highlight
-                        ? "text-[#8B263E] dark:text-rose-400"
-                        : "text-[#1C3324] dark:text-zinc-200"
+                        ? "text-[#8B142D] dark:text-rose-400"
+                        : "text-[#3B0B14] dark:text-zinc-200"
                     )}
                   >
                     {secondaryInfo.value}
@@ -208,7 +208,7 @@ export default function DashboardStatCard({
               )}
 
               {href && (
-                <div className="mr-auto flex items-center gap-1 text-[11px] font-bold text-[#8B263E] transition-transform group-hover:-translate-x-1 dark:text-[#D8B65C]">
+                <div className="mr-auto flex items-center gap-1 text-[11px] font-bold text-[#8B142D] transition-transform group-hover:-translate-x-1 dark:text-[#DFB76C]">
                   <span>{actionText || "مشاهده جزئیات"}</span>
                   <ChevronLeft className="h-3.5 w-3.5" />
                 </div>

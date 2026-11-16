@@ -179,7 +179,7 @@ function Input({
 }) {
   return (
     <div className="space-y-2">
-      <label className="block text-xs font-bold text-[#1C3324] dark:text-zinc-200">
+      <label className="block text-xs font-bold text-[#3B0B14] dark:text-zinc-200">
         {label}
       </label>
 
@@ -189,13 +189,13 @@ function Input({
           value={value}
           placeholder={placeholder}
           onChange={(e) => onChange(e.target.value)}
-          className={`w-full rounded-2xl border border-[#1C3324]/15 bg-white px-4 py-3.5 text-xs font-bold text-[#1C3324] outline-none transition placeholder:text-[#3A5A46]/50 focus:border-[#1C3324] dark:border-white/10 dark:bg-[#101813] dark:text-zinc-100 dark:placeholder:text-zinc-500 dark:focus:border-[#D8B65C] ${
+          className={`w-full rounded-2xl border border-[#3B0B14]/15 bg-white px-4 py-3.5 text-xs font-bold text-[#3B0B14] outline-none transition placeholder:text-[#6E3A44]/50 focus:border-[#3B0B14] dark:border-white/10 dark:bg-[#140508] dark:text-zinc-100 dark:placeholder:text-zinc-500 dark:focus:border-[#DFB76C] ${
             suffix ? "pl-14" : ""
           }`}
         />
 
         {suffix && (
-          <span className="absolute left-4 top-1/2 -translate-y-1/2 text-xs font-bold text-[#3A5A46] dark:text-zinc-400">
+          <span className="absolute left-4 top-1/2 -translate-y-1/2 text-xs font-bold text-[#6E3A44] dark:text-zinc-400">
             {suffix}
           </span>
         )}
@@ -217,7 +217,7 @@ function Textarea({
 }) {
   return (
     <div className="space-y-2">
-      <label className="block text-xs font-bold text-[#1C3324] dark:text-zinc-200">
+      <label className="block text-xs font-bold text-[#3B0B14] dark:text-zinc-200">
         {label}
       </label>
 
@@ -226,7 +226,7 @@ function Textarea({
         placeholder={placeholder}
         onChange={(e) => onChange(e.target.value)}
         rows={4}
-        className="w-full resize-none rounded-2xl border border-[#1C3324]/15 bg-white px-4 py-3.5 text-xs font-bold text-[#1C3324] outline-none transition placeholder:text-[#3A5A46]/50 focus:border-[#1C3324] dark:border-white/10 dark:bg-[#101813] dark:text-zinc-100 dark:placeholder:text-zinc-500 dark:focus:border-[#D8B65C]"
+        className="w-full resize-none rounded-2xl border border-[#3B0B14]/15 bg-white px-4 py-3.5 text-xs font-bold text-[#3B0B14] outline-none transition placeholder:text-[#6E3A44]/50 focus:border-[#3B0B14] dark:border-white/10 dark:bg-[#140508] dark:text-zinc-100 dark:placeholder:text-zinc-500 dark:focus:border-[#DFB76C]"
       />
     </div>
   );
@@ -244,14 +244,14 @@ function Toggle({
   onChange: (value: boolean) => void;
 }) {
   return (
-    <div className="flex items-center justify-between gap-4 rounded-2xl border border-[#1C3324]/15 bg-white px-4 py-4 shadow-xs dark:border-white/10 dark:bg-zinc-900/80">
+    <div className="flex items-center justify-between gap-4 rounded-2xl border border-[#3B0B14]/15 bg-white px-4 py-4 shadow-xs dark:border-white/10 dark:bg-zinc-900/80">
       <div>
-        <div className="text-xs font-black text-[#1C3324] dark:text-zinc-100">
+        <div className="text-xs font-black text-[#3B0B14] dark:text-zinc-100">
           {label}
         </div>
 
         {description && (
-          <div className="mt-1 text-[11px] leading-5 text-[#3A5A46] dark:text-zinc-400">
+          <div className="mt-1 text-[11px] leading-5 text-[#6E3A44] dark:text-zinc-400">
             {description}
           </div>
         )}
@@ -262,7 +262,7 @@ function Toggle({
         aria-label={label}
         onClick={() => onChange(!checked)}
         className={`relative h-6 w-11 shrink-0 rounded-full transition-colors cursor-pointer ${
-          checked ? "bg-[#1C3324] dark:bg-emerald-700" : "bg-neutral-300 dark:bg-zinc-700"
+          checked ? "bg-[#3B0B14] dark:bg-[#DFB76C]" : "bg-neutral-300 dark:bg-zinc-700"
         }`}
       >
         <span
@@ -285,14 +285,14 @@ function Card({
   children: React.ReactNode;
 }) {
   return (
-    <div className="rounded-3xl border border-[#1C3324]/12 bg-white/80 shadow-xs backdrop-blur-md overflow-hidden dark:border-white/10 dark:bg-[#15221B]/80">
-      <div className="border-b border-[#1C3324]/10 px-6 py-5 bg-white/90 dark:border-white/10 dark:bg-[#15221B]">
-        <h2 className="text-sm font-black text-[#1C3324] dark:text-zinc-100">
+    <div className="rounded-3xl border border-[#3B0B14]/12 bg-white/80 shadow-xs backdrop-blur-md overflow-hidden dark:border-white/10 dark:bg-[#1C080E]/80">
+      <div className="border-b border-[#3B0B14]/10 px-6 py-5 bg-white/90 dark:border-white/10 dark:bg-[#1C080E]">
+        <h2 className="text-sm font-black text-[#3B0B14] dark:text-zinc-100">
           {title}
         </h2>
 
         {description && (
-          <p className="mt-1 text-xs text-[#3A5A46] dark:text-zinc-400">
+          <p className="mt-1 text-xs text-[#6E3A44] dark:text-zinc-400">
             {description}
           </p>
         )}
@@ -560,11 +560,11 @@ export default function DashboardSettingsPage() {
   if (loading) {
     return (
       <div className="min-h-screen bg-transparent p-6" dir="rtl">
-        <div className="mx-auto max-w-5xl flex min-h-[420px] items-center justify-center rounded-3xl border border-[#1C3324]/12 bg-white/80 backdrop-blur-md dark:border-white/10 dark:bg-[#15221B]/80">
+        <div className="mx-auto max-w-5xl flex min-h-[420px] items-center justify-center rounded-3xl border border-[#3B0B14]/12 bg-white/80 backdrop-blur-md dark:border-white/10 dark:bg-[#1C080E]/80">
           <div className="flex flex-col items-center gap-3">
-            <Loader2 className="h-8 w-8 animate-spin text-[#8B263E] dark:text-[#D8B65C]" />
+            <Loader2 className="h-8 w-8 animate-spin text-[#8B142D] dark:text-[#DFB76C]" />
 
-            <p className="text-xs font-bold text-[#3A5A46] dark:text-zinc-400">
+            <p className="text-xs font-bold text-[#6E3A44] dark:text-zinc-400">
               در حال دریافت تنظیمات...
             </p>
           </div>
@@ -575,18 +575,18 @@ export default function DashboardSettingsPage() {
 
   return (
     <div
-      className="space-y-6 font-sans text-[#1C3324] dark:text-zinc-100"
+      className="space-y-6 font-sans text-[#3B0B14] dark:text-zinc-100"
       dir="rtl"
     >
       <div className="mx-auto max-w-5xl space-y-6 pb-12">
         {/* Header */}
-        <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between rounded-3xl border border-[#1C3324]/12 bg-white/80 p-5 shadow-xs backdrop-blur-md sm:p-6 dark:border-white/10 dark:bg-[#15221B]/80">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between rounded-3xl border border-[#3B0B14]/12 bg-white/80 p-5 shadow-xs backdrop-blur-md sm:p-6 dark:border-white/10 dark:bg-[#1C080E]/80">
           <div>
-            <h1 className="text-2xl font-black text-[#1C3324] dark:text-zinc-100">
+            <h1 className="text-2xl font-black text-[#3B0B14] dark:text-zinc-100">
               تنظیمات سیستم
             </h1>
 
-            <p className="mt-1 text-xs text-[#3A5A46] dark:text-zinc-400">
+            <p className="mt-1 text-xs text-[#6E3A44] dark:text-zinc-400">
               مدیریت تنظیمات فروشگاه پرنا زر، قیمت‌گذاری و سفارش‌ها
             </p>
           </div>
@@ -594,15 +594,15 @@ export default function DashboardSettingsPage() {
           <div className="flex items-center gap-2 text-xs font-bold">
             {dirty ? (
               <>
-                <span className="h-2 w-2 rounded-full bg-[#8B263E] dark:bg-rose-400" />
-                <span className="text-[#8B263E] dark:text-rose-400">
+                <span className="h-2 w-2 rounded-full bg-[#8B142D] dark:bg-rose-400" />
+                <span className="text-[#8B142D] dark:text-rose-400">
                   تغییرات ذخیره نشده
                 </span>
               </>
             ) : (
               <>
                 <Check className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
-                <span className="text-[#3A5A46] dark:text-zinc-400">
+                <span className="text-[#6E3A44] dark:text-zinc-400">
                   همه تغییرات ذخیره شده
                 </span>
               </>
@@ -671,7 +671,7 @@ export default function DashboardSettingsPage() {
         </section>
 
         {/* Tabs */}
-        <div className="overflow-x-auto rounded-3xl border border-[#1C3324]/12 bg-white/80 p-2 shadow-xs backdrop-blur-md dark:border-white/10 dark:bg-[#15221B]/80">
+        <div className="overflow-x-auto rounded-3xl border border-[#3B0B14]/12 bg-white/80 p-2 shadow-xs backdrop-blur-md dark:border-white/10 dark:bg-[#1C080E]/80">
           <div className="flex min-w-max gap-2">
             {tabs.map((tab) => {
               const active = activeTab === tab.id;
@@ -683,8 +683,8 @@ export default function DashboardSettingsPage() {
                   onClick={() => setActiveTab(tab.id)}
                   className={`flex items-center gap-2 rounded-2xl px-5 py-3 text-xs font-black transition cursor-pointer ${
                     active
-                      ? "bg-[#1C3324] text-white shadow-xs dark:bg-emerald-900 dark:text-[#D8B65C]"
-                      : "text-[#3A5A46] hover:bg-black/5 hover:text-[#1C3324] dark:text-zinc-400 dark:hover:bg-white/5 dark:hover:text-zinc-100"
+                      ? "bg-[#3B0B14] text-white shadow-xs dark:bg-[#8B142D] dark:text-[#DFB76C]"
+                      : "text-[#6E3A44] hover:bg-black/5 hover:text-[#3B0B14] dark:text-zinc-400 dark:hover:bg-white/5 dark:hover:text-zinc-100"
                   }`}
                 >
                   {tab.icon}
@@ -928,7 +928,7 @@ export default function DashboardSettingsPage() {
                 <Textarea
                   label="متن پایین فاکتور"
                   value={settings.invoiceFooter}
-                  placeholder="از خرید شما از گالری طلا و جواهر پرنا زر سپاسگزاریم — مثل زر بدرخش"
+                  placeholder="از خرید شما از گالری طلا پرنا زر سپاسگزاریم — مثل زر بدرخش"
                   onChange={(value) =>
                     update(
                       "invoiceFooter",
@@ -1221,19 +1221,19 @@ export default function DashboardSettingsPage() {
           )}
 
           {/* Save Bar */}
-          <div className="flex items-center justify-between rounded-3xl border border-[#1C3324]/12 bg-white/80 p-4 shadow-xs backdrop-blur-md dark:border-white/10 dark:bg-[#15221B]/80">
+          <div className="flex items-center justify-between rounded-3xl border border-[#3B0B14]/12 bg-white/80 p-4 shadow-xs backdrop-blur-md dark:border-white/10 dark:bg-[#1C080E]/80">
             <div className="hidden items-center gap-2 sm:flex px-2">
               {dirty ? (
                 <>
-                  <span className="h-2 w-2 rounded-full bg-[#8B263E] dark:bg-rose-400" />
-                  <span className="text-xs font-bold text-[#8B263E] dark:text-rose-400">
+                  <span className="h-2 w-2 rounded-full bg-[#8B142D] dark:bg-rose-400" />
+                  <span className="text-xs font-bold text-[#8B142D] dark:text-rose-400">
                     تغییرات ذخیره نشده
                   </span>
                 </>
               ) : (
                 <>
                   <Check className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
-                  <span className="text-xs font-bold text-[#3A5A46] dark:text-zinc-400">
+                  <span className="text-xs font-bold text-[#6E3A44] dark:text-zinc-400">
                     ذخیره شده
                   </span>
                 </>
@@ -1243,7 +1243,7 @@ export default function DashboardSettingsPage() {
             <button
               type="submit"
               disabled={saving || !dirty}
-              className="mr-auto flex items-center gap-2 rounded-2xl bg-[#1C3324] px-6 py-3 text-xs font-black text-white shadow-sm transition hover:bg-[#8B263E] disabled:cursor-not-allowed disabled:opacity-40 cursor-pointer dark:bg-emerald-900/80 dark:hover:bg-emerald-800"
+              className="mr-auto flex items-center gap-2 rounded-2xl bg-[#3B0B14] px-6 py-3 text-xs font-black text-white shadow-sm transition hover:bg-[#8B142D] disabled:cursor-not-allowed disabled:opacity-40 cursor-pointer dark:bg-[#8B142D] dark:hover:bg-[#580F1F]"
             >
               {saving ? (
                 <>

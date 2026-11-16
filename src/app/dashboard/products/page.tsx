@@ -301,7 +301,7 @@ function ProductFallbackIcon({
     text.includes("حلقه") ||
     text.includes("ring")
   ) {
-    return <CircleDot className="h-6 w-6 text-[#8B263E] dark:text-[#D8B65C]" />;
+    return <CircleDot className="h-6 w-6 text-[#8B142D] dark:text-[#DFB76C]" />;
   }
 
   if (
@@ -310,7 +310,7 @@ function ProductFallbackIcon({
     text.includes("necklace") ||
     text.includes("تاج")
   ) {
-    return <Crown className="h-6 w-6 text-[#8B263E] dark:text-[#D8B65C]" />;
+    return <Crown className="h-6 w-6 text-[#8B142D] dark:text-[#DFB76C]" />;
   }
 
   if (
@@ -319,7 +319,7 @@ function ProductFallbackIcon({
     text.includes("coin") ||
     text.includes("bar")
   ) {
-    return <Coins className="h-6 w-6 text-[#8B263E] dark:text-[#D8B65C]" />;
+    return <Coins className="h-6 w-6 text-[#8B142D] dark:text-[#DFB76C]" />;
   }
 
   if (
@@ -328,10 +328,10 @@ function ProductFallbackIcon({
     text.includes("پابند") ||
     text.includes("bracelet")
   ) {
-    return <Sparkles className="h-6 w-6 text-[#8B263E] dark:text-[#D8B65C]" />;
+    return <Sparkles className="h-6 w-6 text-[#8B142D] dark:text-[#DFB76C]" />;
   }
 
-  return <Gem className="h-6 w-6 text-[#8B263E] dark:text-[#D8B65C]" />;
+  return <Gem className="h-6 w-6 text-[#8B142D] dark:text-[#DFB76C]" />;
 }
 
 /* =========================================================
@@ -548,26 +548,26 @@ export default function DashboardProducts() {
   return (
     <div className="space-y-6 sm:space-y-8 font-sans" dir="rtl">
       {/* Header */}
-      <div className="flex flex-col justify-between gap-5 rounded-3xl border border-[#1C3324]/12 bg-white/80 p-5 shadow-xs backdrop-blur-md transition-colors lg:flex-row lg:items-center lg:p-6 dark:border-white/10 dark:bg-[#15221B]/80">
+      <div className="flex flex-col justify-between gap-5 rounded-3xl border border-[#3B0B14]/12 bg-white/80 p-5 shadow-xs backdrop-blur-md transition-colors lg:flex-row lg:items-center lg:p-6 dark:border-white/10 dark:bg-[#1C080E]/80">
         <div>
           <div className="flex items-center gap-2">
             <span className="relative flex h-2.5 w-2.5">
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
               <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald-500" />
             </span>
-            <span className="text-xs font-black text-[#8B263E] dark:text-[#D8B65C]">
-              کاتالوگ طلا و جواهرات · ویترین آنلاین
+            <span className="text-xs font-black text-[#8B142D] dark:text-[#DFB76C]">
+              کاتالوگ طلا · ویترین آنلاین
             </span>
             <span className="text-xs text-zinc-400">|</span>
-            <span className="text-xs font-mono font-bold text-[#3A5A46] dark:text-zinc-400">
+            <span className="text-xs font-mono font-bold text-[#6E3A44] dark:text-zinc-400">
               مظنه ۱۸ عیار: {goldRate.toLocaleString("fa-IR")} تومان
             </span>
           </div>
 
-          <h1 className="mt-2 text-2xl font-black text-[#1C3324] sm:text-3xl dark:text-zinc-100">
+          <h1 className="mt-2 text-2xl font-black text-[#3B0B14] sm:text-3xl dark:text-zinc-100">
             محصولات و ویترین طلا
           </h1>
-          <p className="mt-1 text-xs text-[#3A5A46] dark:text-zinc-400">
+          <p className="mt-1 text-xs text-[#6E3A44] dark:text-zinc-400">
             مدیریت موجودی انبار، عیار و وزن، اجرت ساخت، قیمت‌گذاری خودکار لحظه‌ای و کنترل ویترین آنلاین
           </p>
         </div>
@@ -581,7 +581,7 @@ export default function DashboardProducts() {
             className="gap-2"
           >
             <RefreshCw
-              className={cn("h-4 w-4", isRefreshing && "animate-spin text-[#8B263E] dark:text-[#D8B65C]")}
+              className={cn("h-4 w-4", isRefreshing && "animate-spin text-[#8B142D] dark:text-[#DFB76C]")}
             />
             <span>{isRefreshing ? "در حال دریافت..." : "بروزرسانی مظنه و لیست"}</span>
           </Button>
@@ -671,11 +671,11 @@ export default function DashboardProducts() {
       )}
 
       {/* Filters Card */}
-      <Card className="border-[#1C3324]/12 bg-white/80 p-4 backdrop-blur-md dark:border-white/10 dark:bg-[#15221B]/80">
+      <Card className="border-[#3B0B14]/12 bg-white/80 p-4 backdrop-blur-md dark:border-white/10 dark:bg-[#1C080E]/80">
         <div className="flex flex-col gap-3 lg:flex-row lg:items-center">
           {/* Search input */}
           <div className="relative flex-1">
-            <Search className="absolute right-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-[#3A5A46] dark:text-zinc-400" />
+            <Search className="absolute right-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-[#6E3A44] dark:text-zinc-400" />
             <Input
               type="text"
               placeholder="جست‌وجوی نام طلا، کد کالا (SKU)، دسته‌بندی..."
@@ -687,7 +687,7 @@ export default function DashboardProducts() {
               <button
                 type="button"
                 onClick={() => setSearchTerm("")}
-                className="absolute left-3 top-1/2 -translate-y-1/2 text-[#3A5A46] hover:text-[#1C3324] dark:text-zinc-400 dark:hover:text-zinc-100"
+                className="absolute left-3 top-1/2 -translate-y-1/2 text-[#6E3A44] hover:text-[#3B0B14] dark:text-zinc-400 dark:hover:text-zinc-100"
               >
                 <X size={14} />
               </button>
@@ -697,12 +697,12 @@ export default function DashboardProducts() {
           {/* Filters row */}
           <div className="flex flex-wrap items-center gap-2">
             {/* Category Filter */}
-            <div className="flex items-center gap-1.5 rounded-2xl border border-[#1C3324]/12 bg-[#FAF9F6] px-3 py-1.5 text-xs font-bold dark:border-white/10 dark:bg-zinc-900/60">
-              <Filter className="h-3.5 w-3.5 text-[#3A5A46] dark:text-zinc-400" />
+            <div className="flex items-center gap-1.5 rounded-2xl border border-[#3B0B14]/12 bg-[#FDF8F9] px-3 py-1.5 text-xs font-bold dark:border-white/10 dark:bg-zinc-900/60">
+              <Filter className="h-3.5 w-3.5 text-[#6E3A44] dark:text-zinc-400" />
               <select
                 value={categoryFilter}
                 onChange={(e) => setCategoryFilter(e.target.value)}
-                className="bg-transparent text-xs font-bold text-[#1C3324] outline-none cursor-pointer dark:text-zinc-200 dark:[&>option]:bg-zinc-900"
+                className="bg-transparent text-xs font-bold text-[#3B0B14] outline-none cursor-pointer dark:text-zinc-200 dark:[&>option]:bg-zinc-900"
               >
                 <option value="all">همه دسته‌ها</option>
                 {categories.map((c) => (
@@ -714,12 +714,12 @@ export default function DashboardProducts() {
             </div>
 
             {/* Vitrine Status Filter */}
-            <div className="flex items-center gap-1.5 rounded-2xl border border-[#1C3324]/12 bg-[#FAF9F6] px-3 py-1.5 text-xs font-bold dark:border-white/10 dark:bg-zinc-900/60">
-              <Eye className="h-3.5 w-3.5 text-[#3A5A46] dark:text-zinc-400" />
+            <div className="flex items-center gap-1.5 rounded-2xl border border-[#3B0B14]/12 bg-[#FDF8F9] px-3 py-1.5 text-xs font-bold dark:border-white/10 dark:bg-zinc-900/60">
+              <Eye className="h-3.5 w-3.5 text-[#6E3A44] dark:text-zinc-400" />
               <select
                 value={vitrineFilter}
                 onChange={(e) => setVitrineFilter(e.target.value)}
-                className="bg-transparent text-xs font-bold text-[#1C3324] outline-none cursor-pointer dark:text-zinc-200 dark:[&>option]:bg-zinc-900"
+                className="bg-transparent text-xs font-bold text-[#3B0B14] outline-none cursor-pointer dark:text-zinc-200 dark:[&>option]:bg-zinc-900"
               >
                 <option value="all">همه وضعیت‌های ویترین</option>
                 <option value="active">نمایان در ویترین سایت</option>
@@ -728,11 +728,11 @@ export default function DashboardProducts() {
             </div>
 
             {/* Stock Status Filter */}
-            <div className="flex items-center gap-1.5 rounded-2xl border border-[#1C3324]/12 bg-[#FAF9F6] px-3 py-1.5 text-xs font-bold dark:border-white/10 dark:bg-zinc-900/60">
+            <div className="flex items-center gap-1.5 rounded-2xl border border-[#3B0B14]/12 bg-[#FDF8F9] px-3 py-1.5 text-xs font-bold dark:border-white/10 dark:bg-zinc-900/60">
               <select
                 value={statusFilter}
                 onChange={(e) => setStatusFilter(e.target.value)}
-                className="bg-transparent text-xs font-bold text-[#1C3324] outline-none cursor-pointer dark:text-zinc-200 dark:[&>option]:bg-zinc-900"
+                className="bg-transparent text-xs font-bold text-[#3B0B14] outline-none cursor-pointer dark:text-zinc-200 dark:[&>option]:bg-zinc-900"
               >
                 <option value="all">همه موجودی‌ها</option>
                 <option value="available">موجود در انبار</option>
@@ -742,12 +742,12 @@ export default function DashboardProducts() {
             </div>
 
             {/* Sort Filter */}
-            <div className="flex items-center gap-1.5 rounded-2xl border border-[#1C3324]/12 bg-[#FAF9F6] px-3 py-1.5 text-xs font-bold dark:border-white/10 dark:bg-zinc-900/60">
-              <ArrowUpDown className="h-3.5 w-3.5 text-[#3A5A46] dark:text-zinc-400" />
+            <div className="flex items-center gap-1.5 rounded-2xl border border-[#3B0B14]/12 bg-[#FDF8F9] px-3 py-1.5 text-xs font-bold dark:border-white/10 dark:bg-zinc-900/60">
+              <ArrowUpDown className="h-3.5 w-3.5 text-[#6E3A44] dark:text-zinc-400" />
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
-                className="bg-transparent text-xs font-bold text-[#1C3324] outline-none cursor-pointer dark:text-zinc-200 dark:[&>option]:bg-zinc-900"
+                className="bg-transparent text-xs font-bold text-[#3B0B14] outline-none cursor-pointer dark:text-zinc-200 dark:[&>option]:bg-zinc-900"
               >
                 <option value="newest">جدیدترین محصولات</option>
                 <option value="price_desc">بیشترین قیمت روز</option>
@@ -781,10 +781,10 @@ export default function DashboardProducts() {
       </Card>
 
       {/* Products Table (Shadcn Table with Price & Showcase Controls) */}
-      <Card className="border-[#1C3324]/12 bg-white/80 p-6 dark:border-white/10 dark:bg-[#15221B]/80">
+      <Card className="border-[#3B0B14]/12 bg-white/80 p-6 dark:border-white/10 dark:bg-[#1C080E]/80">
         <div className="mb-4 flex items-center justify-between">
           <div>
-            <CardTitle className="text-base font-extrabold text-[#1C3324] dark:text-zinc-100">
+            <CardTitle className="text-base font-extrabold text-[#3B0B14] dark:text-zinc-100">
               کاتالوگ و لیست محصولات
             </CardTitle>
             <CardDescription className="text-xs">
@@ -816,8 +816,8 @@ export default function DashboardProducts() {
                 <TableRow>
                   <TableCell colSpan={10} className="py-16 text-center">
                     <div className="flex flex-col items-center gap-3">
-                      <RefreshCw className="h-6 w-6 animate-spin text-[#8B263E] dark:text-[#D8B65C]" />
-                      <span className="text-xs font-bold text-[#3A5A46] dark:text-zinc-400">
+                      <RefreshCw className="h-6 w-6 animate-spin text-[#8B142D] dark:text-[#DFB76C]" />
+                      <span className="text-xs font-bold text-[#6E3A44] dark:text-zinc-400">
                         در حال بارگذاری اطلاعات محصولات و محاسبه مظنه طلا...
                       </span>
                     </div>
@@ -827,13 +827,13 @@ export default function DashboardProducts() {
                 <TableRow>
                   <TableCell colSpan={10} className="py-16 text-center">
                     <div className="mx-auto flex max-w-sm flex-col items-center">
-                      <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#FAF9F6] border border-[#1C3324]/10 dark:bg-zinc-800 dark:border-white/10">
-                        <Search className="h-6 w-6 text-[#3A5A46] dark:text-zinc-400" />
+                      <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#FDF8F9] border border-[#3B0B14]/10 dark:bg-zinc-800 dark:border-white/10">
+                        <Search className="h-6 w-6 text-[#6E3A44] dark:text-zinc-400" />
                       </div>
-                      <p className="mt-3 text-sm font-black text-[#1C3324] dark:text-zinc-100">
+                      <p className="mt-3 text-sm font-black text-[#3B0B14] dark:text-zinc-100">
                         محصولی یافت نشد
                       </p>
-                      <p className="mt-1 text-xs text-[#3A5A46] dark:text-zinc-400">
+                      <p className="mt-1 text-xs text-[#6E3A44] dark:text-zinc-400">
                         معیارهای جست‌وجو یا فیلتر دسته‌بندی را تغییر دهید.
                       </p>
                     </div>
@@ -850,13 +850,13 @@ export default function DashboardProducts() {
                   return (
                     <TableRow
                       key={product.raw.id}
-                      className="cursor-pointer transition hover:bg-[#FAF9F6] dark:hover:bg-white/5"
+                      className="cursor-pointer transition hover:bg-[#FDF8F9] dark:hover:bg-white/5"
                       onClick={() => router.push(`/dashboard/products/${product.raw.id}`)}
                     >
                       {/* Image & Title */}
                       <TableCell>
                         <div className="flex items-center gap-3">
-                          <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-2xl border border-[#1C3324]/12 bg-[#FAF9F6] shadow-2xs dark:border-white/10 dark:bg-zinc-800">
+                          <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-2xl border border-[#3B0B14]/12 bg-[#FDF8F9] shadow-2xs dark:border-white/10 dark:bg-zinc-800">
                             {hasValidImage && imageUrl ? (
                               <img
                                 src={imageUrl}
@@ -880,10 +880,10 @@ export default function DashboardProducts() {
                           </div>
 
                           <div className="min-w-0">
-                            <p className="truncate text-xs font-black text-[#1C3324] dark:text-zinc-100">
+                            <p className="truncate text-xs font-black text-[#3B0B14] dark:text-zinc-100">
                               {product.name}
                             </p>
-                            <span className="text-[10px] text-[#3A5A46] dark:text-zinc-400">
+                            <span className="text-[10px] text-[#6E3A44] dark:text-zinc-400">
                               مشاهده شناسنامه ↗
                             </span>
                           </div>
@@ -893,7 +893,7 @@ export default function DashboardProducts() {
                       {/* SKU */}
                       <TableCell>
                         <div className="flex items-center gap-1.5">
-                          <span className="font-mono text-xs font-bold text-[#8B263E] dark:text-[#D8B65C]">
+                          <span className="font-mono text-xs font-bold text-[#8B142D] dark:text-[#DFB76C]">
                             {product.sku}
                           </span>
                           <button
@@ -933,11 +933,11 @@ export default function DashboardProducts() {
                       {/* Weight */}
                       <TableCell>
                         <div className="flex items-center gap-1">
-                          <Scale size={13} className="text-[#8B263E] dark:text-[#D8B65C]" />
-                          <span className="font-mono font-black text-xs text-[#1C3324] dark:text-zinc-100">
+                          <Scale size={13} className="text-[#8B142D] dark:text-[#DFB76C]" />
+                          <span className="font-mono font-black text-xs text-[#3B0B14] dark:text-zinc-100">
                             {product.weight.toFixed(3)}
                           </span>
-                          <span className="text-[10px] text-[#3A5A46] dark:text-zinc-400">
+                          <span className="text-[10px] text-[#6E3A44] dark:text-zinc-400">
                             گرم
                           </span>
                         </div>
@@ -952,7 +952,7 @@ export default function DashboardProducts() {
 
                       {/* Wage */}
                       <TableCell>
-                        <span className="font-mono font-bold text-xs text-[#1C3324] dark:text-zinc-200">
+                        <span className="font-mono font-bold text-xs text-[#3B0B14] dark:text-zinc-200">
                           {product.wage}٪
                         </span>
                       </TableCell>
@@ -960,13 +960,13 @@ export default function DashboardProducts() {
                       {/* Live Price (NEW COLUMN) */}
                       <TableCell>
                         <div className="flex flex-col">
-                          <span className="font-mono font-black text-xs text-[#8B263E] dark:text-[#D8B65C]">
+                          <span className="font-mono font-black text-xs text-[#8B142D] dark:text-[#DFB76C]">
                             {product.livePrice > 0
                               ? `${product.livePrice.toLocaleString("fa-IR")} تومان`
                               : "تماس بگیرید"}
                           </span>
                           {product.livePrice > 0 && (
-                            <span className="text-[9px] text-[#3A5A46] dark:text-zinc-400">
+                            <span className="text-[9px] text-[#6E3A44] dark:text-zinc-400">
                               با سود و مالیات
                             </span>
                           )}
@@ -1059,24 +1059,24 @@ export default function DashboardProducts() {
 
       {/* Delete Confirmation Dialog */}
       <Dialog open={Boolean(deleteTarget)} onOpenChange={() => setDeleteTarget(null)}>
-        <DialogContent className="max-w-md dark:border-white/10 dark:bg-[#15221B]">
+        <DialogContent className="max-w-md dark:border-white/10 dark:bg-[#1C080E]">
           <DialogHeader>
             <div className="flex items-center gap-3">
               <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-rose-100 text-rose-600 dark:bg-rose-950/50 dark:text-rose-400">
                 <Trash2 size={22} />
               </div>
               <div>
-                <DialogTitle className="text-base font-black text-[#1C3324] dark:text-zinc-100">
+                <DialogTitle className="text-base font-black text-[#3B0B14] dark:text-zinc-100">
                   تأیید حذف قطعی محصول از ویترین
                 </DialogTitle>
-                <DialogDescription className="mt-1 text-xs text-[#3A5A46] dark:text-zinc-400">
+                <DialogDescription className="mt-1 text-xs text-[#6E3A44] dark:text-zinc-400">
                   آیا از حذف محصول «{deleteTarget?.name}» اطمینان کامل دارید؟
                 </DialogDescription>
               </div>
             </div>
           </DialogHeader>
 
-          <p className="text-xs leading-6 text-[#3A5A46] dark:text-zinc-300">
+          <p className="text-xs leading-6 text-[#6E3A44] dark:text-zinc-300">
             با حذف این محصول، اطلاعات و فایل‌های تصویری آن به طور کامل از دیتابیس پاک خواهند شد و این عملیات غیرقابل بازگشت است.
           </p>
 
